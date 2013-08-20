@@ -239,5 +239,5 @@ WebAudio-Controls is developped based on:
 - [WebAudio-Switch](http://aikelab.net/switch/) by [Keisuke Ai](http://d.hatena.ne.jp/aike/)   
 Integrated and enhanced by [g200kg](http://www.g200kg.com/)
 
-Copyright 2013 Eiji Kitamura / Ryoya KAWAI / Keisuke Ai / g200kg(Tatsuya Shinyagaito)
+Copyright 2013 Eiji Kitamura / Ryoya KAWAI / Keisuke Ai / g200kg(Tatsuya Shinyagaito)  
 Licensed under the Apache License, Version 2.0
