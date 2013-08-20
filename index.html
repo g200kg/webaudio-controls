@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>[Polymer] WebAudio-Controls Live Demo</title>
+    <script src="js/polymer.min.js"></script>
+    <link rel="import" href="webcomponents/controls.html">
+  </head>
+  <h1>WebAudio-Controls Live Demo</h1>
+  <body style="background-color:#eee;">
+    <div style="position:relative;background-image: url('img/bg.png');width:512px;height:240px;margin:30px auto;padding:0px;overflow:hidden">
+     <webaudio-knob style="position:absolute;left:48px;top:76px" src="img/LittlePhatty.png" value="0" max="100" step="1" diameter="64" sprites="100"></webaudio-knob>
+     <webaudio-knob style="position:absolute;left:128px;top:76px" src="img/LittlePhatty.png" value="0" max="100" step="1" diameter="64" sprites="100"></webaudio-knob>
+     <webaudio-knob id="knob3" style="position:absolute;left:232px;top:48px" src="img/vernier.png" value="0" max="100" step="1" diameter="128" sprites="50" valuetip="0"></webaudio-knob>
+     <webaudio-param style="position:absolute;left:328px;top:162px" link="knob3"></webaudio-param>
+     <webaudio-slider style="position:absolute;left:368px;top:24px" src="img/vsliderbody.png" knobsrc="img/vsliderknob.png" value="0" min="0" max="100" step="1" basewidth="24" baseheight="128" knobwidth="24" knobheight="24" ditchLength="100"></webaudio-slider>
+     <webaudio-slider style="position:absolute;left:400px;top:24px" src="img/vsliderbody.png" knobsrc="img/vsliderknob.png" value="0" min="0" max="100" step="1" basewidth="24" baseheight="128" knobwidth="24" knobheight="24" ditchLength="100"></webaudio-slider>
+     <webaudio-switch style="position:absolute;left:440px;top:38px" src="img/switch_toggle.png" value="0" height="56" width="56"></webaudio-switch>
+     <webaudio-switch style="position:absolute;left:440px;top:102px" src="img/switch_toggle.png" value="0" height="56" width="56"></webaudio-switch>
+	</div>
+	<div>
+  WebAudio-Controls is developped based on :<br/>
+  <ul>
+    <li><a href="https://github.com/agektmr/webaudio-knob" target="_blank">WebAudio-Knob</a> by <a href="http://google.com/+agektmr" target="_blank">Eiji Kitamura</a></li>
+    <li><a href="https://github.com/ryoyakawai/webaudio-slider" target="_blank">WebAudio-Slider</a> by <a href="https://plus.google.com/108242669191458983485/posts" target="_blank">Ryoya Kawai</a></li>
+    <li><a href="http://aikelab.net/switch/" target="_blank">WebAudio-Switch</a> by <a href="http://d.hatena.ne.jp/aike/" target="_blank">Keisuke Ai</a></li>
+  </ul>
+  Integration and enhancement by <a href="http://www.g200kg.com/" target="_blank">g200kg</a>
+  <br/><br/>
+
+	Using <a href="http://polymer-project.org/" target="_blank">Polymer</a> and <a href="http://www.w3.org/TR/components-intro/" target="_blank">WebComponents</a><br/><br/>
+	Knob/Switch images are from <a href="http://www.g200kg.com/en/webknobman/gallery.php" target="_blank">Knob Gallery</a><br/>
+	<a href="http://www.g200kg.com/en/webknobman/gallery.php?m=p&p=58" target="_blank">switch_toggle.knob</a> by az (c) 2011 <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC-BY</a>
+	</div>
+  </body>
+</html>
