@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>[Polymer] WebAudio Controls Test page</title>
+    <script src="js/polymer.min.js"></script>
+		<link rel="import" href="webcomponents/controls.html">
+    <style>
+    body {
+      font-family: sans-serif;
+    }
+    code {
+      color:#4c4;
+      font-family: sans-serif;
+      font-size:small;
+      font-weight:bold;
+    }
+    </style>
+  </head>
+  <body style="background-color:#eee">
+  <h1>WebAudio-Controls Test Page</h1>
+    <div style="background-color:#444;color:#eee;width:640px;margin:30px auto;padding:20px;overflow:hidden">
+      <h2>WebAudio-Knobs</h2>
+      <webaudio-knob></webaudio-knob><br/>
+      <code>&lt;webaudio-knob&gt;&lt;/webaudio-knob&gt;</code>
+      <div>Default webaudio-knob. If no knob-image is specified, simple embedded image resource is used.</div><br/><br/>
+
+      <webaudio-knob src="img/LittlePhatty.png" sprites="100" value="60" min="-100" max="100" step="20" diameter="64"></webaudio-knob><br/>
+      <code>&lt;webaudio-knob src="img/LittlePhatty.png" sprites="100" value="60" min="-100" max="100" step="20" diameter="64"&gt;&lt;webaudio-knob&gt;</code>
+      <div>Knob image file is assigned. Value range can be specified by min/max. The initial value is "60". The value is changed in step of "20".</div><br/><br/>
+
+      <webaudio-knob src="img/LittlePhatty.png" sprites="100" diameter="32"></webaudio-knob><br/>
+      <code>&lt;webaudio-knob src="img/LittlePhatty.png" sprites="100" diameter="32"&gt;&lt;webaudio-knob&gt;</code>
+      <div>The knob image will be resized to specified size (even recommended to prepare required size image for clear display)</div><br/><br/>
+
+      <webaudio-knob src="img/hsw5.png" sprites="4" value="2" min="0" max="4" width="128" height="32"></webaudio-knob><br/>
+      <code>&lt;webaudio-knob src="img/hsw5.png" sprites="4" value="2" min="0" max="4" width="128" height="32"&gt;&lt;webaudio-knob&gt;</code>
+      <div>non-square image is used with specifying width/height instead of diameter.</div><br/><br/>
+
+      <webaudio-knob id="knob1" src="img/LittlePhatty.png" sprites="100" diameter="64" valuetip="0"></webaudio-knob>
+      <webaudio-param link="knob1"></webaudio-param><br/>
+      <code>&lt;webaudio-knob id="knob1" src="img/LittlePhatty.png" sprites="100" diameter="64" valuetip="0"&gt;&lt;/webaudio-knob&gt;<br/>
+      &lt;webaudio-param link="knob1"&gt;&lt;/webaudio-param&gt;
+      </code>
+      <div>webaudio-knob can has editable parameter display field by webaudio-param</div><br/><br/>
+
+      <hr/>
+
+      <h2>WebAudio-Sliders</h2>
+      <webaudio-slider></webaudio-slider>
+      <webaudio-slider direction="horz"></webaudio-slider><br/>
+      <code>&lt;webaudio-slider&gt;&lt;/webaudio-slider&gt;<br/>&lt;webaudio-slider direction="horz"&gt;&lt;/webaudio-slider&gt;</code>
+      <div>Default webaudio-slider. If no slider-image is specified, simple embedded image resource is used.
+        The slider direction is specified by "direction" attribute.
+      </div><br/><br/>
+
+      <webaudio-slider direction="horz" src="img/hsliderbody.png" knobsrc="img/hsliderknob.png"></webaudio-slider><br/>
+      <code>&lt;webaudio-slider direction="horz" src="img/hsliderbody.png" knobsrc="img/hsliderknob.png"&gt;&lt;/webaudi-slider&gt;<br/></code>
+      <div>Specifying the sliderbase and sliderknob images.
+      </div><br/><br/>
+
+      <webaudio-slider id="slider1" direction="horz" src="img/hsliderbody.png" knobsrc="img/hsliderknob.png" min="0" max="1" step="0.1" width="60" height="20" valuetip="0"></webaudio-slider>
+      <webaudio-param link="slider1"></webaudio-param><br/>
+      <code>&lt;webaudio-slider id="slider1" direction="horz" src="img/hsliderbody.png" knobsrc="img/hsliderknob.png" min="0" max="1" step="0.1" width="60" height="20"&gt;&lt;/webaudio-slider&gt;<br/>
+      &lt;webaudio-param link="slider1"&gt;&lt;/webaudio-param&gt;</code>
+      <div>Value step is specified, resized and webaudio-param display is added.
+      </div><br/><br/>
+
+      <hr/>
+
+      <h2>WebAudio-Switches</h2>
+      <webaudio-switch></webaudio-switch><br/>
+      <code>&lt;webaudio-switch&gt;&lt;/webaudio-switch&gt;</code>
+      <div>Default webaudio-switch. If no switch-image is specified, simple embedded image resource is used.</div><br/><br/>
+
+      <webaudio-switch src="img/switch_toggle.png" width="32" height="32"></webaudio-switch><webaudio-switch src="img/switch_toggle.png" width="54" height="54"></webaudio-switch><br/>
+      <code>&lt;webaudio-switch src="img/switch_toggle.png" width="32" height="32"&gt;&lt;/webaudio-switch&gt;<br/>
+       &lt;webaudio-switch src="img/switch_toggle.png" width="54" height="54"&gt;&lt;/webaudio-switch&gt;</code>
+      <div>Image file is specified. Images are resized to specified size.</div><br/><br/>
+
+      <webaudio-switch src="img/switch_toggle.png" type="kick" width="54" height="54"></webaudio-switch><br/>
+      <code>&lt;webaudio-switch src="img/switch_toggle.png" type="kick" width="54" height="54"&gt;&lt;/webaudio-switch&gt;</code>
+      <div>Kick type switch. In this mode, this switch is on only while pressing.</div><br/><br/>
+
+      <webaudio-switch src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" value="1"></webaudio-switch>
+      <webaudio-switch src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54"></webaudio-switch>
+      <webaudio-switch src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54"></webaudio-switch><br/>
+      <code>
+        &lt;webaudio-switch src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" value="1"&gt;&lt;/webaudio-switch&gt;<br/>
+        &lt;webaudio-switch src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54"&gt;&lt;/webaudio-switch&bt;<br/>
+        &lt;webaudio-switch src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54"&gt;&lt;/webaudio-switch&gt;<br/>
+      </code>
+      <div>Radio type switch. In this mode, only one switch is on in the group.</div><br/><br/>
+
+  </div>
+<div>
+  WebAudio-Controls is based on <br/>
+    <a href="https://github.com/agektmr/webaudio-knob" target="_blank">WebAudio-Knob</a> by <a href="http://google.com/+agektmr" target="_blank">Eiji Kitamura</a><br/>
+    <a href="https://github.com/ryoyakawai/webaudio-slider" target="_blank">WebAudio-Slider</a> by <a href="https://plus.google.com/108242669191458983485/posts" target="_blank">Ryoya Kawai</a><br/>
+    <a href="http://aikelab.net/switch/" target="_blank">WebAudio-Switch</a> by <a href="http://d.hatena.ne.jp/aike/" target="_blank">Keisuke Ai</a><br/>
+   Integrated and enhanced by <a href="http://www.g200kg.com/" target="_blank">g200kg</a><br/><br/>
+<div>
+  <h2>Enhancement from webaudio-knob/slider/switch</h2>
+  <ul>
+    <li>Editable value display widget 'webaudio-param' is added that can link to other controls.</li>
+    <li>Support touch panel devices</li>
+    <li>Default knob/slider/switch image is embedded to use when no image is specified.</li>
+    <li>Image resizing to specified width/height.</li>
+    <li>Value changing in step of specified value by "step" attribute, independent from pointing device sensitivity.</li>
+    <li>WebAudio-Knob : Support non-square knob image when specified width/height instead of diameter.</li>
+    <li>WebAudio-Slider : Support horizontal slider by "direction" attribute.</li>
+    <li>WebAudio-Switch : 'Kick' and 'Radio' mode is added.</li>
+    <li>Common interface to Pointing devices
+      <ul>
+        <li>Shift + Drag : fine control (knob/slider).</li>
+        <li>Ctrl + Click : Reset to initial value.</li>
+      </ul>
+    </li>
+    <li>Common interface to Javascript
+      <ul>
+        <li>setValue() function to set value and redraw</li>
+        <li>Attributes 
+          <ul>
+            <li>width / height : widget size</li>
+            <li>value : current value. also used as an initial value.</li>
+            <li>step : value step for knob/slider. The value is always be rounded to multiple of "step".</li>
+            <li>enable : enable control by pointing devices (knob/slider/switch)</li>
+            <li>valuetip : display value-tip on the control (knob/slider)</li>
+            <li>sensitivity : sensitivity of the pointing device (knob/slider)</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h2>Attributes</h2>
+  <h3>webaudio-knob</h3>
+  <ul>
+    <li>src : url of the vertical stitched knob image.</li>
+    <li>value : the current value. also used as initial value of the control if specified.</li>
+    <li>defvalue : the default value that is used when ctrl+click. initial "value" is used instead if not specified.</li>
+    <li>min / max : min value and max value of the control.</li>
+    <li>step : value step of the control.</li>
+    <li>width / height : knob size.</li>
+    <li>diameter : knob size. this attribute can be used instead of width / height if the image is square.</li>
+    <Li>enable : enable the pointing device control.</li>
+    <li>sprites : frames of the stitched knob image. note that this number is (number of frames) -1.</li>
+    <li>sensitivity : pointing device sensitivity. default is 1 that means min-max range correspond to 128px.</li>
+    <li>valuetip : enable the overlayed value-tip display. 0 or 1 (default=1) </li>
+  </ul>
+</div>
+
+<h3>webaudio-slider</h3>
+  <ul>
+    <li>src : url of the slider base image.</li>
+    <li>knobsrc : url of the knob part image</li>
+    <li>value : the current value. also used as initial value of the control if specified.</li>
+    <li>defvalue : the default value that is used when ctrl+click. initial "value" is used instead if not specified.</li>
+    <li>min / max : min value and max value of the control.</li>
+    <li>step : value step of the control.</li>
+    <li>width / height : slider size.</li>
+    <li>knobwidth / knobheight : knob part size. in default, minimum of width and height.</li>
+    <li>ditchLength : knob movable length. Default is (height - knobheight) or (width - knobwidth) depends on direction.</li>
+    <li>direction : slider direction. 'vert' or 'horz'.</li>
+    <Li>enable : enable the pointing device control.</li>
+    <li>sensitivity : pointing device sensitivity. default is 1 that means min-max range correspond to ditchLength.</li>
+    <li>valuetip : enable the overlayed value-tip display. 0 or 1 (default=1) </li>
+  </ul>
+</div>
+
+<h3>webaudio-switch</h3>
+  <ul>
+    <li>src : url of the vertical stitched switch image.</li>
+    <li>value : the current value (0 or 1). also used as initial value of the control if specified.</li>
+    <li>defvalue : the default value that is used when ctrl+click. initial "value" is used instead if not specified.</li>
+    <li>width / height : switch size.</li>
+    <li>type : switch type. "toggle" (default) / "kick" or "radio".</li>
+    <li>group : used if the "type" is "radio". only one switch can be set to "1" in same group.</li>
+    <Li>enable : enable the pointing device control.</li>
+  </ul>
+</div>
+
+<h3>webaudio-param</h3>
+  <ul>
+    <li>src : url of the background image. black rectangle is assigned if no image is specified. transparent if set to 'null'.</li>
+    <li>value : the current value. usually same as linked control.</li>
+    <li>width / height : param display size.</li>
+    <li>fontsize : font size.</li>
+    <li>color : font color.</li>
+    <li>link : specify the linked webaudio-knob/slider/switch by Id.</li>
+  </ul>
+</div>
+
+	Using <a href="http://polymer-project.org/" target="_blank">Polymer</a> and <a href="http://www.w3.org/TR/components-intro/" target="_blank">WebComponents</a><br/><br/>
+	Knob/Switch images are from <a href="http://www.g200kg.com/en/webknobman/gallery.php" target="_blank">Knob Gallery</a><br/>
+	<a href="http://www.g200kg.com/en/webknobman/gallery.php?m=p&p=58" target="_blank">switch_toggle.knob</a> by <a href="http://bji.yukihotaru.com/" target="_blank">az</a> (c) 2011 <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC-BY</a>
+	</div>
+  </body>
+</html>
