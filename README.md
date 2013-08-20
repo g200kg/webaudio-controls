@@ -2,7 +2,7 @@
 
 GUI parts library for Web application using [Polymer] WebComponents
 
-[Live Demo](g200kg.github.com/webaudio-controls/index.html)  
+[Live Demo](http://g200kg.github.com/webaudio-controls/test.html)  
 ![](https://raw.github.com/g200kg/webaudio-controls/master/img/demo.png)
 
 ## How to use
