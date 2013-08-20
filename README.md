@@ -231,3 +231,13 @@ for (var i = 0; i < knobs.length; i++) {
 - Of course, you can create your own!
 
 **Note: comply with license requirements**
+
+## License
+WebAudio-Controls is developped based on:   
+- [WebAudio-Knob](https://github.com/agektmr/webaudio-knob) by [Eiji Kitamura](http://google.com/+agektmr)  
+- [WebAudio-Slider](https://github.com/ryoyakawai/webaudio-slider) by [Ryoya KAWAI](https://plus.google.com/108242669191458983485/posts)  
+- [WebAudio-Switch](http://aikelab.net/switch/) by [Keisuke Ai](http://d.hatena.ne.jp/aike/)   
+Integrated and enhanced by [g200kg](http://www.g200kg.com/)
+
+Copyright 2013 Eiji Kitamura / Ryoya KAWAI / Keisuke Ai / g200kg(Tatsuya Shinyagaito)
+Licensed under the Apache License, Version 2.0
