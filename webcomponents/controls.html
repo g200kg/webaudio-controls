@@ -27,8 +27,8 @@
 
 <polymer-element name="webaudio-knob" attributes="value defvalue min max step sprites diameter width height sensitivity valuetip src enable" on-mousedown="pointerdown" on-touchstart="pointerdown">
 	<template>
-		<div class="knob" id="knob" touch-action="none">
-			<span id="value-tip">{{valuedisp}}</span>
+		<div class="wac-knob" id="wac-knob" touch-action="none">
+			<span id="wac-value-tip">{{valuedisp}}</span>
 		</div>
 		<style>
 			@host {
@@ -36,7 +36,7 @@
 					display: inline-block;
 				}
 			}
-			#knob {
+			#wac-knob {
 				cursor: pointer;
 				width: 64px;
 				height: 64px;
@@ -44,7 +44,7 @@
 				background-position: 0px 0px;
 				position: relative;
 			}
-			#value-tip {
+			#wac-value-tip {
 				opacity: 0;
 				border: solid 1px #666;
 				background-color: #eee;
@@ -78,7 +78,7 @@
 
 			var cancel = function(e) {
 				this.startPosX = this.startPosY = null;
-				this.$['value-tip'].style.opacity = 0;
+				this.$['wac-value-tip'].style.opacity = 0;
 				window.removeEventListener('mousemove', this.boundPointermove, true);
 				window.removeEventListener('touchmove', this.boundPointermove, true);
 				window.removeEventListener('mouseup', this.boundCancel, true);
@@ -94,10 +94,10 @@
 					this.width = this.diameter;
 				if(this.height === null)
 					this.height = this.diameter;
-				this.$['knob'].style.width = this.width+'px';
-				this.$['knob'].style.height = this.height+'px';
-				this.$['knob'].style.background = 'url('+this.src+')';
-				this.$['knob'].style.backgroundSize = '100%'+((this.sprites+1)*100)+'%';
+				this.$['wac-knob'].style.width = this.width+'px';
+				this.$['wac-knob'].style.height = this.height+'px';
+				this.$['wac-knob'].style.background = 'url('+this.src+')';
+				this.$['wac-knob'].style.backgroundSize = '100%'+((this.sprites+1)*100)+'%';
 				if(this.step && this.step < 1) {
 					for(var n = this.step ; n < 1; n *= 10)
 						++this.digits;
@@ -135,7 +135,7 @@
 				}
 				else {
 					if(this.valuetip)
-						this.$['value-tip'].style.opacity = 1;
+						this.$['wac-value-tip'].style.opacity = 1;
 					this.startPosX = e.pageX;
 					this.startPosY = e.pageY;
 					this.startVal = this.value;
@@ -154,7 +154,7 @@
 				this.valuedisp = this.value.toFixed(this.digits);
 				var range = this.max - this.min;
 				var offset = ~~(this.sprites * (this.value - this.min) / range) * this.height;
-				this.$['knob'].style.backgroundPosition= "0px -" + offset + "px";
+				this.$['wac-knob'].style.backgroundPosition= "0px -" + offset + "px";
 			}
 		};
 	})());
@@ -164,9 +164,10 @@
 
 <polymer-element name="webaudio-slider" attributes="min max value defvalue step width height knobwidth knobheight ditchLength src knobsrc direction valuetip sensitivity enable" on-mousedown="pointerdown" on-touchstart="pointerdown">
 	<template>
-		<div class="base" id="base" touch-action="none">
-			<div class="knob" id="knob"></div>
-			<span id="value-tip">{{valuedisp}}</span>
+		<div class="wac-slibase" id="wac-slibase" touch-action="none">
+			<div class="wac-sliknob" id="wac-sliknob"></div>
+			<span id="wac-value-tip">{{valuedisp}}</span>
+			<input id="wac-text" type="text"/>
 		</div>
 		<style>
 			@host {
@@ -174,16 +175,19 @@
 					display: inline-block;
 				}
 			}
-			#base {
+			#wac-slibase {
 				background: #000000;
 				position: relative;
 			}
-			#knob {
+			#wac-sliknob {
 				cursor: pointer;
 				background: #ff0000;
 				position: relative;
 			}
-			#value-tip {
+			#wac-text {
+				display:none;
+			}
+			#wac-value-tip {
 				opacity: 0;
 				border: solid 1px #666;
 				background-color: #eee;
@@ -220,7 +224,7 @@
 			
 			var cancel = function(e) {
 				this.startPosX = this.startPosY = null;
-				this.$['value-tip'].style.opacity = 0;
+				this.$['wac-value-tip'].style.opacity = 0;
 				window.removeEventListener('mousemove', this.boundPointermove, true);
 				window.removeEventListener('touchmove', this.boundPointermove, true);
 				window.removeEventListener('mouseup', this.boundCancel, true);
@@ -242,23 +246,17 @@
 						this.knobheight = (this.direction == 'vert' ? this.width : this.height);
 					if(this.ditchLength == 0)
 						this.ditchLength = (this.direction =='vert' ? this.height - this.knobheight : this.width - this.knobwidth);
-					this.$['base'].style.width = this.width+'px';
-					this.$['base'].style.height = this.height+'px';
+					this.$['wac-slibase'].style.width = this.width+'px';
+					this.$['wac-slibase'].style.height = this.height+'px';
 					if(this.src)
-						this.$['base'].style.background = 'url('+this.src+')';
-					else {
-						if(this.direction == 'vert')
-							this.$['base'].style.background = 'url(img/defaultvslider.png)';
-						else
-							this.$['base'].style.background = 'url(img/defaulthslider.png)';
-					}
-					this.$['base'].style.backgroundSize = '100% 100%';
-					this.$['knob'].style.width = this.knobwidth+'px';
-					this.$['knob'].style.height = this.knobheight+'px';
-					this.$['knob'].style.background = 'url('+this.knobsrc+')';
-					this.$['knob'].style.left = this.width/2 - this.knobwidth/2 + "px";
-					this.$['knob'].style.top = this.height/2 - this.knobheight/2 + "px";
-					this.$['knob'].style.backgroundSize = '100% 100%';
+						this.$['wac-slibase'].style.background = 'url('+this.src+')';
+					this.$['wac-slibase'].style.backgroundSize = '100% 100%';
+					this.$['wac-sliknob'].style.width = this.knobwidth+'px';
+					this.$['wac-sliknob'].style.height = this.knobheight+'px';
+					this.$['wac-sliknob'].style.background = 'url('+this.knobsrc+')';
+					this.$['wac-sliknob'].style.left = this.width/2 - this.knobwidth/2 + "px";
+					this.$['wac-sliknob'].style.top = this.height/2 - this.knobheight/2 + "px";
+					this.$['wac-sliknob'].style.backgroundSize = '100% 100%';
 					if(this.step && this.step < 1) {
 						for(var n = this.step ; n < 1; n *= 10)
 							++this.digits;
@@ -298,7 +296,7 @@
 					}
 					else {
 						if(this.valuetip)
-							this.$['value-tip'].style.opacity = 1;
+							this.$['wac-value-tip'].style.opacity = 1;
 						this.startPosX = e.pageX;
 						this.startPosY = e.pageY;
 						this.startVal = this.value;
@@ -317,11 +315,11 @@
 					var range = Math.abs(this.min) + Math.abs(this.max);
 					if(this.direction == 'vert') {
 						var value = this.ditchLength+(this.height-this.ditchLength)/2 - this.value * (this.ditchLength/this.max);
-						this.$['knob'].style.top = value-this.knobheight/2 + "px";
+						this.$['wac-sliknob'].style.top = value-this.knobheight/2 + "px";
 					}
 					else {
 						var value = (this.width-this.ditchLength)/2 + this.value * (this.ditchLength/this.max);
-						this.$['knob'].style.left = value-this.knobwidth/2+"px";
+						this.$['wac-sliknob'].style.left = value-this.knobwidth/2+"px";
 					}
 					this.valuedisp = this.value.toFixed(this.digits);
 				}
@@ -330,40 +328,65 @@
 	</script>
 </polymer-element>
 
-<polymer-element name="webaudio-switch" attributes="value defvalue type width height src group enable" on-mousedown="pointerdown" on-touchstart="pointerdown">
+<polymer-element name="webaudio-switch" attributes="value defvalue type width height src group tooltip enable" on-mousedown="pointerdown" on-touchstart="pointerdown" on-mouseenter="pointerenter" on-mouseleave="pointerleave">
 	<template>
-		<div class="switch" id="switch">
-		</div>
+		<div class="wac-switch" id="wac-switch"></div>
+		<div id="wac-tool-tip">{{tooltip}}</div>
 		<style>
 			@host {
 				* {
 					display: inline-block;
 				}
 			}
-			#switch {
+			#wac-switch {
 				cursor: pointer;
 				width: 64px;
 				height: 64px;
 				background-position: -64px;
 				position: relative;
 			}
+			#wac-tool-tip {
+				display:none;
+				position:relative;
+				top:10px;
+				left:20px;
+				color:#000;
+				background:#fff;
+				border:1px solid #000;
+				padding:5px;
+				z-index:10;
+			}
 		</style>
 	</template>
 	<script>
 		Polymer('webaudio-switch', (function() {
 			var cancel = function(e) {
-				this.setValue(0);
-				window.removeEventListener('mouseup', this.boundCancel, true);
-				window.removeEventListener('touchend', this.boundCancel, true);
+				window.removeEventListener('mouseup', this.boundUp, true);
+				window.removeEventListener('touchend', this.boundUp, true);
 				window.removeEventListener('touchcancel', this.boundCancel, true);
+				this.press = 0;
+				this.setValue(0);
 			};
+			var up = function(e) {
+				window.removeEventListener('mouseup', this.boundUp, true);
+				window.removeEventListener('touchend', this.boundUp, true);
+				window.removeEventListener('touchcancel', this.boundCancel, true);
+				if(this.value)
+					this.fire('click');
+				this.press = 0;
+				this.setValue(0);
+			}
+			var showtip = function() {
+				if(this.tooltipstate)
+					this.$['wac-tool-tip'].style.display="block";
+			}
 			return {
 				ready: function() {
-					this.$['switch'].style.width = this.width+'px';
-					this.$['switch'].style.height = this.height+'px';
-					this.$['switch'].style.background = 'url('+this.src+')';
-					this.$['switch'].style.backgroundPosition = '0px -' + (this.value * this.height) + 'px';
-					this.$['switch'].style.backgroundSize = '100% 200%';
+					this.$['wac-switch'].style.width = this.width+'px';
+					this.$['wac-switch'].style.height = this.height+'px';
+					this.$['wac-switch'].style.background = 'url('+this.src+')';
+					this.$['wac-switch'].style.backgroundPosition = '0px -' + (this.value * this.height) + 'px';
+					this.$['wac-switch'].style.backgroundSize = '100% 200%';
 					if(this.defvalue === null)
 						this.defvalue = this.value;
 				},
@@ -375,15 +398,21 @@
 				src: 			'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAABACAYAAAB7jnWuAAADiklEQVR42u2YzUtUURjG1Rn8mEHEhV+DK3E3q0EGXAq5EkLETYG4cOlioJWI6NqWLUTnH3ARUpJJyRQVWYqEWSAlJmRBkn0gIqTFnLfnvb5XTuOdr3Pv0Fhz4bfwznif5/06c+4pKyuyywfqQBhEPSYsz/alE68BnWACvAekoVL+zhclz5wQjRqnyPmDeXDosbjOoWh0pmaiTtwdphH22sSEaJ5dYYe055oFladpuxxh3UA0w4NVDvVNdz/TM6LZDBSatAaURz2gsjzTOAPK8LOClcC0R4q3B8ijFLs2oAyaLB/jeWUgl1nPN4Di7wFluAT/O1PgZRNenAwolyug50txLmX4a0vx/zsFKiX9Kofdk3JrQHm4V3Q04GZTavI/5zalTtvyQuG4Lc/2YqIMdr1O2Uj7YpLp1Ux5tBRnfDUripfT0lU6HyidD1yM8wE/uATGQRzMgFHQJZ8V7HygFsQArNMJ+AGQSzoAX8EnsAaGQNDr84EQ2ARJpqKCyO+nJDj2+SwT38E++Ah2wCJoyZ7N3DIQkoeq8nKiYJAoFCJqazuloYF+BgJ0AFO2gXdgS0w0u92U1krklnh9PVEkQtTXRzQ4SNTbS9TRQaqxkY4qK88Z2AA3QcCNgZik3YqcxYeHiaamiOJxorExop4eKxPHyMJnmLRLYBtYBVdNDfil4ayac9o5chZPJIgWF4kmJ0/vtbfTEQzuwcCuZOCNGFgBc+enIzcD3dLt3HBWvTntHDmLz84SjYwQdXdTsrWVvlVVnUX/FrwGL8Az8BBETQyMy6glbQNcc047R87i/f1E4TCdoDf28Z1dMWBHzwaWQQIMmBiIy5zzqHG3c8NZNee0I3IW/4X7XxD9rlb7V2Bd6v8YLIFrJgZmZJFhEzxq3O1WJlBzTjtHzuIfUHsW35aJealF/0DGMWZiYFRWOF5keM551LjbueG45nratyX1du05+keSfvz00RUTA12yvO5r8KjtybilE1/Ran9XpiBiOoZrsrjo2MJ2zTc1cf7+U+n8e+A2mM5zDP/41RrSxHZShO2oN7S0L4s4N96CrISX3ayEQWmiLQ1deN1B/L4mfh1Uuz2iaRETG5qoLvxcazhO+x0RvwGavDofaJaHrmqiHPETiTohJm9pkTd5fT4QkB+WOU10SYTn5f601Ly6kOcDflnbB2SFi8mcR5y3ZKXzgdL5QOl8IOv1G6BBOS3D5b9NAAAAAElFTkSuQmCC',
 				enable:			1,
 				group:			'',
+				tooltip: 		'',
+				tooltipstate:	0,
+				press:			0, 
 				pointerdown: function(e) {
 					if(!this.enable)
 						return;
+					this.press = 1;
 					switch(this.type) {
 					case 'kick':
+						this.press = 1;
 						this.setValue(1);
 						this.boundCancel = cancel.bind(this);
-						window.addEventListener('mouseup', this.boundCancel, true);
-						window.addEventListener('touchend', this.boundCancel, true);
+						this.boundUp = up.bind(this);
+						window.addEventListener('mouseup', this.boundUp, true);
+						window.addEventListener('touchend', this.boundUp, true);
 						window.addEventListener('touchcancel', this.boundCancel, true);
 						this.fire('change');
 						break;
@@ -401,10 +430,25 @@
 					}
 					e.preventDefault();
 				},
+				pointerenter: function(e) {
+					if(this.tooltip) {
+						this.boundShowTip = showtip.bind(this);
+						setTimeout(this.boundShowTip,700);
+						this.tooltipstate = 1;
+					}
+					if(this.type=="kick"&&this.press)
+						this.setValue(1);
+				},
+				pointerleave: function(e) {
+					this.$['wac-tool-tip'].style.display = "none";
+					this.tooltipstate = 0;
+					if(this.type=="kick")
+						this.setValue(0);
+				},
 				setValue: function(value) {
 					this.value = parseInt(value);
 					this.valuedisp = this.value;
-					this.$['switch'].style.backgroundPosition = '0px -' + (this.value * this.height) + 'px';
+					this.$['wac-switch'].style.backgroundPosition = '0px -' + (this.value * this.height) + 'px';
 					var el = document.getElementsByTagName('webaudio-switch');
 					if(value == 1) {
 						for(var i = 0, j = el.length; i < j; ++i) {

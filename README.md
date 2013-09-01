@@ -24,186 +24,190 @@ GUI parts library for Web application using [Polymer] WebComponents
 webaudio-knob
 ---
 
-#### 'src'
+### 'src'
 **description**: url of the vertical stitched knob image.(relative from where you are refering)   
 **default**: internal embedded resource is used if no image-file is specified.
 
-#### 'value'
+### 'value'
 **description**: the current value.   also used as initial value of the control if specified.  
 **default**: `0`
 
-#### 'defvalue'
+### 'defvalue'
 **description**: the default value that is used when ctrl+click.  
 **default**: initial "value" is used instead if not specified.
 
-#### 'min'
+### 'min'
 **description**: min value of the knob  
 **default**: `0`
 
-#### 'max'
+### 'max'
 **description**: max value of the knob  
 **default**: `100`
 
-#### 'step'
+### 'step'
 **description**: value step of the control. value is always rounded to multiple of 'step'.  
 **default**: `1`
 
-#### 'width'
+### 'width'
 **description**: knob width.  
 **default**: `64`
 
-#### 'height'
+### 'height'
 **description**: knob height.  
 **default**: `64`
 
-#### 'diameter'
+### 'diameter'
 **description**: knob size. this attribute can be used instead of width / height if the image is square.  
 **default**: `64`
 
-#### 'sprites'
+### 'sprites'
 **description**: max frame number in the stitched knob-image. note that this is (number of frames) -1.  
 **default**: `30`
 
-#### 'sensitivity'  
+### 'sensitivity'  
 **description**: pointing device sensitivity.  
 **default**:  `1`  that means min-max range correspond to 128px.  
 
-#### 'valuetip'  
+### 'valuetip'  
 **description**: enable the overlayed value-tip display. 0 or 1  
 **default**: `1`
 
-#### 'enable'
+### 'enable'
 **description**: enable the pointing device control.  `0` for disable, `1` for enable.  
 **default**: `1`  
 
 webaudio-slider 
 ---
 
-#### 'src'
+### 'src'
 **description**: url of the slider background image.(relative from where you are refering)   
 **default**: internal embedded resource is used if no image-file is specified.
 
-#### 'knobsrc'
+### 'knobsrc'
 **description**: url of the slider-knob part image.(relative from where you are refering)
 **default**: internal embedded resource is used if no image-file is specified.
 
-#### 'value'
+### 'value'
 **description**: the current value.   also used as initial value of the control if specified.  
 **default**: `0`
 
-#### 'defvalue'
+### 'defvalue'
 **description**: the default value that is used when ctrl+click.  
 **default**: initial "value" is used instead if not specified.
 
-#### 'min'
+### 'min'
 **description**: min value of the slider  
 **default**: `0`
 
-#### 'max'
+### 'max'
 **description**: max value of the slider  
 **default**: `100`
 
-#### 'step'
+### 'step'
 **description**: value step of the control. value is always rounded to multiple of 'step'.  
 **default**: `1`
 
-#### 'width'
+### 'width'
 **description**: slider width.  
 **default**: `64`
 
-#### 'height'
+### 'height'
 **description**: slider height.  
 **default**: `64`
 
-#### 'knobwidth'
+### 'knobwidth'
 **description**: slider knob part width.
 **default**: same as 'width' if 'direction' is 'vert', or same as 'height' if the 'direction' is 'horz'.
 
-#### 'knobheight'
+### 'knobheight'
 **description**: slider knob part height.
 **default**: same as 'width' if 'direction' is 'vert', or same as 'height' if the 'direction' is 'horz'.
 
-#### 'ditchLength'  
+### 'ditchLength'  
 **description**: knob movable length.
 **default**: ('height' - 'knobheight') or ('width' - 'knobwidth') depends of 'direction.
 
-#### 'direction'  
+### 'direction'  
 **description**: slider direction. 'vert' or 'horz'.
 
-#### 'sensitivity'  
+### 'sensitivity'  
 **description**: pointing device sensitivity.  
 **default**:  `1`  that means min-max range correspond to 128px.  
 
-#### 'valuetip'  
+### 'valuetip'  
 **description**: enable the overlayed value-tip display. 0 or 1  
 **default**: `1`
 
-#### 'enable'
+### 'enable'
 **description**: enable the pointing device control.  `0` for disable, `1` for enable.  
 **default**: `1`  
 
 webaudio-switch
 ---
-#### 'src'  
+### 'src'  
 **description**: url of the vertical stitched switch image.  
 **default**: internal embedded resource is used if no image-file is specified.
 
-#### 'value'  
+### 'value'  
 **description**: the current value (`0` or `1`). also used as initial value of the control if specified.  
 **default**: `0`
 
-#### 'defvalue'
+### 'defvalue'
 **description**: the default value that is used when ctrl+click.   
 **default**: Initial "value" is used instead if not specified.  
 
-#### 'width'  
+### 'width'  
 **description**: switch width  
 **default**:  `32`
 
-#### 'height'
+### 'height'
 **description**: switch height  
 **default**: `32`
 
-#### 'type'  
-**description**: switch type. one of  "toggle" or "kick" or "radio".  
+### 'type'  
+**description**: switch type. one of  "toggle" or "kick" or "radio".  "toggle" switch has so-called 'checkbox' function, "radio" switch is a radio-button and the "kick" switch is a general command button.  
 **default**: `toggle`  
 
-#### 'group'
+### 'group'
 **description**: used if the 'type' is `radio`. only one switch can be set to `1` in same group.  
 **default**: `null`  
 
-#### 'enable'  
+### 'tooltip'
+**description**: tooltip text that will be shown when mouse hover a while.  
+**default**: `null`
+
+### 'enable'  
 **description**: enable the pointing device control.  
 **default**:  `1`  
 
 webaudio-param
 ---
-#### 'src'  
+### 'src'  
 **description**: url of the background image.  transparent if set to 'null'.  
 **default**: black rectangle is assigned if no image is specified.
 
-#### 'value'  
-**description**: the current value. usually same as linked control.
+### 'value'  
+**description**: the current value. usually same as linked control.  
 **default**: `0`  
 
-#### 'width'  
+### 'width'  
 **description**: param display width  
 **default**: `32`  
 
-#### 'height'
+### 'height'
 **description**: param display height  
 **default**: `16`
 
-#### 'fontsize'
-**description**: font size of the param-display
+### 'fontsize'
+**description**: font size of the param-display  
 **default**: `9`  
 
-#### 'color'  
+### 'color'  
 **description**: font color  
 **default**: `#ffffff`  
 
-#### 'link'  
-**description**: specify the linked webaudio-knob/slider/switch by Id.
+### 'link'  
+**description**: specify the linked webaudio-knob/slider/switch by Id.  
 **default**: `null`  
 
 ## Functions
@@ -212,7 +216,8 @@ webaudio-param
 
 ## Events
 ### 'change'
-**description**: 'change' event emitted everytime value changes
+**description**: 'change' event emitted everytime value changes.  
+Note: the addEventListener() function is recommended for event handler setup instead of 'onchange=' attribute. 'onchange=' attribute seems not work on Safari.
 
 ```
 var knobs = document.getElementsByTagName('webaudio-knob');
@@ -223,6 +228,9 @@ for (var i = 0; i < knobs.length; i++) {
   });
 }
 ```
+### 'click'
+**description**: 'click' event is emitted if the 'kick' type webaudio-switch has clicked.
+
 
 ## Creating knob images
 - Go to [WebKnobMan](http://www.g200kg.com/en/webknobman/gallery.php)
