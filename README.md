@@ -10,7 +10,7 @@ GUI parts library for Web application using [Polymer] WebComponents
 - load polymer.js
 - link to webaudio-knob component
 
-> &lt;script src="http://www.polymer-project.org/polymer-all/polymer/polymer.js"&gt;&lt;/script&gt;
+> &lt;script src="//cdnjs.cloudflare.com/ajax/libs/polymer/0.0.20130816/polymer.min.js"&gt;&lt;/script&gt;
 > &lt;link rel="import" href="https://raw.github.com/g200kg/webaudio-controls/master/components/controls.html"&gt;
 
 - insert `webaudio-knob/slider/switch` element
