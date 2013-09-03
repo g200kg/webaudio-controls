@@ -1,20 +1,20 @@
 <!--
 /* *
- * 
- *  WebAudio-Controls is based on 
+ *
+ *  WebAudio-Controls is based on
  *    webaudio-knob by Eiji Kitamura http://google.com/+agektmr
  *    webaudio-slider by RYoya Kawai https://plus.google.com/108242669191458983485/posts
  *    webaudio-switch by Keisuke Ai http://d.hatena.ne.jp/aike/
  *  Integrated and enhanced by g200kg http://www.g200kg.com/
- * 
+ *
  *	Copyright 2013 Eiji Kitamura / Ryoya KAWAI / Keisuke Ai / g200kg(Tatsuya Shinyagaito)
  *
  *	 Licensed under the Apache License, Version 2.0 (the "License");
  *	 you may not use this file except in compliance with the License.
  *	 You may obtain a copy of the License at
- *	 
+ *
  *	 http://www.apache.org/licenses/LICENSE-2.0
- *	 
+ *
  *	 Unless required by applicable law or agreed to in writing, software
  *	 distributed under the License is distributed on an "AS IS" BASIS,
  *	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -221,7 +221,7 @@
 				this.fire('change');
 				e.preventDefault();
 			};
-			
+
 			var cancel = function(e) {
 				this.startPosX = this.startPosY = null;
 				this.$['wac-value-tip'].style.opacity = 0;
@@ -231,7 +231,7 @@
 				window.removeEventListener('touchend', this.boundCancel, true);
 				window.removeEventListener('touchcancel', this.boundCancel, true);
 			};
-			
+
 			return {
 				ready: function() {
 					if(this.defvalue === null)
@@ -400,7 +400,7 @@
 				group:			'',
 				tooltip: 		'',
 				tooltipstate:	0,
-				press:			0, 
+				press:			0,
 				pointerdown: function(e) {
 					if(!this.enable)
 						return;
