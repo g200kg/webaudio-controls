@@ -15,8 +15,8 @@ webaudio-param | Editable value display field
 Chrome / Firefox / Safari / Opera / IE compatible  
 iOS and Android touch devices compatible  
 
-[Live Demo 1](http://g200kg.github.com/webaudio-controls/sample1.html)  
-[Live Demo 2](http://g200kg.github.com/webaudio-controls/sample2.html)  
+[Live Demo sample1](https://rawgithub.com/g200kg/webaudio-controls/master/sample1.html)  
+[Live Demo sample2](https://rawgithub.com/g200kg/webaudio-controls/master/sample2.html)  
 [Renoid : Practical application using webaudio-controls](http://www.g200kg.com/renoid/)    
 ![](https://raw.github.com/g200kg/webaudio-controls/master/img/demo.png)
 
