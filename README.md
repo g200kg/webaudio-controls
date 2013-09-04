@@ -1,13 +1,33 @@
 # webaudio-controls
 
 *WebAudioControls* is GUI parts library for Web application using [Polymer] WebComponents.  
-Especially suitable for audio-applications like VST plugins.
+Especially suitable for audio-applications like VST plugins.  
+
+*WebAudioControls* is consist of following components
+Component | Description 
+---|---
+webaudio-knob | Rotating knob
+webaudio-slider | Vertical or Horizontal slider
+webaudio-switch | Toggle/Kick/Radio switches
+webaudio-param | Editable value display field
+
+Chrome / Firefox / Safari / Opera / IE compatible  
+iOS and Android touch devices compatible  
 
 [Live Demo 1](http://g200kg.github.com/webaudio-controls/sample1.html)  
 [Live Demo 2](http://g200kg.github.com/webaudio-controls/sample2.html)  
 [Renoid : Practical application using webaudio-controls](http://www.g200kg.com/renoid/)    
 ![](https://raw.github.com/g200kg/webaudio-controls/master/img/demo.png)
 
+## To Operate  
+Operation | Component | Description
+---|---|---
+**Click** | Switch/Param | toggle / activate the switch or focus the param
+**Drag** | Knob/Slider | up/right to increase value / down/left to decrease value
+**Shift + Drag** | Knob/Slider | fine control
+**Ctrl + Click** | Knob/Slider/Switch | Set to default value
+**Edit with Keyboard** | Param | Edit the value directly
+---
 ## How to use
 
 - load polymer.js
@@ -17,7 +37,6 @@ Especially suitable for audio-applications like VST plugins.
 > &lt;link rel="import" href="https://raw.github.com/g200kg/webaudio-controls/master/components/controls.html" &gt;
 
 - insert `webaudio-knob/slider/switch/param` element
-
 > &lt;webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"&gt;&lt;/webaudio-knob&gt;  
 > &lt;webaudio-slider src="img/hsliderbody.png"&gt;&lt;/webaudio-slider&gt;  
 > &lt;webaudio-switch src="img/switch_toggle.png" width="32" height="32"&gt;&lt;/webaudio-switch&gt;  
