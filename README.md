@@ -3,7 +3,8 @@
 *WebAudioControls* is GUI parts library for Web application using [Polymer] WebComponents.  
 Especially suitable for audio-applications like VST plugins.  
 
-*WebAudioControls* is consist of following components
+*WebAudioControls* is consist of following components  
+
 Component | Description 
 ---|---
 webaudio-knob | Rotating knob
