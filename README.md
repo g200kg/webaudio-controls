@@ -1,223 +1,105 @@
 # webaudio-controls
 
-GUI parts library for Web application using [Polymer] WebComponents
+*WebAudioControls* is GUI parts library for Web application using [Polymer] WebComponents.  
+Especially suitable for audio-applications like VST plugins.
 
-[Sample 1](http://g200kg.github.com/webaudio-controls/sample1.html)
-[Sample 2](http://g200kg.github.com/webaudio-controls/sample2.html)
+[Live Demo 1](http://g200kg.github.com/webaudio-controls/sample1.html)  
+[Live Demo 2](http://g200kg.github.com/webaudio-controls/sample2.html)  
+[Renoid : Practical application using webaudio-controls](http://www.g200kg.com/renoid/)    
 ![](https://raw.github.com/g200kg/webaudio-controls/master/img/demo.png)
 
 ## How to use
+
 - load polymer.js
+> &lt;script src="//cdnjs.cloudflare.com/ajax/libs/polymer/0.0.20130816/polymer.min.js"&gt;&lt;/script&gt;  
+
 - link to webaudio-knob component
+> &lt;link rel="import" href="https://raw.github.com/g200kg/webaudio-controls/master/components/controls.html" &gt;
 
-> &lt;script src="//cdnjs.cloudflare.com/ajax/libs/polymer/0.0.20130816/polymer.min.js"&gt;&lt;/script&gt;
-> &lt;link rel="import" href="https://raw.github.com/g200kg/webaudio-controls/master/components/controls.html"&gt;
+- insert `webaudio-knob/slider/switch/param` element
 
-- insert `webaudio-knob/slider/switch` element
+> &lt;webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"&gt;&lt;/webaudio-knob&gt;  
+> &lt;webaudio-slider src="img/hsliderbody.png"&gt;&lt;/webaudio-slider&gt;  
+> &lt;webaudio-switch src="img/switch_toggle.png" width="32" height="32"&gt;&lt;/webaudio-switch&gt;  
+> &lt;webaudio-param src="" link="knob-1"&gt;&lt;/webaudio-param&gt;
 
-
-> &lt;webaudio-knob src="img/LIttlePhatty.png" sprites="100" min="0" max="100"&gt;&lt;/webaudio-knob&gt;
-> &lt;webaudio-slider src="img/hsliderbody.png"&gt;&lt;/webaudio-slider&gt;
-> &lt;webaudio-switch src="img/switch_toggle.png" width="32" height="32"&gt;&lt;/webaudio-switch&gt;
-
+---
 ## Attributes
-webaudio-knob
+
+###webaudio-knob
+
+Attribute  | Options      | Default          | Description
+---        | ---                  | ---                 | ---
+**src** | string | Internal embedded resource is used if not specified | url of the vertical stitched knob image
+**value** | float | `0` | The current value. Also used as initial value if specified
+**defvalue** | float | Initial 'value' is used if not specified | The default value that will be used when ctrl+click
+**min** | float | `0` | Minimum value of the knob
+**max** | float | `100` | Maximum value of the knob
+**step** | float | `1` | Value step of the control. The 'value' is always rounded to multiple of 'step'
+**width** | int | `64` | Knob display width in px
+**height** | int | `64` | Knob display height in px
+**diameter** | int | `64` | Knob display diameter in px. This attribute can be used instead of width / height if the display image is square
+**sprites** | int | `30` | Max frame number in the stitched knob image. Note that this is (number of frames) - 1
+**sensitivity** | float | `1` | Pointing device sensitivity. min-max range correspond to (128 / 'sensitivity') px
+**valuetip** | `0`,`1` | `1` | Enable the overlaid value-tip display.
+**enable** | `0`,`1` | `1` | Enable the pointing device control.
+
+###webaudio-slider
+
+Attribute  | Options      | Default          | Description
+---        | ---                  | ---                 | ---
+**src** | string | Internal embedded resource is used if not specified | url of the slider background image
+**knobsrc** | string | Internal embedded resouce is used if not specified | url of the slider knob part image
+**value** | float | `0` | The current value. Also used as initial value if specified
+**defvalue** | float | Initial 'value' is used if not specified | The default value that will be used when ctrl+click
+**min** | float | `0` | Minimum value of the slider
+**max** | float | `100` | Maximum value of the slider
+**step** | float | `1` | Value step of the control. The 'value' is always rounded to multiple of 'step'
+**width** | int | `24` | Slider display width in px
+**height** | int | `128` | Slider display height in px
+**knobwidth** | int | same as 'width' if 'direction' is `vert`, or same as 'height' if 'direction' is `horz` | Slider knob part width in px
+**knobheight** | int | same as 'width' if 'direction' is `vert`, or same as 'height' if 'direction' is `horz` | Slider knob part height in px
+**ditchLength** | int | ('height'-'knobheight') or ('width'-'knobwidth')  depends on 'direction' | Knob movable length
+**direction** | `"vert"`,`"horz"` | `"vert"` | Slider direction. vertical or horizontal
+**sensitivity** | float | `1` | Pointing device sensitivity. min-max range correspond to (128 / 'sensitivity') px
+**enable** | `0`, `1` | `1` | Enable the pointing device control. 
+
+###webaudio-switch
+
+Attribute  | Options      | Default          | Description
+---        | ---                  | ---                 | ---
+**src** | string | Internal embedded resource is used if not specified | url of the vertical stitched switch image
+**value** | `0`,`1` | `0` | The current value (`0` or `1`). Also used as initial value of the switch if specified
+**defvalue** | `0`,`1` | Initial 'value' is used if not specified | The default value that will be used when ctrl+click
+**width** | int | `32` | Switch display width in px
+**height** | int | `32` | Switch display height in px
+**type** | `"toggle"`,`"kick"`,`"radio"` | `"toggle"` | Switch type. `"toggle"` switch has so-called 'checkbox' function. `"radio"` switch is a radio-button and the `"kick"` switch is a general command button
+**group** | string | `null` | Group id string used if the 'type' is `"radio"`. Only one switch will be set to `"1"` in same group
+**tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
+**enable** | `0`,`1` | `1` | Enable the pointing device control
+
+###webaudio-param
+
+Attribute  | Options      | Default          | Description
+---        | ---                  | ---                 | ---
+**src** | string | Black rectangle if not specified | url of the background image. Transparent if set to `""`
+**value** | float | `0` | The current value. Usually same as linked control
+**width** | int | `32` | Parameter display width in px
+**height** | int | `16` | Parameter display height in px
+**fontsize** | int | `9` | Font-size of the parameter display
+**color** | string | `"#ffffff"` | Text color
+**link** | string | `null` | Specify the linked webaudio-knob/slider/switch by Id
+
 ---
-
-### 'src'
-**description**: url of the vertical stitched knob image.(relative from where you are refering)
-**default**: internal embedded resource is used if no image-file is specified.
-
-### 'value'
-**description**: the current value.   also used as initial value of the control if specified.
-**default**: `0`
-
-### 'defvalue'
-**description**: the default value that is used when ctrl+click.
-**default**: initial "value" is used instead if not specified.
-
-### 'min'
-**description**: min value of the knob
-**default**: `0`
-
-### 'max'
-**description**: max value of the knob
-**default**: `100`
-
-### 'step'
-**description**: value step of the control. value is always rounded to multiple of 'step'.
-**default**: `1`
-
-### 'width'
-**description**: knob width.
-**default**: `64`
-
-### 'height'
-**description**: knob height.
-**default**: `64`
-
-### 'diameter'
-**description**: knob size. this attribute can be used instead of width / height if the image is square.
-**default**: `64`
-
-### 'sprites'
-**description**: max frame number in the stitched knob-image. note that this is (number of frames) -1.
-**default**: `30`
-
-### 'sensitivity'
-**description**: pointing device sensitivity.
-**default**:  `1`  that means min-max range correspond to 128px.
-
-### 'valuetip'
-**description**: enable the overlayed value-tip display. 0 or 1
-**default**: `1`
-
-### 'enable'
-**description**: enable the pointing device control.  `0` for disable, `1` for enable.
-**default**: `1`
-
-webaudio-slider
----
-
-### 'src'
-**description**: url of the slider background image.(relative from where you are refering)
-**default**: internal embedded resource is used if no image-file is specified.
-
-### 'knobsrc'
-**description**: url of the slider-knob part image.(relative from where you are refering)
-**default**: internal embedded resource is used if no image-file is specified.
-
-### 'value'
-**description**: the current value.   also used as initial value of the control if specified.
-**default**: `0`
-
-### 'defvalue'
-**description**: the default value that is used when ctrl+click.
-**default**: initial "value" is used instead if not specified.
-
-### 'min'
-**description**: min value of the slider
-**default**: `0`
-
-### 'max'
-**description**: max value of the slider
-**default**: `100`
-
-### 'step'
-**description**: value step of the control. value is always rounded to multiple of 'step'.
-**default**: `1`
-
-### 'width'
-**description**: slider width.
-**default**: `64`
-
-### 'height'
-**description**: slider height.
-**default**: `64`
-
-### 'knobwidth'
-**description**: slider knob part width.
-**default**: same as 'width' if 'direction' is 'vert', or same as 'height' if the 'direction' is 'horz'.
-
-### 'knobheight'
-**description**: slider knob part height.
-**default**: same as 'width' if 'direction' is 'vert', or same as 'height' if the 'direction' is 'horz'.
-
-### 'ditchLength'
-**description**: knob movable length.
-**default**: ('height' - 'knobheight') or ('width' - 'knobwidth') depends of 'direction.
-
-### 'direction'
-**description**: slider direction. 'vert' or 'horz'.
-
-### 'sensitivity'
-**description**: pointing device sensitivity.
-**default**:  `1`  that means min-max range correspond to 128px.
-
-### 'valuetip'
-**description**: enable the overlayed value-tip display. 0 or 1
-**default**: `1`
-
-### 'enable'
-**description**: enable the pointing device control.  `0` for disable, `1` for enable.
-**default**: `1`
-
-webaudio-switch
----
-### 'src'
-**description**: url of the vertical stitched switch image.
-**default**: internal embedded resource is used if no image-file is specified.
-
-### 'value'
-**description**: the current value (`0` or `1`). also used as initial value of the control if specified.
-**default**: `0`
-
-### 'defvalue'
-**description**: the default value that is used when ctrl+click.
-**default**: Initial "value" is used instead if not specified.
-
-### 'width'
-**description**: switch width
-**default**:  `32`
-
-### 'height'
-**description**: switch height
-**default**: `32`
-
-### 'type'
-**description**: switch type. one of  "toggle" or "kick" or "radio".  "toggle" switch has so-called 'checkbox' function, "radio" switch is a radio-button and the "kick" switch is a general command button.
-**default**: `toggle`
-
-### 'group'
-**description**: used if the 'type' is `radio`. only one switch can be set to `1` in same group.
-**default**: `null`
-
-### 'tooltip'
-**description**: tooltip text that will be shown when mouse hover a while.
-**default**: `null`
-
-### 'enable'
-**description**: enable the pointing device control.
-**default**:  `1`
-
-webaudio-param
----
-### 'src'
-**description**: url of the background image.  transparent if set to 'null'.
-**default**: black rectangle is assigned if no image is specified.
-
-### 'value'
-**description**: the current value. usually same as linked control.
-**default**: `0`
-
-### 'width'
-**description**: param display width
-**default**: `32`
-
-### 'height'
-**description**: param display height
-**default**: `16`
-
-### 'fontsize'
-**description**: font size of the param-display
-**default**: `9`
-
-### 'color'
-**description**: font color
-**default**: `#ffffff`
-
-### 'link'
-**description**: specify the linked webaudio-knob/slider/switch by Id.
-**default**: `null`
-
 ## Functions
 ### setValue(value)
-**description**: webaudio-knob/webaudio-slider/webaudio-switch has a function `setValue(value)`. Each control can be setup by calling this function from JavaScript.
+**description**: webaudio-knob/webaudio-slider/webaudio-switch has a function `setValue(value)`. Each control can be setup and redraw by calling this function from JavaScript.
 
+---
 ## Events
 ### 'change'
-**description**: 'change' event emitted everytime value changes.
-Note: the addEventListener() function is recommended for event handler setup instead of 'onchange=' attribute. 'onchange=' attribute seems not work on Safari.
+**description**: 'change' event emitted everytime value changes.  
+**Note**: The addEventListener() function is recommended for event handler setup instead of 'onchange=' attribute. 'onchange=' attribute seems not work on Safari.
 
 ```
 var knobs = document.getElementsByTagName('webaudio-knob');
@@ -231,7 +113,7 @@ for (var i = 0; i < knobs.length; i++) {
 ### 'click'
 **description**: 'click' event is emitted if the 'kick' type webaudio-switch has clicked.
 
-
+---
 ## Creating knob images
 - Go to [WebKnobMan](http://www.g200kg.com/en/webknobman/gallery.php)
 - Find your favorite knob design and click 'Open with WebKnobMan'
@@ -240,12 +122,13 @@ for (var i = 0; i < knobs.length; i++) {
 
 **Note: comply with license requirements**
 
+---
 ## License
-WebAudio-Controls is developped based on:
-- [WebAudio-Knob](https://github.com/agektmr/webaudio-knob) by [Eiji Kitamura](http://google.com/+agektmr)
-- [WebAudio-Slider](https://github.com/ryoyakawai/webaudio-slider) by [Ryoya KAWAI](https://plus.google.com/108242669191458983485/posts)
-- [WebAudio-Switch](http://aikelab.net/switch/) by [Keisuke Ai](http://d.hatena.ne.jp/aike/)
+WebAudio-Controls is developped based on:  
+- [WebAudio-Knob](https://github.com/agektmr/webaudio-knob) by [Eiji Kitamura](http://google.com/+agektmr)  
+- [WebAudio-Slider](https://github.com/ryoyakawai/webaudio-slider) by [Ryoya KAWAI](https://plus.google.com/108242669191458983485/posts)  
+- [WebAudio-Switch](http://aikelab.net/switch/) by [Keisuke Ai](http://d.hatena.ne.jp/aike/)  
 Integrated and enhanced by [g200kg](http://www.g200kg.com/)
 
-Copyright 2013 Eiji Kitamura / Ryoya KAWAI / Keisuke Ai / g200kg(Tatsuya Shinyagaito)
+Copyright 2013 Eiji Kitamura / Ryoya KAWAI / Keisuke Ai / g200kg(Tatsuya Shinyagaito)  
 Licensed under the Apache License, Version 2.0
