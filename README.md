@@ -144,8 +144,10 @@ This knob example has only 5 frames but it should has more frames for smooth ani
 
 - [JKnobMan](http://www.g200kg.com/en/software/knobman.html) -- Java based Knob image creation tool.
 - [WebKnobMan](http://www.g200kg.com/en/webknobman/) -- WebApp version of the JknobMan
-- [KnobGallery](http://www.g200kg.com/en/webknobman/gallery.php) -- knob data sharing space  
+- [KnobGallery](http://www.g200kg.com/en/webknobman/gallery.php) -- knob data sharing space
+
 ---
+
 Here is a brief instruction  to export knob-image from KnobGallery
 
 - Go to [KnobGallery](http://www.g200kg.com/en/webknobman/gallery.php)
