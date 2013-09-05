@@ -7,7 +7,7 @@ Especially suitable for audio-applications like VST plugins.
 
 Component | Description 
 ---|---
-webaudio-knob | Rotating knob
+webaudio-knob | Rotating or some other frame-by-frame animation knob
 webaudio-slider | Vertical or Horizontal slider
 webaudio-switch | Toggle/Kick/Radio switches
 webaudio-param | Editable value display field
@@ -135,7 +135,20 @@ for (var i = 0; i < knobs.length; i++) {
 
 ---
 ## Creating knob images
-- Go to [WebKnobMan](http://www.g200kg.com/en/webknobman/gallery.php)
+
+webaudio-knob use a vertical 'stitched' multi-frame animation image, and webaudio-switch use a vertical 'stitched' two-frame animation image.
+For example,   
+<img src="https://raw.github.com/g200kg/webaudio-controls/master/img/LittlePhatty_sample.png" style="border:1px solid #00f"/>
+<img src="https://raw.github.com/g200kg/webaudio-controls/master/img/switch_toggle.png" style="border:1px solid #00f"/>  
+This knob example has only 5 frames but it should has more frames for smooth animation. I recommend to use JKnobMan/WebKnobMan for making these stitched images,
+
+- [JKnobMan](http://www.g200kg.com/en/software/knobman.html) -- Java based Knob image creation tool.
+- [WebKnobMan](http://www.g200kg.com/en/webknobman/) -- WebApp version of the JknobMan
+- [KnobGallery](http://www.g200kg.com/en/webknobman/gallery.php) -- knob data sharing space  
+---
+Here is a brief instruction  to export knob-image from KnobGallery
+
+- Go to [KnobGallery](http://www.g200kg.com/en/webknobman/gallery.php)
 - Find your favorite knob design and click 'Open with WebKnobMan'
 - Click on 'Export' to download `png` file
 - Of course, you can create your own!
