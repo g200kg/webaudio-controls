@@ -1,9 +1,9 @@
 # webaudio-controls
 
-*WebAudioControls* is GUI parts library for Web application using [Polymer] WebComponents.  
+**WebAudioControls** is GUI parts library for Web application using [Polymer] WebComponents.  
 Especially suitable for audio-applications like VST plugins.  
 
-*WebAudioControls* is consist of following components  
+**WebAudioControls** is consist of following components  
 
 Component | Description 
 ---|---
@@ -35,7 +35,7 @@ Operation | Component | Description
 > &lt;script src="//cdnjs.cloudflare.com/ajax/libs/polymer/0.0.20130816/polymer.min.js"&gt;&lt;/script&gt;  
 
 - link to webaudio-knob component
-> &lt;link rel="import" href="https://raw.github.com/g200kg/webaudio-controls/master/components/controls.html" &gt;
+> &lt;link rel="import" href="components/controls.html" &gt;
 
 - insert `webaudio-knob/slider/switch/param` element
 > &lt;webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"&gt;&lt;/webaudio-knob&gt;  
@@ -46,7 +46,7 @@ Operation | Component | Description
 ---
 ## Attributes
 
-###webaudio-knob
+### webaudio-knob
 
 Attribute  | Options      | Default          | Description
 ---        | ---                  | ---                 | ---
@@ -62,9 +62,10 @@ Attribute  | Options      | Default          | Description
 **sprites** | int | `30` | Max frame number in the stitched knob image. Note that this is (number of frames) - 1
 **sensitivity** | float | `1` | Pointing device sensitivity. min-max range correspond to (128 / 'sensitivity') px
 **valuetip** | `0`,`1` | `1` | Enable the overlaid value-tip display.
+**tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
 **enable** | `0`,`1` | `1` | Enable the pointing device control.
 
-###webaudio-slider
+### webaudio-slider
 
 Attribute  | Options      | Default          | Description
 ---        | ---                  | ---                 | ---
@@ -82,9 +83,11 @@ Attribute  | Options      | Default          | Description
 **ditchLength** | int | ('height'-'knobheight') or ('width'-'knobwidth')  depends on 'direction' | Knob movable length
 **direction** | `"vert"`,`"horz"` | `"vert"` | Slider direction. vertical or horizontal
 **sensitivity** | float | `1` | Pointing device sensitivity. min-max range correspond to (128 / 'sensitivity') px
+**valuetip** | `0`,`1` | `1` | Enable the overlaid value-tip display.
+**tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
 **enable** | `0`, `1` | `1` | Enable the pointing device control. 
 
-###webaudio-switch
+### webaudio-switch
 
 Attribute  | Options      | Default          | Description
 ---        | ---                  | ---                 | ---
@@ -98,7 +101,7 @@ Attribute  | Options      | Default          | Description
 **tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
 **enable** | `0`,`1` | `1` | Enable the pointing device control
 
-###webaudio-param
+### webaudio-param
 
 Attribute  | Options      | Default          | Description
 ---        | ---                  | ---                 | ---
@@ -136,10 +139,11 @@ for (var i = 0; i < knobs.length; i++) {
 ---
 ## Creating knob images
 
-webaudio-knob use a vertical 'stitched' multi-frame animation image, and webaudio-switch use a vertical 'stitched' two-frame animation image.
+webaudio-knob use a vertical 'stitched' multi-frames animation image, and webaudio-switch use a vertical 'stitched' two-frames animation image.
 For example,   
-<img src="https://raw.github.com/g200kg/webaudio-controls/master/img/LittlePhatty_sample.png" style="border:1px solid #00f"/>
-<img src="https://raw.github.com/g200kg/webaudio-controls/master/img/switch_toggle.png" style="border:1px solid #00f"/>  
+![](https://raw.github.com/g200kg/webaudio-controls/master/img/LittlePhatty_sample.png)
+![](https://raw.github.com/g200kg/webaudio-controls/master/img/switch_toggle.png)  
+
 This knob example has only 5 frames but it should has more frames for smooth animation. I recommend to use JKnobMan/WebKnobMan for making these stitched images,
 
 - [JKnobMan](http://www.g200kg.com/en/software/knobman.html) -- Java based Knob image creation tool.
