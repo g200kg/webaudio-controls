@@ -25,9 +25,10 @@
 -->
 
 
-<polymer-element name="webaudio-knob" attributes="value defvalue min max step sprites diameter width height sensitivity src valuetip tooltip enable" on-mousedown="pointerdown" on-touchstart="pointerdown" on-mouseover="pointerover" on-mouseout="pointerout">
+<polymer-element name="webaudio-knob" attributes="value defvalue min max step sprites diameter width height sensitivity src valuetip tooltip enable" on-mousedown="pointerdown" on-touchstart="pointerdown">
 	<template>
-		<div class="wac-knob" id="wac-knob" touch-action="none">
+		<div class="wac-body" id="wac-body" touch-action="none">
+			<div id="wac-knob" id="wac-knob"></div>
 			<span id="wac-value-tip">{{valuedisp}}</span>
 			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
@@ -39,42 +40,47 @@
 					font-size: 11px;
 				}
 			}
+			#wac-body {
+				position:relative;
+			}
 			#wac-knob {
 				cursor: pointer;
 				width: 64px;
 				height: 64px;
 				background-repeat: no-repeat;
 				background-position: 0px 0px;
-				position: relative;
 			}
 			#wac-value-tip {
+				position: absolute;
+				top: -20px;
+				right: 0;
+				z-index: 10;
+				display: none;
 				opacity: 0;
 				border: solid 1px #666;
 				background-color: #fff;
 				color: #000;
-				position: absolute;
-				top: 0;
-				right: 0;
 				border-radius: 4px;
 				padding: 3px 8px;
 				transition: opacity 0.3s;
 			}
 			#wac-tooltip-box {
 				position: absolute;
-				width: 200px;
 				bottom: -24px;
 				left: 20px;
 				z-index: 10;
-			}
-			#wac-tooltip-text {
 				display: none;
 				opacity: 0;
+				width: 200px;
+				transition: opacity 0.5s;
+			}
+			#wac-tooltip-text {
+				display: inline-block;
 				border: solid 0px #666;
 				background-color: #fff;
 				color: #000;
 				border-radius: 5px;
 				padding: 5px;
-				transition: opacity 0.5s;
 			}
 		</style>
 	</template>
@@ -95,9 +101,9 @@
 				e.preventDefault();
 			};
 			var cancel = function(e) {
-				this.press = 0;
+				this.press = this.vtflag = 0;
+				this.showtip();
 				this.startPosX = this.startPosY = null;
-				this.$['wac-value-tip'].style.opacity = 0;
 				window.removeEventListener('mousemove', this.boundPointermove, true);
 				window.removeEventListener('touchmove', this.boundPointermove, true);
 				window.removeEventListener('mouseup', this.boundCancel, true);
@@ -112,12 +118,15 @@
 					this.width = this.diameter;
 				if(this.height === null)
 					this.height = this.diameter;
-				this.addEventListener('DOMMouseScroll',this.wheel.bind(this),false);
-				this.addEventListener('mousewheel',this.wheel.bind(this),false);
-				this.$['wac-knob'].style.width = this.width+'px';
-				this.$['wac-knob'].style.height = this.height+'px';
-				this.$['wac-knob'].style.background = 'url('+this.src+')';
-				this.$['wac-knob'].style.backgroundSize = '100%'+((this.sprites+1)*100)+'%';
+				var knb = this.$['wac-knob'];
+				knb.addEventListener('DOMMouseScroll',this.wheel.bind(this),false);
+				knb.addEventListener('mousewheel',this.wheel.bind(this),false);
+				knb.addEventListener('mouseover',this.pointerover.bind(this),false);
+				knb.addEventListener('mouseout',this.pointerout.bind(this),false);
+				knb.style.width = this.width+'px';
+				knb.style.height = this.height+'px';
+				knb.style.background = 'url('+this.src+')';
+				knb.style.backgroundSize = '100%'+((this.sprites+1)*100)+'%';
 				if(this.step && this.step < 1) {
 					for(var n = this.step ; n < 1; n *= 10)
 						++this.digits;
@@ -145,7 +154,8 @@
 			sensitivity:1,
 			valuetip:   1,
 			press:		0,
-			hover:		0,
+			ttflag:		0,
+			vtflag:		0,
 			pointerdown: function(e) {
 				if(!this.enable)
 					return;
@@ -156,8 +166,6 @@
 					this.fire('change');
 				}
 				else {
-					if(this.valuetip)
-						this.$['wac-value-tip'].style.opacity = 0.8;
 					this.startPosX = e.pageX;
 					this.startPosY = e.pageY;
 					this.startVal = this.value;
@@ -169,17 +177,49 @@
 					window.addEventListener('touchend', this.boundCancel, true);
 					window.addEventListener('touchcancel', this.boundCancel, true);
 				}
-				this.press = 1;
-				this.showtooltip();
+				this.press = this.vtflag = 1;
+				this.ttflag = 0;
+				this.showtip();
 				e.preventDefault();
 			},
 			pointerover: function(e) {
-				this.hover = 1;
-				setTimeout(this.showtooltip.bind(this),700);
+				if(typeof(e.buttons)!="undefined")
+					var btn = e.buttons;
+				else
+					var btn = e.which;
+				if(btn==0)
+					this.ttflag = 1;
+				setTimeout(this.showtip.bind(this),700);
 			},
 			pointerout: function(e) {
-				this.hover = 0;
-				this.showtooltip();
+				this.ttflag = 0;
+				if(this.press==0)
+					this.vtflag = 0;
+				this.showtip();
+			},
+			showtip: function() {
+				var vs=this.$['wac-value-tip'].style;
+				var ts=this.$['wac-tooltip-box'].style;
+				if(this.valuetip && this.vtflag) {
+					if(this.vtim) {
+						clearTimeout(this.vtim);
+						this.vtim = null;
+					}
+					vs.display="block";
+					setTimeout(function(){this.opacity=0.8;}.bind(vs),50);
+				}
+				else if(vs.opacity) {
+					vs.opacity = 0;
+					this.vtim=setTimeout(function(){if(this.vtflag==0) this.$['wac-value-tip'].style.display="none";}.bind(this),500);
+				}
+				if(this.tooltip && this.ttflag) {
+					ts.display="block";
+					setTimeout(function(){this.opacity=0.8;}.bind(ts),100);
+				}
+				else if(ts.opacity) {
+					ts.opacity = 0;
+					setTimeout(function(){this.display="none";}.bind(ts),500);
+				}
 			},
 			wheel: function(e) {
 				var delta = 0;
@@ -195,18 +235,11 @@
 				if(Math.abs(delta) < this.step)
 					delta = (delta>0)?this.step:-this.step;
 				this.setValue(this.value+delta);
+				this.ttflag = 0;
+				this.vtflag = 1;
+				this.showtip();
 				this.fire('change');
 				e.preventDefault();
-			},
-			showtooltip: function() {
-				if(this.tooltip && this.hover && !this.press) {
-					this.$['wac-tooltip-text'].style.display = 'inline-block';
-					this.$['wac-tooltip-text'].style.opacity = 0.8;
-				}
-				else {
-					this.$['wac-tooltip-text'].style.display = 'none';
-					this.$['wac-tooltip-text'].style.opacity = 0;
-				}
 			},
 			setValue: function(value) {
 				this.value = value < this.min ? this.min : value > this.max ? this.max : value;
@@ -221,10 +254,12 @@
 </polymer-element>
 
 
-<polymer-element name="webaudio-slider" attributes="min max value defvalue step width height knobwidth knobheight ditchLength src knobsrc direction valuetip sensitivity tooltip enable" on-mousedown="pointerdown" on-touchstart="pointerdown" on-mouseover="pointerover" on-mouseout="pointerout">
+<polymer-element name="webaudio-slider" attributes="min max value defvalue step width height knobwidth knobheight ditchLength src knobsrc direction valuetip sensitivity tooltip enable" on-mousedown="pointerdown" on-touchstart="pointerdown">
 	<template>
-		<div class="wac-slibase" id="wac-slibase" touch-action="none">
-			<div class="wac-sliknob" id="wac-sliknob"></div>
+		<div class="wac-body" id="wac-body">
+			<div id="wac-slibase" touch-action="none">
+				<div id="wac-sliknob"></div>
+			</div>
 			<span id="wac-value-tip">{{valuedisp}}</span>
 			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
@@ -236,43 +271,49 @@
 					font-size: 11px;
 				}
 			}
+			#wac-body {
+				position: relative;
+			}
 			#wac-slibase {
+				cursor: pointer;
 				background: #000000;
 				position: relative;
 			}
 			#wac-sliknob {
-				cursor: pointer;
 				background: #ff0000;
 				position: relative;
 			}
 			#wac-value-tip {
+				position: absolute;
+				top: -20px;
+				right: 0;
+				z-index: 10;
+				display: none;
 				opacity: 0;
 				border: solid 1px #666;
 				background-color: #fff;
 				color: #000;
-				position: absolute;
-				top: 0;
-				right: 0;
-				border-radius: 3px;
+				border-radius: 4px;
 				padding: 3px 8px;
 				transition: opacity 0.3s;
 			}
 			#wac-tooltip-box {
 				position: absolute;
-				width: 200px;
 				bottom: -24px;
 				left: 20px;
 				z-index: 10;
-			}
-			#wac-tooltip-text {
 				display: none;
 				opacity: 0;
+				width: 200px;
+				transition: opacity 0.5s;
+			}
+			#wac-tooltip-text {
+				display: inline-block;
 				border: solid 0px #666;
 				background-color: #fff;
 				color: #000;
 				border-radius: 5px;
 				padding: 5px;
-				transition: opacity 0.5s;
 			}
 		</style>
 	</template>
@@ -296,9 +337,9 @@
 				e.preventDefault();
 			};
 			var cancel = function(e) {
-				this.press = 0;
+				this.press = this.vtflag = 0;
+				this.showtip();
 				this.startPosX = this.startPosY = null;
-				this.$['wac-value-tip'].style.opacity = 0;
 				window.removeEventListener('mousemove', this.boundPointermove, true);
 				window.removeEventListener('touchmove', this.boundPointermove, true);
 				window.removeEventListener('mouseup', this.boundCancel, true);
@@ -319,19 +360,23 @@
 					this.knobheight = (this.direction == 'vert' ? this.width : this.height);
 				if(this.ditchLength == 0)
 					this.ditchLength = (this.direction =='vert' ? this.height - this.knobheight : this.width - this.knobwidth);
-				this.addEventListener('DOMMouseScroll',this.wheel.bind(this),false);
-				this.addEventListener('mousewheel',this.wheel.bind(this),false);
-				this.$['wac-slibase'].style.width = this.width+'px';
-				this.$['wac-slibase'].style.height = this.height+'px';
+				var slib=this.$['wac-slibase'];
+				var slik=this.$['wac-sliknob'];
+				slib.addEventListener('DOMMouseScroll',this.wheel.bind(this),false);
+				slib.addEventListener('mousewheel',this.wheel.bind(this),false);
+				slib.addEventListener('mouseover',this.pointerover.bind(this),false);
+				slib.addEventListener('mouseout',this.pointerout.bind(this),false);
+				slib.style.width = this.width+'px';
+				slib.style.height = this.height+'px';
 				if(this.src)
-					this.$['wac-slibase'].style.background = 'url('+this.src+')';
-				this.$['wac-slibase'].style.backgroundSize = '100% 100%';
-				this.$['wac-sliknob'].style.width = this.knobwidth+'px';
-				this.$['wac-sliknob'].style.height = this.knobheight+'px';
-				this.$['wac-sliknob'].style.background = 'url('+this.knobsrc+')';
-				this.$['wac-sliknob'].style.left = this.width/2 - this.knobwidth/2 + "px";
-				this.$['wac-sliknob'].style.top = this.height/2 - this.knobheight/2 + "px";
-				this.$['wac-sliknob'].style.backgroundSize = '100% 100%';
+					slib.style.background = 'url('+this.src+')';
+				slib.style.backgroundSize = '100% 100%';
+				slik.style.width = this.knobwidth+'px';
+				slik.style.height = this.knobheight+'px';
+				slik.style.background = 'url('+this.knobsrc+')';
+				slik.style.left = this.width/2 - this.knobwidth/2 + "px";
+				slik.style.top = this.height/2 - this.knobheight/2 + "px";
+				slik.style.backgroundSize = '100% 100%';
 				if(this.step && this.step < 1) {
 					for(var n = this.step ; n < 1; n *= 10)
 						++this.digits;
@@ -361,7 +406,8 @@
 			digits:			0,
 			enable:			1,
 			press:			0,
-			hover:			0,
+			ttflag:			0,
+			vtflag:			0,
 			pointerdown: function(e) {
 				if(!this.enable)
 					return;
@@ -385,26 +431,46 @@
 					window.addEventListener('touchend', this.boundCancel, true);
 					window.addEventListener('touchcancel', this.boundCancel, true);
 				}
-				this.press = 1;
-				this.showtooltip();
+				this.press = this.vtflag = 1;
+				this.ttflag = 0;
+				this.showtip();
 				e.preventDefault();
 			},
 			pointerover: function(e) {
-				this.hover = 1;
-				setTimeout(this.showtooltip.bind(this),700);
+				if(typeof(e.buttons)!="undefined")
+					var btn = e.buttons;
+				else
+					var btn = e.which;
+				if(btn==0)
+					this.ttflag = 1;
+				setTimeout(this.showtip.bind(this),700);
 			},
 			pointerout: function(e) {
-				this.hover = 0;
-				this.showtooltip();
+				this.ttflag = 0;
+				if(this.press==0)
+					this.vtflag = 0;
+				this.showtip();
 			},
-			showtooltip: function() {
-				if(this.tooltip && this.hover && !this.press) {
-					this.$['wac-tooltip-text'].style.display = 'inline-block';
-					this.$['wac-tooltip-text'].style.opacity = 0.8;
+			showtip: function() {
+				var vs=this.$['wac-value-tip'].style;
+				var ts=this.$['wac-tooltip-box'].style;
+				if(this.valuetip && this.vtflag) {
+					if(this.vstim)
+						clearTimeout(this.vstim);
+					vs.display="block";
+					setTimeout(function(){this.opacity=0.8;}.bind(vs),50);
 				}
-				else {
-					this.$['wac-tooltip-text'].style.display = 'none';
-					this.$['wac-tooltip-text'].style.opacity = 0;
+				else if(vs.opacity) {
+					vs.opacity = 0;
+					this.vtim=setTimeout(function(){if(this.vtflag==0) this.$['wac-value-tip'].style.display="none";}.bind(this),500);
+				}
+				if(this.tooltip && this.ttflag) {
+					ts.display="block";
+					setTimeout(function(){this.opacity=0.8;}.bind(ts),100);
+				}
+				else if(ts.opacity) {
+					ts.opacity = 0;
+					setTimeout(function(){this.display="none";}.bind(ts),500);
 				}
 			},
 			wheel: function(e) {
@@ -421,6 +487,9 @@
 				if(Math.abs(delta) < this.step)
 					delta = (delta>0)?this.step:-this.step;
 				this.setValue(this.value+delta);
+				this.ttflag = 0;
+				this.vtflag = 1;
+				this.showtip();
 				this.fire('change');
 				e.preventDefault();
 			},
@@ -442,9 +511,10 @@
 	</script>
 </polymer-element>
 
-<polymer-element name="webaudio-switch" attributes="value defvalue type width height src group tooltip enable" on-mousedown="pointerdown" on-touchstart="pointerdown" on-mouseover="pointerover" on-mouseout="pointerout">
+<polymer-element name="webaudio-switch" attributes="value defvalue type width height src group tooltip enable" on-mousedown="pointerdown" on-touchstart="pointerdown">
 	<template>
-		<div class="wac-switch" id="wac-switch">
+		<div class="wac-body">
+			<div class="wac-switch" id="wac-switch"></div>
 			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
 		<style>
@@ -455,29 +525,32 @@
 					font-size: 11px;
 				}
 			}
+			#wc-body {
+				position: relative;
+			}
 			#wac-switch {
 				cursor: pointer;
 				width: 64px;
 				height: 64px;
 				background-position: -64px;
-				position: relative;
 			}
 			#wac-tooltip-box {
 				position: absolute;
-				width: 200px;
 				bottom: -24px;
 				left: 20px;
 				z-index: 10;
-			}
-			#wac-tooltip-text {
 				display: none;
 				opacity: 0;
+				width: 200px;
+				transition: opacity 0.5s;
+			}
+			#wac-tooltip-text {
+				display: inline-block;
 				border: solid 0px #666;
 				background-color: #fff;
 				color: #000;
 				border-radius: 5px;
 				padding: 5px;
-				transition: opacity 0.5s;
 			}
 		</style>
 	</template>
@@ -504,11 +577,14 @@
 			};
 			return {
 			ready: function() {
-				this.$['wac-switch'].style.width = this.width+'px';
-				this.$['wac-switch'].style.height = this.height+'px';
-				this.$['wac-switch'].style.background = 'url('+this.src+')';
-				this.$['wac-switch'].style.backgroundPosition = '0px -' + (this.value * this.height) + 'px';
-				this.$['wac-switch'].style.backgroundSize = '100% 200%';
+				var sw = this.$['wac-switch'];
+				sw.addEventListener('mouseover',this.pointerover.bind(this),false);
+				sw.addEventListener('mouseout',this.pointerout.bind(this),false);
+				sw.style.width = this.width+'px';
+				sw.style.height = this.height+'px';
+				sw.style.background = 'url('+this.src+')';
+				sw.style.backgroundPosition = '0px -' + (this.value * this.height) + 'px';
+				sw.style.backgroundSize = '100% 200%';
 				if(this.defvalue === null)
 					this.defvalue = this.value;
 			},
@@ -522,7 +598,7 @@
 			group:			'',
 			tooltip: 		'',
 			press:			0,
-			hover:			0,
+			ttflag:			0,
 			pointerdown: function(e) {
 				if(!this.enable)
 					return;
@@ -547,29 +623,34 @@
 				}
 				this.fire('change');
 				this.press = 1;
-				this.showtooltip();
+				this.ttflag = 0;
+				this.showtip();
 				e.preventDefault();
 			},
 			pointerover: function(e) {
-				this.hover = 1;
-				setTimeout(this.showtooltip.bind(this),700);
-				if(this.type=="kick"&&this.press)
-					this.setValue(1);
+				if(typeof(e.buttons)!="undefined")
+					var btn = e.buttons;
+				else
+					var btn = e.which;
+				if(btn==0)
+					this.ttflag = 1;
+				setTimeout(this.showtip.bind(this),700);
 			},
 			pointerout: function(e) {
-				this.hover = 0;
-				this.showtooltip();
-				if(this.type=="kick")
-					this.setValue(0);
+				this.ttflag = 0;
+				if(this.press==0)
+					this.vtflag = 0;
+				this.showtip();
 			},
-			showtooltip: function() {
-				if(this.tooltip && this.hover && !this.press) {
-					this.$['wac-tooltip-text'].style.display = 'inline-block';
-					this.$['wac-tooltip-text'].style.opacity = 0.8;
+			showtip: function() {
+				var ts=this.$['wac-tooltip-box'].style;
+				if(this.tooltip && this.ttflag) {
+					ts.display="block";
+					setTimeout(function(){this.opacity=0.8;}.bind(ts),100);
 				}
-				else {
-					this.$['wac-tooltip-text'].style.display = 'none';
-					this.$['wac-tooltip-text'].style.opacity = 0;
+				else if(ts.opacity) {
+					ts.opacity = 0;
+					setTimeout(function(){this.display="none";}.bind(ts),500);
 				}
 			},
 			setValue: function(value) {
