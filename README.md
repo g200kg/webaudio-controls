@@ -25,11 +25,11 @@ Operation | Component | Description
 ---|---|---
 **Click** | Switch/Param | toggle / activate the switch or focus the param
 **Drag** | Knob/Slider | up/right to increase value / down/left to decrease value
-**Shift + Drag** | Knob/Slider | fine control
-**Ctrl + Click** | Knob/Slider/Switch | set to default value
+**Shift+Drag** | Knob/Slider | fine control
+**Ctrl+Click / Command+Click(Mac)** | Knob/Slider/Switch | set to default value
 **Edit with Keyboard** | Param | edit the value directly
 **MouseWheel** | Knob/Slider | rotate upward to increase value / downward to decrease value
-**Shift + MouseWheel** | Knob/Slider | fine control
+**Shift+MouseWheel** | Knob/Slider | fine control
 
 ---
 ## How to use

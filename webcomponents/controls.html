@@ -28,7 +28,7 @@
 <polymer-element name="webaudio-knob" attributes="value defvalue min max step sprites diameter width height sensitivity src valuetip tooltip enable" on-mousedown="pointerdown" on-touchstart="pointerdown">
 	<template>
 		<div class="wac-body" id="wac-body" touch-action="none">
-			<div id="wac-knob" id="wac-knob"></div>
+			<div id="wac-knob" id="wac-knob" touch-action="none"></div>
 			<span id="wac-value-tip">{{valuedisp}}</span>
 			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
@@ -163,7 +163,7 @@
 					e = e.touches[0];
 				this.boundPointermove = pointermove.bind(this);
 				this.boundCancel = cancel.bind(this);
-				if(e.ctrlKey) {
+				if(e.ctrlKey || e.metaKey) {
 					this.setValue(parseFloat(this.defvalue));
 					this.fire('change');
 				}
@@ -415,7 +415,7 @@
 					e = e.touches[0];
 				this.boundPointermove = pointermove.bind(this);
 				this.boundCancel = cancel.bind(this);
-				if(e.ctrlKey) {
+				if(e.ctrlKey || e.metaKey) {
 					this.setValue(this.defvalue);
 					this.fire('change');
 				}
@@ -612,7 +612,7 @@
 					this.setValue(1);
 					break;
 				case 'toggle':
-					if(e.ctrlKey)
+					if(e.ctrlKey || e.metaKey)
 						this.setValue(this.defvalue);
 					else
 						this.setValue(1 - this.value);
