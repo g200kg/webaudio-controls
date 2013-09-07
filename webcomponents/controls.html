@@ -29,8 +29,8 @@
 	<template>
 		<div class="wac-knob" id="wac-knob" touch-action="none">
 			<span id="wac-value-tip">{{valuedisp}}</span>
-		</div>
 		<span id="wac-tool-tip">{{tooltip}}</span>
+		</div>
 		<style>
 			@host {
 				* {
@@ -60,13 +60,13 @@
 				transition: opacity 0.3s;
 			}
 			#wac-tool-tip {
-				display: inline-block;
+				display: none;
 				opacity: 0;
 				border: solid 0px #666;
 				background-color: #fff;
 				color: #000;
-				position: relative;
-				top: 10px;
+				position: absolute;
+				bottom: -24px;
 				left: 20px;
 				border-radius: 5px;
 				padding: 5px;
@@ -109,6 +109,8 @@
 					this.width = this.diameter;
 				if(this.height === null)
 					this.height = this.diameter;
+				this.addEventListener('DOMMouseScroll',this.wheel.bind(this),false);
+				this.addEventListener('mousewheel',this.wheel.bind(this),false);
 				this.$['wac-knob'].style.width = this.width+'px';
 				this.$['wac-knob'].style.height = this.height+'px';
 				this.$['wac-knob'].style.background = 'url('+this.src+')';
@@ -176,11 +178,32 @@
 				this.hover = 0;
 				this.showtooltip();
 			},
+			wheel: function(e) {
+				var delta = 0;
+				if(!e)
+					e = window.event;
+				if(e.wheelDelta)
+					delta = e.wheelDelta/120;
+				else if(e.detail)
+					delta = -e.detail/3;
+				if(e.shiftKey)
+					delta *= 0.2;
+				delta *= (this.max - this.min) * 0.05;
+				if(Math.abs(delta) < this.step)
+					delta = (delta>0)?this.step:-this.step;
+				this.setValue(this.value+delta);
+				this.fire('change');
+				e.preventDefault();
+			},
 			showtooltip: function() {
-				if(this.tooltip && this.hover && !this.press)
+				if(this.tooltip && this.hover && !this.press) {
+					this.$['wac-tool-tip'].style.display = 'inline-block';
 					this.$['wac-tool-tip'].style.opacity = 0.8;
-				else
+				}
+				else {
+					this.$['wac-tool-tip'].style.display = 'none';
 					this.$['wac-tool-tip'].style.opacity = 0;
+				}
 			},
 			setValue: function(value) {
 				this.value = value < this.min ? this.min : value > this.max ? this.max : value;
@@ -232,13 +255,13 @@
 				transition: opacity 0.3s;
 			}
 			#wac-tool-tip {
-				display: inline-block;
+				display: none;
 				opacity: 0;
 				border: solid 0px #666;
 				background-color: #fff;
 				color: #000;
-				position: relative;
-				top: 10px;
+				position: absolute;
+				bottom: -24px;
 				left: 20px;
 				border-radius: 5px;
 				padding: 5px;
@@ -290,6 +313,8 @@
 					this.knobheight = (this.direction == 'vert' ? this.width : this.height);
 				if(this.ditchLength == 0)
 					this.ditchLength = (this.direction =='vert' ? this.height - this.knobheight : this.width - this.knobwidth);
+				this.addEventListener('DOMMouseScroll',this.wheel.bind(this),false);
+				this.addEventListener('mousewheel',this.wheel.bind(this),false);
 				this.$['wac-slibase'].style.width = this.width+'px';
 				this.$['wac-slibase'].style.height = this.height+'px';
 				if(this.src)
@@ -367,10 +392,31 @@
 				this.showtooltip();
 			},
 			showtooltip: function() {
-				if(this.tooltip && this.hover && !this.press)
+				if(this.tooltip && this.hover && !this.press) {
+					this.$['wac-tool-tip'].style.display = 'inline-block';
 					this.$['wac-tool-tip'].style.opacity = 0.8;
-				else
+				}
+				else {
+					this.$['wac-tool-tip'].style.display = 'none';
 					this.$['wac-tool-tip'].style.opacity = 0;
+				}
+			},
+			wheel: function(e) {
+				var delta = 0;
+				if(!e)
+					e = window.event;
+				if(e.wheelDelta)
+					delta = e.wheelDelta/120;
+				else if(e.detail)
+					delta = -e.detail/3;
+				if(e.shiftKey)
+					delta *= 0.2;
+				delta *= (this.max - this.min) * 0.05;
+				if(Math.abs(delta) < this.step)
+					delta = (delta>0)?this.step:-this.step;
+				this.setValue(this.value+delta);
+				this.fire('change');
+				e.preventDefault();
 			},
 			setValue: function(value) {
 				this.value = value < this.min ? this.min : value > this.max ? this.max : value;
@@ -410,13 +456,13 @@
 				position: relative;
 			}
 			#wac-tool-tip {
-				display: inline-block;
+				display: none;
 				opacity: 0;
 				border: solid 0px #666;
 				background-color: #fff;
 				color: #000;
-				position: relative;
-				top: 10px;
+				position: absolute;
+				bottom: -24px;
 				left: 20px;
 				border-radius: 5px;
 				padding: 5px;
@@ -507,10 +553,14 @@
 					this.setValue(0);
 			},
 			showtooltip: function() {
-				if(this.tooltip && this.hover && !this.press)
+				if(this.tooltip && this.hover && !this.press) {
+					this.$['wac-tool-tip'].style.display = 'inline-block';
 					this.$['wac-tool-tip'].style.opacity = 0.8;
-				else
+				}
+				else {
+					this.$['wac-tool-tip'].style.display = 'none';
 					this.$['wac-tool-tip'].style.opacity = 0;
+				}
 			},
 			setValue: function(value) {
 				this.value = parseInt(value);
