@@ -161,6 +161,8 @@
 					return;
 				if(e.touches)
 					e = e.touches[0];
+				this.boundPointermove = pointermove.bind(this);
+				this.boundCancel = cancel.bind(this);
 				if(e.ctrlKey) {
 					this.setValue(parseFloat(this.defvalue));
 					this.fire('change');
@@ -169,14 +171,12 @@
 					this.startPosX = e.pageX;
 					this.startPosY = e.pageY;
 					this.startVal = this.value;
-					this.boundPointermove = pointermove.bind(this);
-					this.boundCancel = cancel.bind(this);
 					window.addEventListener('mousemove', this.boundPointermove, true);
 					window.addEventListener('touchmove', this.boundPointermove, true);
-					window.addEventListener('mouseup', this.boundCancel, true);
-					window.addEventListener('touchend', this.boundCancel, true);
-					window.addEventListener('touchcancel', this.boundCancel, true);
 				}
+				window.addEventListener('mouseup', this.boundCancel, true);
+				window.addEventListener('touchend', this.boundCancel, true);
+				window.addEventListener('touchcancel', this.boundCancel, true);
 				this.press = this.vtflag = 1;
 				this.ttflag = 0;
 				this.showtip();
@@ -413,6 +413,8 @@
 					return;
 				if(e.touches)
 					e = e.touches[0];
+				this.boundPointermove = pointermove.bind(this);
+				this.boundCancel = cancel.bind(this);
 				if(e.ctrlKey) {
 					this.setValue(this.defvalue);
 					this.fire('change');
@@ -423,14 +425,12 @@
 					this.startPosX = e.pageX;
 					this.startPosY = e.pageY;
 					this.startVal = this.value;
-					this.boundPointermove = pointermove.bind(this);
-					this.boundCancel = cancel.bind(this);
 					window.addEventListener('mousemove', this.boundPointermove, true);
 					window.addEventListener('touchmove', this.boundPointermove, true);
-					window.addEventListener('mouseup', this.boundCancel, true);
-					window.addEventListener('touchend', this.boundCancel, true);
-					window.addEventListener('touchcancel', this.boundCancel, true);
 				}
+				window.addEventListener('mouseup', this.boundCancel, true);
+				window.addEventListener('touchend', this.boundCancel, true);
+				window.addEventListener('touchcancel', this.boundCancel, true);
 				this.press = this.vtflag = 1;
 				this.ttflag = 0;
 				this.showtip();
