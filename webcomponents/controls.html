@@ -29,7 +29,7 @@
 	<template>
 		<div class="wac-knob" id="wac-knob" touch-action="none">
 			<span id="wac-value-tip">{{valuedisp}}</span>
-		<span id="wac-tool-tip">{{tooltip}}</span>
+			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
 		<style>
 			@host {
@@ -59,18 +59,21 @@
 				padding: 3px 8px;
 				transition: opacity 0.3s;
 			}
-			#wac-tool-tip {
+			#wac-tooltip-box {
+				position: absolute;
+				width: 200px;
+				bottom: -24px;
+				left: 20px;
+				z-index: 10;
+			}
+			#wac-tooltip-text {
 				display: none;
 				opacity: 0;
 				border: solid 0px #666;
 				background-color: #fff;
 				color: #000;
-				position: absolute;
-				bottom: -24px;
-				left: 20px;
 				border-radius: 5px;
 				padding: 5px;
-				z-index: 10;
 				transition: opacity 0.5s;
 			}
 		</style>
@@ -197,12 +200,12 @@
 			},
 			showtooltip: function() {
 				if(this.tooltip && this.hover && !this.press) {
-					this.$['wac-tool-tip'].style.display = 'inline-block';
-					this.$['wac-tool-tip'].style.opacity = 0.8;
+					this.$['wac-tooltip-text'].style.display = 'inline-block';
+					this.$['wac-tooltip-text'].style.opacity = 0.8;
 				}
 				else {
-					this.$['wac-tool-tip'].style.display = 'none';
-					this.$['wac-tool-tip'].style.opacity = 0;
+					this.$['wac-tooltip-text'].style.display = 'none';
+					this.$['wac-tooltip-text'].style.opacity = 0;
 				}
 			},
 			setValue: function(value) {
@@ -223,8 +226,8 @@
 		<div class="wac-slibase" id="wac-slibase" touch-action="none">
 			<div class="wac-sliknob" id="wac-sliknob"></div>
 			<span id="wac-value-tip">{{valuedisp}}</span>
+			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
-		<span id="wac-tool-tip">{{tooltip}}</span>
 		<style>
 			@host {
 				* {
@@ -254,18 +257,21 @@
 				padding: 3px 8px;
 				transition: opacity 0.3s;
 			}
-			#wac-tool-tip {
+			#wac-tooltip-box {
+				position: absolute;
+				width: 200px;
+				bottom: -24px;
+				left: 20px;
+				z-index: 10;
+			}
+			#wac-tooltip-text {
 				display: none;
 				opacity: 0;
 				border: solid 0px #666;
 				background-color: #fff;
 				color: #000;
-				position: absolute;
-				bottom: -24px;
-				left: 20px;
 				border-radius: 5px;
 				padding: 5px;
-				z-index: 10;
 				transition: opacity 0.5s;
 			}
 		</style>
@@ -393,12 +399,12 @@
 			},
 			showtooltip: function() {
 				if(this.tooltip && this.hover && !this.press) {
-					this.$['wac-tool-tip'].style.display = 'inline-block';
-					this.$['wac-tool-tip'].style.opacity = 0.8;
+					this.$['wac-tooltip-text'].style.display = 'inline-block';
+					this.$['wac-tooltip-text'].style.opacity = 0.8;
 				}
 				else {
-					this.$['wac-tool-tip'].style.display = 'none';
-					this.$['wac-tool-tip'].style.opacity = 0;
+					this.$['wac-tooltip-text'].style.display = 'none';
+					this.$['wac-tooltip-text'].style.opacity = 0;
 				}
 			},
 			wheel: function(e) {
@@ -438,8 +444,9 @@
 
 <polymer-element name="webaudio-switch" attributes="value defvalue type width height src group tooltip enable" on-mousedown="pointerdown" on-touchstart="pointerdown" on-mouseover="pointerover" on-mouseout="pointerout">
 	<template>
-		<div class="wac-switch" id="wac-switch"></div>
-		<span id="wac-tool-tip">{{tooltip}}</span>
+		<div class="wac-switch" id="wac-switch">
+			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
+		</div>
 		<style>
 			@host {
 				* {
@@ -455,18 +462,21 @@
 				background-position: -64px;
 				position: relative;
 			}
-			#wac-tool-tip {
+			#wac-tooltip-box {
+				position: absolute;
+				width: 200px;
+				bottom: -24px;
+				left: 20px;
+				z-index: 10;
+			}
+			#wac-tooltip-text {
 				display: none;
 				opacity: 0;
 				border: solid 0px #666;
 				background-color: #fff;
 				color: #000;
-				position: absolute;
-				bottom: -24px;
-				left: 20px;
 				border-radius: 5px;
 				padding: 5px;
-				z-index: 10;
 				transition: opacity 0.5s;
 			}
 		</style>
@@ -554,12 +564,12 @@
 			},
 			showtooltip: function() {
 				if(this.tooltip && this.hover && !this.press) {
-					this.$['wac-tool-tip'].style.display = 'inline-block';
-					this.$['wac-tool-tip'].style.opacity = 0.8;
+					this.$['wac-tooltip-text'].style.display = 'inline-block';
+					this.$['wac-tooltip-text'].style.opacity = 0.8;
 				}
 				else {
-					this.$['wac-tool-tip'].style.display = 'none';
-					this.$['wac-tool-tip'].style.opacity = 0;
+					this.$['wac-tooltip-text'].style.display = 'none';
+					this.$['wac-tooltip-text'].style.opacity = 0;
 				}
 			},
 			setValue: function(value) {
