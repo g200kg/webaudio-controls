@@ -569,17 +569,20 @@
 				window.removeEventListener('touchend', this.boundUp, true);
 				window.removeEventListener('touchcancel', this.boundCancel, true);
 				if(this.type=="kick") {
-					this.setValue(0);
 					if(this.value)
 						this.fire('click');
+					this.setValue(0);
 				}
 				this.press = 0;
+				e.preventDefault();
+				return false;
 			};
 			return {
 			ready: function() {
 				var sw = this.$['wac-switch'];
 				sw.addEventListener('mouseover',this.pointerover.bind(this),false);
 				sw.addEventListener('mouseout',this.pointerout.bind(this),false);
+				sw.addEventListener('click',this.click.bind(this),false);
 				sw.style.width = this.width+'px';
 				sw.style.height = this.height+'px';
 				sw.style.background = 'url('+this.src+')';
@@ -598,6 +601,7 @@
 			group:			'',
 			tooltip: 		'',
 			press:			0,
+			hover:			0,
 			ttflag:			0,
 			pointerdown: function(e) {
 				if(!this.enable)
@@ -635,12 +639,18 @@
 				if(btn==0)
 					this.ttflag = 1;
 				setTimeout(this.showtip.bind(this),700);
+				this.hover = 1;
+				if(this.type=="kick"&&this.press)
+					this.setValue(1);
 			},
 			pointerout: function(e) {
 				this.ttflag = 0;
 				if(this.press==0)
 					this.vtflag = 0;
 				this.showtip();
+				this.hover = 0;
+				if(this.type=="kick")
+					this.setValue(0);
 			},
 			showtip: function() {
 				var ts=this.$['wac-tooltip-box'].style;
@@ -652,6 +662,11 @@
 					ts.opacity = 0;
 					setTimeout(function(){this.display="none";}.bind(ts),500);
 				}
+			},
+			click: function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				return false;
 			},
 			setValue: function(value) {
 				this.value = parseInt(value);
