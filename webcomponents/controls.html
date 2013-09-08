@@ -96,8 +96,8 @@
 					this.startVal = this.value;
 				}
 				var offset = (this.startPosY - e.pageY - this.startPosX + e.pageX) * this.sensitivity;
-				this.setValue(this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4:1) * 128)) - this.min) / this.step)|0) * this.step);
-				this.fire('change');
+				if(this.setValue(this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4:1) * 128)) - this.min) / this.step)|0) * this.step))
+					this.fire('change');
 				e.preventDefault();
 			};
 			var cancel = function(e) {
@@ -135,6 +135,7 @@
 				this.fire('change');
 			},
 			value:      0,
+			valueold:	0,
 			valuedisp:	"0",
 			defvalue:   null,
 			offset:     0,
@@ -164,8 +165,8 @@
 				this.boundPointermove = pointermove.bind(this);
 				this.boundCancel = cancel.bind(this);
 				if(e.ctrlKey || e.metaKey) {
-					this.setValue(parseFloat(this.defvalue));
-					this.fire('change');
+					if(this.setValue(parseFloat(this.defvalue)))
+						this.fire('change');
 				}
 				else {
 					this.startPosX = e.pageX;
@@ -234,19 +235,27 @@
 				delta *= (this.max - this.min) * 0.05;
 				if(Math.abs(delta) < this.step)
 					delta = (delta>0)?this.step:-this.step;
-				this.setValue(this.value+delta);
+				if(this.setValue(this.value+delta))
+					this.fire('change');
 				this.ttflag = 0;
 				this.vtflag = 1;
 				this.showtip();
-				this.fire('change');
 				e.preventDefault();
 			},
 			setValue: function(value) {
-				this.value = value < this.min ? this.min : value > this.max ? this.max : value;
-				this.valuedisp = this.value.toFixed(this.digits);
-				var range = this.max - this.min;
-				var offset = ~~(this.sprites * (this.value - this.min) / range) * this.height;
-				this.$['wac-knob'].style.backgroundPosition= "0px -" + offset + "px";
+				value = parseFloat(value);
+				if(!isNaN(value)) {
+					this.value = value < this.min ? this.min : value > this.max ? this.max : value;
+					this.valuedisp = this.value.toFixed(this.digits);
+					var range = this.max - this.min;
+					var offset = ~~(this.sprites * (this.value - this.min) / range) * this.height;
+					this.$['wac-knob'].style.backgroundPosition= "0px -" + offset + "px";
+				}
+				if(this.value!=this.valueold) {
+					this.valueold = this.value;
+					return 1;
+				}
+				return 0;
 			}
 		};
 	})());
@@ -332,8 +341,8 @@
 					var offset = (this.startPosY - e.pageY) / this.ditchLength;
 				else
 					var offset = (e.pageX - this.startPosX) / this.ditchLength;
-				this.setValue(this.min + ((((this.startVal + (this.max - this.min) * offset * this.sensitivity / ((e.shiftKey ? 4:1))) - this.min) / this.step)|0) * this.step);
-				this.fire('change');
+				if(this.setValue(this.min + ((((this.startVal + (this.max - this.min) * offset * this.sensitivity / ((e.shiftKey ? 4:1))) - this.min) / this.step)|0) * this.step))
+					this.fire('change');
 				e.preventDefault();
 			};
 			var cancel = function(e) {
@@ -387,6 +396,7 @@
 			min:			0,
 			max:			100,
 			value:			0,
+			valueold:		0,
 			valuedisp:		"0",
 			defvalue:		null,
 			step:			1,
@@ -416,8 +426,8 @@
 				this.boundPointermove = pointermove.bind(this);
 				this.boundCancel = cancel.bind(this);
 				if(e.ctrlKey || e.metaKey) {
-					this.setValue(this.defvalue);
-					this.fire('change');
+					if(this.setValue(this.defvalue))
+						this.fire('change');
 				}
 				else {
 					if(this.valuetip)
@@ -486,25 +496,33 @@
 				delta *= (this.max - this.min) * 0.05;
 				if(Math.abs(delta) < this.step)
 					delta = (delta>0)?this.step:-this.step;
-				this.setValue(this.value+delta);
+				if(this.setValue(this.value+delta))
+					this.fire('change');
 				this.ttflag = 0;
 				this.vtflag = 1;
 				this.showtip();
-				this.fire('change');
 				e.preventDefault();
 			},
 			setValue: function(value) {
-				this.value = value < this.min ? this.min : value > this.max ? this.max : value;
-				var range = Math.abs(this.min) + Math.abs(this.max);
-				if(this.direction == 'vert') {
-					var value = this.ditchLength+(this.height-this.ditchLength)/2 - this.value * (this.ditchLength/this.max);
-					this.$['wac-sliknob'].style.top = value-this.knobheight/2 + "px";
+				value = parseFloat(value);
+				if(!isNaN(value)) {
+					this.value = value < this.min ? this.min : value > this.max ? this.max : value;
+					var range = Math.abs(this.min) + Math.abs(this.max);
+					if(this.direction == 'vert') {
+						var value = this.ditchLength+(this.height-this.ditchLength)/2 - this.value * (this.ditchLength/this.max);
+						this.$['wac-sliknob'].style.top = value-this.knobheight/2 + "px";
+					}
+					else {
+						var value = (this.width-this.ditchLength)/2 + this.value * (this.ditchLength/this.max);
+						this.$['wac-sliknob'].style.left = value-this.knobwidth/2+"px";
+					}
+					this.valuedisp = this.value.toFixed(this.digits);
+					if(this.value!=this.valueold) {
+						this.valueold=this.value;
+						return 1;
+					}
 				}
-				else {
-					var value = (this.width-this.ditchLength)/2 + this.value * (this.ditchLength/this.max);
-					this.$['wac-sliknob'].style.left = value-this.knobwidth/2+"px";
-				}
-				this.valuedisp = this.value.toFixed(this.digits);
+				return 0;
 			}
 		};
 	})());
@@ -569,9 +587,11 @@
 				window.removeEventListener('touchend', this.boundUp, true);
 				window.removeEventListener('touchcancel', this.boundCancel, true);
 				if(this.type=="kick") {
-					if(this.value)
-						this.fire('click');
-					this.setValue(0);
+					if(this.setValue(0)) {
+						this.fire('change');
+						if(this.value==0)
+							this.fire('click');
+					}
 				}
 				this.press = 0;
 				e.preventDefault();
@@ -592,6 +612,7 @@
 					this.defvalue = this.value;
 			},
 			value:			0,
+			valueold: 		0, 
 			defvalue:		null,
 			type:			'toggle',
 			width:			24,
@@ -611,21 +632,23 @@
 				window.addEventListener('mouseup', this.boundUp, true);
 				window.addEventListener('touchend', this.boundUp, true);
 				window.addEventListener('touchcancel', this.boundCancel, true);
+				var m=0;
 				switch(this.type) {
 				case 'kick':
-					this.setValue(1);
+					m=this.setValue(1);
 					break;
 				case 'toggle':
 					if(e.ctrlKey || e.metaKey)
-						this.setValue(this.defvalue);
+						m=this.setValue(this.defvalue);
 					else
-						this.setValue(1 - this.value);
+						m=this.setValue(1 - this.value);
 					break;
 				case 'radio':
-					this.setValue(1);
+					m=this.setValue(1);
 					break;
 				}
-				this.fire('change');
+				if(m)
+					this.fire('change');
 				this.press = 1;
 				this.ttflag = 0;
 				this.showtip();
@@ -641,7 +664,8 @@
 				setTimeout(this.showtip.bind(this),700);
 				this.hover = 1;
 				if(this.type=="kick"&&this.press)
-					this.setValue(1);
+					if(this.setValue(1))
+						this.fire('change');
 			},
 			pointerout: function(e) {
 				this.ttflag = 0;
@@ -650,7 +674,8 @@
 				this.showtip();
 				this.hover = 0;
 				if(this.type=="kick")
-					this.setValue(0);
+					if(this.setValue(0))
+						this.fire('change');
 			},
 			showtip: function() {
 				var ts=this.$['wac-tooltip-box'].style;
@@ -679,6 +704,11 @@
 							el[i].setValue(0);
 					}
 				}
+				if(this.value!=this.valueold) {
+					this.valueold = this.value;
+					return 1;
+				}
+				return 0;
 			}
 		};
 	})());
@@ -718,7 +748,12 @@
 					this.$['param'].value = f(e.value);
 			};
 			var edit = function(e) {
-				document.getElementById(this.link).setValue(parseFloat(this.$['param'].value));
+				var target=document.getElementById(this.link);
+				if(target) {
+					target.setValue(parseFloat(this.$['param'].value));
+					target.fire('change');
+					console.log(target.value);
+				}
 			}
 			return {
 				ready: function() {

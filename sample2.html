@@ -33,7 +33,7 @@ function Init() {
   window.addEventListener('scroll',Scroll);
 }
 function LogChange(e) {
-  var str="change:"+e.target.id;
+  var str="change: id="+e.target.id+" value:"+e.target.value;
   document.getElementById("cons").innerHTML += (str+"<br/>");
   console.log(str);
 }
@@ -43,7 +43,6 @@ function LogClick(e) {
   console.log(str);
 }
 function Scroll() {
-  console.log("window:"+window.scrollY);
   document.getElementById("consframe").style.top=window.scrollY+"px";
 }
 function Clear() {
