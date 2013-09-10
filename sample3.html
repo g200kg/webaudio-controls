@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>[Polymer] WebAudio-Controls Live Demo</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/polymer/0.0.20130816/polymer.min.js"></script>
+    <link rel="import" href="webcomponents/controls.html">
+</head>
+<body style="background-color:#eee;">
+    <h1>WebAudio-Controls Live Demo</h1>
+    <div style="color:#057;font-weight:900;position:relative;background:#888;width:500px;height:300px;margin:30px auto;padding:0px;">
+        <webaudio-knob id="knob1" diameter="48" style="position:absolute;left:50px;top:20px"></webaudio-knob>
+        <webaudio-knob id="knob2" diameter="48" style="position:absolute;left:120px;top:20px"></webaudio-knob>
+        <webaudio-param link="knob1" style="position:absolute;left:60px;top:75px"></webaudio-param>
+        <webaudio-param link="knob2" style="position:absolute;left:130px;top:75px"></webaudio-param>
+        <span style="position:absolute;left:60px;top:100px">&lt;webaudio-knob&gt;</span>
+        <span style="position:absolute;left:60px;top:120px">&lt;webaudio-param&gt;</span>
+        <webaudio-slider width="16" height="80" style="position:absolute;left:380px;top:50px"></webaudio-slider>
+        <webaudio-slider direction="horz" style="position:absolute;left:240px;top:50px"></webaudio-slider>
+        <span style="position:absolute;left:270px;top:20px">&lt;webaudio-slider&gt;</span>
+        <webaudio-switch style="position:absolute;left:220px;top:90px"></webaudio-switch>
+        <webaudio-switch style="position:absolute;left:260px;top:90px"></webaudio-switch>
+        <span style="position:absolute;left:220px;top:120px">&lt;webaudio-switch&gt;</span>
+        <webaudio-keyboard id="key" width="400" height="100" keys="25" style="position:absolute;left:48px;top:160px"></webaudio-keyboard>
+        <span style="position:absolute;left:320px;top:265px">&lt;webaudio-keyboard&gt;</span>
+	</div>
+<div>
+<script type="text/javascript">
+    var key=document.getElementById("key");
+    key.addEventListener('change',Dump,false);
+
+    function Dump(e) {
+        if(key.values.length==0)
+            document.title="---";
+        else
+            document.title=key.values;
+        console.log(key.values);
+    }
+</script>
+</body>
+</html>

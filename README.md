@@ -11,14 +11,21 @@ webaudio-knob | Rotating or some other frame-by-frame animation knob
 webaudio-slider | Vertical or Horizontal slider
 webaudio-switch | Toggle/Kick/Radio switches
 webaudio-param | Editable value display field
+webaudio-keyboard | Mouse/Touch playable keyboard. multi-touch support.
 
 Chrome / Firefox / Safari / Opera / IE compatible  
 iOS and Android touch devices compatible  
 
-[Live Demo sample1](https://rawgithub.com/g200kg/webaudio-controls/master/sample1.html)  
-[Live Demo sample2](https://rawgithub.com/g200kg/webaudio-controls/master/sample2.html)  
+[Live Demo sample1 (with external image-files)](https://rawgithub.com/g200kg/webaudio-controls/master/sample1.html)  
+[Live Demo sample2 (with code example)](https://rawgithub.com/g200kg/webaudio-controls/master/sample2.html)  
+[Live Demo sample3 (Knob/Slider/Switch/Param/Keyboard default style)](https://rawgithub.com/g200kg/webaudio-controls/master/sample3.html)  
 [Renoid : Practical application using webaudio-controls](http://www.g200kg.com/renoid/)    
-![](https://raw.github.com/g200kg/webaudio-controls/master/img/demo.png)
+
+Using with external image-files.  
+[![](img/demo.png)](https://rawgithub.com/g200kg/webaudio-controls/master/sample1.html)  
+
+Default style with no external image-files.  
+[![](img/sample3.png)](https://rawgithub.com/g200kg/webaudio-controls/master/sample3.html)  
 
 ## To Operate  
 Operation | Component | Description
@@ -30,6 +37,7 @@ Operation | Component | Description
 **Edit with Keyboard** | Param | edit the value directly
 **MouseWheel** | Knob/Slider | rotate upward to increase value / downward to decrease value
 **Shift+MouseWheel** | Knob/Slider | fine control
+**Mouse Button Press / Touch** | Keyboard | play keyboard. multi-touch is supported
 
 ---
 ## How to use
@@ -40,11 +48,12 @@ Operation | Component | Description
 - link to webaudio-knob component
 > &lt;link rel="import" href="components/controls.html" &gt;
 
-- insert `webaudio-knob/slider/switch/param` element
+- insert `webaudio-knob/slider/switch/param/keyboard` element
 > &lt;webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"&gt;&lt;/webaudio-knob&gt;  
 > &lt;webaudio-slider src="img/hsliderbody.png"&gt;&lt;/webaudio-slider&gt;  
 > &lt;webaudio-switch src="img/switch_toggle.png" width="32" height="32"&gt;&lt;/webaudio-switch&gt;  
-> &lt;webaudio-param src="" link="knob-1"&gt;&lt;/webaudio-param&gt;
+> &lt;webaudio-param src="" link="knob-1"&gt;&lt;/webaudio-param&gt;  
+> &lt;webaudio-keyboard keys="25" &gt;&lt;/webaudio-keyboard&gt;  
 
 ---
 ## Attributes
@@ -62,7 +71,7 @@ Attribute  | Options      | Default          | Description
 **width** | int | `64` | Knob display width in px
 **height** | int | `64` | Knob display height in px
 **diameter** | int | `64` | Knob display diameter in px. This attribute can be used instead of width / height if the display image is square
-**sprites** | int | `30` | Max frame number in the stitched knob image. Note that this is (number of frames) - 1
+**sprites** | int | `0` | if `0`, the "src" image should be single frame image that indicate middle position. the image will be rotated -135deg to +135deg. if "sprirites" is not `0`, the "src" image should be stitched multi-framed image. "sprites" specify the max frame number in the stitched knob image. Note that this is (number of frames) - 1
 **sensitivity** | float | `1` | Pointing device sensitivity. min-max range correspond to (128 / 'sensitivity') px
 **valuetip** | `0`,`1` | `1` | Enable the overlaid value-tip display.
 **tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
@@ -116,15 +125,25 @@ Attribute  | Options      | Default          | Description
 **color** | string | `"#ffffff"` | Text color
 **link** | string | `null` | Specify the linked webaudio-knob/slider/switch by Id
 
+### webaudio-keyboard
+
+Attribute  | Options      | Default          | Description
+---        | ---                  | ---                 | ---
+**values** | int array | `[]` | The array of current pressed key numbers. "values" may has more than one elements in multi-touch environment.
+**width** | int | `480` | Keyboard display width in px
+**height** | int | `128` | Keyboard display height in px
+**min** | int | `0` | Lowest Key number. Each key is numbered incrementally from this number. If the "min" is not `0` and the modulo 12 is not zero, the keyboard is started from corresponding position (not-C). Note that the specified key should be a 'white-key'.
+**keys** | int | `25` | Number of keys. `25` means 25 keys keyboard.
+
 ---
 ## Functions
-### setValue(value)
-**description**: webaudio-knob/webaudio-slider/webaudio-switch has a function `setValue(value)`. Each control can be setup and redraw by calling this function from JavaScript.
+### setValue(value) `webaudio-knob` | `webaudio-slider` | `webaudio-switch`
+**description**: Each control can be setup and redraw by calling this function from JavaScript.
 
 ---
 ## Events
-### 'change'
-**description**: 'change' event emitted everytime value changes.  
+### 'change' `webaudio-knob` | `webaudio-slider` | `webaudio-switch` | `webaudio-keyboard`
+**description**: 'change' event is emitted everytime value changes.  
 **Note**: The addEventListener() function is recommended for event handler setup instead of 'onchange=' attribute. 'onchange=' attribute seems not work on Safari.
 
 ```
@@ -136,13 +155,17 @@ for (var i = 0; i < knobs.length; i++) {
   });
 }
 ```
-### 'click'
+### 'click' `webaudio-switch (kick)`
 **description**: 'click' event is emitted if the 'kick' type webaudio-switch has clicked.
 
 ---
 ## Creating knob images
+webaudio-knob (with sprites is `0` (default)) use a single frame knob image that indicate center position.
+For example,  
+![](img/testknob.png)  
+This image will be rotated from -135deg to +135deg. This approach will works well if the image is flat designed, but more complex animation (for example, drop-shadowed, highlighted or something elastic) will need pre-rendered frame-by-frame animation as below.
 
-webaudio-knob use a vertical 'stitched' multi-frames animation image, and webaudio-switch use a vertical 'stitched' two-frames animation image.
+webaudio-knob (with non zero "sprites") use a vertical 'stitched' multi-frames animation image, and webaudio-switch use a vertical 'stitched' two-frames animation image.
 For example,   
 ![](https://raw.github.com/g200kg/webaudio-controls/master/img/LittlePhatty_sample.png)
 ![](https://raw.github.com/g200kg/webaudio-controls/master/img/switch_toggle.png)  
