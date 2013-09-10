@@ -137,12 +137,14 @@ Attribute  | Options      | Default          | Description
 
 ---
 ## Functions
-### setValue(value) `webaudio-knob` | `webaudio-slider` | `webaudio-switch`
+### setValue(value)  
+`webaudio-knob` | `webaudio-slider` | `webaudio-switch`  
 **description**: Each control can be setup and redraw by calling this function from JavaScript.
 
 ---
 ## Events
-### 'change' `webaudio-knob` | `webaudio-slider` | `webaudio-switch` | `webaudio-keyboard`
+### 'change'  
+`webaudio-knob` | `webaudio-slider` | `webaudio-switch` | `webaudio-keyboard`  
 **description**: 'change' event is emitted everytime value changes.  
 **Note**: The addEventListener() function is recommended for event handler setup instead of 'onchange=' attribute. 'onchange=' attribute seems not work on Safari.
 
@@ -155,7 +157,8 @@ for (var i = 0; i < knobs.length; i++) {
   });
 }
 ```
-### 'click' `webaudio-switch (kick)`
+### 'click'  
+`webaudio-switch (kick)`  
 **description**: 'click' event is emitted if the 'kick' type webaudio-switch has clicked.
 
 ---
