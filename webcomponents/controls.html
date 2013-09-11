@@ -867,13 +867,17 @@
 			bwidth:		0,
 			wwidth:		0,
 			press:		0,
-			enable:		0,
+			enable:		1,
 			pointerdown: function(e) {
-				this.press=1;
-				this.pointermove(e);
+				if(this.enable) {
+					this.press=1;
+					this.pointermove(e);
+				}
 				e.preventDefault();
 			},
 			pointermove: function(e) {
+				if(!this.enable)
+					return;
 				var r=e.target.getBoundingClientRect();
 				var v=[];
 				if(e.touches)
@@ -905,13 +909,17 @@
 				this.redraw();
 			},
 			pointerup: function(e) {
-				this.press = 0;
-				this.values=[];
-				this.redraw();
-				this.sendevent();
+				if(this.enable) {
+					this.press = 0;
+					this.values=[];
+					this.redraw();
+					this.sendevent();
+				}
 				e.preventDefault();
 			},
 			pointerover: function(e) {
+				if(!this.enable)
+					return;
 				if(typeof(e.buttons)!="undefined")
 					var btn = e.buttons;
 				else
@@ -919,6 +927,8 @@
 				this.press = btn?1:0;
 			},
 			pointerout: function(e) {
+				if(!this.enable)
+					return;
 				this.press = 0;
 				this.values=[];
 				this.sendevent();

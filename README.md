@@ -129,11 +129,12 @@ Attribute  | Options      | Default          | Description
 
 Attribute  | Options      | Default          | Description
 ---        | ---                  | ---                 | ---
-**values** | int array | `[]` | The array of current pressed key numbers. "values" may has more than one elements in multi-touch environment.
+**values** | int array | `[]` | The array of current pressed key numbers. "values" may has more than one element in multi-touch environment.
 **width** | int | `480` | Keyboard display width in px
 **height** | int | `128` | Keyboard display height in px
 **min** | int | `0` | Lowest Key number. Each key is numbered incrementally from this number. If the "min" is not `0` and the modulo 12 is not zero, the keyboard is started from corresponding position (not-C). Note that the specified key should be a 'white-key'.
 **keys** | int | `25` | Number of keys. `25` means 25 keys keyboard.
+**enable** | `0`,`1` | `1` | Enable the pointing device control
 
 ---
 ## Functions
