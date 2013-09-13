@@ -984,13 +984,13 @@
 				var x0=7*((this.min/12)|0)+this.kp[this.min%12];
 				var x1=7*((this.max/12)|0)+this.kp[this.max%12];
 				var n=x1-x0;
-				this.wwidth=this.width/(n+1);
+				this.wwidth=(this.width-1)/(n+1);
 				this.bwidth=this.wwidth*7/12;
 				var h2=this.bheight;
 				var r=Math.min(8,this.wwidth*0.2);
 				for(var i=this.min,j=0;i<=this.max;++i) {
 					if(this.kf[i%12]==0) {
-						var x=this.wwidth*(j++);
+						var x=this.wwidth*(j++)+1;
 						if(this.dispvalues.indexOf(i)>=0)
 							rrect(this.ctx,x,1,this.wwidth-1,this.height-2,r,this.coltab[5],this.coltab[6]);
 						else
@@ -1000,7 +1000,7 @@
 				r=Math.min(8,this.bwidth*0.3);
 				for(var i=this.min;i<this.max;++i) {
 					if(this.kf[i%12]) {
-						var x=this.wwidth*this.ko[this.min%12]+this.bwidth*(i-this.min);
+						var x=this.wwidth*this.ko[this.min%12]+this.bwidth*(i-this.min)+1;
 						if(this.dispvalues.indexOf(i)>=0)
 							rrect(this.ctx,x,1,this.bwidth,h2,r,this.coltab[7],this.coltab[8]);
 						else

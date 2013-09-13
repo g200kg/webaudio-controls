@@ -19,7 +19,9 @@ iOS and Android touch devices compatible
 [Live Demo sample1 (with external image-files)](https://rawgithub.com/g200kg/webaudio-controls/master/sample1.html)  
 [Live Demo sample2 (with code example)](https://rawgithub.com/g200kg/webaudio-controls/master/sample2.html)  
 [Live Demo sample3 (Knob/Slider/Switch/Param/Keyboard default style)](https://rawgithub.com/g200kg/webaudio-controls/master/sample3.html)  
-[Renoid : Practical application using webaudio-controls](http://www.g200kg.com/renoid/)    
+[Live Demo sample4 (webaudio-keyboard to webMIDIAPI)](https://rawgithub.com/g200kg/webaudio-controls/master/sample4.html)  
+ * need Mac+ChromeCanary+flagEnabled+MIDIdevice or Win+JazzPlugin or Mac+JazzPlugin+MidiDevice  
+[Renoid : Practical application using webaudio-controls](http://www.g200kg.com/renoid/)  
 
 Using with external image-files.  
 [![](img/demo.png)](https://rawgithub.com/g200kg/webaudio-controls/master/sample1.html)  
