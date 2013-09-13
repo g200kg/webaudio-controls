@@ -134,7 +134,7 @@ Attribute  | Options      | Default          | Description
 **height** | int | `128` | Keyboard display height in px
 **min** | int | `0` | Lowest Key number. Each key is numbered incrementally from this number. If the "min" is not `0` and the modulo 12 is not zero, the keyboard is started from corresponding position (not-C). Note that the specified key should be a 'white-key'.
 **keys** | int | `25` | Number of keys. `25` means 25 keys keyboard.
-**colors** | string | `'#222; #eee;#ccc; #333;#000; #e88;#c44; #c33;#800'` | semicolon separated 9 keyboard colors.<br/>'border;<br/>whitekey-grad-from;whitekey-grad-to;<br/>blackkey-grad-from;blackkey-grad-to;<br/>active-whitekey-grad-from;active-whitekey-grad-to;<br/>active-blackkey-grad-from;active-blackkey-grad-to'.<br/> Each key surface can has garadient left to right with 'from' and 'to'.
+**colors** | string | '#222; #eee;#ccc; #333;#000; #e88;#c44; #c33;#800' | semicolon separated 9 keyboard colors. 'border; whitekey-grad-from;whitekey-grad-to; blackkey-grad-from;blackkey-grad-to; active-whitekey-grad-from;active-whitekey-grad-to; active-blackkey-grad-from;active-blackkey-grad-to'. Each key surface can has garadient left to right with 'from' and 'to'.
 **enable** | `0`,`1` | `1` | Enable control with the pointing device.
 
 ---
