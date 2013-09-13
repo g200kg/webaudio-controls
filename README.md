@@ -75,7 +75,7 @@ Attribute  | Options      | Default          | Description
 **sensitivity** | float | `1` | Pointing device sensitivity. min-max range correspond to (128 / 'sensitivity') px
 **valuetip** | `0`,`1` | `1` | Enable the overlaid value-tip display.
 **tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
-**enable** | `0`,`1` | `1` | Enable the pointing device control.
+**enable** | `0`,`1` | `1` | Enable control with the pointing device.
 
 ### webaudio-slider
 
@@ -97,7 +97,7 @@ Attribute  | Options      | Default          | Description
 **sensitivity** | float | `1` | Pointing device sensitivity. min-max range correspond to (128 / 'sensitivity') px
 **valuetip** | `0`,`1` | `1` | Enable the overlaid value-tip display.
 **tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
-**enable** | `0`, `1` | `1` | Enable the pointing device control. 
+**enable** | `0`, `1` | `1` | Enable control with the pointing device.
 
 ### webaudio-switch
 
@@ -111,7 +111,7 @@ Attribute  | Options      | Default          | Description
 **type** | `"toggle"`,`"kick"`,`"radio"` | `"toggle"` | Switch type. `"toggle"` switch has so-called 'checkbox' function. `"radio"` switch is a radio-button and the `"kick"` switch is a general command button
 **group** | string | `null` | Group id string used if the 'type' is `"radio"`. Only one switch will be set to `"1"` in same group
 **tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
-**enable** | `0`,`1` | `1` | Enable the pointing device control
+**enable** | `0`,`1` | `1` | Enable control with the pointing device.
 
 ### webaudio-param
 
@@ -134,7 +134,8 @@ Attribute  | Options      | Default          | Description
 **height** | int | `128` | Keyboard display height in px
 **min** | int | `0` | Lowest Key number. Each key is numbered incrementally from this number. If the "min" is not `0` and the modulo 12 is not zero, the keyboard is started from corresponding position (not-C). Note that the specified key should be a 'white-key'.
 **keys** | int | `25` | Number of keys. `25` means 25 keys keyboard.
-**enable** | `0`,`1` | `1` | Enable the pointing device control
+**colors** | string | `'#222; #eee;#ccc; #333;#000; #e88;#c44; #c33;#800'` | semicolon separated 9 keyboard colors.<br/>'border;<br/>whitekey-grad-from;whitekey-grad-to;<br/>blackkey-grad-from;blackkey-grad-to;<br/>active-whitekey-grad-from;active-whitekey-grad-to;<br/>active-blackkey-grad-from;active-blackkey-grad-to'.<br/> Each key surface can has garadient left to right with 'from' and 'to'.
+**enable** | `0`,`1` | `1` | Enable control with the pointing device.
 
 ---
 ## Functions
@@ -142,12 +143,16 @@ Attribute  | Options      | Default          | Description
 `webaudio-knob` | `webaudio-slider` | `webaudio-switch`  
 **description**: Each control can be setup and redraw by calling this function from JavaScript.
 
+
+### setNote(state,note)  
+`webaudio-keyboard`  
+**description**: webaudio-keyboard can be setup pressing state with this function from JavaScript. corresponding key specified by the `note` is pressed if the `state` is non-zero otherwise the key is released. This function will NOT fire the 'change' event.
+
 ---
 ## Events
 ### 'change'  
 `webaudio-knob` | `webaudio-slider` | `webaudio-switch` | `webaudio-keyboard`  
-**description**: 'change' event is emitted everytime value changes.  
-**Note**: The addEventListener() function is recommended for event handler setup instead of 'onchange=' attribute. 'onchange=' attribute seems not work on Safari.
+**description**: 'change' event is emitted everytime value changes. In the event handler of `webaudio-knob`,`webaudio-slider` or `webaudio-switch`, current value can be get with referring `event.target.value`.  
 
 ```
 var knobs = document.getElementsByTagName('webaudio-knob');
@@ -158,6 +163,21 @@ for (var i = 0; i < knobs.length; i++) {
   });
 }
 ```
+
+For the `webaudio-keyboard`, each 'change' event has the property '.note' that contain a array `[key-state, key-number]`. For example `event.note = [1, 60]` if the key#60 is on, or `event.note = [0,60]` if the key#60 is off.
+
+```
+var keyboard = document.getElementsById('keyboard');
+keyboard.addEventListener('change', function(e) {
+	if(e.note[0])
+		console.log("Note-On:"+e.note[1]);
+	else
+		console.log("Note-Off:"+e.note[1]);
+});
+```
+
+**Note**: The addEventListener() function is recommended for event handler setup instead of 'onchange=' attribute. 'onchange=' attribute seems not work on Safari.
+
 ### 'click'  
 `webaudio-switch (kick)`  
 **description**: 'click' event is emitted if the 'kick' type webaudio-switch has clicked.

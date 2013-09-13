@@ -804,7 +804,7 @@
 	</script>
 </polymer-element>
 
-<polymer-element name="webaudio-keyboard" attributes="width height min keys enable">
+<polymer-element name="webaudio-keyboard" attributes="width height min keys colors enable">
 	<template>
 		<div id="wac-body" touch-action="none"></div>
 		<style>
@@ -853,10 +853,12 @@
 				this.addEventListener('touchcancel',this.pointerup,false);
 				this.addEventListener('mouseover',this.pointerover,false);
 				this.addEventListener('mouseout',this.pointerout,false);
+				this.coltab=this.colors.split(";");
 				this.redraw();
 			},
 			values:     [],
-			valuesold: 	[], 
+			valuesold: 	[],
+			dispvalues:	[],
 			min:        0,
 			keys: 		25, 
 			max:        72,
@@ -867,6 +869,8 @@
 			bwidth:		0,
 			wwidth:		0,
 			press:		0,
+			keyenable:	1,
+			colors:		'#222;#eee;#ccc;#333;#000;#e88;#c44;#c33;#800',
 			enable:		1,
 			pointerdown: function(e) {
 				if(this.enable) {
@@ -912,8 +916,8 @@
 				if(this.enable) {
 					this.press = 0;
 					this.values=[];
-					this.redraw();
 					this.sendevent();
+					this.redraw();
 				}
 				e.preventDefault();
 			},
@@ -935,27 +939,36 @@
 				this.redraw();
 			},
 			sendevent: function() {
-				var f=0;
-				if(this.values.length!=this.valuesold.length)
-					f=1;
-				else {
-					for(var i=0;i<this.values.length;++i) {
-						if(this.values[i]!=this.valuesold[i]) {
-							f=1;
-							break;
-						}
-					}
+				var notes=[];
+				for(var i=0,j=this.valuesold.length;i<j;++i) {
+					if(this.values.indexOf(this.valuesold[i])<0)
+						notes.push([0,this.valuesold[i]]);
 				}
-				if(f) {
+				for(var i=0,j=this.values.length;i<j;++i) {
+					if(this.valuesold.indexOf(this.values[i])<0)
+						notes.push([1,this.values[i]]);
+				}
+				if(notes.length) {
 					this.valuesold=this.values;
-					this.fire('change');
+					for(var i=0;i<notes.length;++i) {
+						this.setdispvalues(notes[i][0],notes[i][1]);
+						var ev=document.createEvent('HTMLEvents');
+						ev.initEvent('change',true,true);
+						ev.note=notes[i];
+						this.dispatchEvent(ev);
+					}
 				}
 			},
 			redraw: function() {
 				function rrect(ctx, x, y, w, h, r, c1, c2) {
-					var g=ctx.createLinearGradient(x,y,x+w,y);
-					g.addColorStop(0,c1);
-					g.addColorStop(1,c2);
+					if(c2) {
+						var g=ctx.createLinearGradient(x,y,x+w,y);
+						g.addColorStop(0,c1);
+						g.addColorStop(1,c2);
+						ctx.fillStyle=g;
+					}
+					else
+						ctx.fillStyle=c1;
 					ctx.beginPath();
 					ctx.moveTo(x, y);
 					ctx.lineTo(x+w, y);
@@ -964,10 +977,9 @@
 					ctx.lineTo(x+r, y+h);
 					ctx.quadraticCurveTo(x, y+h, x, y+h-r);
 					ctx.lineTo(x, y);
-					ctx.fillStyle=g;
 					ctx.fill();
 				}
-				this.ctx.fillStyle = "#222";
+				this.ctx.fillStyle = this.coltab[0];
 				this.ctx.fillRect(0,0,this.width,this.height);
 				var x0=7*((this.min/12)|0)+this.kp[this.min%12];
 				var x1=7*((this.max/12)|0)+this.kp[this.max%12];
@@ -979,22 +991,37 @@
 				for(var i=this.min,j=0;i<=this.max;++i) {
 					if(this.kf[i%12]==0) {
 						var x=this.wwidth*(j++);
-						if(this.values.indexOf(i)>=0)
-							rrect(this.ctx,x,1,this.wwidth-1,this.height-2,r,"#e88","#c44");
+						if(this.dispvalues.indexOf(i)>=0)
+							rrect(this.ctx,x,1,this.wwidth-1,this.height-2,r,this.coltab[5],this.coltab[6]);
 						else
-							rrect(this.ctx,x,1,this.wwidth-1,this.height-2,r,"#eee","#ccc");
+							rrect(this.ctx,x,1,this.wwidth-1,this.height-2,r,this.coltab[1],this.coltab[2]);
 					}
 				}
-				r=Math.min(8,this.bwidth*0.2);
+				r=Math.min(8,this.bwidth*0.3);
 				for(var i=this.min;i<this.max;++i) {
 					if(this.kf[i%12]) {
 						var x=this.wwidth*this.ko[this.min%12]+this.bwidth*(i-this.min);
-						if(this.values.indexOf(i)>=0)
-							rrect(this.ctx,x-1,1,this.bwidth+2,h2,r,"#c33","#800");
+						if(this.dispvalues.indexOf(i)>=0)
+							rrect(this.ctx,x,1,this.bwidth,h2,r,this.coltab[7],this.coltab[8]);
 						else
-							rrect(this.ctx,x-1,1,this.bwidth+2,h2,r,"#333","#000");
+							rrect(this.ctx,x,1,this.bwidth,h2,r,this.coltab[3],this.coltab[4]);
+						this.ctx.strokeStyle=this.coltab[0];
+						this.ctx.stroke();
 					}
 				}
+			},
+			setdispvalues: function(state,note) {
+				var n=this.dispvalues.indexOf(note);
+				if(state) {
+					if(n<0) this.dispvalues.push(note);
+				}
+				else {
+					if(n>=0) this.dispvalues.splice(n,1);
+				}
+			},
+			setNote: function(state,note) {
+				this.setdispvalues(state,note);
+				this.redraw();
 			}
 		};
 	})());
