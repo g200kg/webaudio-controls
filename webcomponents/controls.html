@@ -869,6 +869,7 @@
 			bwidth:		0,
 			wwidth:		0,
 			press:		0,
+			hover:		0,
 			keyenable:	1,
 			colors:		'#222;#eee;#ccc;#333;#000;#e88;#c44;#c33;#800',
 			enable:		1,
@@ -886,7 +887,7 @@
 				var v=[];
 				if(e.touches)
 					var p=e.touches;
-				else if(this.press)
+				else if(this.press && this.hover)
 					var p=[e];
 				else
 					return;
@@ -924,16 +925,12 @@
 			pointerover: function(e) {
 				if(!this.enable)
 					return;
-				if(typeof(e.buttons)!="undefined")
-					var btn = e.buttons;
-				else
-					var btn = e.which;
-				this.press = btn?1:0;
+				this.hover = 1;
 			},
 			pointerout: function(e) {
 				if(!this.enable)
 					return;
-				this.press = 0;
+				this.hover = 0;
 				this.values=[];
 				this.sendevent();
 				this.redraw();

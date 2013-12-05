@@ -166,7 +166,7 @@ for (var i = 0; i < knobs.length; i++) {
 }
 ```
 
-For the `webaudio-keyboard`, each 'change' event has the property '.note' that contain a array `[state, key-number]`. For example `event.note = [1, 60]` if the key#60 is on, or `event.note = [0, 60]` if the key#60 is off.
+For the `webaudio-keyboard`, each 'change' event has the property '.note' that contain a array `[key-state, key-number]`. For example `event.note = [1, 60]` if the key#60 is on, or `event.note = [0, 60]` if the key#60 is off.
 
 ```
 var keyboard = document.getElementsById('keyboard');
