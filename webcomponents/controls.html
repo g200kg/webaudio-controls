@@ -527,14 +527,14 @@
 				value = parseFloat(value);
 				if(!isNaN(value)) {
 					this.value = value < this.min ? this.min : value > this.max ? this.max : value;
-					var range = Math.abs(this.min) + Math.abs(this.max);
+					var range = this.max - this.min;
 					if(this.direction == 'vert') {
-						var value = this.ditchLength+(this.height-this.ditchLength)/2 - this.value * (this.ditchLength/this.max);
-						this.$['wac-sliknob'].style.top = value-this.knobheight/2 + "px";
+						var pos = this.height - this.knobheight - (this.value -this.min) / range * this.ditchLength;
+						this.$['wac-sliknob'].style.top = pos + "px";
 					}
 					else {
-						var value = (this.width-this.ditchLength)/2 + this.value * (this.ditchLength/this.max);
-						this.$['wac-sliknob'].style.left = value-this.knobwidth/2+"px";
+						var pos = (this.value - this.min) / range * this.ditchLength;
+						this.$['wac-sliknob'].style.left = pos+"px";
 					}
 					this.valuedisp = this.value.toFixed(this.digits);
 					if(this.value!=this.valueold) {
