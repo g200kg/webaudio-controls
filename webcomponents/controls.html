@@ -247,12 +247,14 @@
 				this.showtip();
 				e.preventDefault();
 			},
-			setValue: function(value) {
+			setValue: function(value,fire) {
 				value = parseFloat(value);
 				if(!isNaN(value)) {
 					this.value = value < this.min ? this.min : value > this.max ? this.max : value;
 					this.valuedisp = this.value.toFixed(this.digits);
 				}
+				if(fire)
+					this.fire('change');
 				if(this.value!=this.valueold) {
 					this.redraw();
 					this.valueold = this.value;
@@ -523,20 +525,22 @@
 				this.showtip();
 				e.preventDefault();
 			},
-			setValue: function(value) {
+			setValue: function(value,fire) {
 				value = parseFloat(value);
 				if(!isNaN(value)) {
 					this.value = value < this.min ? this.min : value > this.max ? this.max : value;
 					var range = this.max - this.min;
 					if(this.direction == 'vert') {
-						var pos = this.height - this.knobheight - (this.value -this.min) / range * this.ditchLength;
+						var pos = (this.height + this.ditchLength - this.knobheight)*0.5 - (this.value -this.min) / range * this.ditchLength;
 						this.$['wac-sliknob'].style.top = pos + "px";
 					}
 					else {
-						var pos = (this.value - this.min) / range * this.ditchLength;
+						var pos = (this.width - this.ditchLength - this.knobwidth)*0.5  + (this.value - this.min) / range * this.ditchLength;
 						this.$['wac-sliknob'].style.left = pos+"px";
 					}
 					this.valuedisp = this.value.toFixed(this.digits);
+					if(fire)
+						this.fire('change');
 					if(this.value!=this.valueold) {
 						this.valueold=this.value;
 						return 1;
@@ -713,7 +717,7 @@
 				e.stopPropagation();
 				return false;
 			},
-			setValue: function(value) {
+			setValue: function(value,fire) {
 				this.value = parseInt(value);
 				this.valuedisp = this.value;
 				this.$['wac-switch'].style.backgroundPosition = '0px -' + (this.value * this.height) + 'px';
@@ -724,6 +728,8 @@
 							el[i].setValue(0);
 					}
 				}
+				if(fire)
+					this.fire('change');
 				if(this.value!=this.valueold) {
 					this.valueold = this.value;
 					return 1;

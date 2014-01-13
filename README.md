@@ -141,9 +141,10 @@ Attribute  | Options      | Default          | Description
 
 ---
 ## Functions
-### setValue(value)  
+### setValue(value, fire)  
 `webaudio-knob` | `webaudio-slider` | `webaudio-switch`  
 **description**: Each control can be setup and redraw by calling this function from JavaScript.
+If the `fire` parameter is `undefined` or `false`, this function will not fire `'change'` event. Or the `change` event will be fired.
 
 
 ### setNote(state,note)  
@@ -154,7 +155,7 @@ Attribute  | Options      | Default          | Description
 ## Events
 ### 'change'  
 `webaudio-knob` | `webaudio-slider` | `webaudio-switch` | `webaudio-keyboard`  
-**description**: 'change' event is emitted everytime value changes. In the event handler of `webaudio-knob`,`webaudio-slider` or `webaudio-switch`, current value can be get with referring `event.target.value`.  
+**description**: 'change' event is emitted everytime value changes by user action or setValue() function with fire flag is `true`. In the event handler of `webaudio-knob`,`webaudio-slider` or `webaudio-switch`, current value can be get with referring `event.target.value`.  
 
 ```
 var knobs = document.getElementsByTagName('webaudio-knob');
