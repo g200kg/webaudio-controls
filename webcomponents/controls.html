@@ -25,11 +25,11 @@
 -->
 
 
-<polymer-element name="webaudio-knob" attributes="value defvalue min max step sprites diameter width height sensitivity src valuetip tooltip enable" on-mousedown="pointerdown" on-touchstart="pointerdown">
+<polymer-element name="webaudio-knob" attributes="value units defvalue min max step sprites diameter width height sensitivity src valuetip tooltip enable" on-mousedown="pointerdown" on-touchstart="pointerdown">
 	<template>
 		<div class="wac-body" id="wac-body" touch-action="none">
 			<div id="wac-knob" touch-action="none"></div>
-			<span id="wac-value-tip">{{valuedisp}}</span>
+			<span id="wac-value-tip">{{valuedisp}}{{units}}</span>
 			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
 		<style>
@@ -140,6 +140,7 @@
 				this.fire('change');
 			},
 			value:      0,
+			units:      "", 
 			valueold:	NaN,
 			valuedisp:	"0",
 			defvalue:   null,
@@ -280,13 +281,13 @@
 </polymer-element>
 
 
-<polymer-element name="webaudio-slider" attributes="min max value defvalue step width height knobwidth knobheight ditchLength src knobsrc direction valuetip sensitivity tooltip enable" on-mousedown="pointerdown" on-touchstart="pointerdown">
+<polymer-element name="webaudio-slider" attributes="min max value units defvalue step width height knobwidth knobheight ditchLength src knobsrc direction valuetip sensitivity tooltip enable" on-mousedown="pointerdown" on-touchstart="pointerdown">
 	<template>
 		<div class="wac-body" id="wac-body">
 			<div id="wac-slibase" touch-action="none">
 				<div id="wac-sliknob"></div>
 			</div>
-			<span id="wac-value-tip">{{valuedisp}}</span>
+			<span id="wac-value-tip">{{valuedisp}}{{units}}</span>
 			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
 		<style>
@@ -417,6 +418,7 @@
 			min:			0,
 			max:			100,
 			value:			0,
+			units:          "",
 			valueold:		0,
 			valuedisp:		"0",
 			defvalue:		null,
