@@ -151,8 +151,10 @@
 					this.ctlStep = log2(this.step);
 					if (this.ctlStep == 0)
 						this.ctlStep = 0.0001;
-				} else
+				} else{
 					this.setValue(this.value);
+					this.ctlStep=this.step;
+				}
 				this.fire('change');
 			},
 			value:      0,
