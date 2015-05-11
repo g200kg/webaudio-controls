@@ -8,7 +8,7 @@
 <link rel="import" href="webcomponents/controls.html">
 <script type="text/javascript" src="https://rawgithub.com/cwilso/WebMIDIAPIShim/gh-pages/WebMIDIAPI.js"></script>
 <script type="text/javascript">
-var midioutputs=null;
+var midioutputs=[];
 var midiout=null;
 function Init() {
 	navigator.requestMIDIAccess({sysex:false}).then(scb,ecb);
@@ -27,10 +27,17 @@ function Init() {
 }
 function ecb(e) { console.log(e); }
 function scb(midiaccess) {
-	midioutputs=midiaccess.outputs();
-	for(var i=0;i<midioutputs.length;++i)
-		document.getElementById("midiout").options[i]=new Option(midioutputs[i].name);
-	midiout=midioutputs[0];
+    function createOptions(outputs) {
+        var i=0;
+        var outputIterator=outputs.values();
+        for(var o=outputIterator.next(); !o.done; o=outputIterator.next()) {
+            midioutputs[i]=o.value;
+	          document.getElementById("midiout").options[i]=new Option(o.value.name);
+            i++;
+        }
+	      midiout=midioutputs[0];
+    }
+    createOptions(midiaccess.outputs);
 }
 </script>
 </head>
