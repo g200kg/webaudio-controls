@@ -6,7 +6,7 @@
     "Tatsuya Shinyagaito <gaito@g200kg.com>"
   ],
   "description": "GUI parts library for Web Music Apps using [Polymer]",
-  "main": "webcomponents/webaudio-controls.html",
+  "main": "webaudio-controls.html",
   "keywords": [
     "gui",
     "web",

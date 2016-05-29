@@ -52,7 +52,7 @@ Operation | Component | Description
   &lt;link rel="import" href="bower_components/polymer/polymer.html"&gt;
 
 - load webaudio-contols
-> &lt;link rel="import" href="webcomponents/webaudio-controls.html" &gt;
+> &lt;link rel="import" href="webaudio-controls.html" &gt;
 
 - insert `webaudio-knob/slider/switch/param/keyboard` element
 > &lt;webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"&gt;&lt;/webaudio-knob&gt;  
