@@ -29,7 +29,7 @@ function scb(midiaccess) {
 	var i=0;
 	var outputs=midiaccess.outputs.values();
 	for (var outit=outputs.next(); !outit.done; outit=outputs.next()) {
-		document.getElementById("midiout").options[i]=new Option(outit.value.name);
+		document.getElementById("midiout").options[i++]=new Option(outit.value.name);
 		midioutputs.push(outit.value);
 	}
 	midiout=midioutputs[0];
