@@ -5,7 +5,7 @@ Especially suitable for audio-applications like VST plugins.
 
 **WebAudioControls** is consist of following components  
 
-Component | Description 
+Component | Description
 ---|---
 webaudio-knob | Rotating or some other frame-by-frame animation knob
 webaudio-slider | Vertical or Horizontal slider
@@ -44,11 +44,15 @@ Operation | Component | Description
 ---
 ## How to use
 
-- load polymer.js
-> &lt;script src="//cdnjs.cloudflare.com/ajax/libs/polymer/0.0.20130816/polymer.min.js"&gt;&lt;/script&gt;  
+- Install Polymer
+> Use command 'bower install --save Polymer/polymer', if you use bower. Or download zipped file and deploy appropriately.
 
-- link to webaudio-knob component
-> &lt;link rel="import" href="components/controls.html" &gt;
+- load webcomponents.js and polymer  
+> &lt;script src="bower_components/webcomponentsjs/webcomponents.js"&gt;&lt;/script&gt;<br/>
+  &lt;link rel="import" href="bower_components/polymer/polymer.html"&gt;
+
+- load webaudio-contols
+> &lt;link rel="import" href="webcomponents/webaudio-controls.html" &gt;
 
 - insert `webaudio-knob/slider/switch/param/keyboard` element
 > &lt;webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"&gt;&lt;/webaudio-knob&gt;  
@@ -70,6 +74,8 @@ Attribute  | Options      | Default          | Description
 **min** | float | `0` | Minimum value of the knob
 **max** | float | `100` | Maximum value of the knob
 **step** | float | `1` | Value step of the control. The 'value' is always rounded to multiple of 'step'
+**log** | int | `0` | If 1, knob scale is logalithmic
+**units** | string | `null` | specified units (e.g. Hz) is added to valuetip
 **width** | int | `64` | Knob display width in px
 **height** | int | `64` | Knob display height in px
 **diameter** | int | `64` | Knob display diameter in px. This attribute can be used instead of width / height if the display image is square

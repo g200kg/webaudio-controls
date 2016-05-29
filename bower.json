@@ -1,0 +1,28 @@
+{
+  "name": "webaudio-controls",
+  "version": "1.0.0",
+  "homepage": "https://github.com/g200kg/webaudio-controls",
+  "authors": [
+    "Tatsuya Shinyagaito <gaito@g200kg.com>"
+  ],
+  "description": "GUI parts library for Web Music Apps using [Polymer]",
+  "main": "webcomponents/webaudio-controls.html",
+  "keywords": [
+    "gui",
+    "web",
+    "music",
+    "knob",
+    "polymer"
+  ],
+  "license": "Apache License, Version 2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0"
+  }
+}

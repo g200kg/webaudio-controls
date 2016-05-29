@@ -3,12 +3,11 @@
 <head>
 <meta charset="utf-8">
 <title>[Polymer] WebAudio-Keyboard Test</title>
-<script src="js/platform.js"></script>
-<link rel="import" href="webcomponents/polymer.html">
-<link rel="import" href="webcomponents/controls.html">
-<script type="text/javascript" src="https://rawgithub.com/cwilso/WebMIDIAPIShim/gh-pages/WebMIDIAPI.js"></script>
+<script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="webcomponents/webaudio-controls.html">
 <script type="text/javascript">
-var midioutputs=null;
+var midioutputs=[];
 var midiout=null;
 function Init() {
 	navigator.requestMIDIAccess({sysex:false}).then(scb,ecb);
@@ -27,14 +26,19 @@ function Init() {
 }
 function ecb(e) { console.log(e); }
 function scb(midiaccess) {
-	midioutputs=midiaccess.outputs();
-	for(var i=0;i<midioutputs.length;++i)
-		document.getElementById("midiout").options[i]=new Option(midioutputs[i].name);
+	var i=0;
+	var outputs=midiaccess.outputs.values();
+	for (var outit=outputs.next(); !outit.done; outit=outputs.next()) {
+		document.getElementById("midiout").options[i]=new Option(outit.value.name);
+		midioutputs.push(outit.value);
+	}
 	midiout=midioutputs[0];
 }
 </script>
 </head>
 <body onload="Init()">
+	<h1>WebAudio-Keyboard Test</h1>
+	<p>This test requires 'Web MIDI API' support, MIDI I/F, and External MIDI device</p>
 	MidiOut : <select id="midiout"></select><br/><br/>
 	Program : <webaudio-slider id="prog" min="0" max="127" direction="horz" valuetip="0"></webaudio-slider>
 	 <webaudio-param link="prog"></webaudio-param><br/><br/>
