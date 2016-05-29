@@ -125,7 +125,7 @@ Attribute  | Options      | Default          | Description
 
 Attribute  | Options      | Default          | Description
 ---        | ---                  | ---                 | ---
-**src** | string | Black rectangle if not specified | url of the background image. Transparent if set to `""`
+**src** | string | Black rectangle if not specified | Background image or color. Transparent if set to `""`.  `#rrggbb` or `rgb(r,g,b)` for specified color, or url to background image.
 **value** | float | `0` | The current value. Usually same as linked control
 **width** | int | `32` | Parameter display width in px
 **height** | int | `16` | Parameter display height in px

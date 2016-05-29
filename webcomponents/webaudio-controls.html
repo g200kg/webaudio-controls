@@ -28,12 +28,13 @@
 	<template>
 		<div class="wac-body" id="wac-body" touch-action="none">
 			<div id="wac-knob" touch-action="none"></div>
-			<span id="wac-value-tip">{{valuedisp}}{{units}}</span>
+			<span id="wac-value-tip" touch-action="none">{{valuedisp}}{{units}}</span>
 			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
 		<style>
 			@host {
 				* {
+					user-select: none;
 					display: inline-block;
 					font-family: sans-serif;
 					font-size: 11px;
@@ -51,6 +52,7 @@
 				background-position: 0px 0px;
 			}
 			#wac-value-tip {
+				user-select: none;
 				position: absolute;
 				top: -20px;
 				left: 0px;
@@ -124,6 +126,7 @@
 				knb.addEventListener('DOMMouseScroll',this.wheel.bind(this),false);
 				knb.addEventListener('mousewheel',this.wheel.bind(this),false);
 				knb.addEventListener('mousedown',this.pointerdown.bind(this),false);
+				knb.addEventListener('touchstart',this.pointerdown.bind(this),false);
 				knb.addEventListener('mouseover',this.pointerover.bind(this),false);
 				knb.addEventListener('mouseout',this.pointerout.bind(this),false);
 				body.style.width = knb.style.width = this.width+'px';
@@ -148,8 +151,6 @@
 					this.min = log2(this.minval);
 					this.max = log2(this.maxval);
 					this.setValue(log2(this.value));
-//					this.ctlStep = log2(this.step);
-//					if (this.ctlStep == 0)
 						this.ctlStep = 0.0001;
 				} else{
 					this.setValue(this.value);
@@ -182,6 +183,8 @@
 				this.ttflag = 0;
 				this.showtip();
 				e.preventDefault();
+				e.stopPropagation();
+				return false;
 			},
 			pointermove: function(e) {
 				if(e.touches)
@@ -196,6 +199,8 @@
 				if(this.setValue(this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4:1) * 128)) - this.min) / this.ctlStep)|0) * this.ctlStep))
 					this.fire('change');
 				e.preventDefault();
+				e.stopPropagation();
+				return false;
 			},
 			cancel: function(e) {
 				this.press = this.vtflag = 0;
@@ -439,6 +444,7 @@
 				slib.addEventListener('DOMMouseScroll',this.wheel.bind(this),false);
 				slib.addEventListener('mousewheel',this.wheel.bind(this),false);
 				slib.addEventListener('mousedown',this.pointerdown.bind(this),false);
+				slib.addEventListener('touchstart',this.pointerdown.bind(this),false);
 				slib.addEventListener('mouseover',this.pointerover.bind(this),false);
 				slib.addEventListener('mouseout',this.pointerout.bind(this),false);
 				body.style.width = slib.style.width = this.width+'px';
@@ -785,7 +791,7 @@
 				cursor: pointer;
 				text-align: center;
 				position: relative;
-				background: #000;
+				background: none;
 				border-radius: 5px;
 			}
 		</style>
@@ -795,10 +801,10 @@
 			is:"webaudio-param",
 			properties:{
 				value:      {type:Number, value:0},
-				width:      {type:Number, value:48},
-				height:     {type:Number, value:24},
+				width:      {type:Number, value:32},
+				height:     {type:Number, value:16},
 				fontsize:		{type:Number, value:9},
-				src:				{type:String, value:null},
+				src:				{type:String, value:'#000'},
 				color:			{type:String, value:'#ffffff'},
 				link:				{type:String, value:null},
 				fcon:				{type:String, value:null},
@@ -825,8 +831,12 @@
 			ready: function() {
 				this.$['param'].style.width = this.width+'px';
 				this.$['param'].style.height = this.height+'px';
-				if(this.src)
-					this.$['param'].style.background = 'url('+this.src+')';
+				if(this.src){
+					if(this.src[0]=='#'||this.src.indexOf('rgb')==0)
+						this.$['param'].style.background = this.src;
+					else
+						this.$['param'].style.background = 'url('+this.src+')';
+				}
 				this.$['param'].style.backgroundSize = '100% 100%';
 				this.$['param'].style.color = this.color;
 				this.$['param'].style.fontSize = this.fontsize+'px';
