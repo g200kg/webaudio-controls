@@ -28,34 +28,47 @@
 	<template>
 		<div class="wac-body" id="wac-body" touch-action="none">
 			<div id="wac-knob" touch-action="none"></div>
-			<span id="wac-value-tip" touch-action="none">{{valuedisp}}{{units}}</span>
+			<div id="wac-valuetip-row"><span id="wac-valuetip" touch-action="none">{{valuedisp}}{{units}}</span></div>
 			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
 		<style>
-			@host {
-				* {
-					user-select: none;
-					display: inline-block;
-					font-family: sans-serif;
-					font-size: 11px;
-				}
+			:host {
+				user-select: none;
+				display: inline-block;
+				font-family: sans-serif;
+				font-size: 11px;
+				padding:0;
+				margin:0;
 			}
 			#wac-body {
+				position: relative;
 				display: inline-block;
-				position:relative;
+				margin:0;
+				padding:0;
+				width: 100%;
+				height: 100%;
 			}
 			#wac-knob {
+				display: inline-block;
 				cursor: pointer;
-				width: {{width}};
-				height: 64px;
+				margin:0;
+				padding:0;
+				width: 100%;
+				height: 100%;
 				background-repeat: no-repeat;
 				background-position: 0px 0px;
 			}
-			#wac-value-tip {
+			#wac-valuetip-row{
+				display:block;
+				z-index: 10;
+				width:100%;
 				user-select: none;
 				position: absolute;
 				top: -20px;
-				left: 0px;
+				height:20px;
+				text-align: center;
+			}
+			#wac-valuetip {
 				text-align: center;
 				z-index: 10;
 				display: none;
@@ -92,21 +105,23 @@
 		Polymer({
 			is:"webaudio-knob",
 			properties:{
-				src:				{type:String, value:null},
-				value:      {type:Number, value:0},
+				src:				{type:String, value:null, observer:'setupImage'},
+				bgsrc:			{type:String, value:null, observer:'setupImage'},
+				value:      {type:Number, value:0, observer:'updateValue'},
 				defvalue:   {type:Number, value:0},
 				min:        {type:Number, value:0},
 				max:        {type:Number, value:100},
 				step:       {type:Number, value:1},
 				log:        {type:Number, value:0},
 				units:      {type:String,value:null},
-				width:      {type:Number, value:null},
-				height:     {type:Number, value:null},
-				diameter:   {type:Number, value:64},
+				width:      {type:Number, value:64, observer:'layout'},
+				height:     {type:Number, value:64, observer:'layout'},
+				diameter:   {type:Number, value:null, observer:'layout'},
 				sprites:    {type:Number, value:0},
 				sensitivity:{type:Number, value:1},
 				valuetip:   {type:Number, value:1},
 				tootip:			{type:String, value:null},
+				colors:			{type:String, value:'#e00;#000;#000', observer:'setupImage'},
 				enable:			{type:Number, value:1},
 			},
 			ready:function(){
@@ -116,10 +131,6 @@
 				}
 				if(this.defvalue === null)
 					this.defvalue = this.value;
-				if(this.width === null)
-					this.width = this.diameter;
-				if(this.height === null)
-					this.height = this.diameter;
 				this.digits=0;
 				var body = this.$['wac-body'];
 				var knb = this.$['wac-knob'];
@@ -129,15 +140,7 @@
 				knb.addEventListener('touchstart',this.pointerdown.bind(this),false);
 				knb.addEventListener('mouseover',this.pointerover.bind(this),false);
 				knb.addEventListener('mouseout',this.pointerout.bind(this),false);
-				body.style.width = knb.style.width = this.width+'px';
-				knb.style.height = this.height+'px';
-
-				if(this.src)
-					knb.style.background = 'url('+this.src+')';
-				else {
-					knb.style.background = 'url(data:image/svg+xml,%3csvg%20xmlns%3d%22http%3a%2f%2fwww%2ew3%2eorg%2f2000%2fsvg%22%20version%3d%221%2e1%22%20viewBox%3d%220%200%2010%2010%22%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%225%22%20r%3d%225%22%2f%3e%0d%0a%3cline%20x1%3d%225%22%20y1%3d%22%2e5%22%20x2%3d%225%22%20y2%3d%224%22%20stroke%3d%22%23f00%22%20stroke%2dwidth%3d%22%2e8%22%20stroke%2dlinecap%3d%22round%22%2f%3e%0d%0a%3c%2fsvg%3e)';
-					this.sprites = 0;
-				}
+				this.setupImage();
 				knb.style.backgroundSize = '100% '+((this.sprites+1)*100)+'%';
 				if(this.step && this.step < 1) {
 					for(var n = this.step ; n < 1; n *= 10)
@@ -156,7 +159,29 @@
 					this.setValue(this.value);
 					this.ctlStep=this.step;
 				}
+				this.redraw();
 				this.fire('change');
+			},
+			setupImage: function(){
+				var body = this.$['wac-body'];
+				var knb = this.$['wac-knob'];
+				if(this.colors)
+					this.coltab=this.colors.split(";");
+				else
+					this.coltab=["#e00","#000","#000"];
+				switch(this.coltab.length){
+				case 1: this.coltab[1]=this.coltab[2]="#000"; break;
+				case 2: this.coltab[2]=this.coltab[1]; break;
+				}
+				if(this.bgsrc)
+					body.style.background = 'url('+this.bgsrc+')';
+				if(this.src)
+					knb.style.background = 'url('+this.src+')';
+				else {
+					knb.style.background = 'url(data:image/svg+xml,%3csvg%20xmlns%3d%22http%3a%2f%2fwww%2ew3%2eorg%2f2000%2fsvg%22%20version%3d%221%2e1%22%20viewBox%3d%220%200%2010%2010%22%20preserveAspectRatio%3d%22none%22%3e%0d%0a%3cline%20x1%3d%225%22%20y1%3d%22%2e5%22%20x2%3d%225%22%20y2%3d%224%22%20stroke%3d%22'+this.coltab[0]+'%22%20stroke%2dwidth%3d%22%2e8%22%20stroke%2dlinecap%3d%22round%22%2f%3e%0d%0a%3c%2fsvg%3e)';
+					body.style.background = 'url(data:image/svg+xml,%3csvg%20xmlns%3d%22http%3a%2f%2fwww%2ew3%2eorg%2f2000%2fsvg%22%20version%3d%221%2e1%22%20viewBox%3d%220%200%2010%2010%22%20preserveAspectRatio%3d%22none%22%3e%0d%0a%3cradialGradient%20id%3d%22g0%22%20fx%3d%22%2e3%22%20fy%3d%22%2e3%22%3e%3cstop%20offset%3d%220%22%20stop%2dcolor%3d%22'+this.coltab[2]+'%22%2f%3e%3cstop%20offset%3d%22%2e75%22%20stop%2dcolor%3d%22'+this.coltab[1]+'%22%2f%3e%3c%2fradialGradient%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%225%22%20r%3d%225%22%20fill%3d%22url%28%23g0%29%22%2f%3e%0d%0a%3c%2fsvg%3e)';
+					this.sprites = 0;
+				}
 			},
 			pointerdown: function(e) {
 				if(!this.enable)
@@ -166,8 +191,10 @@
 				this.boundPointermove = this.pointermove.bind(this);
 				this.boundCancel = this.cancel.bind(this);
 				if(e.ctrlKey || e.metaKey) {
-					if(this.setValue(parseFloat(this.defvalue)))
+					if(this.setValue(parseFloat(this.defvalue))){
 						this.fire('change');
+						this.dirty=false;
+					}
 				}
 				else {
 					this.startPosX = e.pageX;
@@ -196,8 +223,10 @@
 					this.startVal = this.value;
 				}
 				var offset = (this.startPosY - e.pageY - this.startPosX + e.pageX) * this.sensitivity;
-				if(this.setValue(this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4:1) * 128)) - this.min) / this.ctlStep)|0) * this.ctlStep))
+				if(this.setValue(this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4:1) * 128)) - this.min) / this.ctlStep)|0) * this.ctlStep)){
 					this.fire('change');
+					this.dirty=false;
+				}
 				e.preventDefault();
 				e.stopPropagation();
 				return false;
@@ -228,19 +257,19 @@
 				this.showtip();
 			},
 			showtip: function() {
-				var vs=this.$['wac-value-tip'].style;
+				var vs=this.$['wac-valuetip'].style;
 				var ts=this.$['wac-tooltip-box'].style;
 				if(this.valuetip && this.vtflag) {
 					if(this.vtim) {
 						clearTimeout(this.vtim);
 						this.vtim = null;
 					}
-					vs.display="block";
+					vs.display="inline-block";
 					setTimeout(function(){this.opacity=0.9;}.bind(vs),50);
 				}
 				else if(vs.opacity) {
 					vs.opacity = 0;
-					this.vtim=setTimeout(function(){if(this.vtflag==0) this.$['wac-value-tip'].style.display="none";}.bind(this),500);
+					this.vtim=setTimeout(function(){if(this.vtflag==0) this.$['wac-valuetip'].style.display="none";}.bind(this),500);
 				}
 				if(this.tooltip && this.ttflag) {
 					ts.display="block";
@@ -271,8 +300,16 @@
 				this.showtip();
 				e.preventDefault();
 			},
-			setValue: function(value,fire) {
-				value = parseFloat(value);
+			setValue: function(value,fire){
+				this.value = value;
+				if(fire){
+					this.fire('change');
+					this.dirty=false;
+				}
+				return this.dirty;
+			},
+			updateValue: function() {
+				var value = parseFloat(this.value);
 				if(!isNaN(value)) {
 					this.value = value < this.min ? this.min : value > this.max ? this.max : value;
 					var valueNumber = (this.log) ? Math.pow(2,this.value) : this.value;
@@ -282,25 +319,33 @@
 						this.valuedisp = valueNumber.toFixed((valueNumber<10)?2:1) + "k";
 					}
 				}
-				if(fire)
-					this.fire('change');
-				if(this.value!=this.valueold) {
+				if(this.value != this.valueold) {
 					this.redraw();
 					this.valueold = this.value;
-					return 1;
+					this.dirty=true;
 				}
-				return 0;
+			},
+			layout: function(){
+				var knobstyle = this.$['wac-knob'].style;
+				var bodystyle = this.$['wac-body'].style;
+				if(this.diameter)
+					this.width = this.height = this.diameter;
+				if(this.width)
+					bodystyle.width = knobstyle.width = this.width+"px";
+				if(this.height)
+					bodystyle.height = knobstyle.height = this.height+"px";
 			},
 			redraw: function() {
 				var range = this.max - this.min;
+				var style = this.$['wac-knob'].style;
 				if(this.sprites) {
 					var offset = ((this.sprites * (this.value - this.min) / range)|0) * this.height;
-					this.$['wac-knob'].style.backgroundPosition= "0px -" + offset + "px";
-					this.$['wac-knob'].style.transform = 'rotate(0deg)';
+					style.backgroundPosition= "0px -" + offset + "px";
+					style.transform = 'rotate(0deg)';
 				}
 				else {
 					var deg = 270*((this.value-this.min)/range-0.5);
-					this.$['wac-knob'].style.transform = 'rotate('+deg+'deg)';
+					style.transform = 'rotate('+deg+'deg)';
 				}
 			}
 	});
@@ -310,34 +355,27 @@
 <dom-module id="webaudio-slider">
 	<template>
 		<div class="wac-body" id="wac-body">
-			<div id="wac-slibase" touch-action="none">
-				<div id="wac-sliknob"></div>
-			</div>
-			<span id="wac-value-tip">{{valuedisp}}{{units}}</span>
+			<div id="wac-knob"></div>
+			<span id="wac-valuetip">{{valuedisp}}{{units}}</span>
 			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
 		<style>
-			@host {
-				* {
-					display: inline-block;
-					font-family: sans-serif;
-					font-size: 11px;
-				}
+			:host {
+				user-select: none;
+				display: inline-block;
+				font-family: sans-serif;
+				font-size: 11px;
+				padding:0;
+				margin:0;
 			}
 			#wac-body {
 				position: relative;
 				display: inline-block;
 			}
-			#wac-slibase {
-				cursor: pointer;
-				background: #000000;
+			#wac-knob {
 				position: relative;
 			}
-			#wac-sliknob {
-				background: #ff0000;
-				position: relative;
-			}
-			#wac-value-tip {
+			#wac-valuetip {
 				position: absolute;
 				top: -20px;
 				left: 0;
@@ -375,27 +413,28 @@
 		Polymer({
 			is:"webaudio-slider",
 			properties:{
-				value:      {type:Number, value:0},
+				value:      {type:Number, value:0, observer:'updateValue'},
 				units:      {type:String, value:null},
 				log:        {type:Number, value:0},
 				defvalue:   {type:Number, value:0},
 				min:        {type:Number, value:0},
 				max:        {type:Number, value:100},
 				step:       {type:Number, value:1},
-				width:      {type:Number, value:0},
-				height:     {type:Number, value:0},
-				knobwidth:	{type:Number, value:0},
-				knobheight:	{type:Number, value:0},
-				ditchLength:{type:Number, value:0},
+				width:      {type:Number, value:null, observer:'layout'},
+				height:     {type:Number, value:null, observer:'layout'},
+				knobwidth:	{type:Number, value:null},
+				knobheight:	{type:Number, value:null},
+				ditchlength:{type:Number, value:null, observer:'layout'},
 				length:			{type:Number, value:0},
 				weight:			{type:Number, value:0},
-				direction:	{type:String, value:"vert"},
-				knobsrc:		{type:String, value:'data:image/svg+xml;,%3csvg%20xmlns%3d%22http%3a%2f%2fwww%2ew3%2eorg%2f2000%2fsvg%22%20version%3d%221%2e1%22%20viewBox%3d%220%200%2010%2010%22%3e%0d%0a%3cradialGradient%20id%3d%22g0%22%20fx%3d%22%2e25%22%20fy%3d%22%2e25%22%3e%3cstop%20offset%3d%220%22%20stop%2dcolor%3d%22%23fff%22%2f%3e%3cstop%20offset%3d%22%2e75%22%20stop%2dcolor%3d%22%23f00%22%2f%3e%3c%2fradialGradient%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%225%22%20r%3d%224%22%20fill%3d%22url%28%23g0%29%22%2f%3e%0d%0a%3c%2fsvg%3e'},
+				direction:	{type:String, value:'vert', observer:'layout'},
+				knobsrc:		{type:String, value:null, observer:'setupImage'},
 				sensitivity:{type:Number, value:1},
 				digits:			{type:Number, value:0},
 				src:				{type:String, value:""},
 				valuetip:   {type:Number, value:1},
 				tootip:			{type:String, value:null},
+				colors:			{type:String, value:null, observer:'setupImage'},
 				enable:			{type:Boolean, value:true},
 			},
 			pointermove: function(e) {
@@ -408,11 +447,13 @@
 					this.startVal = this.value;
 				}
 				if(this.direction == 'vert')
-					var offset = (this.startPosY - e.pageY) / this.ditchLength;
+					var offset = (this.startPosY - e.pageY) / this._ditchlength;
 				else
-					var offset = (e.pageX - this.startPosX) / this.ditchLength;
-				if(this.setValue(this.min + ((((this.startVal + (this.max - this.min) * offset * this.sensitivity / ((e.shiftKey ? 4:1))) - this.min) / this.step)|0) * this.step))
+					var offset = (e.pageX - this.startPosX) / this._ditchlength;
+				if(this.setValue(this.min + ((((this.startVal + (this.max - this.min) * offset * this.sensitivity / ((e.shiftKey ? 4:1))) - this.min) / this.step)|0) * this.step)){
 					this.fire('change');
+					this.dirty = false;
+				}
 				e.preventDefault();
 			},
 			cancel: function(e) {
@@ -426,41 +467,19 @@
 				window.removeEventListener('touchcancel', this.boundCancel, true);
 			},
 			ready: function() {
-				if(this.defvalue === null)
+				if(this.defvalue == null)
 					this.defvalue = this.value;
-				if(this.width == 0)
-					this.width = (this.direction == 'vert' ? 24 : 128);
-				if(this.height == 0)
-					this.height = (this.direction == 'vert' ? 128 : 24);
-				if(this.knobwidth == 0)
-					this.knobwidth = (this.direction == 'vert' ? this.width : this.height);
-				if(this.knobheight == 0)
-					this.knobheight = (this.direction == 'vert' ? this.width : this.height);
-				if(this.ditchLength == 0)
-					this.ditchLength = (this.direction =='vert' ? this.height - this.knobheight : this.width - this.knobwidth);
-				var body=this.$['wac-body'];
-				var slib=this.$['wac-slibase'];
-				var slik=this.$['wac-sliknob'];
+				this.layout();
+				var slib=this.$['wac-body'];
+				var slik=this.$['wac-knob'];
 				slib.addEventListener('DOMMouseScroll',this.wheel.bind(this),false);
 				slib.addEventListener('mousewheel',this.wheel.bind(this),false);
 				slib.addEventListener('mousedown',this.pointerdown.bind(this),false);
 				slib.addEventListener('touchstart',this.pointerdown.bind(this),false);
 				slib.addEventListener('mouseover',this.pointerover.bind(this),false);
 				slib.addEventListener('mouseout',this.pointerout.bind(this),false);
-				body.style.width = slib.style.width = this.width+'px';
-				slib.style.height = this.height+'px';
-				if(this.src)
-					slib.style.background = 'url('+this.src+')';
-				else {
-					slib.style.background = '#000';
-					slib.style.borderRadius = (Math.min(this.width,this.height)*.5)+'px';
-				}
-				slib.style.backgroundSize = '100% 100%';
-				slik.style.width = this.knobwidth+'px';
-				slik.style.height = this.knobheight+'px';
-				slik.style.background = 'url('+this.knobsrc+')';
-				slik.style.left = this.width/2 - this.knobwidth/2 + "px";
-				slik.style.top = this.height/2 - this.knobheight/2 + "px";
+				this.setupImage();
+				slik.style.background = 'url('+this._knobsrc+')';
 				slik.style.backgroundSize = '100% 100%';
 				if(this.step && this.step < 1) {
 					for(var n = this.step ; n < 1; n *= 10)
@@ -477,12 +496,14 @@
 				this.boundPointermove = this.pointermove.bind(this);
 				this.boundCancel = this.cancel.bind(this);
 				if(e.ctrlKey || e.metaKey) {
-					if(this.setValue(this.defvalue))
+					if(this.setValue(this.defvalue)){
 						this.fire('change');
+						this.dirty = false;
+					}
 				}
 				else {
 					if(this.valuetip)
-						this.$['wac-value-tip'].style.opacity = 0.9;
+						this.$['wac-valuetip'].style.opacity = 0.9;
 					this.startPosX = e.pageX;
 					this.startPosY = e.pageY;
 					this.startVal = this.value;
@@ -513,7 +534,7 @@
 				this.showtip();
 			},
 			showtip: function() {
-				var vs=this.$['wac-value-tip'].style;
+				var vs=this.$['wac-valuetip'].style;
 				var ts=this.$['wac-tooltip-box'].style;
 				if(this.valuetip && this.vtflag) {
 					if(this.vstim)
@@ -523,7 +544,7 @@
 				}
 				else if(vs.opacity) {
 					vs.opacity = 0;
-					this.vtim=setTimeout(function(){if(this.vtflag==0) this.$['wac-value-tip'].style.display="none";}.bind(this),500);
+					this.vtim=setTimeout(function(){if(this.vtflag==0) this.$['wac-valuetip'].style.display="none";}.bind(this),500);
 				}
 				if(this.tooltip && this.ttflag) {
 					ts.display="block";
@@ -547,35 +568,107 @@
 				delta *= (this.max - this.min) * 0.05;
 				if(Math.abs(delta) < this.step)
 					delta = (delta>0)?this.step:-this.step;
-				if(this.setValue(this.value+delta))
+				if(this.setValue(this.value+delta)){
 					this.fire('change');
+					this.dirty = false;
+				}
 				this.ttflag = 0;
 				this.vtflag = 1;
 				this.showtip();
 				e.preventDefault();
 			},
-			setValue: function(value,fire) {
-				value = parseFloat(value);
+			layout: function(){
+				this._width = parseFloat(this.width);
+				this._height = parseFloat(this.height);
+				if(this.width == null)
+					this._width = (this.direction == 'vert' ? 24 : 128);
+				if(this.height == null)
+					this._height = (this.direction == 'vert' ? 128 : 24);
+				this._knobwidth = parseFloat(this.knobwidth);
+				this._knobheight = parseFloat(this.knobheight);
+				if(this.knobwidth == null)
+					this._knobwidth = (this.direction == 'vert' ? this._width : this._height);
+				if(this.knobheight == null)
+					this._knobheight = (this.direction == 'vert' ? this._width : this._height);
+				this._ditchlength = parseFloat(this.ditchlength);
+				if(this.ditchlength == null)
+					this._ditchlength = (this.direction =='vert' ? this._height - this._knobheight : this._width - this._knobwidth);
+				var knob = this.$['wac-knob'];
+				var body = this.$['wac-body'];
+				if(knob&&body){
+					knob.style.width = this._knobwidth+'px';
+					knob.style.height = this._knobheight+'px';
+					if(this.direction=='vert'){
+						if(this._width)
+							body.style.width = knob.style.width = this._width+"px";
+						if(this._height)
+							body.style.height = this._height+"px";
+					}
+					else{
+						if(this._width)
+							body.style.width = this._width+"px";
+						if(this.height)
+							body.style.height = knob.style.height = this._height+"px";
+					}
+					this.redraw();
+				}
+			},
+			setupImage: function(){
+				if(this.colors)
+					this.coltab=this.colors.split(";");
+				else
+					this.coltab=["#e00","#000","#fff"];
+				switch(this.coltab.length){
+				case 1: this.coltab[1]=this.coltab[2]="#fff"; break;
+				case 2: this.coltab[2]=this.coltab[0]; break;
+				}
+				var slib=this.$['wac-body'];
+				if(this.src)
+					slib.style.background = 'url('+this.src+')';
+				else {
+					slib.style.background = this.coltab[1];
+					slib.style.borderRadius = (Math.min(this._width,this._height)*.5)+'px';
+				}
+				slib.style.backgroundSize = '100% 100%';
+				this._knobsrc = this.knobsrc;
+				if(!this.knobsrc){
+					this._knobsrc = 'data:image/svg+xml;,%3csvg%20xmlns%3d%22http%3a%2f%2fwww%2ew3%2eorg%2f2000%2fsvg%22%20version%3d%221%2e1%22%20viewBox%3d%220%200%2010%2010%22%20preserveAspectRatio%3d%22none%22%3e%0d%0a%3cradialGradient%20id%3d%22g0%22%20fx%3d%22%2e3%22%20fy%3d%22%2e3%22%3e%3cstop%20offset%3d%220%22%20stop%2dcolor%3d%22'+this.coltab[2]+'%22%2f%3e%3cstop%20offset%3d%22%2e75%22%20stop%2dcolor%3d%22'+this.coltab[0]+'%22%2f%3e%3c%2fradialGradient%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%225%22%20r%3d%224%22%20fill%3d%22url%28%23g0%29%22%2f%3e%0d%0a%3c%2fsvg%3e';
+				}
+			},
+			setValue: function(value,fire){
+				this.value = parseFloat(value);
+				this.updateValue();
+				if(fire){
+					this.fire('change');
+					this.dirty = false;
+				}
+				return this.dirty;
+			},
+			updateValue: function() {
+				var value = parseFloat(this.value);
 				if(!isNaN(value)) {
 					this.value = value < this.min ? this.min : value > this.max ? this.max : value;
-					var range = this.max - this.min;
-					if(this.direction == 'vert') {
-						var pos = (this.height + this.ditchLength - this.knobheight)*0.5 - (this.value -this.min) / range * this.ditchLength;
-						this.$['wac-sliknob'].style.top = pos + "px";
-					}
-					else {
-						var pos = (this.width - this.ditchLength - this.knobwidth)*0.5  + (this.value - this.min) / range * this.ditchLength;
-						this.$['wac-sliknob'].style.left = pos+"px";
-					}
-					this.valuedisp = this.value.toFixed(this.digits);
-					if(fire)
-						this.fire('change');
-					if(this.value!=this.valueold) {
-						this.valueold=this.value;
-						return 1;
+					this.redraw();
+					if(this.value != this.valueold) {
+						this.valueold = this.value;
+						this.dirty = true;
 					}
 				}
-				return 0;
+			},
+			redraw: function(){
+				var range = this.max - this.min;
+				var s=this.$['wac-knob'].style;
+				if(this.direction == 'vert') {
+					var pos = (this._height + this._ditchlength - this._knobheight)*0.5 - (this.value -this.min) / range * this._ditchlength;
+					s.top = pos + "px";
+					s.left = "0px";
+				}
+				else {
+					var pos = (this._width - this._ditchlength - this._knobwidth)*0.5  + (this.value - this.min) / range * this._ditchlength;
+					s.top = "0px";
+					s.left = pos+"px";
+				}
+				this.valuedisp = this.value.toFixed(this.digits);
 			}
 	});
 	</script>
@@ -583,17 +676,18 @@
 
 <dom-module id="webaudio-switch">
 	<template>
-		<div class="wac-body" id="wac-body">
+		<div id="wac-body">
 			<div id="wac-switch"></div>
 			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
 		<style>
-			@host {
-				* {
-					display: inline-block;
-					font-family: sans-serif;
-					font-size: 11px;
-				}
+			:host {
+				user-select: none;
+				display: inline-block;
+				font-family: sans-serif;
+				font-size: 11px;
+				padding:0;
+				margin:0;
 			}
 			#wac-body {
 				position: relative;
@@ -603,8 +697,6 @@
 			}
 			#wac-switch {
 				cursor: pointer;
-				width: 64px;
-				height: 64px;
 				background-position: -64px;
 			}
 			#wac-tooltip-box {
@@ -631,14 +723,16 @@
 		Polymer({
 			is:"webaudio-switch",
 			properties:{
-				value:      {type:Number, value:0},
+				value:      {type:Number, value:0, observer:'updateValue'},
 				defvalue:   {type:Number, value:0},
 				type:				{type:String, value:'toggle'},
-				width:      {type:Number, value:24},
-				height:     {type:Number, value:24},
+				width:      {type:Number, value:24, observer:'layout'},
+				height:     {type:Number, value:24, observer:'layout'},
+				invert:			{type:Number, value:0},
 				src:				{type:String, value:null},
 				group:			{type:String, value:''},
 				tooltip:		{type:String, value:null},
+				colors:			{type:String, value:null, },
 				enable:			{type:Boolean, value:true},
 			},
 			cancel: function(e) {
@@ -671,18 +765,12 @@
 				sw.addEventListener('mouseover',this.pointerover.bind(this),false);
 				sw.addEventListener('mouseout',this.pointerout.bind(this),false);
 				sw.addEventListener('click',this.click.bind(this),false);
-				sw.style.width = this.width+'px';
-				sw.style.height = this.height+'px';
-				if(this.src){
-					body.style.background = 'none';
-					sw.style.background = 'url('+this.src+')';
-				}
-				else
-					sw.style.background = 'url(data:image/svg+xml;,%3csvg%20xmlns%3d%22http%3a%2f%2fwww%2ew3%2eorg%2f2000%2fsvg%22%20version%3d%221%2e1%22%20viewBox%3d%220%200%2010%2020%22%20preserveAspectRatio%3d%22none%22%3e%0d%0a%3cradialGradient%20id%3d%22g0%22%20fx%3d%22%2e25%22%20fy%3d%22%2e25%22%3e%3cstop%20offset%3d%220%22%20stop%2dcolor%3d%22%23fff%22%2f%3e%3cstop%20offset%3d%22%2e75%22%20stop%2dcolor%3d%22%23f00%22%2f%3e%3c%2fradialGradient%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%225%22%20r%3d%223%22%20fill%3d%22%23600%22%2f%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%2215%22%20r%3d%223%22%20fill%3d%22url%28%23g0%29%22%2f%3e%0d%0a%3c%2fsvg%3e)';
-				sw.style.backgroundPosition = '0px -' + (this.value * this.height) + 'px';
+				this.setupImage();
+				this.layout();
 				sw.style.backgroundSize = '100% 200%';
 				if(this.defvalue === null)
 					this.defvalue = this.value;
+				this.redraw();
 			},
 			pointerdown: function(e) {
 				if(!this.enable)
@@ -707,15 +795,17 @@
 					m=this.setValue(1);
 					break;
 				}
-				if(m)
+				if(m){
 					this.fire('change');
+					this.dirty = false;
+				}
 				this.press = 1;
 				this.ttflag = 0;
 				this.showtip();
 				e.preventDefault();
 			},
 			pointerover: function(e) {
-				if(typeof(e.buttons)!="undefined")
+				if(typeof(e.buttons) != "undefined")
 					var btn = e.buttons;
 				else
 					var btn = e.which;
@@ -723,19 +813,24 @@
 					this.ttflag = 1;
 				setTimeout(this.showtip.bind(this),700);
 				this.hover = 1;
-				if(this.type=="kick"&&this.press)
-					if(this.setValue(1))
+				if(this.type == "kick" && this.press)
+					if(this.setValue(1)){
 						this.fire('change');
+						this.dirty = false;
+					}
 			},
 			pointerout: function(e) {
 				this.ttflag = 0;
-				if(this.press==0)
+				if(this.press == 0)
 					this.vtflag = 0;
 				this.showtip();
 				this.hover = 0;
-				if(this.type=="kick")
-					if(this.setValue(0))
+				if(this.type == "kick"){
+					if(this.setValue(0)){
 						this.fire('change');
+						this.dirty = false;
+					}
+				}
 			},
 			showtip: function() {
 				var ts=this.$['wac-tooltip-box'].style;
@@ -753,25 +848,61 @@
 				e.stopPropagation();
 				return false;
 			},
+			layout: function(){
+				var sw = this.$['wac-switch'];
+				sw.style.width = this.width+'px';
+				sw.style.height = this.height+'px';
+				this.redraw();
+			},
+			setupImage: function(){
+				if(this.colors)
+					this.coltab=this.colors.split(";");
+				else
+					this.coltab=["#e00","#000","#fff"];
+				switch(this.coltab.length){
+				case 1: this.coltab[1]=this.coltab[2]="#fff"; break;
+				case 2: this.coltab[2]=this.coltab[0]; break;
+				}
+				var body=this.$['wac-body'];
+				var sw=this.$['wac-switch'];
+				if(this.src){
+					body.style.background = 'rgba(0,0,0,0)';
+					sw.style.background = 'url('+this.src+')';
+				}
+				else {
+					body.style.background = this.coltab[1];
+					body.style.borderRadius = Math.min(this.width*.5,this.height*.5,5)+'px';
+					sw.style.background = 'url(data:image/svg+xml;,%3csvg%20xmlns%3d%22http%3a%2f%2fwww%2ew3%2eorg%2f2000%2fsvg%22%20version%3d%221%2e1%22%20viewBox%3d%220%200%2010%2020%22%20preserveAspectRatio%3d%22none%22%3e%0d%0a%3cradialGradient%20id%3d%22g0%22%20fx%3d%22%2e3%22%20fy%3d%22%2e3%22%3e%3cstop%20offset%3d%220%22%20stop%2dcolor%3d%22'+this.coltab[2]+'%22%2f%3e%3cstop%20offset%3d%22%2e75%22%20stop%2dcolor%3d%22'+this.coltab[0]+'%22%2f%3e%3c%2fradialGradient%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%225%22%20r%3d%223%22%20stroke%2dwidth%3d%22%2e5%22%20stroke%3d%22'+this.coltab[0]+'%22%20fill%3d%22none%22%2f%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%2215%22%20r%3d%223%22%20fill%3d%22url%28%23g0%29%22%2f%3e%0d%0a%3c%2fsvg%3e)';
+				}
+			},
 			setValue: function(value,fire) {
-				this.value = parseInt(value);
+				this.value = parseFloat(value);
+				this.updateValue();
+				if(fire){
+					this.fire('change');
+					this.dirty = false;
+				}
+				return this.dirty;
+			},
+			updateValue: function() {
+				this.value = parseInt(this.value);
 				this.valuedisp = this.value;
-				this.$['wac-switch'].style.backgroundPosition = '0px -' + (this.value * this.height) + 'px';
+				this.redraw();
 				var el = document.getElementsByTagName('webaudio-switch');
-				if(value == 1) {
+				if(this.value == 1) {
 					for(var i = 0, j = el.length; i < j; ++i) {
 						if(this.group && el[i] != this && el[i].group == this.group)
 							el[i].setValue(0);
 					}
 				}
-				if(fire)
-					this.fire('change');
-				if(this.value!=this.valueold) {
+				if(this.value != this.valueold) {
 					this.valueold = this.value;
-					return 1;
+					this.dirty = true;
 				}
-				return 0;
-			}
+			},
+			redraw: function(){
+				this.$['wac-switch'].style.backgroundPosition = '0px -' + ((this.value^this.invert) * this.height) + 'px';
+			},
 		});
 	</script>
 </dom-module>
@@ -780,11 +911,13 @@
 	<template>
 		<input type="text" class="param" id="param" value="0"/>
 		<style>
-			@host {
-				* {
-					display: inline-block;
-					font-family: sans-serif;
-				}
+			:host {
+				user-select: none;
+				display: inline-block;
+				font-family: sans-serif;
+				font-size: 11px;
+				padding:0;
+				margin:0;
 			}
 			#param {
 				border: none;
@@ -857,10 +990,13 @@
 	<template>
 		<div id="wac-body" touch-action="none"></div>
 		<style>
-			@host {
-				* {
-					display: block;
-				}
+			:host {
+				user-select: none;
+				display: inline-block;
+				font-family: sans-serif;
+				font-size: 11px;
+				padding:0;
+				margin:0;
 			}
 			#wac-canvas {
 				cursor: pointer;

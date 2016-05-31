@@ -11,10 +11,9 @@
       font-family: sans-serif;
     }
     code {
-      color:#4c4;
+      color:#ff4;
       font-family: sans-serif;
-      font-size:small;
-      font-weight:bold;
+      font-size:normal;
     }
     </style>
     <script type="text/javascript">
@@ -62,9 +61,11 @@ function Clear() {
   <h1>WebAudio-Controls Test Page</h1>
     <div style="background-color:#444;color:#eee;width:640px;margin:30px auto;padding:20px;overflow:hidden">
       <h2>WebAudio-Knobs</h2>
-      <webaudio-knob id="knob1"></webaudio-knob><br/>
-      <code>&lt;webaudio-knob id="knob1"&gt;&lt;/webaudio-knob&gt;</code>
-      <div>Default webaudio-knob. If no knob-image is specified, simple embedded image resource is used.</div><br/><br/>
+      <webaudio-knob id="knob1"></webaudio-knob> <webaudio-knob id="knob1a" colors="#fc0;#000;#444"></webaudio-knob><br/>
+
+      <code>&lt;webaudio-knob id="knob1"&gt;&lt;/webaudio-knob&gt;</code><br/>
+      <code>&lt;webaudio-knob id="knob1a" colors="#fc0;#000;#444"&gt;&lt;/webaudio-knob&gt;</code>
+      <div>Default webaudio-knob. If no knob-image is specified, simple embedded image resource is used. Colors are customizable.</div><br/><br/>
 
       <webaudio-knob id="knob2" src="img/LittlePhatty.png" sprites="100" value="60" min="-100" max="100" step="20" diameter="64"></webaudio-knob><br/>
       <code>&lt;webaudio-knob id="knob2" src="img/LittlePhatty.png" sprites="100" value="60" min="-100" max="100" step="20" diameter="64"&gt;&lt;webaudio-knob&gt;</code>
@@ -89,8 +90,10 @@ function Clear() {
 
       <h2>WebAudio-Sliders</h2>
       <webaudio-slider id="slider1"></webaudio-slider>
+      <webaudio-slider id="slider1a" colors="#850;#230;#fff"></webaudio-slider>
       <webaudio-slider id="slider2" direction="horz"></webaudio-slider><br/>
       <code>&lt;webaudio-slider id="slider1"&gt;&lt;/webaudio-slider&gt;<br/>
+      &lt;webaudio-slider id="slider1a" colors="#850;#230;#fff"&gt;&lt;/webaudio-slider&gt;<br/>
         &lt;webaudio-slider id="slider2" direction="horz"&gt;&lt;/webaudio-slider&gt;</code>
       <div>Default webaudio-slider. If no slider-image is specified, simple embedded image resource is used.
         The slider direction is specified by "direction" attribute.
@@ -111,8 +114,10 @@ function Clear() {
       <hr/>
 
       <h2>WebAudio-Switches</h2>
-      <webaudio-switch id="toggle1"></webaudio-switch><br/>
-      <code>&lt;webaudio-switch id="toggle1"&gt;&lt;/webaudio-switch&gt;</code>
+      <webaudio-switch id="toggle1"></webaudio-switch>
+      <webaudio-switch id="toggle1a" colors="#0c0;#008;#fff"></webaudio-switch><br/>
+      <code>&lt;webaudio-switch id="toggle1"&gt;&lt;/webaudio-switch&gt;<br/>
+      &lt;webaudio-switch id="toggle1a" colors="#0c0;#008;#fff"&gt;&lt;/webaudio-switch&gt;</code>
       <div>Default webaudio-switch. If no switch-image is specified, simple embedded image resource is used.</div><br/><br/>
 
       <webaudio-switch id="toggle2" src="img/switch_toggle.png" width="32" height="32"></webaudio-switch>
@@ -125,15 +130,15 @@ function Clear() {
       <code>&lt;webaudio-switch id="kick1" src="img/switch_toggle.png" type="kick" width="54" height="54"&gt;&lt;/webaudio-switch&gt;</code>
       <div>Kick type switch. In this mode, this switch is on only while pressing.</div><br/><br/>
 
-      <webaudio-switch id="radioA" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" value="1" tooltip="Radio-A"></webaudio-switch>
-      <webaudio-switch id="radioB" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" tooltip="Radio-B"></webaudio-switch>
-      <webaudio-switch id="radioC" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" tooltip="Radio-C"></webaudio-switch><br/>
+      <webaudio-switch id="radioA" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" invert="1" value="1" tooltip="Radio-A"></webaudio-switch>
+      <webaudio-switch id="radioB" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" invert="1" tooltip="Radio-B"></webaudio-switch>
+      <webaudio-switch id="radioC" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" invert="1" tooltip="Radio-C"></webaudio-switch><br/>
       <code>
         &lt;webaudio-switch id="radioA" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" value="1" tooltip="Radio-A"&gt;&lt;/webaudio-switch&gt;<br/>
         &lt;webaudio-switch id="radioB" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" tooltip="Radio-B"&gt;&lt;/webaudio-switch&bt;<br/>
         &lt;webaudio-switch id="radioC" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" tooltip="Radio-C"&gt;&lt;/webaudio-switch&gt;<br/>
       </code>
-      <div>Radio type switch. In this mode, only one switch is on in the group.</div><br/><br/>
+      <div>Radio type switch. In this mode, only one switch is activated in the group.</div><br/><br/>
   </div>
 
 

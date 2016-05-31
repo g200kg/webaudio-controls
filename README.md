@@ -1,7 +1,8 @@
 # webaudio-controls
-
 **WebAudioControls** is GUI parts library for Web application using [Polymer] WebComponents.  
 Especially suitable for audio-applications like VST plugins.  
+
+Polymer 1.4 compatible
 
 **WebAudioControls** is consist of following components  
 
@@ -30,6 +31,8 @@ Default style with no external image-files.
 [![](img/sample3.png)](https://rawgithub.com/g200kg/webaudio-controls/master/sample3.html)  
 
 ## To Operate  
+Following user actions are supported.
+
 Operation | Component | Description
 ---|---|---
 **Click** | Switch/Param | toggle / activate the switch or focus the param
@@ -52,7 +55,7 @@ Operation | Component | Description
   &lt;link rel="import" href="bower_components/polymer/polymer.html"&gt;
 
 - load webaudio-contols
-> &lt;link rel="import" href="webaudio-controls.html" &gt;
+> &lt;link rel="import" href="webcomponents/webaudio-controls.html" &gt;
 
 - insert `webaudio-knob/slider/switch/param/keyboard` element
 > &lt;webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"&gt;&lt;/webaudio-knob&gt;  
@@ -68,22 +71,23 @@ Operation | Component | Description
 
 Attribute  | Options      | Default          | Description
 ---        | ---                  | ---                 | ---
-**src** | string | Internal embedded resource is used if not specified | url of the vertical stitched knob image
+**src** | string | Internal embedded resource is used if not specified | url of the knob image. (single frame or vertical stitched)
 **value** | float | `0` | The current value. Also used as initial value if specified
 **defvalue** | float | Initial 'value' is used if not specified | The default value that will be used when ctrl+click
 **min** | float | `0` | Minimum value of the knob
 **max** | float | `100` | Maximum value of the knob
 **step** | float | `1` | Value step of the control. The 'value' is always rounded to multiple of 'step'
-**log** | int | `0` | If 1, knob scale is logalithmic
+**log** | int | `0` | If 1, knob scale is logalithmic. In this mode, `step` is ignored.
 **units** | string | `null` | specified units (e.g. Hz) is added to valuetip
 **width** | int | `64` | Knob display width in px
 **height** | int | `64` | Knob display height in px
 **diameter** | int | `64` | Knob display diameter in px. This attribute can be used instead of width / height if the display image is square
-**sprites** | int | `0` | if `0`, the "src" image should be single frame image that indicate middle position. the image will be rotated -135deg to +135deg. if "sprirites" is not `0`, the "src" image should be stitched multi-framed image. "sprites" specify the max frame number in the stitched knob image. Note that this is (number of frames) - 1
-**sensitivity** | float | `1` | Pointing device sensitivity. min-max range correspond to (128 / 'sensitivity') px
+**sprites** | int | `0` | if `0`, the `src` image should be single frame image that indicate middle position. the image will be rotated -135deg to +135deg. if `sprirites` is not `0`, the `src` image should be stitched multi-framed image. `sprites` specify the max frame number in the stitched knob image. Note that this is (number of frames) - 1
+**sensitivity** | float | `1` | Pointing device sensitivity. min-max range correspond to (128 / `sensitivity`) px
 **valuetip** | `0`,`1` | `1` | Enable the overlaid value-tip display.
 **tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
 **enable** | `0`,`1` | `1` | Enable control with the pointing device.
+**colors** | string | "#e00;#000;#000" | Semicolon separated 3 colors for 'indicator', 'body' and 'highlight'. These colors are used in default knob (when `src` is not provided).
 
 ### webaudio-slider
 
@@ -100,12 +104,14 @@ Attribute  | Options      | Default          | Description
 **height** | int | `128` | Slider display height in px
 **knobwidth** | int | same as 'width' if 'direction' is `vert`, or same as 'height' if 'direction' is `horz` | Slider knob part width in px
 **knobheight** | int | same as 'width' if 'direction' is `vert`, or same as 'height' if 'direction' is `horz` | Slider knob part height in px
-**ditchLength** | int | ('height'-'knobheight') or ('width'-'knobwidth')  depends on 'direction' | Knob movable length
+**ditchlength** | int | ('height'-'knobheight') or ('width'-'knobwidth')  depends on 'direction' | Knob movable length
 **direction** | `"vert"`,`"horz"` | `"vert"` | Slider direction. vertical or horizontal
 **sensitivity** | float | `1` | Pointing device sensitivity. min-max range correspond to (128 / 'sensitivity') px
 **valuetip** | `0`,`1` | `1` | Enable the overlaid value-tip display.
 **tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
 **enable** | `0`, `1` | `1` | Enable control with the pointing device.
+**colors** | string | "#e00;#000;#fff" | Semicolon separated 3 colors for 'knob', 'background' and 'highlight'. These colors are used in default knob (when `src` or `knobsrc` is not provided).
+
 
 ### webaudio-switch
 
@@ -118,8 +124,10 @@ Attribute  | Options      | Default          | Description
 **height** | int | `32` | Switch display height in px
 **type** | `"toggle"`,`"kick"`,`"radio"` | `"toggle"` | Switch type. `"toggle"` switch has so-called 'checkbox' function. `"radio"` switch is a radio-button and the `"kick"` switch is a general command button
 **group** | string | `null` | Group id string used if the 'type' is `"radio"`. Only one switch will be set to `"1"` in same group
+**invert** | `0`,`1` | `0` | exchange on and off image
 **tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
 **enable** | `0`,`1` | `1` | Enable control with the pointing device.
+**colors** | string | "#e00;#000;#fff" | Semicolon separated 3 colors for 'knob', 'background' and 'highlight'. These colors are used in default switch (when `src` is not provided).
 
 ### webaudio-param
 
