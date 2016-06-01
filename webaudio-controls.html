@@ -55,6 +55,7 @@
 				padding:0;
 				width: 100%;
 				height: 100%;
+				border: attr(b-t)
 				background-repeat: no-repeat;
 				background-position: 0px 0px;
 			}
@@ -156,7 +157,6 @@
 					this.setValue(log2(this.value));
 						this.ctlStep = 0.0001;
 				} else{
-					this.setValue(this.value);
 					this.ctlStep=this.step;
 				}
 				this.redraw();
@@ -191,10 +191,7 @@
 				this.boundPointermove = this.pointermove.bind(this);
 				this.boundCancel = this.cancel.bind(this);
 				if(e.ctrlKey || e.metaKey) {
-					if(this.setValue(parseFloat(this.defvalue))){
-						this.fire('change');
-						this.dirty=false;
-					}
+					this.setValue(parseFloat(this.defvalue));
 				}
 				else {
 					this.startPosX = e.pageX;
@@ -223,10 +220,7 @@
 					this.startVal = this.value;
 				}
 				var offset = (this.startPosY - e.pageY - this.startPosX + e.pageX) * this.sensitivity;
-				if(this.setValue(this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4:1) * 128)) - this.min) / this.ctlStep)|0) * this.ctlStep)){
-					this.fire('change');
-					this.dirty=false;
-				}
+				this.value = this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4:1) * 128)) - this.min) / this.ctlStep)|0) * this.ctlStep;
 				e.preventDefault();
 				e.stopPropagation();
 				return false;
@@ -293,20 +287,16 @@
 				delta *= (this.max - this.min) * 0.05;
 				if(Math.abs(delta) < this.step)
 					delta = (delta>0)?this.step:-this.step;
-				if(this.setValue(this.value+delta))
-					this.fire('change');
+				this.value += delta;
 				this.ttflag = 0;
 				this.vtflag = 1;
 				this.showtip();
 				e.preventDefault();
 			},
 			setValue: function(value,fire){
+				if(!fire)
+					this.valueold = value;
 				this.value = value;
-				if(fire){
-					this.fire('change');
-					this.dirty=false;
-				}
-				return this.dirty;
 			},
 			updateValue: function() {
 				var value = parseFloat(this.value);
@@ -319,10 +309,10 @@
 						this.valuedisp = valueNumber.toFixed((valueNumber<10)?2:1) + "k";
 					}
 				}
+				this.redraw();
 				if(this.value != this.valueold) {
-					this.redraw();
 					this.valueold = this.value;
-					this.dirty=true;
+					this.fire('change');
 				}
 			},
 			layout: function(){
@@ -450,10 +440,7 @@
 					var offset = (this.startPosY - e.pageY) / this._ditchlength;
 				else
 					var offset = (e.pageX - this.startPosX) / this._ditchlength;
-				if(this.setValue(this.min + ((((this.startVal + (this.max - this.min) * offset * this.sensitivity / ((e.shiftKey ? 4:1))) - this.min) / this.step)|0) * this.step)){
-					this.fire('change');
-					this.dirty = false;
-				}
+				this.value = this.min + (((((this.startVal + (this.max - this.min) * offset * this.sensitivity / ((e.shiftKey ? 4:1))) - this.min) / this.step)|0) * this.step);
 				e.preventDefault();
 			},
 			cancel: function(e) {
@@ -485,8 +472,6 @@
 					for(var n = this.step ; n < 1; n *= 10)
 						++this.digits;
 				}
-				this.setValue(this.value);
-				this.fire('change');
 			},
 			pointerdown: function(e) {
 				if(!this.enable)
@@ -495,12 +480,8 @@
 					e = e.touches[0];
 				this.boundPointermove = this.pointermove.bind(this);
 				this.boundCancel = this.cancel.bind(this);
-				if(e.ctrlKey || e.metaKey) {
-					if(this.setValue(this.defvalue)){
-						this.fire('change');
-						this.dirty = false;
-					}
-				}
+				if(e.ctrlKey || e.metaKey)
+					this.value = this.defvalue;
 				else {
 					if(this.valuetip)
 						this.$['wac-valuetip'].style.opacity = 0.9;
@@ -547,7 +528,7 @@
 					this.vtim=setTimeout(function(){if(this.vtflag==0) this.$['wac-valuetip'].style.display="none";}.bind(this),500);
 				}
 				if(this.tooltip && this.ttflag) {
-					ts.display="block";
+					ts.display = "block";
 					setTimeout(function(){this.opacity=0.8;}.bind(ts),100);
 				}
 				else if(ts.opacity) {
@@ -568,10 +549,7 @@
 				delta *= (this.max - this.min) * 0.05;
 				if(Math.abs(delta) < this.step)
 					delta = (delta>0)?this.step:-this.step;
-				if(this.setValue(this.value+delta)){
-					this.fire('change');
-					this.dirty = false;
-				}
+				this.value += delta;
 				this.ttflag = 0;
 				this.vtflag = 1;
 				this.showtip();
@@ -636,13 +614,9 @@
 				}
 			},
 			setValue: function(value,fire){
-				this.value = parseFloat(value);
-				this.updateValue();
-				if(fire){
-					this.fire('change');
-					this.dirty = false;
-				}
-				return this.dirty;
+				if(!fire)
+					this.valueold = value;
+				this.value = value;
 			},
 			updateValue: function() {
 				var value = parseFloat(this.value);
@@ -651,7 +625,7 @@
 					this.redraw();
 					if(this.value != this.valueold) {
 						this.valueold = this.value;
-						this.dirty = true;
+						this.fire('change');
 					}
 				}
 			},
@@ -780,24 +754,19 @@
 				window.addEventListener('mouseup', this.boundUp, true);
 				window.addEventListener('touchend', this.boundUp, true);
 				window.addEventListener('touchcancel', this.boundCancel, true);
-				var m=0;
 				switch(this.type) {
 				case 'kick':
-					m=this.setValue(1);
+					this.value = 1;
 					break;
 				case 'toggle':
 					if(e.ctrlKey || e.metaKey)
-						m=this.setValue(this.defvalue);
+						this.value = defvalue;
 					else
-						m=this.setValue(1 - this.value);
+						this.value = 1 - this.value;
 					break;
 				case 'radio':
-					m=this.setValue(1);
+					this.value = 1;
 					break;
-				}
-				if(m){
-					this.fire('change');
-					this.dirty = false;
 				}
 				this.press = 1;
 				this.ttflag = 0;
@@ -814,10 +783,7 @@
 				setTimeout(this.showtip.bind(this),700);
 				this.hover = 1;
 				if(this.type == "kick" && this.press)
-					if(this.setValue(1)){
-						this.fire('change');
-						this.dirty = false;
-					}
+					this.value = 1;
 			},
 			pointerout: function(e) {
 				this.ttflag = 0;
@@ -825,12 +791,8 @@
 					this.vtflag = 0;
 				this.showtip();
 				this.hover = 0;
-				if(this.type == "kick"){
-					if(this.setValue(0)){
-						this.fire('change');
-						this.dirty = false;
-					}
-				}
+				if(this.type == "kick")
+					this.value = 0;
 			},
 			showtip: function() {
 				var ts=this.$['wac-tooltip-box'].style;
@@ -875,14 +837,10 @@
 					sw.style.background = 'url(data:image/svg+xml;,%3csvg%20xmlns%3d%22http%3a%2f%2fwww%2ew3%2eorg%2f2000%2fsvg%22%20version%3d%221%2e1%22%20viewBox%3d%220%200%2010%2020%22%20preserveAspectRatio%3d%22none%22%3e%0d%0a%3cradialGradient%20id%3d%22g0%22%20fx%3d%22%2e3%22%20fy%3d%22%2e3%22%3e%3cstop%20offset%3d%220%22%20stop%2dcolor%3d%22'+this.coltab[2]+'%22%2f%3e%3cstop%20offset%3d%22%2e75%22%20stop%2dcolor%3d%22'+this.coltab[0]+'%22%2f%3e%3c%2fradialGradient%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%225%22%20r%3d%223%22%20stroke%2dwidth%3d%22%2e5%22%20stroke%3d%22'+this.coltab[0]+'%22%20fill%3d%22none%22%2f%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%2215%22%20r%3d%223%22%20fill%3d%22url%28%23g0%29%22%2f%3e%0d%0a%3c%2fsvg%3e)';
 				}
 			},
-			setValue: function(value,fire) {
-				this.value = parseFloat(value);
-				this.updateValue();
-				if(fire){
-					this.fire('change');
-					this.dirty = false;
-				}
-				return this.dirty;
+			setValue: function(value,fire){
+				if(!fire)
+					this.valueold = value;
+				this.value = value;
 			},
 			updateValue: function() {
 				this.value = parseInt(this.value);
@@ -892,13 +850,12 @@
 				if(this.value == 1) {
 					for(var i = 0, j = el.length; i < j; ++i) {
 						if(this.group && el[i] != this && el[i].group == this.group)
-							el[i].setValue(0);
+							el[i].value = 0;
 					}
 				}
-				if(this.value != this.valueold) {
+				this.fire('change');
+				if(this.value != this.valueold)
 					this.valueold = this.value;
-					this.dirty = true;
-				}
 			},
 			redraw: function(){
 				this.$['wac-switch'].style.backgroundPosition = '0px -' + ((this.value^this.invert) * this.height) + 'px';
@@ -909,7 +866,7 @@
 
 <dom-module id="webaudio-param">
 	<template>
-		<input type="text" class="param" id="param" value="0"/>
+		<input type="text" id="param" value="0"/>
 		<style>
 			:host {
 				user-select: none;
@@ -933,12 +890,12 @@
 		Polymer({
 			is:"webaudio-param",
 			properties:{
-				value:      {type:Number, value:0},
-				width:      {type:Number, value:32},
-				height:     {type:Number, value:16},
-				fontsize:		{type:Number, value:9},
-				src:				{type:String, value:'#000'},
-				color:			{type:String, value:'#ffffff'},
+				value:      {type:Number, value:0, observer:'updateValue'},
+				width:      {type:Number, value:32, observer:'layout'},
+				height:     {type:Number, value:16, observer:'layout'},
+				fontsize:		{type:Number, value:9, observer:'layout'},
+				src:				{type:String, value:'#000', observer:'setupImage'},
+				color:			{type:String, value:'#ffffff', observer:'setupImage'},
 				link:				{type:String, value:null},
 				fcon:				{type:String, value:null},
 			},
@@ -948,11 +905,12 @@
 				var f = eval(this.fconv);
 				var t = typeof(f);
 				if(this.fconv == null)
-					this.$['param'].value = e.valuedisp;
+					this.value = e.valuedisp;
 				else if(t == "object")
-					this.$['param'].value = f[e.value];
+					this.value = f[e.value];
 				else if(t == "function")
-					this.$['param'].value = f(e.value);
+					this.value = f(e.value);
+				this.$['param'].value = this.value;
 			},
 			edit: function(e) {
 				var target=document.getElementById(this.link);
@@ -962,8 +920,18 @@
 				}
 			},
 			ready: function() {
-				this.$['param'].style.width = this.width+'px';
-				this.$['param'].style.height = this.height+'px';
+				this.setupImage();
+				this.boundChange = this.change.bind(this);
+				this.boundEdit = this.edit.bind(this);
+				this.layout();
+				if(this.link) {
+					var t = document.getElementById(this.link);
+					t.addEventListener("change", this.boundChange, true);
+					this.boundChange(t);
+				}
+				this.$['param'].addEventListener("change", this.boundEdit, true);
+			},
+			setupImage: function(){
 				if(this.src){
 					if(this.src[0]=='#'||this.src.indexOf('rgb')==0)
 						this.$['param'].style.background = this.src;
@@ -972,15 +940,15 @@
 				}
 				this.$['param'].style.backgroundSize = '100% 100%';
 				this.$['param'].style.color = this.color;
+			},
+			layout: function(){
+				this.$['param'].style.width = this.width+'px';
+				this.$['param'].style.height = this.height+'px';
 				this.$['param'].style.fontSize = this.fontsize+'px';
-				this.boundChange = this.change.bind(this);
-				this.boundEdit = this.edit.bind(this);
-				if(this.link) {
-					var t = document.getElementById(this.link);
-					t.addEventListener("change", this.boundChange, true);
-					this.boundChange(t);
-				}
-				this.$['param'].addEventListener("change", this.boundEdit, true);
+			},
+			updateValue: function(){
+				this.$['param'].value=this.value;
+				this.edit();
 			},
 		});
 	</script>
