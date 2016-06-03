@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>[Polymer] WebAudio-Controls Live Demo</title>
-    <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+    <script src="bower_components/webcomponentsjs/webcomponents-lite-min.js"></script>
     <link rel="import" href="bower_components/polymer/polymer.html">
     <link rel="import" href="webaudio-controls.html">
     <style type="text/css">
@@ -19,7 +19,7 @@
     <h1>WebAudio-Controls Live Demo</h1>
     <div style="position:relative;background-image: url('img/bg.png');width:512px;height:240px;margin:30px auto;padding:0px;">
         <webaudio-knob style="position:absolute;left:48px;top:76px" src="img/LittlePhatty.png" value="0" max="100" step="1" width="64" height="64" sprites="100" tooltip="Knob1 tooltip abcdefghijklmnopqustuvwxyz"></webaudio-knob>
-        <webaudio-knob units="Hz" log=true style="position:absolute;left:128px;top:76px" src="img/LittlePhatty.png" value="50" min="20" max="20000" diameter="64" sprites="100" tooltip="Knob2 tooltip"></webaudio-knob>
+        <webaudio-knob units="Hz" log="1" style="position:absolute;left:128px;top:76px" src="img/LittlePhatty.png" value="50" min="20" max="20000" diameter="64" sprites="100" tooltip="Knob2 tooltip"></webaudio-knob>
         <webaudio-knob id="knob3" style="position:absolute;left:232px;top:48px" src="img/vernier.png" value="30" max="100" step="1" diameter="128" sprites="50" valuetip="0" tooltip="Knob3"></webaudio-knob>
         <webaudio-param style="position:absolute;left:328px;top:162px" link="knob3"></webaudio-param>
         <webaudio-slider style="position:absolute;left:368px;top:24px" src="img/vsliderbody.png" knobsrc="img/vsliderknob.png" value="0" min="0" max="100" step="1" basewidth="24" baseheight="128" knobwidth="24" knobheight="24" ditchLength="100" tooltip="Slider-L"></webaudio-slider>

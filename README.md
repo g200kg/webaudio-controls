@@ -51,7 +51,7 @@ Operation | Component | Description
 > Use command 'bower install --save Polymer/polymer', if you use bower. Or download zipped file and deploy appropriately.
 
 - load webcomponents.js and polymer  
-> &lt;script src="bower_components/webcomponentsjs/webcomponents.js"&gt;&lt;/script&gt;<br/>
+> &lt;script src="bower_components/webcomponentsjs/webcomponents-lite-min.js"&gt;&lt;/script&gt;<br/>
   &lt;link rel="import" href="bower_components/polymer/polymer.html"&gt;
 
 - load webaudio-contols
