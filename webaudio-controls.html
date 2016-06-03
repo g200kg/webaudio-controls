@@ -183,6 +183,9 @@
 					this.sprites = 0;
 				}
 			},
+			preventScroll: function(e){
+				e.preventDefault();
+			},
 			pointerdown: function(e) {
 				if(!this.enable)
 					return;
@@ -203,6 +206,7 @@
 				window.addEventListener('mouseup', this.boundCancel, true);
 				window.addEventListener('touchend', this.boundCancel, true);
 				window.addEventListener('touchcancel', this.boundCancel, true);
+				document.body.addEventListener('touchstart',this.preventScroll);
 				this.press = this.vtflag = 1;
 				this.ttflag = 0;
 				this.showtip();
@@ -234,6 +238,7 @@
 				window.removeEventListener('mouseup', this.boundCancel, true);
 				window.removeEventListener('touchend', this.boundCancel, true);
 				window.removeEventListener('touchcancel', this.boundCancel, true);
+				document.body.removeEventListener('touchstart',this.preventScroll,false);
 			},
 			pointerover: function(e) {
 				if(typeof(e.buttons)!="undefined")
@@ -425,7 +430,10 @@
 				valuetip:   {type:Number, value:1},
 				tootip:			{type:String, value:null},
 				colors:			{type:String, value:null, observer:'setupImage'},
-				enable:			{type:Boolean, value:true},
+				enable:			{type:Number, value:1},
+			},
+			preventScroll: function(e){
+				e.preventDefault();
 			},
 			pointermove: function(e) {
 				if(e.touches)
@@ -452,6 +460,7 @@
 				window.removeEventListener('mouseup', this.boundCancel, true);
 				window.removeEventListener('touchend', this.boundCancel, true);
 				window.removeEventListener('touchcancel', this.boundCancel, true);
+				document.body.removeEventListener('touchstart',this.preventScroll,false);
 			},
 			ready: function() {
 				if(this.defvalue == null)
@@ -494,6 +503,7 @@
 				window.addEventListener('mouseup', this.boundCancel, true);
 				window.addEventListener('touchend', this.boundCancel, true);
 				window.addEventListener('touchcancel', this.boundCancel, true);
+				document.body.addEventListener('touchstart',this.preventScroll);
 				this.press = this.vtflag = 1;
 				this.ttflag = 0;
 				this.showtip();
@@ -707,7 +717,7 @@
 				group:			{type:String, value:''},
 				tooltip:		{type:String, value:null},
 				colors:			{type:String, value:null, },
-				enable:			{type:Boolean, value:true},
+				enable:			{type:Number, value:1},
 			},
 			cancel: function(e) {
 				window.removeEventListener('mouseup', this.boundUp, true);
@@ -910,7 +920,6 @@
 					this.value = f[e.value];
 				else if(t == "function")
 					this.value = f(e.value);
-				this.$['param'].value = this.value;
 			},
 			edit: function(e) {
 				var target=document.getElementById(this.link);
@@ -948,7 +957,6 @@
 			},
 			updateValue: function(){
 				this.$['param'].value=this.value;
-				this.edit();
 			},
 		});
 	</script>
