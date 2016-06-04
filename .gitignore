@@ -1,5 +1,5 @@
 # bower
-bower_components/
+bower_components/*
 !bower_components/polymer/polymer.html
 !bower_components/webcomponentsjs/webcomponents-lite.min.js
 
