@@ -155,7 +155,7 @@
 					this.min = log2(this.minval);
 					this.max = log2(this.maxval);
 					this.setValue(log2(this.value));
-						this.ctlStep = 0.0001;
+					this.ctlStep = 0.0001;
 				} else{
 					this.ctlStep=this.step;
 				}
@@ -732,10 +732,9 @@
 				window.removeEventListener('touchend', this.boundUp, true);
 				window.removeEventListener('touchcancel', this.boundCancel, true);
 				if(this.type=="kick") {
-					if(this.setValue(0)) {
-						this.fire('change');
-						if(this.value==0)
-							this.fire('click');
+					if(this.value) {
+						this.value = 0;
+						this.fire('click');
 					}
 				}
 				this.press = 0;
