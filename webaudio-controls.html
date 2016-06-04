@@ -178,8 +178,8 @@
 				if(this.src)
 					knb.style.background = 'url('+this.src+')';
 				else {
-					knb.style.background = 'url(data:image/svg+xml,%3csvg%20xmlns%3d%22http%3a%2f%2fwww%2ew3%2eorg%2f2000%2fsvg%22%20version%3d%221%2e1%22%20viewBox%3d%220%200%2010%2010%22%20preserveAspectRatio%3d%22none%22%3e%0d%0a%3cline%20x1%3d%225%22%20y1%3d%22%2e5%22%20x2%3d%225%22%20y2%3d%224%22%20stroke%3d%22'+this.coltab[0]+'%22%20stroke%2dwidth%3d%22%2e8%22%20stroke%2dlinecap%3d%22round%22%2f%3e%0d%0a%3c%2fsvg%3e)';
-					body.style.background = 'url(data:image/svg+xml,%3csvg%20xmlns%3d%22http%3a%2f%2fwww%2ew3%2eorg%2f2000%2fsvg%22%20version%3d%221%2e1%22%20viewBox%3d%220%200%2010%2010%22%20preserveAspectRatio%3d%22none%22%3e%0d%0a%3cradialGradient%20id%3d%22g0%22%20fx%3d%22%2e3%22%20fy%3d%22%2e3%22%3e%3cstop%20offset%3d%220%22%20stop%2dcolor%3d%22'+this.coltab[2]+'%22%2f%3e%3cstop%20offset%3d%22%2e75%22%20stop%2dcolor%3d%22'+this.coltab[1]+'%22%2f%3e%3c%2fradialGradient%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%225%22%20r%3d%225%22%20fill%3d%22url%28%23g0%29%22%2f%3e%0d%0a%3c%2fsvg%3e)';
+					knb.style.background = 'url(data:image/svg+xml,%3csvg%20xmlns%3d%22http%3a%2f%2fwww%2ew3%2eorg%2f2000%2fsvg%22%20version%3d%221%2e1%22%20viewBox%3d%220%200%2010%2010%22%20preserveAspectRatio%3d%22none%22%3e%0d%0a%3cline%20x1%3d%225%22%20y1%3d%22%2e5%22%20x2%3d%225%22%20y2%3d%224%22%20stroke%3d%22'+encodeURIComponent(this.coltab[0])+'%22%20stroke%2dwidth%3d%22%2e8%22%20stroke%2dlinecap%3d%22round%22%2f%3e%0d%0a%3c%2fsvg%3e)';
+					body.style.background = 'url(data:image/svg+xml,%3csvg%20xmlns%3d%22http%3a%2f%2fwww%2ew3%2eorg%2f2000%2fsvg%22%20version%3d%221%2e1%22%20viewBox%3d%220%200%2010%2010%22%20preserveAspectRatio%3d%22none%22%3e%0d%0a%3cradialGradient%20id%3d%22g0%22%20fx%3d%22%2e3%22%20fy%3d%22%2e3%22%3e%3cstop%20offset%3d%220%22%20stop%2dcolor%3d%22'+encodeURIComponent(this.coltab[2])+'%22%2f%3e%3cstop%20offset%3d%22%2e75%22%20stop%2dcolor%3d%22'+encodeURIComponent(this.coltab[1])+'%22%2f%3e%3c%2fradialGradient%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%225%22%20r%3d%225%22%20fill%3d%22url%28%23g0%29%22%2f%3e%0d%0a%3c%2fsvg%3e)';
 					this.sprites = 0;
 				}
 			},
@@ -620,7 +620,7 @@
 				slib.style.backgroundSize = '100% 100%';
 				this._knobsrc = this.knobsrc;
 				if(!this.knobsrc){
-					this._knobsrc = 'data:image/svg+xml;,%3csvg%20xmlns%3d%22http%3a%2f%2fwww%2ew3%2eorg%2f2000%2fsvg%22%20version%3d%221%2e1%22%20viewBox%3d%220%200%2010%2010%22%20preserveAspectRatio%3d%22none%22%3e%0d%0a%3cradialGradient%20id%3d%22g0%22%20fx%3d%22%2e3%22%20fy%3d%22%2e3%22%3e%3cstop%20offset%3d%220%22%20stop%2dcolor%3d%22'+this.coltab[2]+'%22%2f%3e%3cstop%20offset%3d%22%2e75%22%20stop%2dcolor%3d%22'+this.coltab[0]+'%22%2f%3e%3c%2fradialGradient%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%225%22%20r%3d%224%22%20fill%3d%22url%28%23g0%29%22%2f%3e%0d%0a%3c%2fsvg%3e';
+					this._knobsrc = 'data:image/svg+xml;,%3csvg%20xmlns%3d%22http%3a%2f%2fwww%2ew3%2eorg%2f2000%2fsvg%22%20version%3d%221%2e1%22%20viewBox%3d%220%200%2010%2010%22%20preserveAspectRatio%3d%22none%22%3e%0d%0a%3cradialGradient%20id%3d%22g0%22%20fx%3d%22%2e3%22%20fy%3d%22%2e3%22%3e%3cstop%20offset%3d%220%22%20stop%2dcolor%3d%22'+encodeURIComponent(this.coltab[2])+'%22%2f%3e%3cstop%20offset%3d%22%2e75%22%20stop%2dcolor%3d%22'+encodeURIComponent(this.coltab[0])+'%22%2f%3e%3c%2fradialGradient%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%225%22%20r%3d%224%22%20fill%3d%22url%28%23g0%29%22%2f%3e%0d%0a%3c%2fsvg%3e';
 				}
 			},
 			setValue: function(value,fire){
@@ -844,7 +844,7 @@
 				else {
 					body.style.background = this.coltab[1];
 					body.style.borderRadius = Math.min(this.width*.5,this.height*.5,5)+'px';
-					sw.style.background = 'url(data:image/svg+xml;,%3csvg%20xmlns%3d%22http%3a%2f%2fwww%2ew3%2eorg%2f2000%2fsvg%22%20version%3d%221%2e1%22%20viewBox%3d%220%200%2010%2020%22%20preserveAspectRatio%3d%22none%22%3e%0d%0a%3cradialGradient%20id%3d%22g0%22%20fx%3d%22%2e3%22%20fy%3d%22%2e3%22%3e%3cstop%20offset%3d%220%22%20stop%2dcolor%3d%22'+this.coltab[2]+'%22%2f%3e%3cstop%20offset%3d%22%2e75%22%20stop%2dcolor%3d%22'+this.coltab[0]+'%22%2f%3e%3c%2fradialGradient%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%225%22%20r%3d%223%22%20stroke%2dwidth%3d%22%2e5%22%20stroke%3d%22'+this.coltab[0]+'%22%20fill%3d%22none%22%2f%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%2215%22%20r%3d%223%22%20fill%3d%22url%28%23g0%29%22%2f%3e%0d%0a%3c%2fsvg%3e)';
+					sw.style.background = 'url(data:image/svg+xml;,%3csvg%20xmlns%3d%22http%3a%2f%2fwww%2ew3%2eorg%2f2000%2fsvg%22%20version%3d%221%2e1%22%20viewBox%3d%220%200%2010%2020%22%20preserveAspectRatio%3d%22none%22%3e%0d%0a%3cradialGradient%20id%3d%22g0%22%20fx%3d%22%2e3%22%20fy%3d%22%2e3%22%3e%3cstop%20offset%3d%220%22%20stop%2dcolor%3d%22'+encodeURIComponent(this.coltab[2])+'%22%2f%3e%3cstop%20offset%3d%22%2e75%22%20stop%2dcolor%3d%22'+encodeURIComponent(this.coltab[0])+'%22%2f%3e%3c%2fradialGradient%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%225%22%20r%3d%223%22%20stroke%2dwidth%3d%22%2e5%22%20stroke%3d%22'+encodeURIComponent(this.coltab[0])+'%22%20fill%3d%22none%22%2f%3e%0d%0a%3ccircle%20cx%3d%225%22%20cy%3d%2215%22%20r%3d%223%22%20fill%3d%22url%28%23g0%29%22%2f%3e%0d%0a%3c%2fsvg%3e)';
 				}
 			},
 			setValue: function(value,fire){
@@ -904,9 +904,10 @@
 				width:      {type:Number, value:32, observer:'layout'},
 				height:     {type:Number, value:16, observer:'layout'},
 				fontsize:		{type:Number, value:9, observer:'layout'},
-				src:				{type:String, value:'#000', observer:'setupImage'},
-				color:			{type:String, value:'#ffffff', observer:'setupImage'},
+				src:				{type:String, value:null, observer:'setupImage'},
+//				color:			{type:String, value:'#ffffff', observer:'setupImage'},
 				link:				{type:String, value:null},
+				colors:			{type:String, value:'#fff;#000', observer:'setupImage'},
 				fcon:				{type:String, value:null},
 			},
 			change: function(e) {
@@ -941,14 +942,18 @@
 				this.$['param'].addEventListener("change", this.boundEdit, true);
 			},
 			setupImage: function(){
-				if(this.src){
-					if(this.src[0]=='#'||this.src.indexOf('rgb')==0)
-						this.$['param'].style.background = this.src;
-					else
-						this.$['param'].style.background = 'url('+this.src+')';
-				}
+				if(this.colors)
+					this.coltab = this.colors.split(";");
+				else
+					this.coltab = ["#fff","#000"];
+				if(this.src)
+					this.$['param'].style.background = 'url('+this.src+')';
+				else if(this.src == "")
+					this.$['param'].style.background = 'none';
+				else
+					this.$['param'].style.background = this.coltab[1];
 				this.$['param'].style.backgroundSize = '100% 100%';
-				this.$['param'].style.color = this.color;
+				this.$['param'].style.color = this.coltab[0];
 			},
 			layout: function(){
 				this.$['param'].style.width = this.width+'px';

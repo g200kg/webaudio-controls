@@ -133,12 +133,12 @@ Attribute  | Options      | Default          | Description
 
 Attribute  | Options      | Default          | Description
 ---        | ---                  | ---                 | ---
-**src** | string | Black rectangle if not specified | Background image or color. Transparent if set to `""`.  `#rrggbb` or `rgb(r,g,b)` for specified color, or url to background image.
+**src** | string | Black rectangle if not specified | Background image or color. Transparent if set to `""`, or url to background image.
 **value** | float | `0` | The current value. Usually same as linked control
 **width** | int | `32` | Parameter display width in px
 **height** | int | `16` | Parameter display height in px
 **fontsize** | int | `9` | Font-size of the parameter display
-**color** | string | `"#ffffff"` | Text color
+**colors** | string | `"#e00;#000"` | Semicolon separated 2 colors for text and background. background color is used when `src` is not defined.
 **link** | string | `null` | Specify the linked webaudio-knob/slider/switch by Id
 
 ### webaudio-keyboard
