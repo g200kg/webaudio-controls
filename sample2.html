@@ -34,7 +34,10 @@ function Init() {
 }
 function LogChange(e) {
   var str="change: id="+e.target.id+" value:"+e.target.value;
-  document.getElementById("cons").innerHTML += (str+"<br/>");
+  var con = document.getElementById("cons");
+  var conframe = document.getElementById("consframe");
+  con.innerHTML += (str+"<br/>");
+  conframe.scrollTop = con.scrollHeight;
   console.log(str);
 }
 function LogClick(e) {
@@ -53,13 +56,15 @@ function Clear() {
   </head>
   <body style="background-color:#eee;" onload="Init()">
 
-<div id="consframe" style="position:absolute;right:0;bottom:0;width:250px;height:100%;background:#ccc;overflow:scroll;margin:0;padding:0px 10px">
-  <button onclick="Clear()">Clear</button>
-  <div id="cons">--- Events ---<br/></div>
+<div id="side" style="position:fixed;right:0;top:0;height:100%">
+  <div id="consframe" style="width:250px;height:100%;background:#ccc;overflow:scroll;margin:0;padding:0px 10px">
+    <div id="cons"><br/><br/>--- Events ---<br/></div>
+  </div>
+  <button onclick="Clear()" style="position:absolute;left:0;top:0">Clear</button>
 </div>
 
   <h1>WebAudio-Controls Test Page</h1>
-    <div style="background-color:#444;color:#eee;width:640px;margin:30px auto;padding:20px;overflow:hidden">
+    <div style="background-color:#444;color:#eee;width:640px;margin:30px;padding:20px;overflow:hidden">
       <h2>WebAudio-Knobs</h2>
       <webaudio-knob id="knob1"></webaudio-knob> <webaudio-knob id="knob1a" colors="#fc0;#000;#444"></webaudio-knob><br/>
 

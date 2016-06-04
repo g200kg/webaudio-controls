@@ -51,11 +51,11 @@ Operation | Component | Description
 > Use command 'bower install --save Polymer/polymer', if you use bower. Or download zipped file and deploy appropriately.
 
 - load webcomponents.js and polymer  
-> &lt;script src="bower_components/webcomponentsjs/webcomponents-lite-min.js"&gt;&lt;/script&gt;<br/>
+> &lt;script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"&gt;&lt;/script&gt;<br/>
   &lt;link rel="import" href="bower_components/polymer/polymer.html"&gt;
 
 - load webaudio-contols
-> &lt;link rel="import" href="webcomponents/webaudio-controls.html" &gt;
+> &lt;link rel="import" href="bower_components/webaudio-controls/webaudio-controls.html" &gt;
 
 - insert `webaudio-knob/slider/switch/param/keyboard` element
 > &lt;webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"&gt;&lt;/webaudio-knob&gt;  
