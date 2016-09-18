@@ -1,6 +1,9 @@
 # bower
 bower_components/
+!bower_components/polymer/LICENSE.txt
 !bower_components/polymer/polymer.html
+!bower_components/polymer/polymer-micro.html
+!bower_components/polymer/polymer-mini.html
 !bower_components/webcomponentsjs/webcomponents-lite.min.js
 
 # Windows image file caches

@@ -28,7 +28,7 @@
 	<template>
 		<div class="wac-body" id="wac-body" touch-action="none">
 			<div id="wac-knob" touch-action="none"></div>
-			<div id="wac-valuetip-row"><span id="wac-valuetip" touch-action="none">{{valuedisp}}{{units}}</span></div>
+			<div id="wac-valuetip-row"><span id="wac-valuetip" touch-action="none">{{valuestr}}</span></div>
 			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
 		<style>
@@ -113,7 +113,7 @@
 				min:        {type:Number, value:0},
 				max:        {type:Number, value:100},
 				step:       {type:Number, value:1},
-				log:        {type:Number, value:0},
+//				log:        {type:Number, value:0},
 				units:      {type:String,value:null},
 				width:      {type:Number, value:64, observer:'layout'},
 				height:     {type:Number, value:64, observer:'layout'},
@@ -124,6 +124,7 @@
 				tootip:			{type:String, value:null},
 				colors:			{type:String, value:'#e00;#000;#000', observer:'setupImage'},
 				enable:			{type:Number, value:1},
+				fconv:			{type:String, value:null},
 			},
 			ready:function(){
 				function log2(num) {
@@ -159,8 +160,16 @@
 				} else{
 					this.ctlStep=this.step;
 				}
+/*
+				if(this.fconv)
+					this.computedValue=this.fconv(this.value);
+				else
+					this.computedValue=this.value;
+				this.valuestr=this.computedValue+(this.units?this.units:"");
 				this.redraw();
-				this.fire('change');
+//				this.fire('change');
+*/
+				this.updateValue();
 			},
 			setupImage: function(){
 				var body = this.$['wac-body'];
@@ -307,11 +316,17 @@
 				var value = parseFloat(this.value);
 				if(!isNaN(value)) {
 					this.value = value < this.min ? this.min : value > this.max ? this.max : value;
-					var valueNumber = (this.log) ? Math.pow(2,this.value) : this.value;
-					this.valuedisp = valueNumber.toFixed(this.digits);
-					if ((this.digits==0)&&(valueNumber>1000)) {
-						valueNumber = valueNumber/1000;
-						this.valuedisp = valueNumber.toFixed((valueNumber<10)?2:1) + "k";
+					this.computedValue = (this.fconv ? eval("("+this.fconv+")")(this.value) : this.value);
+					if(typeof(this.computedValue)=="number"){
+						var valueNumber = (this.log) ? Math.pow(2,this.computedValue) : this.computedValue;
+						this.valuestr = valueNumber.toFixed(this.digits) + (this.units?this.units:"");
+						if ((this.digits==0)&&(valueNumber>1000)) {
+							valueNumber = valueNumber/1000;
+							this.valuestr = valueNumber.toFixed((valueNumber<10)?2:1) + "k" + (this.units?this.units:"");
+						}
+					}
+					else {
+						this.valuestr = this.computedValue + (this.units?this.units:"");
 					}
 				}
 				this.redraw();
@@ -351,7 +366,7 @@
 	<template>
 		<div class="wac-body" id="wac-body">
 			<div id="wac-knob"></div>
-			<span id="wac-valuetip">{{valuedisp}}{{units}}</span>
+			<span id="wac-valuetip">{{valuestr}}</span>
 			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
 		<style>
@@ -410,7 +425,6 @@
 			properties:{
 				value:      {type:Number, value:0, observer:'updateValue'},
 				units:      {type:String, value:null},
-				log:        {type:Number, value:0},
 				defvalue:   {type:Number, value:0},
 				min:        {type:Number, value:0},
 				max:        {type:Number, value:100},
@@ -431,6 +445,7 @@
 				tootip:			{type:String, value:null},
 				colors:			{type:String, value:null, observer:'setupImage'},
 				enable:			{type:Number, value:1},
+				fconv:			{type:String, value:null},
 			},
 			preventScroll: function(e){
 				e.preventDefault();
@@ -481,6 +496,10 @@
 					for(var n = this.step ; n < 1; n *= 10)
 						++this.digits;
 				}
+				this.updateValue();
+//				this.valuestr="0"+(this.units?this.units:"");
+//				this.redraw();
+//				this.fire('change');
 			},
 			pointerdown: function(e) {
 				if(!this.enable)
@@ -566,12 +585,16 @@
 				e.preventDefault();
 			},
 			layout: function(){
+				var knob = this.$['wac-knob'];
+				var body = this.$['wac-body'];
 				this._width = parseFloat(this.width);
 				this._height = parseFloat(this.height);
 				if(this.width == null)
 					this._width = (this.direction == 'vert' ? 24 : 128);
 				if(this.height == null)
 					this._height = (this.direction == 'vert' ? 128 : 24);
+				if(!this.src)
+					body.style.borderRadius = (Math.min(this._width,this._height)*.5)+'px';
 				this._knobwidth = parseFloat(this.knobwidth);
 				this._knobheight = parseFloat(this.knobheight);
 				if(this.knobwidth == null)
@@ -581,8 +604,6 @@
 				this._ditchlength = parseFloat(this.ditchlength);
 				if(this.ditchlength == null)
 					this._ditchlength = (this.direction =='vert' ? this._height - this._knobheight : this._width - this._knobwidth);
-				var knob = this.$['wac-knob'];
-				var body = this.$['wac-body'];
 				if(knob&&body){
 					knob.style.width = this._knobwidth+'px';
 					knob.style.height = this._knobheight+'px';
@@ -632,6 +653,11 @@
 				var value = parseFloat(this.value);
 				if(!isNaN(value)) {
 					this.value = value < this.min ? this.min : value > this.max ? this.max : value;
+					this.computedValue = (this.fconv ? eval("("+this.fconv+")")(this.value) : this.value);
+					if(typeof(this.computedValue)=="number")
+						this.valuestr = this.computedValue.toFixed(this.digits) + (this.units?this.units:"");
+					else
+						this.valuestr = this.computedValue;
 					this.redraw();
 					if(this.value != this.valueold) {
 						this.valueold = this.value;
@@ -652,7 +678,6 @@
 					s.top = "0px";
 					s.left = pos+"px";
 				}
-				this.valuedisp = this.value.toFixed(this.digits);
 			}
 	});
 	</script>
@@ -853,7 +878,7 @@
 			},
 			updateValue: function() {
 				this.value = parseInt(this.value);
-				this.valuedisp = this.value;
+				this.valuestr = this.value;
 				this.redraw();
 				var el = document.getElementsByTagName('webaudio-switch');
 				if(this.value == 1) {
@@ -862,9 +887,10 @@
 							el[i].value = 0;
 					}
 				}
-				this.fire('change');
-				if(this.value != this.valueold)
+				if(this.value != this.valueold){
+					this.fire('change');
 					this.valueold = this.value;
+				}
 			},
 			redraw: function(){
 				this.$['wac-switch'].style.backgroundPosition = '0px -' + ((this.value^this.invert) * this.height) + 'px';
@@ -904,7 +930,6 @@
 				height:     {type:Number, value:16, observer:'layout'},
 				fontsize:		{type:Number, value:9, observer:'layout'},
 				src:				{type:String, value:null, observer:'setupImage'},
-//				color:			{type:String, value:'#ffffff', observer:'setupImage'},
 				link:				{type:String, value:null},
 				colors:			{type:String, value:'#fff;#000', observer:'setupImage'},
 				fcon:				{type:String, value:null},
@@ -915,7 +940,7 @@
 				var f = eval(this.fconv);
 				var t = typeof(f);
 				if(this.fconv == null)
-					this.value = e.valuedisp;
+					this.value = e.valuestr;
 				else if(t == "object")
 					this.value = f[e.value];
 				else if(t == "function")
@@ -955,6 +980,7 @@
 				this.$['param'].style.color = this.coltab[0];
 			},
 			layout: function(){
+				console.log("layout")
 				this.$['param'].style.width = this.width+'px';
 				this.$['param'].style.height = this.height+'px';
 				this.$['param'].style.fontSize = this.fontsize+'px';
@@ -991,11 +1017,11 @@
 			is:"webaudio-keyboard",
 			properties:{
 				values:			{type:Array,  value:[]},
-				keys:				{type:Number, value:25},
-				min:				{type:Number, value:0},
+				keys:				{type:Number, value:25, observer:'layout'},
+				min:				{type:Number, value:0, observer:'layout'},
 				max:				{type:Number, value:72},
-				width:      {type:Number, value:480},
-				height:     {type:Number, value:128},
+				width:      {type:Number, value:480, observer:'layout'},
+				height:     {type:Number, value:128, observer:'layout'},
 				colors:			{type:String, value:'#222;#eee;#ccc;#333;#000;#e88;#c44;#c33;#800'},
 				enable:			{type:Number, value:1},
 			},
@@ -1033,7 +1059,26 @@
 				this.coltab=this.colors.split(";");
 				this.redraw();
 			},
+			layout: function(){
+				if(this.cv){
+					this.cv.width = this.width;
+					this.cv.height = this.height;
+					this.cv.style.width = this.width+'px';
+					this.cv.style.height = this.height+'px';
+					this.bheight = this.height * 0.55;
+					this.max=this.min+this.keys-1;
+					if(this.kf[this.min%12])
+						--this.min;
+					if(this.kf[this.max%12])
+						++this.max;
+					this.redraw();
+				}
+			},
+			preventScroll: function(e){
+				e.preventDefault();
+			},
 			pointerdown: function(e) {
+				document.body.addEventListener('touchstart',this.preventScroll);
 				if(this.enable) {
 					this.press=1;
 					this.pointermove(e);
@@ -1074,6 +1119,7 @@
 				this.redraw();
 			},
 			pointerup: function(e) {
+				document.body.removeEventListener('touchstart',this.preventScroll,false);
 				if(this.enable) {
 					this.press = 0;
 					this.values=[];

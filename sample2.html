@@ -73,15 +73,15 @@ function Clear() {
       <div>Default webaudio-knob. If no knob-image is specified, simple embedded image resource is used. Colors are customizable.</div><br/><br/>
 
       <webaudio-knob id="knob2" src="img/LittlePhatty.png" sprites="100" value="60" min="-100" max="100" step="20" diameter="64"></webaudio-knob><br/>
-      <code>&lt;webaudio-knob id="knob2" src="img/LittlePhatty.png" sprites="100" value="60" min="-100" max="100" step="20" diameter="64"&gt;&lt;webaudio-knob&gt;</code>
+      <code>&lt;webaudio-knob id="knob2" src="img/LittlePhatty.png" sprites="100" value="60" min="-100" max="100" step="20" diameter="64"&gt;&lt;/webaudio-knob&gt;</code>
       <div>Knob image file is assigned. Value range can be specified by min/max. The initial value is "60". The value is changed in step of "20".</div><br/><br/>
 
       <webaudio-knob id="knob3" src="img/LittlePhatty.png" sprites="100" diameter="32"></webaudio-knob><br/>
-      <code>&lt;webaudio-knob id="knob3" src="img/LittlePhatty.png" sprites="100" diameter="32"&gt;&lt;webaudio-knob&gt;</code>
+      <code>&lt;webaudio-knob id="knob3" src="img/LittlePhatty.png" sprites="100" diameter="32"&gt;&lt;/webaudio-knob&gt;</code>
       <div>The knob image will be resized to specified size (even recommended to prepare required size image for clear display)</div><br/><br/>
 
       <webaudio-knob id="knob4" src="img/hsw5.png" sprites="4" value="2" min="0" max="4" width="128" height="32"></webaudio-knob><br/>
-      <code>&lt;webaudio-knob id="knob4" src="img/hsw5.png" sprites="4" value="2" min="0" max="4" width="128" height="32"&gt;&lt;webaudio-knob&gt;</code>
+      <code>&lt;webaudio-knob id="knob4" src="img/hsw5.png" sprites="4" value="2" min="0" max="4" width="128" height="32"&gt;&lt;/webaudio-knob&gt;</code>
       <div>non-square image is used with specifying width/height instead of diameter.</div><br/><br/>
 
       <webaudio-knob id="knob5" src="img/LittlePhatty.png" sprites="100" diameter="64" valuetip="0" tooltip="Knob Test"></webaudio-knob>
@@ -139,9 +139,9 @@ function Clear() {
       <webaudio-switch id="radioB" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" invert="1" tooltip="Radio-B"></webaudio-switch>
       <webaudio-switch id="radioC" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" invert="1" tooltip="Radio-C"></webaudio-switch><br/>
       <code>
-        &lt;webaudio-switch id="radioA" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" value="1" tooltip="Radio-A"&gt;&lt;/webaudio-switch&gt;<br/>
-        &lt;webaudio-switch id="radioB" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" tooltip="Radio-B"&gt;&lt;/webaudio-switch&bt;<br/>
-        &lt;webaudio-switch id="radioC" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" tooltip="Radio-C"&gt;&lt;/webaudio-switch&gt;<br/>
+        &lt;webaudio-switch id="radioA" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" invert="1" value="1" tooltip="Radio-A"&gt;&lt;/webaudio-switch&gt;<br/>
+        &lt;webaudio-switch id="radioB" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" invert="1" tooltip="Radio-B"&gt;&lt;/webaudio-switch&bt;<br/>
+        &lt;webaudio-switch id="radioC" src="img/switch_toggle.png" type="radio" group="radio1" width="54" height="54" invert="1" tooltip="Radio-C"&gt;&lt;/webaudio-switch&gt;<br/>
       </code>
       <div>Radio type switch. In this mode, only one switch is activated in the group.</div><br/><br/>
   </div>

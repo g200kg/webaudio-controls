@@ -23,6 +23,7 @@ iOS and Android touch devices compatible
 [Live Demo sample4 (webaudio-keyboard to webMIDIAPI)](https://rawgithub.com/g200kg/webaudio-controls/master/sample4.html)  
  (need Mac+ChromeCanary+flagEnabled+MIDIdevice or Win+JazzPlugin or Mac+JazzPlugin+MidiDevice)  
 [Renoid : Practical application using webaudio-controls](http://www.g200kg.com/renoid/)  
+[webaudio-controls Resize Test](https://rawgithub.com/g200kg/webaudio-controls/master/resizetest.html)  
 
 Using with external image-files.  
 [![](img/demo.png)](https://rawgithub.com/g200kg/webaudio-controls/master/sample1.html)  

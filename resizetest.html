@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+  <link rel="import" href="bower_components/polymer/polymer.html">
+  <link rel="import" href="webaudio-controls.html">
+</head>
+<body>
+<h1>webaudio-controls : Resize Test</h1>
+<br/>
+<h2>Knob</h2>
+Size :
+<button onclick="document.getElementById('knob').diameter=25">Small</button>
+<button onclick="document.getElementById('knob').diameter=50">Mid</button>
+<button onclick="document.getElementById('knob').diameter=100">Large</button>
+<br/><br/>
+<webaudio-knob id="knob" diameter="50"></webaudio-knob>
+<br/><br/>
+<h2>Param</h2>
+Size :
+<button onclick="document.getElementById('param').width=25">Width Small</button>
+<button onclick="document.getElementById('param').width=100">Width Large</button>
+<button onclick="document.getElementById('param').height=16">Height Small</button>
+<button onclick="document.getElementById('param').height=48">Height Large</button>
+<button onclick="document.getElementById('param').fontsize=9">Font Small</button>
+<button onclick="document.getElementById('param').fontsize=48">Font Large</button>
+<br/>
+<webaudio-param id="param" link="knob" width="100" height="16"></webaudio-param>
+<h2>Slider</h2>
+Size :
+<button onclick="document.getElementById('sli').height=50;document.getElementById('sli').width=10">Small</button>
+<button onclick="document.getElementById('sli').height=100;document.getElementById('sli').width=20">Mid</button>
+<button onclick="document.getElementById('sli').height=200;document.getElementById('sli').width=40">Large</button>
+<br/><br/>
+<webaudio-slider id="sli" height="100" width="20"></webaudio-slider>
+<br/><br/>
+<h2>Switch</h2>
+Size :
+<button onclick="document.getElementById('sw').height=25;document.getElementById('sw').width=25">Small</button>
+<button onclick="document.getElementById('sw').height=50;document.getElementById('sw').width=50">Mid</button>
+<button onclick="document.getElementById('sw').height=100;document.getElementById('sw').width=100">Large</button>
+<br/><br/>
+<webaudio-switch id="sw" height="50" width="50"></webaudio-switch>
+<br/><br/>
+<h2>Keyboard</h2>
+Size :
+<button onclick="document.getElementById('keyb').width=100;document.getElementById('keyb').height=20;">Small</button>
+<button onclick="document.getElementById('keyb').width=200;document.getElementById('keyb').height=40;">Mid</button>
+<button onclick="document.getElementById('keyb').width=400;document.getElementById('keyb').height=80;">Large</button><br/><br/>
+Keys :
+<button onclick="document.getElementById('keyb').keys=13;">13 Keys</button>
+<button onclick="document.getElementById('keyb').keys=25;">25 Keys</button>
+<button onclick="document.getElementById('keyb').keys=49;">49 Keys</button>
+<button onclick="document.getElementById('keyb').keys=61;">61 Keys</button>
+<br/><br/><br/>
+<webaudio-keyboard id="keyb" width="400" height="80" onchange="console.log(event.note)"></webaudio-keyboard>
+<br/><br/>
+<br/><br/>
+</body>
+</html>
