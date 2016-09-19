@@ -883,8 +883,11 @@
 				var el = document.getElementsByTagName('webaudio-switch');
 				if(this.value == 1) {
 					for(var i = 0, j = el.length; i < j; ++i) {
-						if(this.group && el[i] != this && el[i].group == this.group)
+						if(this.group && el[i] != this && el[i].group == this.group){
+							if(this.valueold == 1)
+								el[i].valueold = 0;
 							el[i].value = 0;
+						}
 					}
 				}
 				if(this.value != this.valueold){
@@ -898,7 +901,6 @@
 		});
 	</script>
 </dom-module>
-
 <dom-module id="webaudio-param">
 	<template>
 		<input type="text" id="param" value="0"/>
