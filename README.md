@@ -14,6 +14,8 @@ webaudio-switch | Toggle/Kick/Radio switches
 webaudio-param | Editable value display field
 webaudio-keyboard | Mouse/Touch playable keyboard. multi-touch support.
 
+* Also available 'webaudio-pianoroll' at : [https://github.com/g200kg/webaudio-pianoroll/](https://github.com/g200kg/webaudio-pianoroll/)
+
 Chrome / Firefox / Safari / Opera / IE compatible  
 iOS and Android touch devices compatible  
 
