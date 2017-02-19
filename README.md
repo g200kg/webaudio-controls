@@ -42,7 +42,7 @@ Operation | Component | Description
 **Drag** | Knob/Slider | up/right to increase value / down/left to decrease value
 **Shift+Drag** | Knob/Slider | fine control
 **Ctrl+Click / Command+Click(Mac)** | Knob/Slider/Switch | set to default value
-**Edit with Keyboard** | Param | edit the value directly
+**Keyboard** | Param/Keyboard | edit the param value directly / [ZSXDCV...] and [Q2W3E...] as a music keyboard
 **MouseWheel** | Knob/Slider | rotate upward to increase value / downward to decrease value
 **Shift+MouseWheel** | Knob/Slider | fine control
 **Mouse Button Press / Touch** | Keyboard | play keyboard. multi-touch is supported
@@ -50,22 +50,26 @@ Operation | Component | Description
 ---
 ## How to use
 
-- Install Polymer
-> Use command 'bower install --save Polymer/polymer', if you use bower. Or download zipped file and deploy appropriately.
+- Install  
+ * Use command `bower install --save Polymer/polymer`, if you use bower. Or download zipped file and deploy appropriately.
+ * webaudio-controls also can be installed with : `bower install --save g200kg/webaudio-controls`  
 
-- load webcomponents.js and polymer  
-> &lt;script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"&gt;&lt;/script&gt;<br/>
+
+- load webcomponents.js and polymer
+  * &lt;script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"&gt;&lt;/script&gt;<br/>
   &lt;link rel="import" href="bower_components/polymer/polymer.html"&gt;
 
-- load webaudio-contols
-> &lt;link rel="import" href="bower_components/webaudio-controls/webaudio-controls.html" &gt;
 
-- insert `webaudio-knob/slider/switch/param/keyboard` element
-> &lt;webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"&gt;&lt;/webaudio-knob&gt;  
-> &lt;webaudio-slider src="img/hsliderbody.png"&gt;&lt;/webaudio-slider&gt;  
-> &lt;webaudio-switch src="img/switch_toggle.png" width="32" height="32"&gt;&lt;/webaudio-switch&gt;  
-> &lt;webaudio-param src="" link="knob-1"&gt;&lt;/webaudio-param&gt;  
-> &lt;webaudio-keyboard keys="25" &gt;&lt;/webaudio-keyboard&gt;  
+- load webaudio-contols  
+  * &lt;link rel="import" href="bower_components/webaudio-controls/webaudio-controls.html" &gt;
+
+
+- insert **webaudio-knob/slider/switch/param/keyboard** elements. for example...
+ * &lt;webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"&gt;&lt;/webaudio-knob&gt;  
+ * &lt;webaudio-slider src="img/hsliderbody.png"&gt;&lt;/webaudio-slider&gt;  
+ * &lt;webaudio-switch src="img/switch_toggle.png" width="32" height="32"&gt;&lt;/webaudio-switch&gt;  
+ * &lt;webaudio-param src="" link="knob-1"&gt;&lt;/webaudio-param&gt;  
+ * &lt;webaudio-keyboard keys="25" &gt;&lt;/webaudio-keyboard&gt;  
 
 ---
 ## Attributes
