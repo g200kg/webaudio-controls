@@ -42,7 +42,7 @@ Operation | Component | Description
 **Drag** | Knob/Slider | up/right to increase value / down/left to decrease value
 **Shift+Drag** | Knob/Slider | fine control
 **Ctrl+Click / Command+Click(Mac)** | Knob/Slider/Switch | set to default value
-**Keyboard** | Param/Keyboard | edit the param value directly / [ZSXDCV...] and [Q2W3E...] as a music keyboard
+**Keyboard** | Param/Keyboard | edit the param value directly / [ZSXDCV...for lowest visible 'C' octave] and [Q2W3E... one octave higher] as a music keyboard
 **MouseWheel** | Knob/Slider | rotate upward to increase value / downward to decrease value
 **Shift+MouseWheel** | Knob/Slider | fine control
 **Mouse Button Press / Touch** | Keyboard | play keyboard. multi-touch is supported
