@@ -996,7 +996,7 @@
 
 <dom-module id="webaudio-keyboard">
 	<template>
-		<div id="wac-body" touch-action="none"></div>
+		<div id="wac-body" touch-action="none" tabindex="1"></div>
 		<style>
 			:host {
 				user-select: none;
@@ -1058,6 +1058,8 @@
 				this.addEventListener('touchcancel',this.pointerup,false);
 				this.addEventListener('mouseover',this.pointerover,false);
 				this.addEventListener('mouseout',this.pointerout,false);
+				this.addEventListener('keydown',this.keydown,false);
+				this.addEventListener('keyup',this.keyup,false);
 				this.coltab=this.colors.split(";");
 				this.redraw();
 			},
@@ -1079,11 +1081,46 @@
 			preventScroll: function(e){
 				e.preventDefault();
 			},
+			sendEvent: function(s,k){
+				var ev=document.createEvent('HTMLEvents');
+				ev.initEvent('change',true,true);
+				ev.note=[s,k];
+				this.dispatchEvent(ev);
+			},
+			keycodes1:[90,83,88,68,67,86,71,66,72,78,74,77,188,76,190,187,191,226],
+			keycodes2:[81,50,87,51,69,82,53,84,54,89,55,85,73,57,79,48,80,192,222,219],
+			keydown: function(e){
+				var m=this.min-this.min%12;
+				var k=this.keycodes1.indexOf(e.keyCode);
+				if(k<0) {
+					k=this.keycodes2.indexOf(e.keyCode);
+					if(k>=0) k+=12;
+				}
+				if(k>=0){
+					k+=m;
+					this.sendEvent(1,k);
+					this.setNote(1,k);
+				}
+			},
+			keyup: function(e){
+				var m=this.min-this.min%12;
+				var k=this.keycodes1.indexOf(e.keyCode);
+				if(k<0) {
+					k=this.keycodes2.indexOf(e.keyCode);
+					if(k>=0) k+=12;
+				}
+				if(k>=0){
+					k+=m;
+					this.sendEvent(0,k);
+					this.setNote(0,k);
+				}
+			},
 			pointerdown: function(e) {
 				document.body.addEventListener('touchstart',this.preventScroll);
 				if(this.enable) {
 					this.press=1;
 					this.pointermove(e);
+					this.childNodes[1].focus();
 				}
 				e.preventDefault();
 			},
