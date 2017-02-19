@@ -1106,7 +1106,7 @@
 				}
 			},
 			keyup: function(e){
-				var m=this.min-this.min%12;
+				var m=Math.floor((this.min+11)/12)*12;
 				var k=this.keycodes1.indexOf(e.keyCode);
 				if(k<0) {
 					k=this.keycodes2.indexOf(e.keyCode);
