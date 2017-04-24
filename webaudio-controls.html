@@ -831,7 +831,7 @@
 		          window.addEventListener('resize', this.resizeListener.bind(this), false);
 
 		          this.menu = this.$["context-menuKnob"];
-		          this.compId = Date.now();
+		          this.compId = Date.now() + Math.random();
 		        }
 
 			},
@@ -1341,7 +1341,7 @@
 		          window.addEventListener('resize', this.resizeListener.bind(this), false);
 
 		          this.menu = this.$["context-menuKnob"];
-		          this.compId = Date.now();
+		          this.compId = Date.now()+ Math.random();
 		        }
 			},
 			pointerdown: function(e) {
