@@ -31,6 +31,21 @@
 			<div id="wac-valuetip-row"><span id="wac-valuetip" touch-action="none">{{valuestr}}</span></div>
 			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
+    <div>
+      <nav id="context-menuKnob" class="context-menu">
+        <ul class="context-menu__items">
+          <li class="context-menu__item" id="context-menu-learn" on-click="onClickLearn">
+            Learn
+          </li>
+          <li class="context-menu__item" on-click="onClickClear">
+            Clear
+          </li>
+          <li class="context-menu__item" on-click="toggleMenuOff">
+            Close
+          </li>
+        </ul>
+      </nav>
+    </div>
 		<style>
 			:host {
 				user-select: none;
@@ -99,7 +114,40 @@
 				border-radius: 5px;
 				padding: 5px;
 			}
-		</style>
+	      /* context midilearn menu */
+	      .context-menu {
+	        display: none;
+	        position: absolute;
+	        z-index: 10;
+	        padding: 12px 0;
+	        width: 240px;
+	        background-color: #fff;
+	        border: solid 1px #dfdfdf;
+	        box-shadow: 1px 1px 2px #cfcfcf;
+	      }
+	      .context-menu--active {
+	        display: block;
+	      }
+	      .context-menu__items {
+	        list-style: none;
+	        margin: 0;
+	        padding: 0;
+	      }
+	      .context-menu__item {
+	        display: block;
+	        margin-bottom: 4px;
+	        padding: 4px 12px;
+	        color: #0066aa;
+	        text-decoration: none;
+	      }
+	      .context-menu__item:last-child {
+	        margin-bottom: 0;
+	      }
+	      .context-menu__item:hover {
+	        color: #fff;
+	        background-color: #0066aa;
+	      }
+	  </style>
 	</template>
 
 	<script>
@@ -125,6 +173,50 @@
 				colors:			{type:String, value:'#e00;#000;#000', observer:'setupImage'},
 				enable:			{type:Number, value:1},
 				fconv:			{type:String, value:null},
+		        // for midi learn
+		        midilearn: {
+		          type: String
+		        },
+		        compId: {
+		          type:Number
+		        },
+		        midiMode: {
+		          type: String,
+		          value: "not"
+		        },
+		        midiControllers: {
+		          type: Array,
+		          value: []
+		        },
+		        menu: {
+		          type: String,
+		          value: null
+		        },
+		        menuVisible: {
+		          type: Boolean,
+		          value: false
+		        },
+		        taskItemClassName: {
+		          type: String,
+		          value: "knob"
+		        },
+		        lastShift: {
+		          type: Boolean,
+		          value: false
+		        },
+		        contextMenuLinkClassName: {
+		          type: String,
+		          value: "context-menu__link"
+		        },
+		        contextMenuActive: {
+		          type: String,
+		          value: "context-menu--active"
+		        },
+		        //windowHeigth: {type:Number,value:null},
+		        webAudioControllerWithMenu: {
+		          type: String,
+		          value: null
+		        },
 			},
 			ready:function(){
 				function log2(num) {
@@ -170,6 +262,17 @@
 //				this.fire('change');
 */
 				this.updateValue();
+
+		        // context menu
+		        if(this.midilearn) {
+		          knb.addEventListener("contextmenu", this.positionContextMenu.bind(this), false);
+		          window.addEventListener('keyup', this.keyupListener.bind(this), false);
+		          window.addEventListener('resize', this.resizeListener.bind(this), false);
+
+		          this.menu = this.$["context-menuKnob"];
+		          this.compId = Date.now() + Math.random();
+		        }
+
 			},
 			setupImage: function(){
 				var body = this.$['wac-body'];
@@ -357,7 +460,135 @@
 					var deg = 270*((this.value-this.min)/range-0.5);
 					style.transform = 'rotate('+deg+'deg)';
 				}
-			}
+			},
+		      // MIDILEARN MENU
+		      positionContextMenu: function (e) {
+		        e.preventDefault();
+		        e.stopPropagation();
+		        this.toggleMenuOn(e);
+		        this.positionMenu(e);
+		      },
+		 
+		      keyupListener: function (e) {
+		        if (e.keyCode === 27 && this.menuVisible) {
+		          console.log("keyup");
+		          // Pressing ESC will close the menu
+		          this.toggleMenuOff(e);
+		        }
+		      },
+		      resizeListener: function (e) {
+		        // Hide menu if the window is resized
+		        console.log("resize");
+		        this.toggleMenuOff(e);
+		      },
+		      onClickLearn: function (e) {
+		        // Change label to "listening"
+		        //e.target.textContent = "Listening...";
+		        var menuItemLearn = this.$["context-menu-learn"];
+		        menuItemLearn.innerHTML = 'Listening...';
+		        this.midiMode = 'learn';
+		      },
+		      onClickClear: function (e) {
+		        this.toggleMenuOff(e);
+		        this.midiControllers = [];
+		      },
+		      toggleMenuOn: function (e) {
+		        if (!this.menuVisible) {
+		          this.menuVisible = true;
+		          this.menu.classList.add(this.contextMenuActive);
+		        }
+		      },
+		      toggleMenuOff: function (e) {
+		        if (this.menuVisible) {
+		         // Change the "listening..." label back to "learn"
+		          var menuItemLearn = this.$["context-menu-learn"];
+		          menuItemLearn.innerHTML = 'Learn';
+
+		          this.menuVisible = false;
+		          this.menu.classList.remove(this.contextMenuActive);
+		        }
+		      },
+		      // Get mouse pointer position
+		      getPosition: function (e) {
+		        var rect = e.target.getBoundingClientRect();
+		        var posx =  e.clientX - rect.left;
+		        var posy =  e.clientY - rect.top;
+		        //var posx = e.pageX - rect.width;
+		        //var posy = e.pageY - rect.height;
+		        return {
+		          x: posx,
+		          y: posy
+		        }
+		      },
+
+		      positionMenu: function (e) {
+		        let clickCoords = this.getPosition(e),
+		          menuWidth = this.menu.offsetWidth + 1,
+		          menuHeight = this.menu.offsetHeight + 1;
+		        if ((window.innerWidth - clickCoords.x) < menuWidth) {
+		          this.menu.style.left = window.innerWidth - menuWidth + "px";
+		        } else {
+		          this.menu.style.left = clickCoords.x + "px";
+		        }
+		        if ((window.innerHeight - clickCoords.y) < menuHeight) {
+		          this.menu.style.top = window.innerHeight - menuHeight + "px";
+		        } else {
+		          this.menu.style.top = clickCoords.y + "px";
+		        }
+		      },
+
+		      addMidiController: function (type, note) {
+		        if(this.listeningToThisMidiController(type, note)) return;
+
+		         this.midiControllers.push({
+		              'type': type,
+		              'note': note,
+		              'compId':this.compId,
+		              'tooltip': this.tooltip
+		            });
+		      },
+
+		      listeningToThisMidiController: function (type, note) {
+		        for (var i = 0; i < this.midiControllers.length; i++) {
+		          var c = this.midiControllers[i];
+		          if ((c.type === type && c.note === note && c.compId === this.compId)) {
+		            return true;
+		          }
+		        }
+		        return false;
+		      },
+
+		      processMidiEvent: function (event) {
+		        // Identify the controller
+		        var type = event.data[0];
+		        var note = event.data[1];
+		        if (this.midiMode === 'learn') {
+		          // add this controller to the list of controllers we're
+		          // listening to
+		          this.addMidiController(type, note);
+		          // hide menu
+		          this.toggleMenuOff(event);
+
+		          // set back mode to normal
+		          this.midiMode = 'normal';
+		 
+		        }
+		        // are we listening to this controller ?
+		        if (this.listeningToThisMidiController(type, note)) {
+		          // midi event value
+		          var val = event.data[2];
+		          // adjust taking into account the min and max attributes of the audiocontrol
+		          var adjustedValue = this.map(val, 0, 127, this.min, this.max);
+		          // set the webaudiocontrol value and pass true as second
+		          // argument to make it fire an input event as if the 
+		          // button was activated in the browser
+		          this.setValue(adjustedValue, true);
+		        }
+		      },
+		      // maps a value from [istart, istop] into [ostart, ostop]
+		      map: function (value, istart, istop, ostart, ostop) {
+		        return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
+		      }
 	});
 	</script>
 </dom-module>
@@ -369,6 +600,21 @@
 			<span id="wac-valuetip">{{valuestr}}</span>
 			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
+	    <div>
+	      <nav id="context-menuKnob" class="context-menu">
+	        <ul class="context-menu__items">
+	          <li class="context-menu__item" id="context-menu-learn" on-click="onClickLearn">
+	            Learn
+	          </li>
+	          <li class="context-menu__item" on-click="onClickClear">
+	            Clear
+	          </li>
+	          <li class="context-menu__item" on-click="toggleMenuOff">
+	            Close
+	          </li>
+	        </ul>
+	      </nav>
+	  </div>
 		<style>
 			:host {
 				user-select: none;
@@ -417,6 +663,39 @@
 				border-radius: 5px;
 				padding: 5px;
 			}
+		      /* context midilearn menu */
+		      .context-menu {
+		        display: none;
+		        position: absolute;
+		        z-index: 10;
+		        padding: 12px 0;
+		        width: 240px;
+		        background-color: #fff;
+		        border: solid 1px #dfdfdf;
+		        box-shadow: 1px 1px 2px #cfcfcf;
+		      }
+		      .context-menu--active {
+		        display: block;
+		      }
+		      .context-menu__items {
+		        list-style: none;
+		        margin: 0;
+		        padding: 0;
+		      }
+		      .context-menu__item {
+		        display: block;
+		        margin-bottom: 4px;
+		        padding: 4px 12px;
+		        color: #0066aa;
+		        text-decoration: none;
+		      }
+		      .context-menu__item:last-child {
+		        margin-bottom: 0;
+		      }
+		      .context-menu__item:hover {
+		        color: #fff;
+		        background-color: #0066aa;
+		      }  
 		</style>
 	</template>
 	<script>
@@ -446,6 +725,50 @@
 				colors:			{type:String, value:null, observer:'setupImage'},
 				enable:			{type:Number, value:1},
 				fconv:			{type:String, value:null},
+		        // for midi learn
+		        midilearn: {
+		          type: String
+		        },
+		        compId: {
+		          type:Number
+		        },
+		        midiMode: {
+		          type: String,
+		          value: "not"
+		        },
+		        midiControllers: {
+		          type: Array,
+		          value: []
+		        },
+		        menu: {
+		          type: String,
+		          value: null
+		        },
+		        menuVisible: {
+		          type: Boolean,
+		          value: false
+		        },
+		        taskItemClassName: {
+		          type: String,
+		          value: "knob"
+		        },
+		        lastShift: {
+		          type: Boolean,
+		          value: false
+		        },
+		        contextMenuLinkClassName: {
+		          type: String,
+		          value: "context-menu__link"
+		        },
+		        contextMenuActive: {
+		          type: String,
+		          value: "context-menu--active"
+		        },
+		        //windowHeigth: {type:Number,value:null},
+		        webAudioControllerWithMenu: {
+		          type: String,
+		          value: null
+		        }
 			},
 			preventScroll: function(e){
 				e.preventDefault();
@@ -500,6 +823,17 @@
 //				this.valuestr="0"+(this.units?this.units:"");
 //				this.redraw();
 //				this.fire('change');
+//				
+		        // context midilearn menu
+		        if(this.midilearn) {
+		          slib.addEventListener("contextmenu", this.positionContextMenu.bind(this), false);
+		          window.addEventListener('keyup', this.keyupListener.bind(this), false);
+		          window.addEventListener('resize', this.resizeListener.bind(this), false);
+
+		          this.menu = this.$["context-menuKnob"];
+		          this.compId = Date.now();
+		        }
+
 			},
 			pointerdown: function(e) {
 				if(!this.enable)
@@ -678,7 +1012,135 @@
 					s.top = "0px";
 					s.left = pos+"px";
 				}
-			}
+			},
+		      // MIDILEARN MENU
+		      positionContextMenu: function (e) {
+		        e.preventDefault();
+		        e.stopPropagation();
+		        this.toggleMenuOn(e);
+		        this.positionMenu(e);
+		      },
+		 
+		      keyupListener: function (e) {
+		        if (e.keyCode === 27 && this.menuVisible) {
+		          console.log("keyup");
+		          // Pressing ESC will close the menu
+		          this.toggleMenuOff(e);
+		        }
+		      },
+		      resizeListener: function (e) {
+		        // Hide menu if the window is resized
+		        console.log("resize");
+		        this.toggleMenuOff(e);
+		      },
+		      onClickLearn: function (e) {
+		        // Change label to "listening"
+		        //e.target.textContent = "Listening...";
+		        var menuItemLearn = this.$["context-menu-learn"];
+		        menuItemLearn.innerHTML = 'Listening...';
+		        this.midiMode = 'learn';
+		      },
+		      onClickClear: function (e) {
+		        this.toggleMenuOff(e);
+		        this.midiControllers = [];
+		      },
+		      toggleMenuOn: function (e) {
+		        if (!this.menuVisible) {
+		          this.menuVisible = true;
+		          this.menu.classList.add(this.contextMenuActive);
+		        }
+		      },
+		      toggleMenuOff: function (e) {
+		        if (this.menuVisible) {
+		         // Change the "listening..." label back to "learn"
+		          var menuItemLearn = this.$["context-menu-learn"];
+		          menuItemLearn.innerHTML = 'Learn';
+
+		          this.menuVisible = false;
+		          this.menu.classList.remove(this.contextMenuActive);
+		        }
+		      },
+		      // Get mouse pointer position
+		      getPosition: function (e) {
+		        var rect = e.target.getBoundingClientRect();
+		        var posx =  e.clientX - rect.left;
+		        var posy =  e.clientY - rect.top;
+		        //var posx = e.pageX - rect.width;
+		        //var posy = e.pageY - rect.height;
+		        return {
+		          x: posx,
+		          y: posy
+		        }
+		      },
+
+		      positionMenu: function (e) {
+		        let clickCoords = this.getPosition(e),
+		          menuWidth = this.menu.offsetWidth + 1,
+		          menuHeight = this.menu.offsetHeight + 1;
+		        if ((window.innerWidth - clickCoords.x) < menuWidth) {
+		          this.menu.style.left = window.innerWidth - menuWidth + "px";
+		        } else {
+		          this.menu.style.left = clickCoords.x + "px";
+		        }
+		        if ((window.innerHeight - clickCoords.y) < menuHeight) {
+		          this.menu.style.top = window.innerHeight - menuHeight + "px";
+		        } else {
+		          this.menu.style.top = clickCoords.y + "px";
+		        }
+		      },
+
+		      addMidiController: function (type, note) {
+		        if(this.listeningToThisMidiController(type, note)) return;
+
+		         this.midiControllers.push({
+		              'type': type,
+		              'note': note,
+		              'compId':this.compId,
+		              'tooltip': this.tooltip
+		            });
+		      },
+
+		      listeningToThisMidiController: function (type, note) {
+		        for (var i = 0; i < this.midiControllers.length; i++) {
+		          var c = this.midiControllers[i];
+		          if ((c.type === type && c.note === note && c.compId === this.compId)) {
+		            return true;
+		          }
+		        }
+		        return false;
+		      },
+
+		      processMidiEvent: function (event) {
+		        // Identify the controller
+		        var type = event.data[0];
+		        var note = event.data[1];
+		        if (this.midiMode === 'learn') {
+		          // add this controller to the list of controllers we're
+		          // listening to
+		          this.addMidiController(type, note);
+		          // hide menu
+		          this.toggleMenuOff(event);
+
+		          // set back mode to normal
+		          this.midiMode = 'normal';
+		 
+		        }
+		        // are we listening to this controller ?
+		        if (this.listeningToThisMidiController(type, note)) {
+		          // midi event value
+		          var val = event.data[2];
+		          // adjust taking into account the min and max attributes of the audiocontrol
+		          var adjustedValue = this.map(val, 0, 127, this.min, this.max);
+		          // set the webaudiocontrol value and pass true as second
+		          // argument to make it fire an input event as if the 
+		          // button was activated in the browser
+		          this.setValue(adjustedValue, true);
+		        }
+		      },
+		      // maps a value from [istart, istop] into [ostart, ostop]
+		      map: function (value, istart, istop, ostart, ostop) {
+		        return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
+		      }
 	});
 	</script>
 </dom-module>
@@ -689,6 +1151,21 @@
 			<div id="wac-switch"></div>
 			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
 		</div>
+	    <div>
+	      <nav id="context-menuKnob" class="context-menu">
+	        <ul class="context-menu__items">
+	          <li class="context-menu__item" id="context-menu-learn" on-click="onClickLearn">
+	            Learn
+	          </li>
+	          <li class="context-menu__item" on-click="onClickClear">
+	            Clear
+	          </li>
+	          <li class="context-menu__item" on-click="toggleMenuOff">
+	            Close
+	          </li>
+	        </ul>
+	      </nav>
+	    </div>
 		<style>
 			:host {
 				user-select: none;
@@ -726,6 +1203,39 @@
 				border-radius: 5px;
 				padding: 5px;
 			}
+		      /* context menu */
+		      .context-menu {
+		        display: none;
+		        position: absolute;
+		        z-index: 10;
+		        padding: 12px 0;
+		        width: 240px;
+		        background-color: #fff;
+		        border: solid 1px #dfdfdf;
+		        box-shadow: 1px 1px 2px #cfcfcf;
+		      }
+		      .context-menu--active {
+		        display: block;
+		      }
+		      .context-menu__items {
+		        list-style: none;
+		        margin: 0;
+		        padding: 0;
+		      }
+		      .context-menu__item {
+		        display: block;
+		        margin-bottom: 4px;
+		        padding: 4px 12px;
+		        color: #0066aa;
+		        text-decoration: none;
+		      }
+		      .context-menu__item:last-child {
+		        margin-bottom: 0;
+		      }
+		      .context-menu__item:hover {
+		        color: #fff;
+		        background-color: #0066aa;
+		      } 
 		</style>
 	</template>
 	<script>
@@ -743,6 +1253,50 @@
 				tooltip:		{type:String, value:null},
 				colors:			{type:String, value:null, },
 				enable:			{type:Number, value:1},
+		        // for midi learn
+		        midilearn: {
+		          type: String
+		        },
+		        compId: {
+		          type:Number
+		        },
+		        midiMode: {
+		          type: String,
+		          value: "not"
+		        },
+		        midiControllers: {
+		          type: Array,
+		          value: []
+		        },
+		        menu: {
+		          type: String,
+		          value: null
+		        },
+		        menuVisible: {
+		          type: Boolean,
+		          value: false
+		        },
+		        taskItemClassName: {
+		          type: String,
+		          value: "knob"
+		        },
+		        lastShift: {
+		          type: Boolean,
+		          value: false
+		        },
+		        contextMenuLinkClassName: {
+		          type: String,
+		          value: "context-menu__link"
+		        },
+		        contextMenuActive: {
+		          type: String,
+		          value: "context-menu--active"
+		        },
+		        //windowHeigth: {type:Number,value:null},
+		        webAudioControllerWithMenu: {
+		          type: String,
+		          value: null
+		        }
 			},
 			cancel: function(e) {
 				window.removeEventListener('mouseup', this.boundUp, true);
@@ -779,8 +1333,21 @@
 				if(this.defvalue === null)
 					this.defvalue = this.value;
 				this.redraw();
+
+		        // context menu
+		        if(this.midilearn) {
+		          sw.addEventListener("contextmenu", this.positionContextMenu.bind(this), false);
+		          window.addEventListener('keyup', this.keyupListener.bind(this), false);
+		          window.addEventListener('resize', this.resizeListener.bind(this), false);
+
+		          this.menu = this.$["context-menuKnob"];
+		          this.compId = Date.now();
+		        }
 			},
 			pointerdown: function(e) {
+				// For midi learn
+				if(e.type !== 'mousedown' || e.button !== 0) return;
+
 				if(!this.enable)
 					return;
 				this.boundCancel = this.cancel.bind(this);
@@ -898,6 +1465,149 @@
 			redraw: function(){
 				this.$['wac-switch'].style.backgroundPosition = '0px -' + ((this.value^this.invert) * this.height) + 'px';
 			},
+		      // MIDILEARN MENU
+		      positionContextMenu: function (e) {
+		        e.preventDefault();
+		        e.stopPropagation();
+		        this.toggleMenuOn(e);
+		        this.positionMenu(e);
+		      },
+		 
+		      keyupListener: function (e) {
+		        if (e.keyCode === 27 && this.menuVisible) {
+		          console.log("keyup");
+		          // Pressing ESC will close the menu
+		          this.toggleMenuOff(e);
+		        }
+		      },
+		      resizeListener: function (e) {
+		        // Hide menu if the window is resized
+		        console.log("resize");
+		        this.toggleMenuOff(e);
+		      },
+		      onClickLearn: function (e) {
+		        // Change label to "listening"
+		        //e.target.textContent = "Listening...";
+		        var menuItemLearn = this.$["context-menu-learn"];
+		        menuItemLearn.innerHTML = 'Listening...';
+		        this.midiMode = 'learn';
+		      },
+		      onClickClear: function (e) {
+		        this.toggleMenuOff(e);
+		        this.midiControllers = [];
+		      },
+		      toggleMenuOn: function (e) {
+		        if (!this.menuVisible) {
+		          this.menuVisible = true;
+		          this.menu.classList.add(this.contextMenuActive);
+		        }
+		      },
+		      toggleMenuOff: function (e) {
+		        if (this.menuVisible) {
+		         // Change the "listening..." label back to "learn"
+		          var menuItemLearn = this.$["context-menu-learn"];
+		          menuItemLearn.innerHTML = 'Learn';
+
+		          this.menuVisible = false;
+		          this.menu.classList.remove(this.contextMenuActive);
+		        }
+		      },
+		      // Get mouse pointer position
+		      getPosition: function (e) {
+		        var rect = e.target.getBoundingClientRect();
+		        var posx =  e.clientX - rect.left;
+		        var posy =  e.clientY - rect.top;
+		        //var posx = e.pageX - rect.width;
+		        //var posy = e.pageY - rect.height;
+		        return {
+		          x: posx,
+		          y: posy
+		        }
+		      },
+
+		      positionMenu: function (e) {
+		        let clickCoords = this.getPosition(e),
+		          menuWidth = this.menu.offsetWidth + 1,
+		          menuHeight = this.menu.offsetHeight + 1;
+		        if ((window.innerWidth - clickCoords.x) < menuWidth) {
+		          this.menu.style.left = window.innerWidth - menuWidth + "px";
+		        } else {
+		          this.menu.style.left = clickCoords.x + "px";
+		        }
+		        if ((window.innerHeight - clickCoords.y) < menuHeight) {
+		          this.menu.style.top = window.innerHeight - menuHeight + "px";
+		        } else {
+		          this.menu.style.top = clickCoords.y + "px";
+		        }
+		      },
+
+		      addMidiController: function (type, note) {
+		        if(this.listeningToThisMidiController(type, note)) return;
+
+		         this.midiControllers.push({
+		              'type': type,
+		              'note': note,
+		              'compId':this.compId,
+		              'tooltip': this.tooltip
+		            });
+		      },
+
+		      listeningToThisMidiController: function (type, note) {
+		        for (var i = 0; i < this.midiControllers.length; i++) {
+		          var c = this.midiControllers[i];
+		          if ((c.type === type && c.note === note && c.compId === this.compId)) {
+		            return true;
+		          }
+		        }
+		        return false;
+		      },
+
+		      processMidiEvent: function (event) {
+		        // Identify the controller
+		        var type = event.data[0];
+		        var note = event.data[1];
+		        if (this.midiMode === 'learn') {
+		          // add this controller to the list of controllers we're
+		          // listening to
+		          this.addMidiController(type, note);
+		          // hide menu
+		          this.toggleMenuOff(event);
+
+		          // set back mode to normal
+		          this.midiMode = 'normal';
+		 
+		        }
+		        // are we listening to this controller ?
+		        if (this.listeningToThisMidiController(type, note)) {
+		          if(this.type=="kick") {
+		            if(this.value) {
+		              this.value = 0;
+		              this.fire('click');
+		            }
+		          }
+		          this.press = 0;
+		          //preventDefault();
+		          switch(this.type) {
+		          case 'kick':
+		            this.value = 1;
+		            break;
+		          case 'toggle':
+		              this.value = 1 - this.value;
+		            break;
+		          case 'radio':
+		            this.value = 1;
+		            break;
+		        }
+		        this.press = 1;
+		        this.ttflag = 0;
+		        this.showtip();
+		          return false;
+		          }
+		      },
+		      // maps a value from [istart, istop] into [ostart, ostop]
+		      map: function (value, istart, istop, ostart, ostop) {
+		        return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
+		      }
 		});
 	</script>
 </dom-module>
@@ -1272,3 +1982,93 @@
 		});
 	</script>
 </dom-module>
+
+<script>
+  // FOR MIDI LEARN
+  var webAudioControlsManager = {
+    listOfDevices : [],
+    listOfWidgets : [],
+    currentConfig : undefined,
+    getCurrentConfigAsJSON : function() {
+      return this.currentConfig.stringify();
+    },
+    midiLearn: false,
+    addMidiListener: function(callback) {
+      // add the callback to the list of listeners...
+    }
+  }
+
+  //var webAudioControlsMidiManager = new WebAudioControlsMidiManager();
+
+  window.addEventListener('load', initWebAudioControls);
+
+  function initWebAudioControls() {
+      if (navigator.requestMIDIAccess) {
+          navigator.requestMIDIAccess()
+          .then(onMIDIStarted, onMIDISystemError);
+      }
+  }
+
+  var listOfExternalMidiListeners = [];
+
+  function webAudioControlsAddMidiListener(callback) {
+    listOfExternalMidiListeners.push(callback);
+  }
+
+
+  /**
+   * Created by ThiernoMamadouCellou on 2/12/2017.
+   */
+  var selectMIDI = null;
+  var midiAccess = null;
+  var midiIn = null;
+  var midi;
+  //var menu = document.querySelector("#context-menu");
+  var knobs = document.getElementsByTagName('webaudio-knob');
+  var sliders = document.getElementsByTagName('webaudio-slider');
+  var switches = document.getElementsByTagName('webaudio-switch');
+
+
+  /* midi learn config it one by one */
+
+  function handleMIDIMessage(event){
+    //console.log(restoreConfigs());
+    //console.log(document.querySelector("#"+preset_buttons[0].id));
+    for (var i = 0; i <knobs.length; i++){
+      knobs[i].processMidiEvent(event);
+    }
+    for (var i = 0; i <sliders.length; i++){
+      sliders[i].processMidiEvent(event);
+    }
+    for (var i = 0; i <switches.length; i++){
+      switches[i].processMidiEvent(event);
+    }
+
+    listOfExternalMidiListeners.forEach(function(externalListener) {
+      externalListener(event);
+    })
+  }
+  
+
+
+  function midiConnectionStateChange( e ) {
+    console.log("connection: " + e.port.name + " " + e.port.connection + " " + e.port.state );
+
+  }
+
+  function onMIDIStarted( midi ) {
+    midiAccess = midi;
+    var inputs = midiAccess.inputs.values();
+    console.log("Found " + midi.inputs.size + " MIDI input(s)");
+    console.log(midi);
+      for ( var input = inputs.next(); input && !input.done; input = inputs.next()){
+        console.log("Connected first input: " + input.value.name);
+        input.value.onmidimessage = handleMIDIMessage;
+      }
+  }
+
+  function onMIDISystemError( err ) {
+    document.getElementById("midilearn").className = "error";
+    console.log( "MIDI not initialized - error encountered:" + err.code );
+  }
+</script>
