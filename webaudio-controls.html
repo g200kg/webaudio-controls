@@ -468,7 +468,7 @@
 		        this.toggleMenuOn(e);
 		        this.positionMenu(e);
 		      },
-		 
+
 		      keyupListener: function (e) {
 		        if (e.keyCode === 27 && this.menuVisible) {
 		          console.log("keyup");
@@ -571,7 +571,7 @@
 
 		          // set back mode to normal
 		          this.midiMode = 'normal';
-		 
+
 		        }
 		        // are we listening to this controller ?
 		        if (this.listeningToThisMidiController(type, note)) {
@@ -580,7 +580,7 @@
 		          // adjust taking into account the min and max attributes of the audiocontrol
 		          var adjustedValue = this.map(val, 0, 127, this.min, this.max);
 		          // set the webaudiocontrol value and pass true as second
-		          // argument to make it fire an input event as if the 
+		          // argument to make it fire an input event as if the
 		          // button was activated in the browser
 		          this.setValue(adjustedValue, true);
 		        }
@@ -695,7 +695,7 @@
 		      .context-menu__item:hover {
 		        color: #fff;
 		        background-color: #0066aa;
-		      }  
+		      }
 		</style>
 	</template>
 	<script>
@@ -823,7 +823,7 @@
 //				this.valuestr="0"+(this.units?this.units:"");
 //				this.redraw();
 //				this.fire('change');
-//				
+//
 		        // context midilearn menu
 		        if(this.midilearn) {
 		          slib.addEventListener("contextmenu", this.positionContextMenu.bind(this), false);
@@ -1020,7 +1020,7 @@
 		        this.toggleMenuOn(e);
 		        this.positionMenu(e);
 		      },
-		 
+
 		      keyupListener: function (e) {
 		        if (e.keyCode === 27 && this.menuVisible) {
 		          console.log("keyup");
@@ -1123,7 +1123,7 @@
 
 		          // set back mode to normal
 		          this.midiMode = 'normal';
-		 
+
 		        }
 		        // are we listening to this controller ?
 		        if (this.listeningToThisMidiController(type, note)) {
@@ -1132,7 +1132,7 @@
 		          // adjust taking into account the min and max attributes of the audiocontrol
 		          var adjustedValue = this.map(val, 0, 127, this.min, this.max);
 		          // set the webaudiocontrol value and pass true as second
-		          // argument to make it fire an input event as if the 
+		          // argument to make it fire an input event as if the
 		          // button was activated in the browser
 		          this.setValue(adjustedValue, true);
 		        }
@@ -1235,7 +1235,7 @@
 		      .context-menu__item:hover {
 		        color: #fff;
 		        background-color: #0066aa;
-		      } 
+		      }
 		</style>
 	</template>
 	<script>
@@ -1472,7 +1472,7 @@
 		        this.toggleMenuOn(e);
 		        this.positionMenu(e);
 		      },
-		 
+
 		      keyupListener: function (e) {
 		        if (e.keyCode === 27 && this.menuVisible) {
 		          console.log("keyup");
@@ -1575,7 +1575,7 @@
 
 		          // set back mode to normal
 		          this.midiMode = 'normal';
-		 
+
 		        }
 		        // are we listening to this controller ?
 		        if (this.listeningToThisMidiController(type, note)) {
@@ -2034,6 +2034,8 @@
   function handleMIDIMessage(event){
     //console.log(restoreConfigs());
     //console.log(document.querySelector("#"+preset_buttons[0].id));
+    if((event.data[0]&0xf0)!=0xb0)
+      return;
     for (var i = 0; i <knobs.length; i++){
       knobs[i].processMidiEvent(event);
     }
@@ -2048,7 +2050,7 @@
       externalListener(event);
     })
   }
-  
+
 
 
   function midiConnectionStateChange( e ) {
