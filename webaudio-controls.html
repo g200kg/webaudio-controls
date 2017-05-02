@@ -2083,11 +2083,11 @@
 
   	// Add hooks for external midi listeners support
   	function addMidiListener(callback) {
-    	this.listOfExternalMidiListeners.push(callback);
+    	listOfExternalMidiListeners.push(callback);
   	}
 
     function getCurrentConfigAsJSON() {
-      return this.currentConfig.stringify();
+      return currentConfig.stringify();
     }
 
   	function handleMIDIMessage(event){
@@ -2114,6 +2114,10 @@
     	for (var i = 0; i <sliders.length; i++){
       		sliders[i].processMidiEvent(event);
     	}
+  	}
+  	// API
+  	return {
+  		addMidiListener:addMidiListener
   	}
   }
 </script>

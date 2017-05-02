@@ -72,6 +72,14 @@ function test() {
     document.body.appendChild(y);
     return y;
 }
+
+webAudioControlsMidiManager.addMidiListener(function(event) {
+    var data = event.data;
+    var channel = data[0] & 0xf;
+    var controlNumber = data[1];
+
+    console.log("Midi event hook: data:[" + data + "] channel:" + channel + " cc:"+controlNumber);
+})
 </script>
 </body>
 </html>
