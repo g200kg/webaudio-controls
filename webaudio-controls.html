@@ -2049,6 +2049,7 @@
 
   // FOR MIDI LEARN
   function WebAudioControlsManager() {
+  	var midiAccess;
     var listOfDevices  =[];
     var listOfWidgets = [];
     var listOfExternalMidiListeners = [];
@@ -2068,15 +2069,31 @@
       	}
   	}
 
- 	function onMIDIStarted(midi) {
-        var inputs = midi.inputs.values();
-        console.log("Found " + midi.inputs.size + " MIDI input(s)");
-    	console.log(midi);
-      	for ( var input = inputs.next(); input && !input.done; input = inputs.next()){
-        	console.log("Connected first input: " + input.value.name);
+  	function enableInputs() {
+  		var inputs = midiAccess.inputs.values();
+        console.log("Found " + midiAccess.inputs.size + " MIDI input(s)");
+    	console.log(midiAccess);
+      	for (var input = inputs.next(); input && !input.done; input = inputs.next()){
+        	console.log("Connected input: " + input.value.name);
         	input.value.onmidimessage = handleMIDIMessage;
       	}
   	}
+
+  	function midiConnectionStateChange(e) {
+  		  console.log("connection: " + e.port.name + " " + e.port.connection + " " + e.port.state );
+
+  		  enableInputs();
+  	}
+
+ 	function onMIDIStarted(midi) {
+ 		midiAccess = midi;
+ 		// to detect hot plug/unplug
+ 		midi.onstatechange = midiConnectionStateChange;
+
+ 		// Add listeners
+		enableInputs(midi);
+  	}
+
   	function onMIDISystemError(err) {
     	console.log( "MIDI not initialized - error encountered:" + err.code );
   	}
