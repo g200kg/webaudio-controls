@@ -241,6 +241,8 @@ Added a midilearn menu to knobs, sliders and switches by micbuffa.
 
 It suffices to update the webaudiocontrols.html file, and add a midilearn=true attribute to the <code>&lt;webaudio-knob&gt;</code>,  <code>&lt;webaudio-slider&gt;</code> and  <code>&lt;webaudio-switch&gt;</code> elements.
 
+Added also a midicc attribute that works like this: add a midicc="3.2" to make a knob, slider or switch listen to a cc event on channel 3, cc#2.
+
 Demo at: https://wasabi.i3s.unice.fr/AmpSimFA/ and at https://wasabi.i3s.unice.fr/AmpSimFA/sample1.html
 
 ---
