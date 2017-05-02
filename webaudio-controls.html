@@ -177,6 +177,9 @@
 		        midilearn: {
 		          type: String
 		        },
+		        midicc: {
+		          type: String
+		        },
 		        compId: {
 		          type:Number
 		        },
@@ -264,13 +267,23 @@
 				this.updateValue();
 
 		        // context menu
+		        this.compId = Date.now() + Math.random();
 		        if(this.midilearn) {
 		          knb.addEventListener("contextmenu", this.positionContextMenu.bind(this), false);
 		          window.addEventListener('keyup', this.keyupListener.bind(this), false);
 		          window.addEventListener('resize', this.resizeListener.bind(this), false);
 
 		          this.menu = this.$["context-menuKnob"];
-		          this.compId = Date.now() + Math.random();
+		        }
+
+		        if(this.midicc) {
+		        	// parse midi cc value
+		        	// for the moment only one value
+		        	// of type midicc="3.2" -> use midi ch(3) + 
+		        	// midi cc#2
+		        	var ch = parseInt(this.midicc.substring(0,this.midicc.lastIndexOf(".")));
+		        	var cc = parseInt(this.midicc.substring(this.midicc.lastIndexOf(".")+1));
+		        	this.addMidiController(ch, cc);
 		        }
 
 			},
@@ -537,21 +550,22 @@
 		        }
 		      },
 
-		      addMidiController: function (type, note) {
-		        if(this.listeningToThisMidiController(type, note)) return;
+		      addMidiController: function (channel, cc) {
+		        if(this.listeningToThisMidiController(channel, cc)) return;
 
 		         this.midiControllers.push({
-		              'type': type,
-		              'note': note,
+		              'channel': channel,
+		              'cc': cc,
 		              'compId':this.compId,
 		              'tooltip': this.tooltip
 		            });
+		        console.log("Added mapping for channel=" + channel + " cc="+ cc + " tooltip=" + this.tooltip);
 		      },
 
-		      listeningToThisMidiController: function (type, note) {
+		      listeningToThisMidiController: function (channel, cc) {
 		        for (var i = 0; i < this.midiControllers.length; i++) {
 		          var c = this.midiControllers[i];
-		          if ((c.type === type && c.note === note && c.compId === this.compId)) {
+		          if ((c.channel === channel && c.cc === cc && c.compId === this.compId)) {
 		            return true;
 		          }
 		        }
@@ -559,13 +573,17 @@
 		      },
 
 		      processMidiEvent: function (event) {
+		      	// Message is a cc
+
 		        // Identify the controller
-		        var type = event.data[0];
-		        var note = event.data[1];
+		        var data = event.data;
+		        var channel = data[0] & 0xf;
+		        var controlNumber = data[1];
+
 		        if (this.midiMode === 'learn') {
 		          // add this controller to the list of controllers we're
 		          // listening to
-		          this.addMidiController(type, note);
+		          this.addMidiController(channel, controlNumber);
 		          // hide menu
 		          this.toggleMenuOff(event);
 
@@ -574,7 +592,7 @@
 
 		        }
 		        // are we listening to this controller ?
-		        if (this.listeningToThisMidiController(type, note)) {
+		        if (this.listeningToThisMidiController(channel, controlNumber)) {
 		          // midi event value
 		          var val = event.data[2];
 		          // adjust taking into account the min and max attributes of the audiocontrol
@@ -729,6 +747,9 @@
 		        midilearn: {
 		          type: String
 		        },
+		        midicc: {
+		          type: String
+		        },
 		        compId: {
 		          type:Number
 		        },
@@ -825,15 +846,25 @@
 //				this.fire('change');
 //
 		        // context midilearn menu
+		      	this.compId = Date.now() + Math.random();
+
 		        if(this.midilearn) {
 		          slib.addEventListener("contextmenu", this.positionContextMenu.bind(this), false);
 		          window.addEventListener('keyup', this.keyupListener.bind(this), false);
 		          window.addEventListener('resize', this.resizeListener.bind(this), false);
 
 		          this.menu = this.$["context-menuKnob"];
-		          this.compId = Date.now() + Math.random();
 		        }
 
+		        if(this.midicc) {
+		        	// parse midi cc value
+		        	// for the moment only one value
+		        	// of type midicc="3.2" -> use midi ch(3) + 
+		        	// midi cc#2
+		        	var ch = parseInt(this.midicc.substring(0,this.midicc.lastIndexOf(".")));
+		        	var cc = parseInt(this.midicc.substring(this.midicc.lastIndexOf(".")+1));
+		        	this.addMidiController(ch, cc);
+		        }
 			},
 			pointerdown: function(e) {
 				if(!this.enable)
@@ -1089,21 +1120,22 @@
 		        }
 		      },
 
-		      addMidiController: function (type, note) {
-		        if(this.listeningToThisMidiController(type, note)) return;
+		      addMidiController: function (channel, cc) {
+		        if(this.listeningToThisMidiController(channel, cc)) return;
 
 		         this.midiControllers.push({
-		              'type': type,
-		              'note': note,
+		              'channel': channel,
+		              'cc': cc,
 		              'compId':this.compId,
 		              'tooltip': this.tooltip
 		            });
+		        console.log("Added mapping for channel=" + channel + " cc="+ cc + " tooltip=" + this.tooltip);
 		      },
 
-		      listeningToThisMidiController: function (type, note) {
+		      listeningToThisMidiController: function (channel, cc) {
 		        for (var i = 0; i < this.midiControllers.length; i++) {
 		          var c = this.midiControllers[i];
-		          if ((c.type === type && c.note === note && c.compId === this.compId)) {
+		          if ((c.channel === channel && c.cc === cc && c.compId === this.compId)) {
 		            return true;
 		          }
 		        }
@@ -1111,13 +1143,17 @@
 		      },
 
 		      processMidiEvent: function (event) {
+		      	// Message is a cc
+
 		        // Identify the controller
-		        var type = event.data[0];
-		        var note = event.data[1];
+		        var data = event.data;
+		        var channel = data[0] & 0xf;
+		        var controlNumber = data[1];
+
 		        if (this.midiMode === 'learn') {
 		          // add this controller to the list of controllers we're
 		          // listening to
-		          this.addMidiController(type, note);
+		          this.addMidiController(channel, controlNumber);
 		          // hide menu
 		          this.toggleMenuOff(event);
 
@@ -1126,7 +1162,7 @@
 
 		        }
 		        // are we listening to this controller ?
-		        if (this.listeningToThisMidiController(type, note)) {
+		        if (this.listeningToThisMidiController(channel, controlNumber)) {
 		          // midi event value
 		          var val = event.data[2];
 		          // adjust taking into account the min and max attributes of the audiocontrol
@@ -1257,6 +1293,9 @@
 		        midilearn: {
 		          type: String
 		        },
+		        midicc: {
+		          type: String
+		        },
 		        compId: {
 		          type:Number
 		        },
@@ -1335,14 +1374,26 @@
 				this.redraw();
 
 		        // context menu
+		        this.compId = Date.now()+ Math.random();
+
 		        if(this.midilearn) {
 		          sw.addEventListener("contextmenu", this.positionContextMenu.bind(this), false);
 		          window.addEventListener('keyup', this.keyupListener.bind(this), false);
 		          window.addEventListener('resize', this.resizeListener.bind(this), false);
 
 		          this.menu = this.$["context-menuKnob"];
-		          this.compId = Date.now()+ Math.random();
 		        }
+
+		        if(this.midicc) {
+		        	// parse midi cc value
+		        	// for the moment only one value
+		        	// of type midicc="3.2" -> use midi ch(3) + 
+		        	// midi cc#2
+		        	var ch = parseInt(this.midicc.substring(0,this.midicc.lastIndexOf(".")));
+		        	var cc = parseInt(this.midicc.substring(this.midicc.lastIndexOf(".")+1));
+		        	this.addMidiController(ch, cc);
+		        }
+
 			},
 			pointerdown: function(e) {
 				// For midi learn
@@ -1541,21 +1592,22 @@
 		        }
 		      },
 
-		      addMidiController: function (type, note) {
-		        if(this.listeningToThisMidiController(type, note)) return;
+		      addMidiController: function (channel, cc) {
+		        if(this.listeningToThisMidiController(channel, cc)) return;
 
 		         this.midiControllers.push({
-		              'type': type,
-		              'note': note,
+		              'channel': channel,
+		              'cc': cc,
 		              'compId':this.compId,
 		              'tooltip': this.tooltip
 		            });
+		        console.log("Added mapping for channel=" + channel + " cc="+ cc + " tooltip=" + this.tooltip);
 		      },
 
-		      listeningToThisMidiController: function (type, note) {
+		      listeningToThisMidiController: function (channel, cc) {
 		        for (var i = 0; i < this.midiControllers.length; i++) {
 		          var c = this.midiControllers[i];
-		          if ((c.type === type && c.note === note && c.compId === this.compId)) {
+		          if ((c.channel === channel && c.cc === cc && c.compId === this.compId)) {
 		            return true;
 		          }
 		        }
@@ -1563,13 +1615,22 @@
 		      },
 
 		      processMidiEvent: function (event) {
+		      	// Message is a cc
+
 		        // Identify the controller
-		        var type = event.data[0];
-		        var note = event.data[1];
+		        var data = event.data;
+		        var channel = data[0]; // and not data[0] & 0xf;
+		        					   // otherwise channel is the
+		        					   // same for pressure pad 
+		        					   // press and release
+		        var controlNumber = data[1];
+
+
+
 		        if (this.midiMode === 'learn') {
 		          // add this controller to the list of controllers we're
 		          // listening to
-		          this.addMidiController(type, note);
+		          this.addMidiController(channel, controlNumber);
 		          // hide menu
 		          this.toggleMenuOff(event);
 
@@ -1578,7 +1639,7 @@
 
 		        }
 		        // are we listening to this controller ?
-		        if (this.listeningToThisMidiController(type, note)) {
+		        if (this.listeningToThisMidiController(channel, controlNumber)) {
 		          if(this.type=="kick") {
 		            if(this.value) {
 		              this.value = 0;
@@ -1603,7 +1664,7 @@
 		        this.showtip();
 		          return false;
 		          }
-		      },
+		      },		      
 		      // maps a value from [istart, istop] into [ostart, ostop]
 		      map: function (value, istart, istop, ostart, ostop) {
 		        return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
@@ -1984,93 +2045,96 @@
 </dom-module>
 
 <script>
+  var webAudioControlsMidiManager = new WebAudioControlsManager();
+
   // FOR MIDI LEARN
-  var webAudioControlsManager = {
-    listOfDevices : [],
-    listOfWidgets : [],
-    currentConfig : undefined,
-    getCurrentConfigAsJSON : function() {
-      return this.currentConfig.stringify();
-    },
-    midiLearn: false,
-    addMidiListener: function(callback) {
-      // add the callback to the list of listeners...
-    }
-  }
+  function WebAudioControlsManager() {
+  	var midiAccess;
+    var listOfDevices  =[];
+    var listOfWidgets = [];
+    var listOfExternalMidiListeners = [];
 
-  //var webAudioControlsMidiManager = new WebAudioControlsMidiManager();
-
-  window.addEventListener('load', initWebAudioControls);
-
-  function initWebAudioControls() {
-      if (navigator.requestMIDIAccess) {
-          navigator.requestMIDIAccess()
-          .then(onMIDIStarted, onMIDISystemError);
-      }
-  }
-
-  var listOfExternalMidiListeners = [];
-
-  function webAudioControlsAddMidiListener(callback) {
-    listOfExternalMidiListeners.push(callback);
-  }
+    var knobs = document.getElementsByTagName('webaudio-knob');
+  	var sliders = document.getElementsByTagName('webaudio-slider');
+  	var switches = document.getElementsByTagName('webaudio-switch');
 
 
-  /**
-   * Created by ThiernoMamadouCellou on 2/12/2017.
-   */
-  var selectMIDI = null;
-  var midiAccess = null;
-  var midiIn = null;
-  var midi;
-  //var menu = document.querySelector("#context-menu");
-  var knobs = document.getElementsByTagName('webaudio-knob');
-  var sliders = document.getElementsByTagName('webaudio-slider');
-  var switches = document.getElementsByTagName('webaudio-switch');
+    initWebAudioControls();
 
 
-  /* midi learn config it one by one */
+    function initWebAudioControls() {
+      	if (navigator.requestMIDIAccess) {
+          	navigator.requestMIDIAccess()
+          	.then(onMIDIStarted, onMIDISystemError);
+      	}
+  	}
 
-  function handleMIDIMessage(event){
-    //console.log(restoreConfigs());
-    //console.log(document.querySelector("#"+preset_buttons[0].id));
-    if((event.data[0]&0xf0)!=0xb0)
-      return;
-    for (var i = 0; i <knobs.length; i++){
-      knobs[i].processMidiEvent(event);
-    }
-    for (var i = 0; i <sliders.length; i++){
-      sliders[i].processMidiEvent(event);
-    }
-    for (var i = 0; i <switches.length; i++){
-      switches[i].processMidiEvent(event);
+  	function enableInputs() {
+  		var inputs = midiAccess.inputs.values();
+        console.log("Found " + midiAccess.inputs.size + " MIDI input(s)");
+    	console.log(midiAccess);
+      	for (var input = inputs.next(); input && !input.done; input = inputs.next()){
+        	console.log("Connected input: " + input.value.name);
+        	input.value.onmidimessage = handleMIDIMessage;
+      	}
+  	}
+
+  	function midiConnectionStateChange(e) {
+  		  console.log("connection: " + e.port.name + " " + e.port.connection + " " + e.port.state );
+
+  		  enableInputs();
+  	}
+
+ 	function onMIDIStarted(midi) {
+ 		midiAccess = midi;
+ 		// to detect hot plug/unplug
+ 		midi.onstatechange = midiConnectionStateChange;
+
+ 		// Add listeners
+		enableInputs(midi);
+  	}
+
+  	function onMIDISystemError(err) {
+    	console.log( "MIDI not initialized - error encountered:" + err.code );
+  	}
+
+    // Add hooks for external midi listeners support
+  	function addMidiListener(callback) {
+    	listOfExternalMidiListeners.push(callback);
+  	}
+
+    function getCurrentConfigAsJSON() {
+      return currentConfig.stringify();
     }
 
-    listOfExternalMidiListeners.forEach(function(externalListener) {
-      externalListener(event);
-    })
-  }
+  	function handleMIDIMessage(event){
+  		// External hooks, we do not filter event types
+    	listOfExternalMidiListeners.forEach(function(externalListener) {
+      		externalListener(event);
+    	});
 
+    	// switches may receive pressure pad events too
+    	for (var i = 0; i <switches.length; i++){
+      		switches[i].processMidiEvent(event);
+    	}
 
+  		// for webaudiocontrols sliders and knobs, we limit to 
+  		// cc midi events
+  		//console.log("event[0] =" + event.data[0]);
+  		//console.log("(event.data[0]&0xf0)!=0xb0) = " + ((event.data[0]&0xf0)!=0xb0));
+  		if((event.data[0]&0xf0)!=0xb0)
+      		return;
 
-  function midiConnectionStateChange( e ) {
-    console.log("connection: " + e.port.name + " " + e.port.connection + " " + e.port.state );
-
-  }
-
-  function onMIDIStarted( midi ) {
-    midiAccess = midi;
-    var inputs = midiAccess.inputs.values();
-    console.log("Found " + midi.inputs.size + " MIDI input(s)");
-    console.log(midi);
-      for ( var input = inputs.next(); input && !input.done; input = inputs.next()){
-        console.log("Connected first input: " + input.value.name);
-        input.value.onmidimessage = handleMIDIMessage;
-      }
-  }
-
-  function onMIDISystemError( err ) {
-    document.getElementById("midilearn").className = "error";
-    console.log( "MIDI not initialized - error encountered:" + err.code );
+    	for (var i = 0; i <knobs.length; i++){
+      		knobs[i].processMidiEvent(event);
+    	}
+    	for (var i = 0; i <sliders.length; i++){
+      		sliders[i].processMidiEvent(event);
+    	}
+  	}
+  	// API
+  	return {
+  		addMidiListener:addMidiListener
+  	}
   }
 </script>
