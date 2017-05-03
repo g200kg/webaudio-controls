@@ -243,24 +243,9 @@ It suffices to update the webaudiocontrols.html file, and add a midilearn=true a
 
 Added also a midicc attribute that works like this: add a midicc="3.2" to make a knob, slider or switch listen to a cc event on channel 3, cc#2.
 
-```
-<webaudio-knob midilearn=true midicc="7.7" ...></webaudio-knob>
-```
+It's also possible to use an external hook for listening to all midi events from the host html file. 
 
-Example: 
-
-```
-<script>
-// add this to your html page that uses webaudiocontrols
-webAudioControlsMidiManager.addMidiListener(function(event) {
-    var data = event.data;
-    var channel = data[0] & 0xf;
-    var controlNumber = data[1];
-
-    console.log("Midi event hook: data:[" + data + "] channel:" + channel + " cc:"+controlNumber);
-});
-</script>
-```
+Just add: 
 
 Demo at: https://wasabi.i3s.unice.fr/AmpSimFA/ and at https://wasabi.i3s.unice.fr/AmpSimFA/sample1.html
 
