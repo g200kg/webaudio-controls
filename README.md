@@ -238,7 +238,7 @@ Here is a brief instruction  to export knob-image from KnobGallery
 ---
 ## MIDI support: knobs, sliders and switches have midilearn/midicc support built-in
 
-Added a midilearn menu to knobs, sliders and switches by @micbuffa.
+Added a midilearn menu to knobs, sliders and switches by @micbuffa and @CellouBalde.
 
 <b>Midilearn right click menu</b>: add a <code>midilearn=true</code> attribute to the <code>&lt;webaudio-knob&gt;</code>,  <code>&lt;webaudio-slider&gt;</code> and  <code>&lt;webaudio-switch&gt;</code> elements. Then right click on the element in the GUI, a midi learn menu should appear. Then, operate one of your midi controller and it should start actionning the webaudiocontrol widget in the HTML page. You can associate more than one controller to each widget. You can hot plug/unplug midi devices, they will be detected.
 
