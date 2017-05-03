@@ -240,17 +240,19 @@ Here is a brief instruction  to export knob-image from KnobGallery
 
 Added a midilearn menu to knobs, sliders and switches by @micbuffa.
 
-<b>Midilearn right click menu</b>: add a midilearn=true attribute to the <code>&lt;webaudio-knob&gt;</code>,  <code>&lt;webaudio-slider&gt;</code> and  <code>&lt;webaudio-switch&gt;</code> elements. Then right click on the element in the GUI, a midi learn menu should appear.
+<b>Midilearn right click menu</b>: add a <code>midilearn=true</code> attribute to the <code>&lt;webaudio-knob&gt;</code>,  <code>&lt;webaudio-slider&gt;</code> and  <code>&lt;webaudio-switch&gt;</code> elements. Then right click on the element in the GUI, a midi learn menu should appear. Then, operate one of your midi controller and it should start actionning the webaudiocontrol widget in the HTML page. You can associate more than one controller to each widget. You can hot plug/unplug midi devices, they will be detected.
 
 ![Midi Learn Menu](http://i.imgur.com/h0ZiXyp.jpg)
 
-<b>Declarative association between a midi controller and a GUI webaudiocontrol</b>: There is also a midicc attribute that works like this:  midicc="3.2" means "listen to a cc event on channel 3, cc#2". If you don't know the channel/cc number of your control: 1) add a midilearn=true attribute so that a right click on the GUI widget will display the midilearn menu, 2) select "learn" in the menu, 3) operate your knob/slider/switch, normally the midi controller and the GUI object are in sync. 4) look at the console, there is a message indicating the channel and cc number, for example "channel 0, cc 28". Then if you add the attribute midicc="0.28" to the HTML of your knob/slider/switch, the midi mapping between your GUI webaudiocontrol and your midi controller will be automatic.
+<b>Declarative association between a midi controller and a GUI webaudiocontrol</b>: There is also an HTML <code>midicc="channel.cc#"</code> attribute that works like this:  <code>midicc="3.2"</code> means "listen to a cc event on channel 3, cc number 2". If you don't know the channel/cc number of your controller: 1) add a <code>midilearn=true</code> attribute so that a right click on the GUI widget will display the midilearn menu, 2) select "learn" in the menu, 3) operate your knob/slider/switch, normally the midi controller and the GUI object are in sync. 4) look at the devtool console, there is a message indicating the channel and cc number, for example "channel 0, cc 28". Then if you add the attribute midicc="0.28" to the HTML of your knob/slider/switch, the midi mapping between your GUI webaudiocontrol and your midi controller will be automatic. Follow the links at the end of this section and look at the HTML source code to see some examples.
+
+Example: associate a knob with a controller on channel 7, cc number 7:
 
 ```
 <webaudio-knob midilearn=true midicc="7.7" ...></webaudio-knob>
 ```
 
-You can also declare in your HTML file your own midi event listener (for example for listening to program changes events): use the webAudioControlsMidiManager object, that comes with an addMidiListener method. Like that you will benefit from the MIDI code included in the webaudiocontrols:
+<b>External midi event listener (hook): </b>you can also declare in your HTML file your own midi event listener (for example for listening to program changes events): use the <code>webAudioControlsMidiManager</code> object, that comes with an <code>addMidiListener</code> method. Like that you will benefit from the MIDI code included in the webaudiocontrols. Here is an example (also, look at the source code of the Sample1.html demo, and open the devtool console to see midi messages received by the hook at the end of the HTML file).
 
 ```
 <script>
