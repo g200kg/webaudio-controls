@@ -2113,19 +2113,23 @@
       		externalListener(event);
     	});
 
-    	// switches may receive pressure pad events too
+  		//console.log("event[0] =" + event.data[0]);
+  		//console.log("(event.data[0]&0xf0)!=0xb0) = " + ((event.data[0]&0xf0)!=0xb0));
+
+
+  		// for webaudiocontrols sliders and knobs, we limit to 
+  		// cc midi events
+  		if(((event.data [0] & 0xf0) == 0xf0) || ((event.data [0] & 0xf0) == 0xb0 && event.data [1]>= 120)) {
+  			alert("filtered");
+  			return;
+  		}
+      		
+
     	for (var i = 0; i <switches.length; i++){
       		switches[i].processMidiEvent(event);
     	}
 
-  		// for webaudiocontrols sliders and knobs, we limit to 
-  		// cc midi events
-  		//console.log("event[0] =" + event.data[0]);
-  		//console.log("(event.data[0]&0xf0)!=0xb0) = " + ((event.data[0]&0xf0)!=0xb0));
-  		if((event.data[0]&0xf0)!=0xb0)
-      		return;
-
-    	for (var i = 0; i <knobs.length; i++){
+   		for (var i = 0; i <knobs.length; i++){
       		knobs[i].processMidiEvent(event);
     	}
     	for (var i = 0; i <sliders.length; i++){
