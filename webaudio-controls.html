@@ -279,9 +279,9 @@
 		        if(this.midicc) {
 		        	// parse midi cc value
 		        	// for the moment only one value
-		        	// of type midicc="3.2" -> use midi ch(3) + 
+		        	// of type midicc="3.2" -> use midi ch(3) +
 		        	// midi cc#2
-		        	var ch = parseInt(this.midicc.substring(0,this.midicc.lastIndexOf(".")));
+		        	var ch = parseInt(this.midicc.substring(0,this.midicc.lastIndexOf(".")))-1;
 		        	var cc = parseInt(this.midicc.substring(this.midicc.lastIndexOf(".")+1));
 		        	this.addMidiController(ch, cc);
 		        }
@@ -859,9 +859,9 @@
 		        if(this.midicc) {
 		        	// parse midi cc value
 		        	// for the moment only one value
-		        	// of type midicc="3.2" -> use midi ch(3) + 
+		        	// of type midicc="3.2" -> use midi ch(3) +
 		        	// midi cc#2
-		        	var ch = parseInt(this.midicc.substring(0,this.midicc.lastIndexOf(".")));
+		        	var ch = parseInt(this.midicc.substring(0,this.midicc.lastIndexOf(".")))-1;
 		        	var cc = parseInt(this.midicc.substring(this.midicc.lastIndexOf(".")+1));
 		        	this.addMidiController(ch, cc);
 		        }
@@ -1387,9 +1387,9 @@
 		        if(this.midicc) {
 		        	// parse midi cc value
 		        	// for the moment only one value
-		        	// of type midicc="3.2" -> use midi ch(3) + 
+		        	// of type midicc="3.2" -> use midi ch(3) +
 		        	// midi cc#2
-		        	var ch = parseInt(this.midicc.substring(0,this.midicc.lastIndexOf(".")));
+		        	var ch = parseInt(this.midicc.substring(0,this.midicc.lastIndexOf(".")))-1;
 		        	var cc = parseInt(this.midicc.substring(this.midicc.lastIndexOf(".")+1));
 		        	this.addMidiController(ch, cc);
 		        }
@@ -1621,7 +1621,7 @@
 		        var data = event.data;
 		        var channel = data[0]; // and not data[0] & 0xf;
 		        					   // otherwise channel is the
-		        					   // same for pressure pad 
+		        					   // same for pressure pad
 		        					   // press and release
 		        var controlNumber = data[1];
 
@@ -1664,7 +1664,7 @@
 		        this.showtip();
 		          return false;
 		          }
-		      },		      
+		      },
 		      // maps a value from [istart, istop] into [ostart, ostop]
 		      map: function (value, istart, istop, ostart, ostop) {
 		        return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
@@ -2117,13 +2117,13 @@
   		//console.log("(event.data[0]&0xf0)!=0xb0) = " + ((event.data[0]&0xf0)!=0xb0));
 
 
-  		// for webaudiocontrols sliders and knobs, we limit to 
+  		// for webaudiocontrols sliders and knobs, we limit to
   		// cc midi events
   		if(((event.data [0] & 0xf0) == 0xf0) || ((event.data [0] & 0xf0) == 0xb0 && event.data [1]>= 120)) {
-  			alert("filtered");
+//  			alert("filtered");
   			return;
   		}
-      		
+
 
     	for (var i = 0; i <switches.length; i++){
       		switches[i].processMidiEvent(event);
