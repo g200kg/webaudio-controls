@@ -96,7 +96,7 @@ Attribute  | Options      | Default          | Description
 **enable** | `0`,`1` | `1` | Enable control with the pointing device.
 **colors** | string | "#e00;#000;#000" | Semicolon separated 3 colors for 'indicator', 'body' and 'highlight'. These colors are used in default knob (when `src` is not provided).
 **midilearn** | string | null | If `true`, MIDI learn function with right-click menu is enabled.
-**midicc** | string | null | Assign MIDI control change to this knob. with format `ch.cn`, here the `ch` is channel (1-16) and `cn` is control number (0-119).
+**midicc** | string | null | Assign MIDI control change to this knob. with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
 ### webaudio-slider
 
@@ -121,7 +121,7 @@ Attribute  | Options      | Default          | Description
 **enable** | `0`, `1` | `1` | Enable control with the pointing device.
 **colors** | string | "#e00;#000;#fff" | Semicolon separated 3 colors for 'knob', 'background' and 'highlight'. These colors are used in default knob (when `src` or `knobsrc` is not provided).
 **midilearn** | string | null | If `true`, MIDI learn function with right-click menu is enabled.
-**midicc** | string | null | Assign MIDI control change to this slider. with format `ch.cn`, here the `ch` is channel (1-16) and `cn` is control number (0-119).
+**midicc** | string | null | Assign MIDI control change to this slider. with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
 
 ### webaudio-switch
@@ -140,7 +140,7 @@ Attribute  | Options      | Default          | Description
 **enable** | `0`,`1` | `1` | Enable control with the pointing device.
 **colors** | string | "#e00;#000;#fff" | Semicolon separated 3 colors for 'knob', 'background' and 'highlight'. These colors are used in default switch (when `src` is not provided).
 **midilearn** | string | null | If `true`, MIDI learn function with right-click menu is enabled.
-**midicc** | string | null | Assign MIDI control change to this switch. with format `ch.cn`, here the `ch` is channel (1-16) and `cn` is control number (0-119).
+**midicc** | string | null | Assign MIDI control change to this switch. with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
 ### webaudio-param
 

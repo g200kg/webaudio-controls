@@ -565,7 +565,7 @@
 		      listeningToThisMidiController: function (channel, cc) {
 		        for (var i = 0; i < this.midiControllers.length; i++) {
 		          var c = this.midiControllers[i];
-		          if ((c.channel === channel && c.cc === cc && c.compId === this.compId)) {
+              if (((c.channel === channel || c.channel < 0) && c.cc === cc && c.compId === this.compId)) {
 		            return true;
 		          }
 		        }
@@ -1135,7 +1135,7 @@
 		      listeningToThisMidiController: function (channel, cc) {
 		        for (var i = 0; i < this.midiControllers.length; i++) {
 		          var c = this.midiControllers[i];
-		          if ((c.channel === channel && c.cc === cc && c.compId === this.compId)) {
+		          if (((c.channel === channel || c.channel < 0) && c.cc === cc && c.compId === this.compId)) {
 		            return true;
 		          }
 		        }
@@ -1607,7 +1607,7 @@
 		      listeningToThisMidiController: function (channel, cc) {
 		        for (var i = 0; i < this.midiControllers.length; i++) {
 		          var c = this.midiControllers[i];
-		          if ((c.channel === channel && c.cc === cc && c.compId === this.compId)) {
+              if (((c.channel === channel || c.channel < 0) && c.cc === cc && c.compId === this.compId)) {
 		            return true;
 		          }
 		        }
