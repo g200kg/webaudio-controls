@@ -232,6 +232,7 @@
 				var body = this.$['wac-body'];
 				var knb = this.$['wac-knob'];
 				knb.addEventListener('DOMMouseScroll',this.wheel.bind(this),false);
+        knb.addEventListener('wheel',this.wheel.bind(this),false);
 				knb.addEventListener('mousewheel',this.wheel.bind(this),false);
 				knb.addEventListener('mousedown',this.pointerdown.bind(this),false);
 				knb.addEventListener('touchstart',this.pointerdown.bind(this),false);
@@ -828,7 +829,8 @@
 				var slib=this.$['wac-body'];
 				var slik=this.$['wac-knob'];
 				slib.addEventListener('DOMMouseScroll',this.wheel.bind(this),false);
-				slib.addEventListener('mousewheel',this.wheel.bind(this),false);
+        slib.addEventListener('wheel',this.wheel.bind(this),false);
+  			slib.addEventListener('mousewheel',this.wheel.bind(this),false);
 				slib.addEventListener('mousedown',this.pointerdown.bind(this),false);
 				slib.addEventListener('touchstart',this.pointerdown.bind(this),false);
 				slib.addEventListener('mouseover',this.pointerover.bind(this),false);
@@ -2045,6 +2047,7 @@
 </dom-module>
 
 <script>
+if(window.UseWebAudioControlsMidi)
   var webAudioControlsMidiManager = new WebAudioControlsManager();
 
   // FOR MIDI LEARN
