@@ -1897,7 +1897,7 @@
 				if(this.enable) {
 					this.press=1;
 					this.pointermove(e);
-					this.childNodes[1].focus();
+					if(this.hasChildNodes() && this.childNodes>0) this.childNodes[1].focus();
 				}
 				e.preventDefault();
 			},
