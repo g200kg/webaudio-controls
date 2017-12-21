@@ -51,9 +51,7 @@ Operation | Component | Description
 ## How to use
 
 - Install  
- * Use command `bower install --save Polymer/polymer`, if you use bower. Or download zipped file and deploy appropriately.
- * webaudio-controls also can be installed with : `bower install --save g200kg/webaudio-controls`  
-
+ * Use command `bower install --save g200kg/webaudio-controls`, if you use bower. Or download zipped file and deploy appropriately.
 
 - load webcomponents.js and polymer
   * &lt;script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"&gt;&lt;/script&gt;<br/>
