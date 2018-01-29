@@ -3,6 +3,7 @@
 Especially suitable for audio-applications like VST plugins.  
 
 Polymer 1.4 compatible
+### This version still uses Polymer 1.4, but now  rewriting to a WebComponents API direct version. It is available under folder "2.0".
 
 **WebAudioControls** is consist of following components  
 
