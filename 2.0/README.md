@@ -11,6 +11,7 @@ This version use only the Custom Elements V1 API.
 It means that it works with the current Chrome and Safari, Firefox 59 and above without requiring other libraries.
 Also, in order to operate with Firefox 58 or lower, Edge etc etc., we need only webcomponentsjs.
 
+* NOTE : event firing is a little different from old version. While dragging the knob it fires the "input" event and the "change" event fires when you release the mouse
 
 ---
 **WebAudioControls** is consist of following components  
