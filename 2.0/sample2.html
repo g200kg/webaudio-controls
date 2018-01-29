@@ -2,10 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>[Polymer] WebAudio Controls Test page</title>
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-    <link rel="import" href="bower_components/polymer/polymer.html">
-    <link rel="import" href="webaudio-controls.html">
+    <title>WebAudio Controls Test page</title>
+    <script src="webaudio-controls.js"></script>
     <style>
     body {
       font-family: sans-serif;
@@ -20,25 +18,31 @@
 
 function Init() {
   var knobs = document.getElementsByTagName('webaudio-knob');
-  for(var i = 0; i < knobs.length; ++i)
-    knobs[i].addEventListener('change', LogChange);
+  for(var i = 0; i < knobs.length; ++i){
+    knobs[i].addEventListener('input', AddLog);
+    knobs[i].addEventListener('change', AddLog);
+    knobs[i].addEventListener('click', AddLog);
+  }
   var sliders = document.getElementsByTagName('webaudio-slider');
-  for(var i = 0; i < sliders.length; ++i)
-    sliders[i].addEventListener('change', LogChange);
+  for(var i = 0; i < sliders.length; ++i){
+    sliders[i].addEventListener('input', AddLog);
+    sliders[i].addEventListener('change', AddLog);
+    knobs[i].addEventListener('click', AddLog);
+  }
   var switches = document.getElementsByTagName('webaudio-switch');
-  for(var i = 0; i < switches.length; ++i)
-    switches[i].addEventListener('change', LogChange);
-  for(var i=0;i<switches.length;++i)
-    switches[i].addEventListener("click",LogClick);
+  for(var i = 0; i < switches.length; ++i){
+    switches[i].addEventListener('input', AddLog);
+    switches[i].addEventListener('change', AddLog);
+    switches[i].addEventListener('click', AddLog);
+  }
   window.addEventListener('scroll',Scroll);
 }
-function LogChange(e) {
-  var str="change: id="+e.target.id+" value:"+e.target.value;
+function AddLog(e) {
+  var str=e.type+": id="+e.target.id+" value:"+e.target.value;
   var con = document.getElementById("cons");
   var conframe = document.getElementById("consframe");
   con.innerHTML += (str+"<br/>");
   conframe.scrollTop = con.scrollHeight;
-  console.log(str);
 }
 function LogClick(e) {
   var str="click:"+e.target.id;
@@ -85,7 +89,7 @@ function Clear() {
       <div>non-square image is used with specifying width/height instead of diameter.</div><br/><br/>
 
       <webaudio-knob id="knob5" src="img/LittlePhatty.png" sprites="100" diameter="64" valuetip="0" tooltip="Knob Test"></webaudio-knob>
-      <webaudio-param link="knob5"></webaudio-param><br/>
+      <webaudio-param id="para5" link="knob5"></webaudio-param><br/>
       <code>&lt;webaudio-knob id="knob5" src="img/LittlePhatty.png" sprites="100" diameter="64" valuetip="0" tooltip="Knob Test"&gt;&lt;/webaudio-knob&gt;<br/>
       &lt;webaudio-param link="knob5"&gt;&lt;/webaudio-param&gt;
       </code>
@@ -146,7 +150,6 @@ function Clear() {
       <div>Radio type switch. In this mode, only one switch is activated in the group.</div><br/><br/>
   </div>
 
-
 <div>
   <h2>Specification</h2>
   <p>Refer the following page for detail specifications</p>
@@ -169,5 +172,6 @@ webaudio-controls is licensed under the Apache License, Version 2.0</p>
 	Knob/Switch images are from <a href="http://www.g200kg.com/en/webknobman/gallery.php" target="_blank">Knob Gallery</a><br/>
 	<a href="http://www.g200kg.com/en/webknobman/gallery.php?m=p&p=58" target="_blank">switch_toggle.knob</a> by <a href="http://bji.yukihotaru.com/" target="_blank">az</a> Copyright (c) 2011 <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC-BY</a>
 	</div>
+  <button onclick="console.log(event.target)">test</button>
   </body>
 </html>
