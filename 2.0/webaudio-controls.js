@@ -1040,7 +1040,10 @@ webaudio-keyboard{
       if(this.enable==null) this.enable=1; else this.enable=+this.enable;
       this.midilearn=+this.getAttribute("midilearn");
       this.midicc=this.getAttribute("midicc");
-
+      this.keycodes1=[90,83,88,68,67,86,71,66,72,78,74,77,188,76,190,187,191,226];
+      this.keycodes2=[81,50,87,51,69,82,53,84,54,89,55,85,73,57,79,48,80,192,222,219];
+      this.addEventListener("keydown",this.keydown);
+      this.addEventListener("keyup",this.keyup);
       this.midiController={};
       this.midiMode="normal";
       if(this.midicc) {
@@ -1145,6 +1148,36 @@ webaudio-keyboard{
         this.sendEvent("input"),this.sendEvent("change");
     }
     wheel(e){}
+    keydown(e){
+      var m=Math.floor((this.min+11)/12)*12;
+      var k=this.keycodes1.indexOf(e.keyCode);
+      if(k<0) {
+        k=this.keycodes2.indexOf(e.keyCode);
+        if(k>=0) k+=12;
+      }
+      if(k>=0){
+        k+=m;
+        if(this.currentKey!=k){
+          this.currentKey=k;
+          this.sendEventFromKey(1,k);
+          this.setNote(1,k);
+        }
+      }
+    }
+    keyup(e){
+      var m=Math.floor((this.min+11)/12)*12;
+      var k=this.keycodes1.indexOf(e.keyCode);
+      if(k<0) {
+        k=this.keycodes2.indexOf(e.keyCode);
+        if(k>=0) k+=12;
+      }
+      if(k>=0){
+        k+=m;
+        this.currentKey=-1;
+        this.sendEventFromKey(0,k);
+        this.setNote(0,k);
+      }
+    }
     pointerdown(e){
       let pointermove=(e)=>{
         if(!this.enable)
@@ -1202,6 +1235,12 @@ webaudio-keyboard{
 //        if(this.hasChildNodes() && this.childNodes.length>0) this.childNodes[1].focus();
       }
       e.preventDefault();
+    }
+    sendEventFromKey(s,k){
+      var ev=document.createEvent('HTMLEvents');
+      ev.initEvent('change',true,true);
+      ev.note=[s,k];
+      this.dispatchEvent(ev);
     }
     sendevent(){
       var notes=[];
