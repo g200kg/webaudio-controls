@@ -70,7 +70,7 @@ if(window.customElements){
   background:#eee;
   border:1px solid #666;
   border-radius:4px;
-  position:absolute;
+  position:fixed;
   padding:5px 10px;
   text-align:center;
   left:0; top:0;
@@ -136,7 +136,7 @@ if(window.customElements){
         el=this.ttframe.knobDrag||this.ttframe.knobHover;
         if(el==this){
           let s=this.tooltip;
-          if(this.valuetip){
+          if(this.valuetip && el==this.ttframe.knobDrag){
             let v=this.value.toFixed(this.digits);
             if(s) s+=" : "+v;
             else s=""+v;
@@ -144,24 +144,24 @@ if(window.customElements){
           if(s){
             this.ttframe.innerHTML=s.replace("${value}",el.value);
             let rc=el.getBoundingClientRect(),rc2=this.ttframe.getBoundingClientRect();
-            this.ttframe.style.left=Math.max(0,(rc.left+rc.right)*0.5+window.pageXOffset-(rc2.right-rc2.left)*0.5)+"px";
-            this.ttframe.style.top=(rc.top+window.pageYOffset-(rc2.bottom-rc2.top)-8)+"px";
+            this.ttframe.style.left=Math.max(0,(rc.left+rc.right)*0.5-(rc2.right-rc2.left)*0.5)+"px";
+            this.ttframe.style.top=(rc.top-(rc2.bottom-rc2.top)-8)+"px";
             if((el.valuetip && this.ttframe.knobDrag)||el.tooltip&&this.ttframe.knobHover)
               op=1;
           }
+          if(op){
+            if(el==this.ttframe.knobDrag)
+              this.ttframe.style.transition="opacity 0.1s ease 0s";
+            else
+              this.ttframe.style.transition="opacity 0.5s ease 0.5s";
+            this.ttframe.style.opacity=op;
+          }
         }
-      }
-      if(op){
-        if(el==this.ttframe.knobDrag)
-          this.ttframe.style.transition="opacity 0.1s ease 0s";
-        else
-          this.ttframe.style.transition="opacity 0.5s ease 0.5s";
-        this.ttframe.style.opacity=op;
-      }
-      else{
-        this.ttframe.style.transition="opacity 0s ease 0s";
-        this.ttframe.style.opacity=op;
-        this.ttframe.style.top="-1000px";
+        if(el==null){
+          this.ttframe.style.transition="opacity 0s ease 0s";
+          this.ttframe.style.opacity=op;
+          this.ttframe.style.top="-1000px";
+        }
       }
     }
     pointerover(e) {
@@ -240,6 +240,8 @@ webaudio-knob{
 `;
       this.elem=root.childNodes[2];
 
+      this.enable=this.getAttribute("enable");
+      if(this.enable==null) this.enable=1; else this.enable=+this.enable;
       this._src=this.getAttribute("src"); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
       this._value=+this.getAttribute("value")||0; Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
       this.defvalue=+this.getAttribute("defvalue")||0;
@@ -251,9 +253,9 @@ webaudio-knob{
       this._height=+this.getAttribute("height"); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
       this._diameter=+this.getAttribute("diameter"); Object.defineProperty(this,"diameter",{get:()=>{return this._diameter},set:(v)=>{this._diameter=v;this.setupImage()}});
       this._colors=this.getAttribute("colors")||"#e00;#000;#000"; Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
-      this.enable=+this.getAttribute("enable")||1;
       this.sensitivity=+this.getAttribute("sensitivity")||1;
-      this.valuetip=+this.getAttribute("valuetip");
+      this.valuetip=this.getAttribute("valuetip");
+      if(this.valuetip==null) this.valuetip=1; else this.valuetip=+this.valuetip;
       this.tooltip=this.getAttribute("tooltip");
       this.midilearn=+this.getAttribute("midilearn");
       this.midicc=this.getAttribute("midicc");
@@ -458,7 +460,8 @@ webaudio-slider{
       this.elem=root.childNodes[2];
       this.knob=this.elem.childNodes[0];
 
-      this.enable=this.getAttribute("enable")||1;
+      this.enable=this.getAttribute("enable");
+      if(this.enable==null) this.enable=1; else this.enable=+this.enable;
       this._src=this.getAttribute("src"); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
       this._knobsrc=this.getAttribute("knobsrc"); Object.defineProperty(this,"knobsrc",{get:()=>{return this._knobsrc},set:(v)=>{this._knobsrc=v;this.setupImage()}});
       this._value=+this.getAttribute("value"); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
@@ -475,7 +478,8 @@ webaudio-slider{
       this._direction=this.getAttribute("direction"); Object.defineProperty(this,"direction",{get:()=>{return this._direction},set:(v)=>{this._direction=v;this.setupImage()}});
       this._colors=this.getAttribute("colors")||"#e00;#000;#fcc"; Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.sensitivity=+this.getAttribute("sensitivity")||1;
-      this.valuetip=+this.getAttribute("valuetip");
+      this.valuetip=this.getAttribute("valuetip");
+      if(this.valuetip==null) this.valuetip=1; else this.valuetip=+this.valuetip;
       this.tooltip=this.getAttribute("tooltip");
       this.midilearn=+this.getAttribute("midilearn");
       this.midicc=this.getAttribute("midicc");
@@ -695,7 +699,8 @@ webaudio-switch{
 `;
       this.elem=root.childNodes[2];
 
-      this.enable=+this.getAttribute("enable")||1;
+      this.enable=this.getAttribute("enable");
+      if(this.enable==null) this.enable=1; else this.enable=+this.enable;
       this._src=this.getAttribute("src"); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
       this._value=+this.getAttribute("value"); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
       this.defvalue=+this.getAttribute("defvalue");
@@ -706,7 +711,7 @@ webaudio-switch{
       this._diameter=+this.getAttribute("diameter"); Object.defineProperty(this,"diameter",{get:()=>{return this._diameter},set:(v)=>{this._diameter=v;this.setupImage()}});
       this.invert=+this.getAttribute("invert");
       this._colors=this.getAttribute("colors")||"#e00;#000;#fcc"; Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
-      this.valuetip=+this.getAttribute("valuetip");
+      this.valuetip=0;
       this.tooltip=this.getAttribute("tooltip");
       this.midilearn=+this.getAttribute("midilearn");
       this.midicc=this.getAttribute("midicc");
@@ -780,14 +785,14 @@ webaudio-switch{
           return;
       }
       this.elem.focus();
-      this.showtip("drag",this);
+      this.showtip();
       let pointermove=(e)=>{
         e.preventDefault();
         e.stopPropagation();
         return false;
       }
       let pointerup=(e)=>{
-        this.showtip("dragh",null);
+        this.showtip("drag",null);
         window.removeEventListener('mousemove', pointermove, true);
         window.removeEventListener('touchmove', pointermove, true);
         window.removeEventListener('mouseup', pointerup, true);
@@ -893,8 +898,8 @@ webaudio-param{
 <input class='webaudio-param-body' value='0' tabindex='1' touch-action='none'/>
 `;
       this.elem=root.childNodes[2];
-
-      this.enable=+this.getAttribute("enable");
+      this.enable=this.getAttribute("enable");
+      if(this.enable==null) this.enable=1; else this.enable=+this.enable;
       this._value=+this.getAttribute("value"); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
       this.defvalue=+this.getAttribute("defvalue");
       this.fontsize=+this.getAttribute("fontsize")||9;
@@ -916,6 +921,11 @@ webaudio-param{
       this.fromLink=((e)=>{
         this.setValue(e.target.value.toFixed(e.target.digits));
       }).bind(this);
+      this.elem.onchange=()=>{
+        let le=document.getElementById(this.link);
+        if(le)
+          le.setValue(+this.elem.value);
+      }
     }
     disconnectedCallback(){}
     setupImage(){
@@ -989,6 +999,246 @@ webaudio-param{
     }
   });
 
+  customElements.define("webaudio-keyboard", class WebAudioKeyboard extends WebAudioControlsWidget {
+    constructor(){
+      super();
+    }
+    connectedCallback(){
+      let root;
+//      if(this.attachShadow)
+//        root=this.attachShadow({mode: 'open'});
+//      else
+        root=this;
+      root.innerHTML=
+`<style>
+webaudio-keyboard{
+  display:inline-block;
+  position:relative;
+  margin:0;
+  padding:0;
+  font-family: sans-serif;
+  font-size: 11px;
+}
+.webaudio-keyboard-body{
+  display:inline-block;
+  margin:0;
+  padding:0;
+}
+</style>
+<canvas class='webaudio-keyboard-body' tabindex='1' touch-action='none'></canvas>
+`;
+      this.cv=root.childNodes[2];
+      this.ctx=this.cv.getContext("2d");
+
+      this._values=[];
+      this._width=+this.getAttribute("width")||480; Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});
+      this._height=+this.getAttribute("height")||128; Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
+      this._min=+this.getAttribute("min"); Object.defineProperty(this,"min",{get:()=>{return this._min},set:(v)=>{this._min=+v;this.redraw()}});
+      this._keys=+this.getAttribute("keys")||25; Object.defineProperty(this,"keys",{get:()=>{return this._keys},set:(v)=>{this._keys=+v;this.setupImage()}});
+      this._colors=this.getAttribute("colors")||"#222;#eee;#ccc;#333;#000;#e88;#c44;#c33;#800"; Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
+      this.enable=this.getAttribute("enable");
+      if(this.enable==null) this.enable=1; else this.enable=+this.enable;
+      this.midilearn=+this.getAttribute("midilearn");
+      this.midicc=this.getAttribute("midicc");
+
+      this.midiController={};
+      this.midiMode="normal";
+      if(this.midicc) {
+          let ch = parseInt(this.midicc.substring(0, this.midicc.lastIndexOf("."))) - 1;
+          let cc = parseInt(this.midicc.substring(this.midicc.lastIndexOf(".") + 1));
+          this.setMidiController(ch, cc);
+      }
+      this.setupImage();
+      this.digits=0;
+      if(window.webAudioControlsMidiManager)
+        window.webAudioControlsMidiManager.updateWidgets();
+    }
+    disconnectedCallback(){}
+    setupImage(){
+      this.cv.style.width=this.width+"px";
+      this.cv.style.height=this.height+"px";
+      this.bheight = this.height * 0.55;
+      this.kp=[0,7/12,1,3*7/12,2,3,6*7/12,4,8*7/12,5,10*7/12,6];
+      this.kf=[0,1,0,1,0,0,1,0,1,0,1,0];
+      this.ko=[0,0,(7*2)/12-1,0,(7*4)/12-2,(7*5)/12-3,0,(7*7)/12-4,0,(7*9)/12-5,0,(7*11)/12-6];
+      this.kn=[0,2,4,5,7,9,11];
+      this.coltab=this.colors.split(";");
+      this.cv.width = this.width;
+      this.cv.height = this.height;
+      this.cv.style.width = this.width+'px';
+      this.cv.style.height = this.height+'px';
+      this.bheight = this.height * 0.55;
+      this.max=this.min+this.keys-1;
+      this.dispvalues=[];
+      this.valuesold=[];
+      if(this.kf[this.min%12])
+        --this.min;
+      if(this.kf[this.max%12])
+        ++this.max;
+      this.redraw();
+    }
+    redraw(){
+      function rrect(ctx, x, y, w, h, r, c1, c2) {
+        if(c2) {
+          var g=ctx.createLinearGradient(x,y,x+w,y);
+          g.addColorStop(0,c1);
+          g.addColorStop(1,c2);
+          ctx.fillStyle=g;
+        }
+        else
+          ctx.fillStyle=c1;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x+w, y);
+        ctx.lineTo(x+w, y+h-r);
+        ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+        ctx.lineTo(x+r, y+h);
+        ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+        ctx.lineTo(x, y);
+        ctx.fill();
+      }
+      this.ctx.fillStyle = this.coltab[0];
+      this.ctx.fillRect(0,0,this.width,this.height);
+      var x0=7*((this.min/12)|0)+this.kp[this.min%12];
+      var x1=7*((this.max/12)|0)+this.kp[this.max%12];
+      var n=x1-x0;
+      this.wwidth=(this.width-1)/(n+1);
+      this.bwidth=this.wwidth*7/12;
+      var h2=this.bheight;
+      var r=Math.min(8,this.wwidth*0.2);
+      for(var i=this.min,j=0;i<=this.max;++i) {
+        if(this.kf[i%12]==0) {
+          var x=this.wwidth*(j++)+1;
+          if(this.dispvalues.indexOf(i)>=0)
+            rrect(this.ctx,x,1,this.wwidth-1,this.height-2,r,this.coltab[5],this.coltab[6]);
+          else
+            rrect(this.ctx,x,1,this.wwidth-1,this.height-2,r,this.coltab[1],this.coltab[2]);
+        }
+      }
+      r=Math.min(8,this.bwidth*0.3);
+      for(var i=this.min;i<this.max;++i) {
+        if(this.kf[i%12]) {
+          var x=this.wwidth*this.ko[this.min%12]+this.bwidth*(i-this.min)+1;
+          if(this.dispvalues.indexOf(i)>=0)
+            rrect(this.ctx,x,1,this.bwidth,h2,r,this.coltab[7],this.coltab[8]);
+          else
+            rrect(this.ctx,x,1,this.bwidth,h2,r,this.coltab[3],this.coltab[4]);
+          this.ctx.strokeStyle=this.coltab[0];
+          this.ctx.stroke();
+        }
+      }
+    }
+    _setValue(v){
+      if(this.step)
+        v=(Math.round((v-this.min)/this.step))*this.step+this.min;
+      this.value=Math.min(this.max,Math.max(this.min,v));
+      if(this.value!=this.oldvalue){
+        this.redraw();
+        this.showtip();
+        this.oldvalue=this.value;
+        return 1;
+      }
+      return 0;
+    }
+    setValue(v,f){
+      if(this._setValue(v) && f)
+        this.sendEvent("input"),this.sendEvent("change");
+    }
+    wheel(e){}
+    pointerdown(e){
+      let pointermove=(e)=>{
+        if(!this.enable)
+          return;
+        var r=this.getBoundingClientRect();
+        var v=[];
+        if(e.touches)
+          var p=e.touches;
+        else if(this.press)
+          var p=[e];
+        else
+          return;
+        for(var i=0;i<p.length;++i) {
+          var px=p[i].clientX-r.left;
+          var py=p[i].clientY-r.top;
+//          if(px<0) px=0;
+//          if(px>=r.width) px=r.width-2;
+          if(py<this.bheight) {
+            var x=px-this.wwidth*this.ko[this.min%12];
+            var k=this.min+((x/this.bwidth)|0);
+          }
+          else {
+            var k=(px/this.wwidth)|0;
+            var ko=this.kp[this.min%12];
+            k+=ko;
+            k=this.min+((k/7)|0)*12+this.kn[k%7]-this.kn[ko%7];
+          }
+          if(k>=this.min&&k<=this.max)
+            v.push(k);
+        }
+        v.sort();
+        this.values=v;
+        this.sendevent();
+        this.redraw();
+      }
+      let pointerup=(e)=>{
+        document.body.removeEventListener('touchstart',this.preventScroll,false);
+        if(this.enable) {
+          this.press = 0;
+          this.values=[];
+          this.sendevent();
+          this.redraw();
+        }
+        document.removeEventListener("mousemove",pointermove);
+        document.removeEventListener("mouseup",pointerup);
+        e.preventDefault();
+      }
+      this.cv.focus();
+      document.body.addEventListener('touchstart',this.preventScroll);
+      document.addEventListener("mousemove",pointermove);
+      document.addEventListener("mouseup",pointerup);
+      if(this.enable) {
+        this.press=1;
+        pointermove(e);
+//        if(this.hasChildNodes() && this.childNodes.length>0) this.childNodes[1].focus();
+      }
+      e.preventDefault();
+    }
+    sendevent(){
+      var notes=[];
+      for(var i=0,j=this.valuesold.length;i<j;++i) {
+        if(this.values.indexOf(this.valuesold[i])<0)
+          notes.push([0,this.valuesold[i]]);
+      }
+      for(var i=0,j=this.values.length;i<j;++i) {
+        if(this.valuesold.indexOf(this.values[i])<0)
+          notes.push([1,this.values[i]]);
+      }
+      if(notes.length) {
+        this.valuesold=this.values;
+        for(var i=0;i<notes.length;++i) {
+          this.setdispvalues(notes[i][0],notes[i][1]);
+          var ev=document.createEvent('HTMLEvents');
+          ev.initEvent('change',true,true);
+          ev.note=notes[i];
+          this.dispatchEvent(ev);
+        }
+      }
+    }
+    setdispvalues(state,note) {
+      var n=this.dispvalues.indexOf(note);
+      if(state) {
+        if(n<0) this.dispvalues.push(note);
+      }
+      else {
+        if(n>=0) this.dispvalues.splice(n,1);
+      }
+    }
+    setNote(state,note) {
+      this.setdispvalues(state,note);
+      this.redraw();
+    }
+  });
+
   // FOR MIDI LEARN
   class WebAudioControlsMidiManager {
     constructor(){
@@ -1028,7 +1278,7 @@ webaudio-param{
     }
     // Add hooks for external midi listeners support
     addMidiListener(callback) {
-      listOfExternalMidiListeners.push(callback);
+      this.listOfExternalMidiListeners.push(callback);
     }
     getCurrentConfigAsJSON() {
       return currentConfig.stringify();
@@ -1075,7 +1325,7 @@ webaudio-param{
   window.addEventListener("load",()=>{
     document.body.appendChild(midimenu);
     document.body.appendChild(tooltip);
-    if(window.UseWebAudioControlsMidi)
-      window.webAudioControlsMidiManager = new WebAudioControlsMidiManager();
   });
+  if(window.UseWebAudioControlsMidi)
+    window.webAudioControlsMidiManager = new WebAudioControlsMidiManager();
 }
