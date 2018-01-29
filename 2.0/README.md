@@ -11,7 +11,7 @@ This version use only the Custom Elements V1 API.
 It means that it works with the current Chrome and Safari, Firefox 59 and above without requiring other libraries.
 Also, in order to operate with Firefox 58 or lower, Edge etc etc., we need only webcomponentsjs.
 
-* NOTE : event firing is a little different from old version. While dragging the knob it fires the "input" event and the "change" event fires when you release the mouse
+* NOTE : event firing is a little different from old version. While dragging the knob it fires the "input" event and the "change" event fires when you release the mouse, same as input type=range.
 
 ---
 **WebAudioControls** is consist of following components  
@@ -99,7 +99,7 @@ Attribute  | Options      | Default          | Description
 **sprites** | int | `0` | if `0`, the `src` image should be single frame image that indicate middle position. the image will be rotated -135deg to +135deg. if `sprirites` is not `0`, the `src` image should be stitched multi-framed image. `sprites` specify the max frame number in the stitched knob image. Note that this is (number of frames) - 1
 **sensitivity** | float | `1` | Pointing device sensitivity. min-max range correspond to (128 / `sensitivity`) px
 **valuetip** | `0`,`1` | `1` | Enable the overlaid value-tip display.
-**tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
+**tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while. If the text include a string '${value}', it will be replaced by current value.
 **enable** | `0`,`1` | `1` | Enable control with the pointing device.
 **colors** | string | "#e00;#000;#000" | Semicolon separated 3 colors for 'indicator', 'body' and 'highlight'. These colors are used in default knob (when `src` is not provided).
 **midilearn** | string | null | If `true`, MIDI learn function with right-click menu is enabled.

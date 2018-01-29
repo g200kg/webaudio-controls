@@ -136,13 +136,19 @@ if(window.customElements){
         el=this.ttframe.knobDrag||this.ttframe.knobHover;
         if(el==this){
           let s=this.tooltip;
-          if(this.valuetip && el==this.ttframe.knobDrag){
+          if(this.valuetip){
+            if(s==null)
+              s="${value}";
+            else if(s.indexOf("${value}")<0)
+              s+=" : ${value}";
+          }
+/*          if(this.valuetip && el==this.ttframe.knobDrag){
             let v=this.value.toFixed(this.digits);
             if(s) s+=" : "+v;
             else s=""+v;
-          }
+          }*/
           if(s){
-            this.ttframe.innerHTML=s.replace("${value}",el.value);
+            this.ttframe.innerHTML=s.replace("${value}",el.value.toFixed(this.digits));
             let rc=el.getBoundingClientRect(),rc2=this.ttframe.getBoundingClientRect();
             this.ttframe.style.left=Math.max(0,(rc.left+rc.right)*0.5-(rc2.right-rc2.left)*0.5)+"px";
             this.ttframe.style.top=(rc.top-(rc2.bottom-rc2.top)-8)+"px";
@@ -257,7 +263,11 @@ webaudio-knob{
       this.valuetip=this.getAttribute("valuetip");
       if(this.valuetip==null) this.valuetip=1; else this.valuetip=+this.valuetip;
       this.tooltip=this.getAttribute("tooltip");
-      this.midilearn=+this.getAttribute("midilearn");
+      this.midilearn=this.getAttribute("midilearn");
+      if(this.midilearn=="true"||+this.midilearn)
+        this.midilearn=1;
+      else
+        this.midilearn=0;
       this.midicc=this.getAttribute("midicc");
 
       this.midiController={};
@@ -481,7 +491,11 @@ webaudio-slider{
       this.valuetip=this.getAttribute("valuetip");
       if(this.valuetip==null) this.valuetip=1; else this.valuetip=+this.valuetip;
       this.tooltip=this.getAttribute("tooltip");
-      this.midilearn=+this.getAttribute("midilearn");
+      this.midilearn=this.getAttribute("midilearn");
+      if(this.midilearn=="true"||+this.midilearn)
+        this.midilearn=1;
+      else
+        this.midilearn=0;
       this.midicc=this.getAttribute("midicc");
       this.midiController={};
       this.midiMode="normal";
@@ -713,7 +727,11 @@ webaudio-switch{
       this._colors=this.getAttribute("colors")||"#e00;#000;#fcc"; Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.valuetip=0;
       this.tooltip=this.getAttribute("tooltip");
-      this.midilearn=+this.getAttribute("midilearn");
+      this.midilearn=this.getAttribute("midilearn");
+      if(this.midilearn=="true"||+this.midilearn)
+        this.midilearn=1;
+      else
+        this.midilearn=0;
       this.midicc=this.getAttribute("midicc");
       this.midiController={};
       this.midiMode="normal";
@@ -1038,7 +1056,11 @@ webaudio-keyboard{
       this._colors=this.getAttribute("colors")||"#222;#eee;#ccc;#333;#000;#e88;#c44;#c33;#800"; Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.enable=this.getAttribute("enable");
       if(this.enable==null) this.enable=1; else this.enable=+this.enable;
-      this.midilearn=+this.getAttribute("midilearn");
+      this.midilearn=this.getAttribute("midilearn");
+      if(this.midilearn=="true"||+this.midilearn)
+        this.midilearn=1;
+      else
+        this.midilearn=0;
       this.midicc=this.getAttribute("midicc");
       this.keycodes1=[90,83,88,68,67,86,71,66,72,78,74,77,188,76,190,187,191,226];
       this.keycodes2=[81,50,87,51,69,82,53,84,54,89,55,85,73,57,79,48,80,192,222,219];

@@ -46,11 +46,15 @@
     var message="";
     var log=[];
     var knobs = document.getElementsByTagName('webaudio-knob');
-    for(var i = 0; i < knobs.length; i++)
-        knobs[i].addEventListener("change",Dump,false);
+    for(var i = 0; i < knobs.length; i++){
+      knobs[i].addEventListener("input",Dump,false);
+      knobs[i].addEventListener("change",Dump,false);
+    }
     var sliders = document.getElementsByTagName('webaudio-slider');
-    for(var i = 0; i < sliders.length; i++)
-        sliders[i].addEventListener("change",Dump,false);
+    for(var i = 0; i < sliders.length; i++){
+      sliders[i].addEventListener("input",Dump,false);
+      sliders[i].addEventListener("change",Dump,false);
+    }
     var switches = document.getElementsByTagName('webaudio-switch');
     for(var i = 0; i < switches.length; i++) {
         switches[i].addEventListener("change",Dump,false);
