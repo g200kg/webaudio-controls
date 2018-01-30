@@ -33,7 +33,7 @@ iOS and Android touch devices compatible
 [Live Demo sample2 (with code example)](http://g200kg.github.io/webaudio-controls/2.0/sample2.html)  
 [Live Demo sample3 (Knob/Slider/Switch/Param/Keyboard default style)](http://g200kg.github.io/webaudio-controls/2.0/sample3.html)  
 [Live Demo sample4 (webaudio-keyboard to webMIDIAPI)](http://g200kg.github.io/webaudio-controls/2.0/sample4.html)  
- (need Mac+ChromeCanary+flagEnabled+MIDIdevice or Win+JazzPlugin or Mac+JazzPlugin+MidiDevice)  
+ (need Web MIDI API)  
 [Renoid : Practical application using webaudio-controls](http://www.g200kg.com/renoid/)  
 [webaudio-controls Resize Test](https://rawgithub.com/g200kg/webaudio-controls/master/resizetest.html)  
 
@@ -62,10 +62,10 @@ Operation | Component | Description
 
 - Polyfill Install  
   If you need webcomponentsjs polyfill for Firefox 58 or lower, Edge etc,
- * Use command `bower install webcomponents/webcomponentsjs`
+ - Use command `bower install webcomponents/webcomponentsjs`
 
-- load webcomponents.js
-  * &lt;script src="bower_components/webcomponentsjs/webcomponents-lite.js"&gt;&lt;/script&gt;<br/>
+ -  load webcomponents.js
+   * &lt;script src="bower_components/webcomponentsjs/webcomponents-lite.js"&gt;&lt;/script&gt;<br/>
 
 - load webaudio-contols  
   * &lt;script src="webaudio-controls.js"&gt;&lt;/script&gt;
@@ -91,10 +91,8 @@ Attribute  | Options      | Default          | Description
 **min** | float | `0` | Minimum value of the knob
 **max** | float | `100` | Maximum value of the knob
 **step** | float | `1` | Value step of the control. The 'value' is always rounded to multiple of 'step'
-**log** | int | `0` | If 1, knob scale is logalithmic. In this mode, `step` is ignored.
-**units** | string | `null` | specified units (e.g. Hz) is added to valuetip
-**width** | int | `64` | Knob display width in px
-**height** | int | `64` | Knob display height in px
+**width** | int | `0` | Knob width in px. If this value is `0`, diameter value is used as width.
+**height** | int | `0` | Knob height in px. If this value is `0`, diameter value is used as height.
 **diameter** | int | `64` | Knob display diameter in px. This attribute can be used instead of width / height if the display image is square
 **sprites** | int | `0` | if `0`, the `src` image should be single frame image that indicate middle position. the image will be rotated -135deg to +135deg. if `sprirites` is not `0`, the `src` image should be stitched multi-framed image. `sprites` specify the max frame number in the stitched knob image. Note that this is (number of frames) - 1
 **sensitivity** | float | `1` | Pointing device sensitivity. min-max range correspond to (128 / `sensitivity`) px
@@ -102,7 +100,8 @@ Attribute  | Options      | Default          | Description
 **tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while. If the text include a string '${value}', it will be replaced by current value.
 **enable** | `0`,`1` | `1` | Enable control with the pointing device.
 **colors** | string | "#e00;#000;#000" | Semicolon separated 3 colors for 'indicator', 'body' and 'highlight'. These colors are used in default knob (when `src` is not provided).
-**midilearn** | string | null | If `true`, MIDI learn function with right-click menu is enabled.
+**outline** | `0`,`1` | `1` | outline display when focused.
+**midilearn** | `0`,`1` | `0` | If `1`, MIDI learn function with right-click menu is enabled.
 **midicc** | string | null | Assign MIDI control change to this knob. with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
 ### webaudio-slider
@@ -118,16 +117,17 @@ Attribute  | Options      | Default          | Description
 **step** | float | `1` | Value step of the control. The 'value' is always rounded to multiple of 'step'
 **width** | int | `24` | Slider display width in px
 **height** | int | `128` | Slider display height in px
-**knobwidth** | int | same as 'width' if 'direction' is `vert`, or same as 'height' if 'direction' is `horz` | Slider knob part width in px
-**knobheight** | int | same as 'width' if 'direction' is `vert`, or same as 'height' if 'direction' is `horz` | Slider knob part height in px
+**knobwidth** | int | `0` | Slider thumb part width in px. If this value is `0`, knobwidth is same as slider 'width' for vertical slider, or same as 'height' for horizontal sliders.
+**knobheight** | int | `0` | Slider thumb part height in px. If this value is `0`, knobheight is same as slider `width` for vertical slider, or same as 'height` for horizontal sliders.
 **ditchlength** | int | ('height'-'knobheight') or ('width'-'knobwidth')  depends on 'direction' | Knob movable length
-**direction** | `"vert"`,`"horz"` | `"vert"` | Slider direction. vertical or horizontal
+**direction** | `"vert"`,`"horz"` | `null` | Slider direction, vertical or horizontal. If this value is not specified, direction is determined to be elongated from  width / height values.
 **sensitivity** | float | `1` | Pointing device sensitivity. min-max range correspond to (128 / 'sensitivity') px
 **valuetip** | `0`,`1` | `1` | Enable the overlaid value-tip display.
 **tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
 **enable** | `0`, `1` | `1` | Enable control with the pointing device.
 **colors** | string | "#e00;#000;#fff" | Semicolon separated 3 colors for 'knob', 'background' and 'highlight'. These colors are used in default knob (when `src` or `knobsrc` is not provided).
-**midilearn** | string | null | If `true`, MIDI learn function with right-click menu is enabled.
+**outline** | `0`,`1` | `1` | outline display when focused.
+**midilearn** | `0`,`1` | `0` | If `1`, MIDI learn function with right-click menu is enabled.
 **midicc** | string | null | Assign MIDI control change to this slider. with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
 
@@ -138,15 +138,17 @@ Attribute  | Options      | Default          | Description
 **src** | string | Internal embedded resource is used if not specified | url of the vertical stitched switch image
 **value** | `0`,`1` | `0` | The current value (`0` or `1`). Also used as initial value of the switch if specified
 **defvalue** | `0`,`1` | Initial 'value' is used if not specified | The default value that will be used when ctrl+click
-**width** | int | `32` | Switch display width in px
-**height** | int | `32` | Switch display height in px
+**width** | int | `0` | Switch display width in px. If this value is `0`, diameter value is used as width.
+**height** | int | `0` | Switch display height in px. If this. value is `0`, diameter value is used as height.
+**diameter** | int | `32` | Switch diameter in px.
 **type** | `"toggle"`,`"kick"`,`"radio"` | `"toggle"` | Switch type. `"toggle"` switch has so-called 'checkbox' function. `"radio"` switch is a radio-button and the `"kick"` switch is a general command button
 **group** | string | `null` | Group id string used if the 'type' is `"radio"`. Only one switch will be set to `"1"` in same group
 **invert** | `0`,`1` | `0` | exchange on and off image
 **tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
 **enable** | `0`,`1` | `1` | Enable control with the pointing device.
 **colors** | string | "#e00;#000;#fff" | Semicolon separated 3 colors for 'knob', 'background' and 'highlight'. These colors are used in default switch (when `src` is not provided).
-**midilearn** | string | null | If `true`, MIDI learn function with right-click menu is enabled.
+**outline** | `0`,`1` | `1` | outline display when focused.
+**midilearn** | `0`,`1` | `0` | If `1`, MIDI learn function with right-click menu is enabled.
 **midicc** | string | null | Assign MIDI control change to this switch. with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
 ### webaudio-param
@@ -159,6 +161,7 @@ Attribute  | Options      | Default          | Description
 **height** | int | `16` | Parameter display height in px
 **fontsize** | int | `9` | Font-size of the parameter display
 **colors** | string | `"#e00;#000"` | Semicolon separated 2 colors for text and background. background color is used when `src` is not defined.
+**outline** | `0`,`1` | `1` | outline display when focused.
 **link** | string | `null` | Specify the linked webaudio-knob/slider/switch by Id
 
 ### webaudio-keyboard
@@ -171,6 +174,7 @@ Attribute  | Options      | Default          | Description
 **min** | int | `0` | Lowest Key number. Each key is numbered incrementally from this number. If the "min" is not `0` and the modulo 12 is not zero, the keyboard is started from corresponding position (not-C). Note that the specified key should be a 'white-key'.
 **keys** | int | `25` | Number of keys. `25` means 25 keys keyboard.
 **colors** | string | '#222; #eee;#ccc; #333;#000; #e88;#c44; #c33;#800' | semicolon separated 9 keyboard colors. 'border; whitekey-grad-from;whitekey-grad-to; blackkey-grad-from;blackkey-grad-to; active-whitekey-grad-from;active-whitekey-grad-to; active-blackkey-grad-from;active-blackkey-grad-to'. Each key surface can has garadient left to right with 'from' and 'to'.
+**outline** | `0`,`1` | `1` | outline display when focused.
 **enable** | `0`,`1` | `1` | Enable control with the pointing device.
 
 ---
@@ -178,7 +182,7 @@ Attribute  | Options      | Default          | Description
 ### setValue(value, fire)  
 `webaudio-knob` | `webaudio-slider` | `webaudio-switch`  
 **description**: Each control can be setup and redraw by calling this function from JavaScript.
-If the `fire` parameter is `undefined` or `false`, this function will not fire `'change'` event. Or the `change` event will be fired.
+If the `fire` parameter is `undefined` or `false`, this function will not fire events. Or the `input` and `change` event will be fired. Knobs can be set only by assigning a value to the '.value' property, but this function can issue events.
 
 
 ### setNote(state,note)  
@@ -187,9 +191,15 @@ If the `fire` parameter is `undefined` or `false`, this function will not fire `
 
 ---
 ## Events
+### 'input'  
+`webaudio-knob` | `webaudio-slider`  
+**description**: 'input' event is fired when knob / slider value changes while dragging.
+
 ### 'change'  
 `webaudio-knob` | `webaudio-slider` | `webaudio-switch` | `webaudio-keyboard`  
-**description**: 'change' event is emitted everytime value changes by user action or setValue() function with fire flag is `true`. In the event handler of `webaudio-knob`,`webaudio-slider` or `webaudio-switch`, current value can be get with referring `event.target.value`.  
+**description**: 'change' event is fired when value changes is decided. It means mouse button release for knobs and sliders.
+Also issued when setValue() function call with fire flag is nonzero.
+In the event handler of `webaudio-knob`,`webaudio-slider` or `webaudio-switch`, current value can be get with referring `event.target.value`.  
 
 ```
 var knobs = document.getElementsByTagName('webaudio-knob');
@@ -218,6 +228,46 @@ keyboard.addEventListener('change', function(e) {
 ### 'click'  
 `webaudio-switch (kick)`  
 **description**: 'click' event is emitted if the 'kick' type webaudio-switch has clicked.
+
+---
+## WebAudioControlsOptions
+By setting the global object, WebAudioControlsOptions, you can specify default values such as the knob size or colors when attribute setting on each tag is omitted.
+This declaration should be prior to the webaduio-controls.js loading.
+```
+<script>
+WebAudioControlsOptions={
+  useMidi:1,
+  knobDiameter:80,
+  switchWidth:40,
+  switchHeight:20,
+};
+</script>
+<script src="webaudio-controls.js"></script>
+```
+The items that can be set are as follows
+
+name   | default | description
+------------|---------|----------------
+useMidi     |0        | enable control from midi devices
+midilearn   |0        | enable midilearn function
+outline     |1        | border display when focused
+knobWidth   |0        | width for knobs
+knobHeight  |0        | height for knobs
+knobDiameter|64       | diameter for knobs
+knobSrc     |null     | knob image source
+knobSprites |0        | knob image number of frames
+knobColors  |"#e00;#000;#000"| color setting for knobs
+sliderWidth |24       | width for sliders
+sliderHeight|128      | height for sliders
+sliderColors|"#e00;#000;#fcc"| color setting for sliders
+switchWidth |0        | width for switches
+switchHeight|0        | height for switches
+switchDiameter|24     | diameter for switches
+switchColors|"#e00;#000;#fcc"| color setting for switches
+paramWidth  |32       | width for param
+paramHeight |16       | height for param
+paramColors |"#fff;#000"| color setting for param
+
 
 ---
 ## Creating knob images
