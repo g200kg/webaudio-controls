@@ -57,12 +57,12 @@ Operation | Component | Description
 ---
 ## How to use
 
-- Install  
- * The main file is `webaudio-controls.js`. If you want to support non-WebComponents ready browsers, webcomponents.js is also needed.
- * Use command `bower install --save g200kg/webaudio-controls`, if you use bower. Or download zipped file and deploy appropriately.
+* Install  
+  * The main file is `webaudio-controls.js`. If you want to support non-WebComponents ready browsers, webcomponents.js is also needed.
+  * Use command `bower install --save g200kg/webaudio-controls`, if you use bower. Or download zipped file and deploy appropriately.
 
 
-- [for WebComponents polyfill] load webcomponents.js  
+* [for WebComponents polyfill] load webcomponents.js  
   * &lt;script src="bower_components/webcomponentsjs/webcomponents-lite.js"&gt;&lt;/script&gt;
 
 
@@ -70,12 +70,12 @@ Operation | Component | Description
   * &lt;script src="bower_components/webaudio-controls/webaudio-controls.js"&gt;&lt;/script&gt;
 
 
-- insert **webaudio-knob/slider/switch/param/keyboard** elements. for example...
- * &lt;webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"&gt;&lt;/webaudio-knob&gt;  
- * &lt;webaudio-slider src="img/hsliderbody.png"&gt;&lt;/webaudio-slider&gt;  
- * &lt;webaudio-switch src="img/switch_toggle.png" width="32" height="32"&gt;&lt;/webaudio-switch&gt;  
- * &lt;webaudio-param src="" link="knob-1"&gt;&lt;/webaudio-param&gt;  
- * &lt;webaudio-keyboard keys="25" &gt;&lt;/webaudio-keyboard&gt;  
+* insert **webaudio-knob/slider/switch/param/keyboard** elements. for example...
+  * &lt;webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"&gt;&lt;/webaudio-knob&gt;  
+  * &lt;webaudio-slider src="img/hsliderbody.png"&gt;&lt;/webaudio-slider&gt;  
+  * &lt;webaudio-switch src="img/switch_toggle.png" width="32" height="32"&gt;&lt;/webaudio-switch&gt;  
+  * &lt;webaudio-param src="" link="knob-1"&gt;&lt;/webaudio-param&gt;  
+  * &lt;webaudio-keyboard keys="25" &gt;&lt;/webaudio-keyboard&gt;  
 
 ---
 ## Attributes
@@ -186,9 +186,16 @@ If the `fire` parameter is `undefined` or `false`, this function will not fire `
 
 ---
 ## Events
+
+### 'input'  
+`webaudio-knob` | `webaudio-slider`  
+**description**: 'input' event is fired when knob / slider value changes while dragging.
+
 ### 'change'  
 `webaudio-knob` | `webaudio-slider` | `webaudio-switch` | `webaudio-keyboard`  
-**description**: 'change' event is emitted everytime value changes by user action or setValue() function with fire flag is `true`. In the event handler of `webaudio-knob`,`webaudio-slider` or `webaudio-switch`, current value can be get with referring `event.target.value`.  
+**description**: 'change' event is fired when value changes is decided. It means mouse button release for knobs and sliders, or switch / keyboard state changes.
+ Also issued when setValue() function call with fire flag is nonzero.
+In the event handler of `webaudio-knob`,`webaudio-slider` or `webaudio-switch`, current value can be get with referring `event.target.value`.  
 
 ```
 var knobs = document.getElementsByTagName('webaudio-knob');
@@ -217,6 +224,45 @@ keyboard.addEventListener('change', function(e) {
 ### 'click'  
 `webaudio-switch (kick)`  
 **description**: 'click' event is emitted if the 'kick' type webaudio-switch has clicked.
+
+---
+## WebAudioControlsOptions
+By setting the global object, WebAudioControlsOptions, you can specify default values such as the knob size or colors when attribute setting on each tag is omitted.
+This declaration should be prior to the webaduio-controls.js loading.
+```
+<script>
+WebAudioControlsOptions={
+  useMidi:1,
+  knobDiameter:80,
+  switchWidth:40,
+  switchHeight:20,
+};
+</script>
+<script src="webaudio-controls.js"></script>
+```
+The items that can be set are as follows
+
+name   | default | description
+------------|---------|----------------
+useMidi     |0        | enable control from midi devices
+midilearn   |0        | enable midilearn function
+outline     |1        | border display when focused
+knobWidth   |0        | width for knobs
+knobHeight  |0        | height for knobs
+knobDiameter|64       | diameter for knobs
+knobSrc     |null     | knob image source
+knobSprites |0        | knob image number of frames
+knobColors  |"#e00;#000;#000"| color setting for knobs
+sliderWidth |24       | width for sliders
+sliderHeight|128      | height for sliders
+sliderColors|"#e00;#000;#fcc"| color setting for sliders
+switchWidth |0        | width for switches
+switchHeight|0        | height for switches
+switchDiameter|24     | diameter for switches
+switchColors|"#e00;#000;#fcc"| color setting for switches
+paramWidth  |32       | width for param
+paramHeight |16       | height for param
+paramColors |"#fff;#000"| color setting for param
 
 ---
 ## Creating knob images

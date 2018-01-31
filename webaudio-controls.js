@@ -402,13 +402,13 @@ webaudio-knob{
     _setValue(v){
       if(this.step)
         v=(Math.round((v-this.min)/this.step))*this.step+this.min;
-      this.value=Math.min(this.max,Math.max(this.min,v));
-      if(this.value!=this.oldvalue){
-        this.oldvalue=this.value;
+      this._value=Math.min(this.max,Math.max(this.min,v));
+      if(this._value!=this.oldvalue){
+        this.oldvalue=this._value;
         if(this.conv)
-          this.convValue=eval(this.conv)(this.value);
+          this.convValue=eval(this.conv)(this._value);
         else
-          this.convValue=this.value;
+          this.convValue=this._value;
         this.redraw();
         this.showtip();
         return 1;
@@ -427,8 +427,6 @@ webaudio-knob{
       if(Math.abs(delta) < this.step)
         delta = (delta > 0) ? +this.step : -this.step;
       this.setValue(+this.value+delta,true);
-      this.showtip();
-      this.redraw();
       e.preventDefault();
       e.stopPropagation();
     }
@@ -660,15 +658,15 @@ webaudio-slider{
     }
     _setValue(v){
       v=(Math.round((v-this.min)/this.step))*this.step+this.min;
-      this.value=Math.min(this.max,Math.max(this.min,v));
-      if(this.value!=this.oldvalue){
+      this._value=Math.min(this.max,Math.max(this.min,v));
+      if(this._value!=this.oldvalue){
+        this.oldvalue=this._value;
         if(this.conv)
-          this.convValue=eval(this.conv)(this.value);
+          this.convValue=eval(this.conv)(this._value);
         else
-          this.convValue=this.value;
+          this.convValue=this._value;
         this.redraw();
         this.showtip();
-        this.oldvalue=this.value;
         return 1;
       }
       return 0;
@@ -685,7 +683,6 @@ webaudio-slider{
       if(Math.abs(delta) < this.step)
         delta = (delta > 0) ? +this.step : -this.step;
       this.setValue(+this.value+delta,true);
-      this.showtip();
       e.preventDefault();
       e.stopPropagation();
       this.redraw();
@@ -1215,11 +1212,11 @@ webaudio-keyboard{
     _setValue(v){
       if(this.step)
         v=(Math.round((v-this.min)/this.step))*this.step+this.min;
-      this.value=Math.min(this.max,Math.max(this.min,v));
-      if(this.value!=this.oldvalue){
+      this._value=Math.min(this.max,Math.max(this.min,v));
+      if(this._value!=this.oldvalue){
+        this.oldvalue=this._value;
         this.redraw();
         this.showtip();
-        this.oldvalue=this.value;
         return 1;
       }
       return 0;
