@@ -5,6 +5,8 @@ bower_components/
 !bower_components/polymer/polymer-micro.html
 !bower_components/polymer/polymer-mini.html
 !bower_components/webcomponentsjs/webcomponents-lite.min.js
+!2.0/bower_components/webcomponentsjs/webcomponents-lite.js
+
 
 # Windows image file caches
 Thumbs.db
