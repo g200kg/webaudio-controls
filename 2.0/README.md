@@ -140,7 +140,7 @@ Attribute  | Options      | Default          | Description
 **defvalue** | `0`,`1` | Initial 'value' is used if not specified | The default value that will be used when ctrl+click
 **width** | int | `0` | Switch display width in px. If this value is `0`, diameter value is used as width.
 **height** | int | `0` | Switch display height in px. If this. value is `0`, diameter value is used as height.
-**diameter** | int | `32` | Switch diameter in px.
+**diameter** | int | `24` | Switch diameter in px.
 **type** | `"toggle"`,`"kick"`,`"radio"` | `"toggle"` | Switch type. `"toggle"` switch has so-called 'checkbox' function. `"radio"` switch is a radio-button and the `"kick"` switch is a general command button
 **group** | string | `null` | Group id string used if the 'type' is `"radio"`. Only one switch will be set to `"1"` in same group
 **invert** | `0`,`1` | `0` | exchange on and off image

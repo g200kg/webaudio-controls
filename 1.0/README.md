@@ -1,9 +1,11 @@
 # webaudio-controls
-**WebAudioControls** is GUI parts Custom Elements library for Web application using WebComponents.  
+**WebAudioControls** is GUI parts library for Web application using [Polymer] WebComponents.  
 Especially suitable for audio-applications like VST plugins.  
 
+Polymer 1.4 compatible
+### This version still uses Polymer 1.4, but now  rewriting to a WebComponents API direct version. It is available under folder "2.0".
 
-**webaudio-controls** is consist of following components  
+**WebAudioControls** is consist of following components  
 
 Component | Description
 ---|---
@@ -15,30 +17,22 @@ webaudio-keyboard | Mouse/Touch playable keyboard. multi-touch support.
 
 * Also available 'webaudio-pianoroll' at : [https://github.com/g200kg/webaudio-pianoroll/](https://github.com/g200kg/webaudio-pianoroll/)
 
-#### Difference from old version
-There are some difference from old [Polymer 1.4] version.
-* Current **webaudio-controls** uses the Custom Elements V1 API directly. In Chrome / Safari / Firefox (59 and later) it works without polyfill. Please install webcomponentsjs on Firefox (58 or less), Edge etc Custom Elements non-compatible browsers.  
-
-* Event firing. Knobs/Sliders fires 'input' event instead of 'change' during drag. This is same behavior as input type=range tags.
-
-* Value post conversion function `conv` attribute is available. It will help for implement, for example, exponential curve parameters. Also Tooltip and Valuetip is integrated. It is now acceptable C-like formatting string for current value display.  
-
-Chrome / Firefox / Safari / Opera compatible  
+Chrome / Firefox / Safari / Opera / IE compatible  
 iOS and Android touch devices compatible  
 
-[Live Demo sample1 (with external image-files)](https://g200kg.github.io/webaudio-controls/2.0/sample1.html)  
-[Live Demo sample2 (with code example)](https://g200kg.github.io/webaudio-controls/2.0/sample2.html)  
-[Live Demo sample3 (Knob/Slider/Switch/Param/Keyboard default style)](https://g200kg.github.io/webaudio-controls/2.0/sample3.html)  
-[Live Demo sample4 (webaudio-keyboard to webMIDIAPI)](https://g200kg.github.io/webaudio-controls/2.0/sample4.html)  
- (need Web MIDI API support)  
+[Live Demo sample1 (with external image-files)](https://rawgithub.com/g200kg/webaudio-controls/master/sample1.html)  
+[Live Demo sample2 (with code example)](https://rawgithub.com/g200kg/webaudio-controls/master/sample2.html)  
+[Live Demo sample3 (Knob/Slider/Switch/Param/Keyboard default style)](https://rawgithub.com/g200kg/webaudio-controls/master/sample3.html)  
+[Live Demo sample4 (webaudio-keyboard to webMIDIAPI)](https://rawgithub.com/g200kg/webaudio-controls/master/sample4.html)  
+ (need Mac+ChromeCanary+flagEnabled+MIDIdevice or Win+JazzPlugin or Mac+JazzPlugin+MidiDevice)  
 [Renoid : Practical application using webaudio-controls](http://www.g200kg.com/renoid/)  
-[webaudio-controls Resize Test](https://g200kg.github.io/webaudio-controls/2.0/resizetest.html)  
+[webaudio-controls Resize Test](https://rawgithub.com/g200kg/webaudio-controls/master/resizetest.html)  
 
 Using with external image-files.  
-[![](img/demo.png)](https://g200kg.github.io/webaudio-controls/2.0/sample1.html)  
+[![](img/demo.png)](https://rawgithub.com/g200kg/webaudio-controls/master/sample1.html)  
 
 Default style with no external image-files.  
-[![](img/sample3.png)](https://g200kg.github.io/webaudio-controls/2.0/sample3.html)  
+[![](img/sample3.png)](https://rawgithub.com/g200kg/webaudio-controls/master/sample3.html)  
 
 ## To Operate  
 Following user actions are supported.
@@ -58,16 +52,15 @@ Operation | Component | Description
 ## How to use
 
 - Install  
- * The main file is `webaudio-controls.js`. If you want to support non-WebComponents ready browsers, webcomponents.js is also needed.
  * Use command `bower install --save g200kg/webaudio-controls`, if you use bower. Or download zipped file and deploy appropriately.
 
-
-- [for WebComponents polyfill] load webcomponents.js  
-  * &lt;script src="bower_components/webcomponentsjs/webcomponents-lite.js"&gt;&lt;/script&gt;
+- load webcomponents.js and polymer
+  * &lt;script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"&gt;&lt;/script&gt;<br/>
+  &lt;link rel="import" href="bower_components/polymer/polymer.html"&gt;
 
 
 - load webaudio-contols  
-  * &lt;script src="bower_components/webaudio-controls/webaudio-controls.js"&gt;&lt;/script&gt;
+  * &lt;link rel="import" href="bower_components/webaudio-controls/webaudio-controls.html" &gt;
 
 
 - insert **webaudio-knob/slider/switch/param/keyboard** elements. for example...
@@ -84,31 +77,32 @@ Operation | Component | Description
 
 Attribute  | Options      | Default          | Description
 ---        | ---                  | ---                 | ---
-**src** | string | null | url of the knob image, Single frame or vertical stitched. Internal embedded resource is used if not specified.
+**src** | string | Internal embedded resource is used if not specified | url of the knob image. (single frame or vertical stitched)
 **value** | float | `0` | The current value. Also used as initial value if specified
 **defvalue** | float | Initial 'value' is used if not specified | The default value that will be used when ctrl+click
 **min** | float | `0` | Minimum value of the knob
 **max** | float | `100` | Maximum value of the knob
 **step** | float | `1` | Value step of the control. The 'value' is always rounded to multiple of 'step'
-**width** | int | `0` | Knob width in px. diameter value is used if this value is `0`.
-**height** | int | `0` | Knob height in px. diameter value is used if this value is `0`.
-**diameter** | int | `64` | Knob diameter in px. This attribute can be used instead of width / height if the display image is square.
-**sprites** | int | `0` | if `0`, the `src` image should be single frame image that indicate middle position. the image will be rotated -135deg to +135deg. If `sprirites` is not `0`, the `src` image should be vertically stitched multi-framed image. `sprites` specify the max frame number in the stitched knob image. Note that this is (number of frames) - 1
+**log** | int | `0` | If 1, knob scale is logalithmic. In this mode, `step` is ignored.
+**units** | string | `null` | specified units (e.g. Hz) is added to valuetip
+**width** | int | `64` | Knob display width in px
+**height** | int | `64` | Knob display height in px
+**diameter** | int | `64` | Knob display diameter in px. This attribute can be used instead of width / height if the display image is square
+**sprites** | int | `0` | if `0`, the `src` image should be single frame image that indicate middle position. the image will be rotated -135deg to +135deg. if `sprirites` is not `0`, the `src` image should be stitched multi-framed image. `sprites` specify the max frame number in the stitched knob image. Note that this is (number of frames) - 1
 **sensitivity** | float | `1` | Pointing device sensitivity. min-max range correspond to (128 / `sensitivity`) px
 **valuetip** | `0`,`1` | `1` | Enable the overlaid value-tip display.
-**tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while. If the text include a C-printf style value formatter like `%8.2f`, it will be replaced by current value. This formatter should be `%[n][.][m]{d,f,x,X,s}`. Here the 'n' is total columns, 'm' is after the decimal point columns. If the `conv` function is specified, the converted value `convValue` is used for display.
-**conv** | string | `null` | Value conversion function. If this function is specified, the function is called with current `value` as argument and be stored as `convValue`. That will be used as tooltip display. For example, `conv="(x)=>{return Math.pow(10,x)*20}"` is specified, for range of value between 0 and 3, the range of convValue corresponds to 20 to 20000.
+**tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
 **enable** | `0`,`1` | `1` | Enable control with the pointing device.
 **colors** | string | "#e00;#000;#000" | Semicolon separated 3 colors for 'indicator', 'body' and 'highlight'. These colors are used in default knob (when `src` is not provided).
-**midilearn** | `0`,`1` | `0` | If `1`, MIDI learn function with right-click menu is enabled.
-**midicc** | string | null | Assign MIDI control change to this knob, with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
+**midilearn** | string | null | If `true`, MIDI learn function with right-click menu is enabled.
+**midicc** | string | null | Assign MIDI control change to this knob. with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
 ### webaudio-slider
 
 Attribute  | Options      | Default          | Description
 ---        | ---                  | ---                 | ---
-**src** | string | null | url of the slider background image. Solid background color if not specified.
-**knobsrc** | string | null | url of the slider knob part image. Internal embedded resouce is used if not specified
+**src** | string | Internal embedded resource is used if not specified | url of the slider background image
+**knobsrc** | string | Internal embedded resouce is used if not specified | url of the slider knob part image
 **value** | float | `0` | The current value. Also used as initial value if specified
 **defvalue** | float | Initial 'value' is used if not specified | The default value that will be used when ctrl+click
 **min** | float | `0` | Minimum value of the slider
@@ -122,11 +116,10 @@ Attribute  | Options      | Default          | Description
 **direction** | `"vert"`,`"horz"` | `"vert"` | Slider direction. vertical or horizontal
 **sensitivity** | float | `1` | Pointing device sensitivity. min-max range correspond to (128 / 'sensitivity') px
 **valuetip** | `0`,`1` | `1` | Enable the overlaid value-tip display.
-**tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while. If the text include a C-printf style value formatter like `%8.2f`, it will be replaced by current value. This formatter should be `%[n][.][m]{d,f,x,X,s}`. Here the 'n' is total columns, 'm' is after the decimal point columns. If the `conv` function is specified, the converted value `convValue` is used for display.
-**conv** | string | `null` | Value conversion function. If this function is specified, the function is called with current `value` as argument and be stored as `convValue`. That will be used as tooltip display. For example, `conv="(x)=>{return Math.pow(10,x)*20}"` is specified, for range of value between 0 and 3, the range of convValue corresponds to 20 to 20000.
+**tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
 **enable** | `0`, `1` | `1` | Enable control with the pointing device.
 **colors** | string | "#e00;#000;#fff" | Semicolon separated 3 colors for 'knob', 'background' and 'highlight'. These colors are used in default knob (when `src` or `knobsrc` is not provided).
-**midilearn** | `0`,`1` | `0` | If `1`, MIDI learn function with right-click menu is enabled.
+**midilearn** | string | null | If `true`, MIDI learn function with right-click menu is enabled.
 **midicc** | string | null | Assign MIDI control change to this slider. with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
 
