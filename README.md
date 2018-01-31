@@ -29,6 +29,7 @@ iOS and Android touch devices compatible
 [Live Demo sample1 (with external image-files)](https://g200kg.github.io/webaudio-controls/2.0/sample1.html)  
 [Live Demo sample2 (with code example)](https://g200kg.github.io/webaudio-controls/2.0/sample2.html)  
 [Live Demo sample3 (Knob/Slider/Switch/Param/Keyboard default style)](https://g200kg.github.io/webaudio-controls/2.0/sample3.html)  
+[Live Demo Various Knob Images](https://g200kg.github.io/webaudio-controls/2.0/knobsamples.html)  
 [Live Demo sample4 (webaudio-keyboard to webMIDIAPI)](https://g200kg.github.io/webaudio-controls/2.0/sample4.html)  
  (need Web MIDI API support)  
 [Renoid : Practical application using webaudio-controls](http://www.g200kg.com/renoid/)  
