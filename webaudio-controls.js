@@ -1118,6 +1118,7 @@ webaudio-keyboard{
       this.outline=this.getAttr("outline",opt.outline);
       this.midilearn=this.getAttr("midilearn",0);
       this.midicc=this.getAttr("midicc",null);
+      this.press=0;
       this.keycodes1=[90,83,88,68,67,86,71,66,72,78,74,77,188,76,190,187,191,226];
       this.keycodes2=[81,50,87,51,69,82,53,84,54,89,55,85,73,57,79,48,80,192,222,219];
       this.addEventListener("keyup",this.keyup);
@@ -1295,8 +1296,8 @@ webaudio-keyboard{
       let pointerup=(e)=>{
         document.body.removeEventListener('touchstart',this.preventScroll,false);
         if(this.enable) {
-          this.press = 0;
-          this.values=[];
+          if(--this.press==0)
+            this.values=[];
           this.sendevent();
           this.redraw();
         }
@@ -1315,7 +1316,7 @@ webaudio-keyboard{
       document.addEventListener("touchend",pointerup);
       document.addEventListener("touchcancel",pointerup);
       if(this.enable) {
-        this.press=1;
+        ++this.press;
         pointermove(e);
 //        if(this.hasChildNodes() && this.childNodes.length>0) this.childNodes[1].focus();
       }
