@@ -1420,9 +1420,17 @@ webaudio-keyboard{
       menu.style.top=e.pageY+"px";
       menu.knob=knob;
       menu.classList.add("active");
+      menu.knob.focus();
+      document.activeElement.onblur=this.contextMenuClose;
+      menu.knob.addEventListener("keydown",this.contextMenuCloseByKey.bind(this));
+    }
+    contextMenuCloseByKey(e){
+      if(e.keyCode==27)
+       this.contextMenuClose();
     }
     contextMenuClose(){
       let menu=document.getElementById("webaudioctrl-context-menu");
+      menu.knob.removeEventListener("keydown",this.contextMenuCloseByKey);
       menu.classList.remove("active");
       let menuItemLearn=document.getElementById("webaudioctrl-context-menu-learn");
       menuItemLearn.innerHTML = 'Learn';
