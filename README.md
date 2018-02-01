@@ -101,6 +101,7 @@ Attribute  | Options      | Default          | Description
 **conv** | string | `null` | Value conversion function. If this function is specified, the function is called with current `value` as argument and be stored as `convValue`. That will be used as tooltip display. For example, `conv="(x)=>{return Math.pow(10,x)*20}"` is specified, for range of value between 0 and 3, the range of convValue corresponds to 20 to 20000.
 **enable** | `0`,`1` | `1` | Enable control with the pointing device.
 **colors** | string | "#e00;#000;#000" | Semicolon separated 3 colors for 'indicator', 'body' and 'highlight'. These colors are used in default knob (when `src` is not provided).
+**outline** | `0`,`1` | `1` | Border display when focused.
 **midilearn** | `0`,`1` | `0` | If `1`, MIDI learn function with right-click menu is enabled.
 **midicc** | string | null | Assign MIDI control change to this knob, with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
@@ -127,6 +128,7 @@ Attribute  | Options      | Default          | Description
 **conv** | string | `null` | Value conversion function. If this function is specified, the function is called with current `value` as argument and be stored as `convValue`. That will be used as tooltip display. For example, `conv="(x)=>{return Math.pow(10,x)*20}"` is specified, for range of value between 0 and 3, the range of convValue corresponds to 20 to 20000.
 **enable** | `0`, `1` | `1` | Enable control with the pointing device.
 **colors** | string | "#e00;#000;#fff" | Semicolon separated 3 colors for 'knob', 'background' and 'highlight'. These colors are used in default knob (when `src` or `knobsrc` is not provided).
+**outline** | `0`,`1` | `1` | Border display when focused.
 **midilearn** | `0`,`1` | `0` | If `1`, MIDI learn function with right-click menu is enabled.
 **midicc** | string | null | Assign MIDI control change to this slider. with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
@@ -146,6 +148,7 @@ Attribute  | Options      | Default          | Description
 **tooltip** | string | `null` | Tooltip text that will be shown when mouse hover a while
 **enable** | `0`,`1` | `1` | Enable control with the pointing device.
 **colors** | string | "#e00;#000;#fff" | Semicolon separated 3 colors for 'knob', 'background' and 'highlight'. These colors are used in default switch (when `src` is not provided).
+**outline** | `0`,`1` | `1` | Border display when focused.
 **midilearn** | string | null | If `true`, MIDI learn function with right-click menu is enabled.
 **midicc** | string | null | Assign MIDI control change to this switch. with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
@@ -159,6 +162,7 @@ Attribute  | Options      | Default          | Description
 **height** | int | `16` | Parameter display height in px
 **fontsize** | int | `9` | Font-size of the parameter display
 **colors** | string | `"#e00;#000"` | Semicolon separated 2 colors for text and background. background color is used when `src` is not defined.
+**outline** | `0`,`1` | `1` | Border display when focused.
 **link** | string | `null` | Specify the linked webaudio-knob/slider/switch by Id
 
 ### webaudio-keyboard
@@ -171,6 +175,7 @@ Attribute  | Options      | Default          | Description
 **min** | int | `0` | Lowest Key number. Each key is numbered incrementally from this number. If the "min" is not `0` and the modulo 12 is not zero, the keyboard is started from corresponding position (not-C). Note that the specified key should be a 'white-key'.
 **keys** | int | `25` | Number of keys. `25` means 25 keys keyboard.
 **colors** | string | '#222; #eee;#ccc; #333;#000; #e88;#c44; #c33;#800' | semicolon separated 9 keyboard colors. 'border; whitekey-grad-from;whitekey-grad-to; blackkey-grad-from;blackkey-grad-to; active-whitekey-grad-from;active-whitekey-grad-to; active-blackkey-grad-from;active-blackkey-grad-to'. Each key surface can has garadient left to right with 'from' and 'to'.
+**outline** | `0`,`1` | `1` | Border display when focused.
 **enable** | `0`,`1` | `1` | Enable control with the pointing device.
 
 ---
@@ -220,15 +225,13 @@ keyboard.addEventListener('change', function(e) {
 });
 ```
 
-**Note**: The addEventListener() function is recommended for event handler setup instead of 'onchange=' attribute. 'onchange=' attribute seems not work on Safari.
-
 ### 'click'  
 `webaudio-switch (kick)`  
 **description**: 'click' event is emitted if the 'kick' type webaudio-switch has clicked.
 
 ---
 ## WebAudioControlsOptions
-By setting the global object, WebAudioControlsOptions, you can specify default values such as the knob size or colors when attribute setting on each tag is omitted.
+By setting the global object, WebAudioControlsOptions, you can specify default values such as the knob size or colors etc when attribute setting on each tag is omitted.
 This declaration should be prior to the webaduio-controls.js loading.
 ```
 <script>
@@ -246,7 +249,7 @@ The items that can be set are as follows
 name   | default | description
 ------------|---------|----------------
 useMidi     |0        | enable control from midi devices
-midilearn   |0        | enable midilearn function
+midilearn   |0        | enable midilearn function for each knobs/sliders/switches
 outline     |1        | border display when focused
 knobWidth   |0        | width for knobs
 knobHeight  |0        | height for knobs
@@ -299,16 +302,13 @@ Here is a brief instruction  to export knob-image from KnobGallery
 
 To enable MIDI related functions, add the following line before the &lt;link&gt; tag that loads `webaudio-controls.html`  
 
-`<script>UseWebAudioControlsMidi = 1</script>`
+`<script>WebAudioControlsOptions={useMidi:1}</script>`
 
+<b>Midilearn right click menu</b>: add a <code>midilearn=1</code> attribute to the <code>&lt;webaudio-knob&gt;</code>,  <code>&lt;webaudio-slider&gt;</code> and  <code>&lt;webaudio-switch&gt;</code> elements. Then right click on the element in the GUI, a midi learn menu should appear. Then, operate one of your midi controller and it should start actionning the webaudio-controls widget in the HTML page. <!--You can associate more than one controller to each widget. -->You can hot plug/unplug midi devices, they will be detected.
 
-Added a midilearn menu to knobs, sliders and switches by @micbuffa and @CellouBalde.
+![Midi Learn Menu](img/midilearn.png)
 
-<b>Midilearn right click menu</b>: add a <code>midilearn=true</code> attribute to the <code>&lt;webaudio-knob&gt;</code>,  <code>&lt;webaudio-slider&gt;</code> and  <code>&lt;webaudio-switch&gt;</code> elements. Then right click on the element in the GUI, a midi learn menu should appear. Then, operate one of your midi controller and it should start actionning the webaudiocontrol widget in the HTML page. You can associate more than one controller to each widget. You can hot plug/unplug midi devices, they will be detected.
-
-![Midi Learn Menu](http://i.imgur.com/h0ZiXyp.jpg)
-
-<b>Declarative association between a midi controller and a GUI webaudiocontrol</b>: There is also an HTML <code>midicc="channel.cc#"</code> attribute that works like this:  <code>midicc="3.2"</code> means "listen to a cc event on channel 3, cc number 2". If you don't know the channel/cc number of your controller: 1) add a <code>midilearn=true</code> attribute so that a right click on the GUI widget will display the midilearn menu, 2) select "learn" in the menu, 3) operate your knob/slider/switch, normally the midi controller and the GUI object are in sync. 4) look at the devtool console, there is a message indicating the channel and cc number, for example "channel 0, cc 28". Then if you add the attribute midicc="0.28" to the HTML of your knob/slider/switch, the midi mapping between your GUI webaudiocontrol and your midi controller will be automatic. Follow the links at the end of this section and look at the HTML source code to see some examples.
+<b>Declarative association between a midi controller and a GUI webaudiocontrol</b>: There is also an HTML <code>midicc="channel.cc#"</code> attribute that works like this:  <code>midicc="3.2"</code> means "listen to a cc event on channel 3, cc number 2". If you don't know the channel/cc number of your controller: 1) add a <code>midilearn=1</code> attribute so that a right click on the GUI widget will display the midilearn menu, 2) select "learn" in the menu, 3) operate your knob/slider/switch, normally the midi controller and the GUI object are in sync. 4) look at the devtool console, there is a message indicating the channel and cc number, for example "channel 0, cc 28". Then if you add the attribute midicc="0.28" to the HTML of your knob/slider/switch, the midi mapping between your GUI webaudiocontrol and your midi controller will be automatic. Follow the links at the end of this section and look at the HTML source code to see some examples.
 
 Example: associate a knob with a controller on channel 7, cc number 7:
 
@@ -345,10 +345,10 @@ WebAudio-Controls is developped based on:
 - [WebAudio-Switch](http://aikelab.net/switch/) by [Keisuke Ai](http://d.hatena.ne.jp/aike/)  
 Integrated and enhanced by [g200kg](http://www.g200kg.com/)
 
-Copyright (c) 2013 Eiji Kitamura / Ryoya KAWAI / Keisuke Ai / g200kg (Tatsuya Shinyagaito)  
+Copyright (c) 2013 Eiji Kitamura / Ryoya KAWAI / Keisuke Ai / g200kg /  @micbuffa / @CellouBalde
 Licensed under the Apache License, Version 2.0
 
 ---
+
 Knob/Switch images in samples are from [Knob Gallery](http://www.g200kg.com/en/webknobman/gallery.php)  
-[switch_toggle.knob](http://www.g200kg.com/en/webknobman/gallery.php?m=p&p=58) by [az](http://bji.yukihotaru.com/) (c) 2011 [CC-BY](http://creativecommons.org/licenses/by/3.0/)
----
+[switch_toggle.knob](http://www.g200kg.com/en/webknobman/gallery.php?m=p&p=58) by [az](http://bji.yukihotaru.com/) (c) 2011 [CC-BY](http://creativecommons.org/licenses/by/3.0/)  
