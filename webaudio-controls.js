@@ -1301,13 +1301,19 @@ webaudio-keyboard{
           this.redraw();
         }
         document.removeEventListener("mousemove",pointermove);
+        document.removeEventListener("touchmove",pointermove);
         document.removeEventListener("mouseup",pointerup);
+        document.removeEventListener("touchend",pointerup);
+        document.removeEventListener("touchcancel",pointerup);
         e.preventDefault();
       }
       this.cv.focus();
       document.body.addEventListener('touchstart',this.preventScroll);
       document.addEventListener("mousemove",pointermove);
+      document.addEventListener("touchmove",pointermove);
       document.addEventListener("mouseup",pointerup);
+      document.addEventListener("touchend",pointerup);
+      document.addEventListener("touchcancel",pointerup);
       if(this.enable) {
         this.press=1;
         pointermove(e);
