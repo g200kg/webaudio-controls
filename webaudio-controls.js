@@ -70,7 +70,7 @@ if(window.customElements){
   background:#eee;
   border:1px solid #666;
   border-radius:4px;
-  position:fixed;
+  position:absolute;
   padding:5px 10px;
   text-align:center;
   left:0; top:0;
@@ -138,13 +138,13 @@ if(window.customElements){
   class WebAudioControlsWidget extends HTMLElement{
     constructor(){
       super();
-      this.addEventListener("keydown",this.keydown,false);
-      this.addEventListener("mousedown",this.pointerdown,false);
-      this.addEventListener("touchstart",this.pointerdown,false);
-      this.addEventListener("wheel",this.wheel,false);
-      this.addEventListener("mouseover",this.pointerover,false);
-      this.addEventListener("mouseout",this.pointerout,false);
-      this.addEventListener("contextmenu",this.contextMenu,false);
+      this.addEventListener("keydown",this.keydown);
+      this.addEventListener("mousedown",this.pointerdown,{passive:false});
+      this.addEventListener("touchstart",this.pointerdown,{passive:false});
+      this.addEventListener("wheel",this.wheel);
+      this.addEventListener("mouseover",this.pointerover);
+      this.addEventListener("mouseout",this.pointerout);
+      this.addEventListener("contextmenu",this.contextMenu);
     }
     sendEvent(ev){
       let event;
@@ -208,9 +208,9 @@ if(window.customElements){
           }
           if(s){
             this.ttframe.innerHTML=numformat(s,el.convValue);
-            let rc=el.getBoundingClientRect(),rc2=this.ttframe.getBoundingClientRect();
-            this.ttframe.style.left=Math.max(0,(rc.left+rc.right)*0.5-(rc2.right-rc2.left)*0.5)+"px";
-            this.ttframe.style.top=(rc.top-(rc2.bottom-rc2.top)-8)+"px";
+            let rc=el.getBoundingClientRect(),rc2=this.ttframe.getBoundingClientRect(),rc3=document.documentElement.getBoundingClientRect();
+            this.ttframe.style.left=(Math.max(0,(rc.left+rc.right)*0.5-(rc2.right-rc2.left)*0.5)+window.scrollX)+"px";
+            this.ttframe.style.top=(rc.top-(rc2.bottom-rc2.top+8)+window.scrollY)+"px";
             if((el.valuetip && this.ttframe.knobDrag)||el.tooltip&&this.ttframe.knobHover)
               op=1;
           }
@@ -220,6 +220,9 @@ if(window.customElements){
             else
               this.ttframe.style.transition="opacity 0.5s ease 0.5s";
             this.ttframe.style.opacity=op;
+          }
+          else{
+            this.ttframe.style.top="-1000px";
           }
         }
         if(el==null){
@@ -292,6 +295,7 @@ webaudio-knob{
   position:relative;
   margin:0;
   padding:0;
+  cursor:pointer;
   font-family: sans-serif;
   font-size: 11px;
 }
@@ -453,19 +457,21 @@ webaudio-knob{
         let offset = (this.startPosY - e.pageY - this.startPosX + e.pageX) * this.sensitivity;
         this._setValue(this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4 : 1) * 128)) - this.min) / this.step) | 0) * this.step);
         this.sendEvent("input");
-        e.preventDefault();
-        e.stopPropagation();
+        if(e.preventDefault)
+          e.preventDefault();
+        if(e.stopPropagation)
+          e.stopPropagation();
         return false;
       }
       let pointerup=(e)=>{
         this.showtip("drag",null);
         this.startPosX = this.startPosY = null;
-        window.removeEventListener('mousemove', pointermove, true);
-        window.removeEventListener('touchmove', pointermove, true);
-        window.removeEventListener('mouseup', pointerup, true);
-        window.removeEventListener('touchend', pointerup, true);
-        window.removeEventListener('touchcancel', pointerup, true);
-        document.body.removeEventListener('touchstart', preventScroll, false);
+        window.removeEventListener('mousemove', pointermove);
+        window.removeEventListener('touchmove', pointermove, {passive:false});
+        window.removeEventListener('mouseup', pointerup);
+        window.removeEventListener('touchend', pointerup);
+        window.removeEventListener('touchcancel', pointerup);
+        document.body.removeEventListener('touchstart', preventScroll,{passive:false});
         this.sendEvent("change");
       }
       let preventScroll=(e)=>{
@@ -477,15 +483,17 @@ webaudio-knob{
         this.startPosX = e.pageX;
         this.startPosY = e.pageY;
         this.startVal = this.value;
-        window.addEventListener('mousemove', pointermove, true);
-        window.addEventListener('touchmove', pointermove, true);
+        window.addEventListener('mousemove', pointermove);
+        window.addEventListener('touchmove', pointermove, {passive:false});
       }
-      window.addEventListener('mouseup', pointerup, true);
-      window.addEventListener('touchend', pointerup, true);
-      window.addEventListener('touchcancel', pointerup, true);
-      document.body.addEventListener('touchstart', preventScroll);
-      e.preventDefault();
-      e.stopPropagation();
+      window.addEventListener('mouseup', pointerup);
+      window.addEventListener('touchend', pointerup);
+      window.addEventListener('touchcancel', pointerup);
+      document.body.addEventListener('touchstart', preventScroll,{passive:false});
+      if(e.preventDefault)
+        e.preventDefault();
+      if(e.stopPropagation)
+        e.stopPropagation();
       return false;
     }
   });
@@ -509,6 +517,7 @@ webaudio-slider{
   padding:0;
   font-family: sans-serif;
   font-size: 11px;
+  cursor:pointer;
 }
 .webaudio-slider-body{
   display:inline-block;
@@ -710,19 +719,21 @@ webaudio-slider{
         let offset = ((this.startPosY - e.pageY)*this.sensey - (this.startPosX - e.pageX)*this.sensex) * this.sensitivity;
         this._setValue(this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4 : 1) * this.dlen)) - this.min) / this.step) | 0) * this.step);
         this.sendEvent("input");
-        e.preventDefault();
-        e.stopPropagation();
+        if(e.preventDefault)
+          e.preventDefault();
+        if(e.stopPropagation)
+          e.stopPropagation();
         return false;
       }
       let pointerup=(e)=>{
         this.showtip("drag",null);
         this.startPosX = this.startPosY = null;
-        window.removeEventListener('mousemove', pointermove, true);
-        window.removeEventListener('touchmove', pointermove, true);
-        window.removeEventListener('mouseup', pointerup, true);
-        window.removeEventListener('touchend', pointerup, true);
-        window.removeEventListener('touchcancel', pointerup, true);
-        document.body.removeEventListener('touchstart', preventScroll, false);
+        window.removeEventListener('mousemove', pointermove);
+        window.removeEventListener('touchmove', pointermove, {passive:false});
+        window.removeEventListener('mouseup', pointerup);
+        window.removeEventListener('touchend', pointerup);
+        window.removeEventListener('touchcancel', pointerup);
+        document.body.removeEventListener('touchstart', preventScroll,{passive:false});
         this.sendEvent("change");
       }
       let preventScroll=(e)=>{
@@ -736,15 +747,17 @@ webaudio-slider{
         this.startPosX = e.pageX;
         this.startPosY = e.pageY;
         this.startVal = this.value;
-        window.addEventListener('mousemove', pointermove, true);
-        window.addEventListener('touchmove', pointermove, true);
+        window.addEventListener('mousemove', pointermove);
+        window.addEventListener('touchmove', pointermove, {passive:false});
       }
-      window.addEventListener('mouseup', pointerup, true);
-      window.addEventListener('touchend', pointerup, true);
-      window.addEventListener('touchcancel', pointerup, true);
-      document.body.addEventListener('touchstart', preventScroll);
-      e.preventDefault();
-      e.stopPropagation();
+      window.addEventListener('mouseup', pointerup);
+      window.addEventListener('touchend', pointerup);
+      window.addEventListener('touchcancel', pointerup);
+      document.body.addEventListener('touchstart', preventScroll,{passive:false});
+      if(e.preventDefault)
+        e.preventDefault();
+      if(e.stopPropagation)
+        e.stopPropagation();
       return false;
     }
   });
@@ -767,6 +780,7 @@ webaudio-switch{
   padding:0;
   font-family: sans-serif;
   font-size: 11px;
+  cursor:pointer;
 }
 .webaudio-switch-body{
   display:inline-block;
@@ -874,12 +888,12 @@ webaudio-switch{
       }
       let pointerup=(e)=>{
         this.showtip("drag",null);
-        window.removeEventListener('mousemove', pointermove, true);
-        window.removeEventListener('touchmove', pointermove, true);
-        window.removeEventListener('mouseup', pointerup, true);
-        window.removeEventListener('touchend', pointerup, true);
-        window.removeEventListener('touchcancel', pointerup, true);
-        document.body.removeEventListener('touchstart', preventScroll, false);
+        window.removeEventListener('mousemove', pointermove);
+        window.removeEventListener('touchmove', pointermove, {passive:false});
+        window.removeEventListener('mouseup', pointerup);
+        window.removeEventListener('touchend', pointerup);
+        window.removeEventListener('touchcancel', pointerup);
+        document.body.removeEventListener('touchstart', preventScroll,{passive:false});
         if(this.type=="kick"){
           this.value=0;
           this.checked=false;
@@ -918,13 +932,15 @@ webaudio-switch{
         break;
       }
 
-      window.addEventListener('mouseup', pointerup, true);
-      window.addEventListener('touchend', pointerup, true);
-      window.addEventListener('touchcancel', pointerup, true);
-      document.body.addEventListener('touchstart', preventScroll);
+      window.addEventListener('mouseup', pointerup);
+      window.addEventListener('touchend', pointerup);
+      window.addEventListener('touchcancel', pointerup);
+      document.body.addEventListener('touchstart', preventScroll,{passive:false});
       this.redraw();
-      e.preventDefault();
-      e.stopPropagation();
+      if(e.preventDefault)
+        e.preventDefault();
+      if(e.stopPropagation)
+        e.stopPropagation();
       return false;
     }
   });
@@ -932,13 +948,13 @@ webaudio-switch{
   customElements.define("webaudio-param", class WebAudioParam extends WebAudioControlsWidget {
     constructor(){
       super();
-      this.addEventListener("keydown",this.keydown,false);
-      this.addEventListener("mousedown",this.pointerdown,false);
-      this.addEventListener("touchstart",this.pointerdown,false);
-      this.addEventListener("wheel",this.wheel,false);
-      this.addEventListener("mouseover",this.pointerover,false);
-      this.addEventListener("mouseout",this.pointerout,false);
-      this.addEventListener("contextmenu",this.contextMenu,false);
+      this.addEventListener("keydown",this.keydown);
+      this.addEventListener("mousedown",this.pointerdown,{passive:false});
+      this.addEventListener("touchstart",this.pointerdown,{passive:false});
+      this.addEventListener("wheel",this.wheel);
+      this.addEventListener("mouseover",this.pointerover);
+      this.addEventListener("mouseout",this.pointerout);
+      this.addEventListener("contextmenu",this.contextMenu);
     }
     connectedCallback(){
       let root;
@@ -955,10 +971,10 @@ webaudio-param{
   padding:0;
   font-family: sans-serif;
   font-size: 8px;
+  cursor:pointer;
 }
 .webaudio-param-body{
   display:inline-block;
-  cursor:pointer;
   text-align:center;
   vertical-align:middle;
   position:relative;
@@ -1058,21 +1074,23 @@ webaudio-param{
       }
       let pointerup=(e)=>{
         this.showtip("drag",null);
-        window.removeEventListener('mouseup', pointerup, true);
-        window.removeEventListener('touchend', pointerup, true);
-        window.removeEventListener('touchcancel', pointerup, true);
-        document.body.removeEventListener('touchstart', preventScroll, false);
+        window.removeEventListener('mouseup', pointerup);
+        window.removeEventListener('touchend', pointerup);
+        window.removeEventListener('touchcancel', pointerup);
+        document.body.removeEventListener('touchstart', preventScroll,{passive:false});
       }
       let preventScroll=(e)=>{
         e.preventDefault();
       }
-      window.addEventListener('mouseup', pointerup, true);
-      window.addEventListener('touchend', pointerup, true);
-      window.addEventListener('touchcancel', pointerup, true);
-      document.body.addEventListener('touchstart', preventScroll);
+      window.addEventListener('mouseup', pointerup);
+      window.addEventListener('touchend', pointerup);
+      window.addEventListener('touchcancel', pointerup);
+      document.body.addEventListener('touchstart', preventScroll,{passive:false});
       this.redraw();
-      e.preventDefault();
-      e.stopPropagation();
+      if(e.preventDefault)
+        e.preventDefault();
+      if(e.stopPropagation)
+        e.stopPropagation();
       return false;
     }
   });
@@ -1273,8 +1291,6 @@ webaudio-keyboard{
           let px=p[i].clientX-r.left;
           let py=p[i].clientY-r.top;
           let x,k,ko;
-//          if(px<0) px=0;
-//          if(px>=r.width) px=r.width-2;
           if(py<this.bheight) {
             x=px-this.wwidth*this.ko[this.min%12];
             k=this.min+((x/this.bwidth)|0);
@@ -1294,7 +1310,7 @@ webaudio-keyboard{
         this.redraw();
       }
       let pointerup=(e)=>{
-        document.body.removeEventListener('touchstart',this.preventScroll,false);
+        document.body.removeEventListener('touchstart',this.preventScroll,{passive:false});
         if(this.enable) {
           if(--this.press==0)
             this.values=[];
@@ -1302,23 +1318,22 @@ webaudio-keyboard{
           this.redraw();
         }
         document.removeEventListener("mousemove",pointermove);
-        document.removeEventListener("touchmove",pointermove);
+        document.removeEventListener("touchmove",pointermove,{passive:false});
         document.removeEventListener("mouseup",pointerup);
         document.removeEventListener("touchend",pointerup);
         document.removeEventListener("touchcancel",pointerup);
         e.preventDefault();
       }
       this.cv.focus();
-      document.body.addEventListener('touchstart',this.preventScroll);
+      document.body.addEventListener('touchstart',this.preventScroll,{passive:false});
       document.addEventListener("mousemove",pointermove);
-      document.addEventListener("touchmove",pointermove);
+      document.addEventListener("touchmove",pointermove,{passive:false});
       document.addEventListener("mouseup",pointerup);
       document.addEventListener("touchend",pointerup);
       document.addEventListener("touchcancel",pointerup);
       if(this.enable) {
         ++this.press;
         pointermove(e);
-//        if(this.hasChildNodes() && this.childNodes.length>0) this.childNodes[1].focus();
       }
       e.preventDefault();
     }
