@@ -4,6 +4,14 @@
         <meta charset="utf-8">
         <title>WebAudio-Controls Live Demo (Mixer)</title>
         <script src="webcomponents-lite.js"></script>
+        <script>
+        WebAudioControlsOptions={
+          knobSrc:"../knobs/simplegray.png",
+          knobSprites:100,
+          sliderSrc:"../knobs/vsliderbody.png",
+          sliderKnobsrc:"../knobs/vsliderknob.png",
+        }
+        </script>
         <script src="../webaudio-controls.js"></script>
         <style>
             #base {
@@ -29,14 +37,14 @@
 <div id="base">
   <table>
     <tr>
-      <td><webaudio-knob diameter="80"></webaudio-knob></td>
-      <td><webaudio-knob diameter="80"></webaudio-knob></td>
-      <td><webaudio-knob diameter="80"></webaudio-knob></td>
-      <td><webaudio-knob diameter="80"></webaudio-knob></td>
-      <td><webaudio-knob diameter="80"></webaudio-knob></td>
-      <td><webaudio-knob diameter="80"></webaudio-knob></td>
-      <td><webaudio-knob diameter="80"></webaudio-knob></td>
-      <td><webaudio-knob diameter="80"></webaudio-knob></td>
+      <td><webaudio-knob diameter="80" value="50"></webaudio-knob></td>
+      <td><webaudio-knob diameter="80" value="50"></webaudio-knob></td>
+      <td><webaudio-knob diameter="80" value="50"></webaudio-knob></td>
+      <td><webaudio-knob diameter="80" value="50"></webaudio-knob></td>
+      <td><webaudio-knob diameter="80" value="50"></webaudio-knob></td>
+      <td><webaudio-knob diameter="80" value="50"></webaudio-knob></td>
+      <td><webaudio-knob diameter="80" value="50"></webaudio-knob></td>
+      <td><webaudio-knob diameter="80" value="50"></webaudio-knob></td>
     </tr>
     <tr>
       <td><webaudio-slider width="50" height="300"></webaudio-slider></td>
