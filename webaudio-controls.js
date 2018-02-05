@@ -64,21 +64,22 @@ if(window.customElements){
 .webaudioctrl-context-menu__item:hover {
   background-color: #b8b8b8;
 }
-#webaudioctrl-tooltip{
+.webaudioctrl-tooltip{
   display:inline-block;
-  z-index: 10;
+  position:absolute;
+  margin:0 -1000px;
+  z-index: 999;
   background:#eee;
   border:1px solid #666;
   border-radius:4px;
-  position:absolute;
   padding:5px 10px;
   text-align:center;
   left:0; top:0;
   font-size:11px;
   opacity:0;
-  transition:opacity 1s ease 1s;
+  visibility:hidden;
 }
-#webaudioctrl-tooltip:before{
+.webaudioctrl-tooltip:before{
   content: "";
 	position: absolute;
 	top: 100%;
@@ -87,7 +88,7 @@ if(window.customElements){
 	border: 8px solid transparent;
 	border-top: 8px solid #666;
 }
-#webaudioctrl-tooltip:after{
+.webaudioctrl-tooltip:after{
   content: "";
 	position: absolute;
 	top: 100%;
@@ -105,8 +106,6 @@ if(window.customElements){
 <li class="webaudioctrl-context-menu__item" onclick="webAudioControlsMidiManager.contextMenuClear()">Clear</li>
 <li class="webaudioctrl-context-menu__item" onclick="webAudioControlsMidiManager.contextMenuClose()">Close</li>
 `;
-  let tooltip=document.createElement("div");
-  tooltip.id="webaudioctrl-tooltip";
   let opt={
     useMidi:0,
     midilearn:0,
@@ -145,6 +144,7 @@ if(window.customElements){
       this.addEventListener("mouseover",this.pointerover);
       this.addEventListener("mouseout",this.pointerout);
       this.addEventListener("contextmenu",this.contextMenu);
+      this.hover=this.drag=0;
     }
     sendEvent(ev){
       let event;
@@ -164,7 +164,7 @@ if(window.customElements){
       }
       return v;
     }
-    showtip(f,e){
+    showtip(d){
       function numformat(s,x){
         let i=s.indexOf("%");
         let c=[0,0],type=0,m=0,r="",j=i+1;
@@ -190,61 +190,39 @@ if(window.customElements){
         r=s.replace(/%.*[xXdfs]/,r);
         return r;
       }
-      this.ttframe=document.getElementById("webaudioctrl-tooltip");
-      if(!this.ttframe)
-        return;
-      if(f=="drag")
-        this.ttframe.knobDrag=e;
-      let op=0,el=0;
-      if(this.ttframe){
-        el=this.ttframe.knobDrag||this.ttframe.knobHover;
-        if(el==this){
-          let s=this.tooltip;
-          if(this.valuetip){
-            if(s==null)
-              s=`%.${this.digits}f`;
-            else if(s.indexOf("%")<0)
-              s+=` : %.${this.digits}f`;
-          }
-          if(s){
-            this.ttframe.innerHTML=numformat(s,el.convValue);
-            let rc=el.getBoundingClientRect(),rc2=this.ttframe.getBoundingClientRect(),rc3=document.documentElement.getBoundingClientRect();
-            this.ttframe.style.left=(Math.max(0,(rc.left+rc.right)*0.5-(rc2.right-rc2.left)*0.5)+window.scrollX)+"px";
-            this.ttframe.style.top=(rc.top-(rc2.bottom-rc2.top+8)+window.scrollY)+"px";
-            if((el.valuetip && this.ttframe.knobDrag)||el.tooltip&&this.ttframe.knobHover)
-              op=1;
-          }
-          if(op){
-            if(el==this.ttframe.knobDrag)
-              this.ttframe.style.transition="opacity 0.1s ease 0s";
-            else
-              this.ttframe.style.transition="opacity 0.5s ease 0.5s";
-            this.ttframe.style.opacity=op;
-          }
-          else{
-            this.ttframe.style.top="-1000px";
-          }
+      let s=this.tooltip;
+      if(this.drag||this.hover){
+        if(this.valuetip){
+          if(s==null)
+            s=`%.${this.digits}f`;
+          else if(s.indexOf("%")<0)
+            s+=` : %.${this.digits}f`;
         }
-        if(el==null){
-          this.ttframe.style.transition="opacity 0s ease 0s";
-          this.ttframe.style.opacity=op;
-          this.ttframe.style.top="-1000px";
+        if(s){
+          this.ttframe.innerHTML=numformat(s,this.convValue);
+          this.ttframe.style.display="inline-block";
+          this.ttframe.style.width="auto";
+          this.ttframe.style.height="auto";
+          this.ttframe.style.transition="opacity 0.5s "+d+"s,visibility 0.5s "+d+"s";
+          this.ttframe.style.opacity=0.9;
+          this.ttframe.style.visibility="visible";
+          let rc=this.getBoundingClientRect(),rc2=this.ttframe.getBoundingClientRect(),rc3=document.documentElement.getBoundingClientRect();
+          this.ttframe.style.left=((rc.width-rc2.width)*0.5+1000)+"px";
+          this.ttframe.style.top=(-rc2.height-8)+"px";
+          return;
         }
       }
+      this.ttframe.style.transition="opacity 0.1s "+d+"s,visibility 0.1s "+d+"s";
+      this.ttframe.style.opacity=0;
+      this.ttframe.style.visibility="hidden";
     }
     pointerover(e) {
-      let ttframe=document.getElementById("webaudioctrl-tooltip");
-      if(ttframe){
-        ttframe.knobHover=this;
-        this.showtip();
-      }
+      this.hover=1;
+      this.showtip(1);
     }
     pointerout(e) {
-      let ttframe=document.getElementById("webaudioctrl-tooltip");
-      if(ttframe){
-        ttframe.knobHover=null;
-        this.showtip();
-      }
+      this.hover=0;
+      this.showtip(0);
     }
     contextMenu(e){
       if(window.webAudioControlsMidiManager && this.midilearn)
@@ -293,6 +271,7 @@ if(window.customElements){
 webaudio-knob{
   display:inline-block;
   position:relative;
+  z-index:1;
   margin:0;
   padding:0;
   cursor:pointer;
@@ -301,14 +280,16 @@ webaudio-knob{
 }
 .webaudio-knob-body{
   display:inline-block;
+  position:relative;
+  z-index:1;
   margin:0;
   padding:0;
 }
 </style>
-<div class='webaudio-knob-body' tabindex='1' touch-action='none'></div>
+<div class='webaudio-knob-body' tabindex='1' touch-action='none'></div><div class='webaudioctrl-tooltip'></div>
 `;
       this.elem=root.childNodes[2];
-
+      this.ttframe=root.childNodes[3];
       this.enable=this.getAttr("enable",1);
       this._src=this.getAttr("src",opt.knobSrc); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
       this.convValue=this._value=this.getAttr("value",0); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
@@ -414,7 +395,7 @@ webaudio-knob{
         else
           this.convValue=this._value;
         this.redraw();
-        this.showtip();
+        this.showtip(0);
         return 1;
       }
       return 0;
@@ -434,20 +415,31 @@ webaudio-knob{
       e.preventDefault();
       e.stopPropagation();
     }
-    pointerdown(e){
+    pointerdown(ev){
       if(!this.enable)
         return;
-      if(e.touches)
-          e = e.touches[0];
+      let e=ev;
+      if(ev.touches){
+        e = ev.changedTouches[0];
+        this.identifier=e.identifier;
+      }
       else {
         if(e.buttons!=1 && e.button!=0)
           return;
       }
       this.elem.focus();
-      this.showtip("drag",this);
-      let pointermove=(e)=>{
-        if(e.touches)
-            e = e.touches[0];
+      this.drag=1;
+      this.showtip(0);
+      let pointermove=(ev)=>{
+        let e=ev;
+        if(ev.touches){
+          for(let i=0;i<ev.touches.length;++i){
+            if(ev.touches[i].identifier==this.identifier){
+              e = ev.touches[i];
+              break;
+            }
+          }
+        }
         if(this.lastShift !== e.shiftKey) {
           this.lastShift = e.shiftKey;
           this.startPosX = e.pageX;
@@ -463,8 +455,19 @@ webaudio-knob{
           e.stopPropagation();
         return false;
       }
-      let pointerup=(e)=>{
-        this.showtip("drag",null);
+      let pointerup=(ev)=>{
+        let e=ev;
+        if(ev.touches){
+          for(let i=0;;){
+            if(ev.changedTouches[i].identifier==this.identifier){
+              break;
+            }
+            if(++i>=ev.changedTouches.length)
+              return;
+          }
+        }
+        this.drag=0;
+        this.showtip(0);
         this.startPosX = this.startPosY = null;
         window.removeEventListener('mousemove', pointermove);
         window.removeEventListener('touchmove', pointermove, {passive:false});
@@ -490,10 +493,8 @@ webaudio-knob{
       window.addEventListener('touchend', pointerup);
       window.addEventListener('touchcancel', pointerup);
       document.body.addEventListener('touchstart', preventScroll,{passive:false});
-      if(e.preventDefault)
-        e.preventDefault();
-      if(e.stopPropagation)
-        e.stopPropagation();
+      ev.preventDefault();
+      ev.stopPropagation();
       return false;
     }
   });
@@ -532,11 +533,11 @@ webaudio-slider{
   padding:0;
 }
 </style>
-<div class='webaudio-slider-body' tabindex='1' touch-action='none'><div class='webaudio-slider-knob' touch-action='none'></div></div>
+<div class='webaudio-slider-body' tabindex='1' touch-action='none'><div class='webaudio-slider-knob' touch-action='none'></div></div><div class='webaudioctrl-tooltip'></div>
 `;
       this.elem=root.childNodes[2];
       this.knob=this.elem.childNodes[0];
-
+      this.ttframe=root.childNodes[3];
       this.enable=this.getAttr("enable",1);
       this._src=this.getAttr("src",opt.sliderSrc); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
       this._knobsrc=this.getAttr("knobsrc",opt.sliderKnobsrc); Object.defineProperty(this,"knobsrc",{get:()=>{return this._knobsrc},set:(v)=>{this._knobsrc=v;this.setupImage()}});
@@ -675,7 +676,7 @@ webaudio-slider{
         else
           this.convValue=this._value;
         this.redraw();
-        this.showtip();
+        this.showtip(0);
         return 1;
       }
       return 0;
@@ -696,20 +697,31 @@ webaudio-slider{
       e.stopPropagation();
       this.redraw();
     }
-    pointerdown(e){
+    pointerdown(ev){
       if(!this.enable)
         return;
-      if(e.touches)
-          e = e.touches[0];
+      let e=ev;
+      if(ev.touches){
+        e = ev.changedTouches[0];
+        this.identifier=e.identifier;
+      }
       else {
         if(e.buttons!=1 && e.button!=0)
           return;
       }
       this.elem.focus();
-      this.showtip("drag",this);
-      let pointermove=(e)=>{
-        if(e.touches)
-            e = e.touches[0];
+      this.drag=1;
+      this.showtip(0);
+      let pointermove=(ev)=>{
+        let e=ev;
+        if(ev.touches){
+          for(let i=0;i<ev.touches.length;++i){
+            if(ev.touches[i].identifier==this.identifier){
+              e = ev.touches[i];
+              break;
+            }
+          }
+        }
         if(this.lastShift !== e.shiftKey) {
           this.lastShift = e.shiftKey;
           this.startPosX = e.pageX;
@@ -725,8 +737,19 @@ webaudio-slider{
           e.stopPropagation();
         return false;
       }
-      let pointerup=(e)=>{
-        this.showtip("drag",null);
+      let pointerup=(ev)=>{
+        let e=ev;
+        if(ev.touches){
+          for(let i=0;;){
+            if(ev.changedTouches[i].identifier==this.identifier){
+              break;
+            }
+            if(++i>=ev.changedTouches.length)
+              return;
+          }
+        }
+        this.drag=0;
+        this.showtip(0);
         this.startPosX = this.startPosY = null;
         window.removeEventListener('mousemove', pointermove);
         window.removeEventListener('touchmove', pointermove, {passive:false});
@@ -754,10 +777,8 @@ webaudio-slider{
       window.addEventListener('touchend', pointerup);
       window.addEventListener('touchcancel', pointerup);
       document.body.addEventListener('touchstart', preventScroll,{passive:false});
-      if(e.preventDefault)
-        e.preventDefault();
-      if(e.stopPropagation)
-        e.stopPropagation();
+      e.preventDefault();
+      e.stopPropagation();
       return false;
     }
   });
@@ -788,9 +809,10 @@ webaudio-switch{
   padding:0;
 }
 </style>
-<div class='webaudio-switch-body' tabindex='1' touch-action='none'></div>
+<div class='webaudio-switch-body' tabindex='1' touch-action='none'><div class='webaudioctrl-tooltip'></div></div>
 `;
       this.elem=root.childNodes[2];
+      this.ttframe=this.elem.childNodes[0];
 
       this.enable=this.getAttr("enable",1);
       this._src=this.getAttr("src",null); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
@@ -862,7 +884,7 @@ webaudio-switch{
       this.checked=(!!v);
       if(this.value!=this.oldvalue){
         this.redraw();
-        this.showtip();
+        this.showtip(0);
         if(f){
           this.sendEvent("input");
           this.sendEvent("change");
@@ -870,24 +892,29 @@ webaudio-switch{
         this.oldvalue=this.value;
       }
     }
-    pointerdown(e){
+    pointerdown(ev){
       if(!this.enable)
         return;
-      if(e.touches)
-          e = e.touches[0];
+      let e=ev;
+      if(ev.touches){
+        e = ev.changedTouches[0];
+        this.identifier=e.identifier;
+      }
       else {
         if(e.buttons!=1 && e.button!=0)
           return;
       }
       this.elem.focus();
-      this.showtip();
+      this.drag=1;
+      this.showtip(0);
       let pointermove=(e)=>{
         e.preventDefault();
         e.stopPropagation();
         return false;
       }
       let pointerup=(e)=>{
-        this.showtip("drag",null);
+        this.drag=0;
+        this.showtip(0);
         window.removeEventListener('mousemove', pointermove);
         window.removeEventListener('touchmove', pointermove, {passive:false});
         window.removeEventListener('mouseup', pointerup);
@@ -937,10 +964,8 @@ webaudio-switch{
       window.addEventListener('touchcancel', pointerup);
       document.body.addEventListener('touchstart', preventScroll,{passive:false});
       this.redraw();
-      if(e.preventDefault)
-        e.preventDefault();
-      if(e.stopPropagation)
-        e.stopPropagation();
+      e.preventDefault();
+      e.stopPropagation();
       return false;
     }
   });
@@ -987,9 +1012,10 @@ webaudio-param{
   font-size:11px;
 }
 </style>
-<input class='webaudio-param-body' value='0' tabindex='1' touch-action='none'/>
+<input class='webaudio-param-body' value='0' tabindex='1' touch-action='none'/><div class='webaudioctrl-tooltip'></div>
 `;
       this.elem=root.childNodes[2];
+      this.ttframe=root.childNodes[3];
       this.enable=this.getAttr("enable",1);
       this._value=this.getAttr("value",0); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
       this.defvalue=this.getAttr("defvalue",0);
@@ -1047,7 +1073,7 @@ webaudio-param{
       this.value=v;
       if(this.value!=this.oldvalue){
         this.redraw();
-        this.showtip();
+        this.showtip(0);
         if(f){
           let event=document.createEvent("HTMLEvents");
           event.initEvent("change",false,true);
@@ -1056,24 +1082,27 @@ webaudio-param{
         this.oldvalue=this.value;
       }
     }
-    pointerdown(e){
+    pointerdown(ev){
       if(!this.enable)
         return;
-      if(e.touches)
-          e = e.touches[0];
+      let e=ev;
+      if(ev.touches)
+          e = ev.touches[0];
       else {
         if(e.buttons!=1 && e.button!=0)
           return;
       }
       this.elem.focus();
-      this.showtip("drag",this);
+      this.drag=1;
+      this.showtip(0);
       let pointermove=(e)=>{
         e.preventDefault();
         e.stopPropagation();
         return false;
       }
       let pointerup=(e)=>{
-        this.showtip("drag",null);
+        this.drag=0;
+        this.showtip(0);
         window.removeEventListener('mouseup', pointerup);
         window.removeEventListener('touchend', pointerup);
         window.removeEventListener('touchcancel', pointerup);
@@ -1121,11 +1150,11 @@ webaudio-keyboard{
   padding:0;
 }
 </style>
-<canvas class='webaudio-keyboard-body' tabindex='1' touch-action='none'></canvas>
+<canvas class='webaudio-keyboard-body' tabindex='1' touch-action='none'></canvas><div class='webauioctrl-tooltip'></div>
 `;
       this.cv=root.childNodes[2];
+      this.ttframe=root.childNodes[3];
       this.ctx=this.cv.getContext("2d");
-
       this._values=[];
       this.enable=this.getAttr("enable",1);
       this._width=this.getAttr("width",480); Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});
@@ -1149,6 +1178,11 @@ webaudio-keyboard{
       }
       this.setupImage();
       this.digits=0;
+      this.addEventListener("mousemove",this.pointermove);
+      this.addEventListener("touchmove",this.pointermove,{passive:false});
+      this.addEventListener("mouseup",this.pointerup);
+      this.addEventListener("touchend",this.pointerup);
+      this.addEventListener("touchcancel",this.pointerup);
       if(window.webAudioControlsMidiManager)
         window.webAudioControlsMidiManager.updateWidgets();
     }
@@ -1235,7 +1269,7 @@ webaudio-keyboard{
       if(this._value!=this.oldvalue){
         this.oldvalue=this._value;
         this.redraw();
-        this.showtip();
+        this.showtip(0);
         return 1;
       }
       return 0;
@@ -1276,65 +1310,56 @@ webaudio-keyboard{
       }
     }
     pointerdown(e){
-      let pointermove=(e)=>{
-        if(!this.enable)
-          return;
-        let r=this.getBoundingClientRect();
-        let v=[],p;
-        if(e.touches)
-          p=e.touches;
-        else if(this.press)
-          p=[e];
-        else
-          return;
-        for(let i=0;i<p.length;++i) {
-          let px=p[i].clientX-r.left;
-          let py=p[i].clientY-r.top;
-          let x,k,ko;
-          if(py<this.bheight) {
-            x=px-this.wwidth*this.ko[this.min%12];
-            k=this.min+((x/this.bwidth)|0);
-          }
-          else {
-            k=(px/this.wwidth)|0;
-            ko=this.kp[this.min%12];
-            k+=ko;
-            k=this.min+((k/7)|0)*12+this.kn[k%7]-this.kn[ko%7];
-          }
-          if(k>=this.min&&k<=this.max)
-            v.push(k);
+      this.cv.focus();
+//      document.body.addEventListener('touchstart',this.preventScroll,{passive:false});
+      if(this.enable) {
+        ++this.press;
+        this.pointermove(e);
+      }
+      e.preventDefault();
+    }
+    pointermove(e){
+      if(!this.enable)
+        return;
+      let r=this.getBoundingClientRect();
+      let v=[],p;
+      if(e.touches)
+        p=e.targetTouches;
+      else if(this.press)
+        p=[e];
+      else
+        return;
+      this.drag=1;
+      for(let i=0;i<p.length;++i) {
+        let px=p[i].clientX-r.left;
+        let py=p[i].clientY-r.top;
+        let x,k,ko;
+        if(py<this.bheight) {
+          x=px-this.wwidth*this.ko[this.min%12];
+          k=this.min+((x/this.bwidth)|0);
         }
-        v.sort();
-        this.values=v;
+        else {
+          k=(px/this.wwidth)|0;
+          ko=this.kp[this.min%12];
+          k+=ko;
+          k=this.min+((k/7)|0)*12+this.kn[k%7]-this.kn[ko%7];
+        }
+        if(k>=this.min&&k<=this.max)
+          v.push(k);
+      }
+      v.sort();
+      this.values=v;
+      this.sendevent();
+      this.redraw();
+    }
+    pointerup(e){
+      if(this.enable) {
+        --this.press;
+        this.pointermove(e);
         this.sendevent();
         this.redraw();
       }
-      let pointerup=(e)=>{
-        document.body.removeEventListener('touchstart',this.preventScroll,{passive:false});
-        if(this.enable) {
-          if(--this.press==0)
-            this.values=[];
-          this.sendevent();
-          this.redraw();
-        }
-        document.removeEventListener("mousemove",pointermove);
-        document.removeEventListener("touchmove",pointermove,{passive:false});
-        document.removeEventListener("mouseup",pointerup);
-        document.removeEventListener("touchend",pointerup);
-        document.removeEventListener("touchcancel",pointerup);
-        e.preventDefault();
-      }
-      this.cv.focus();
-      document.body.addEventListener('touchstart',this.preventScroll,{passive:false});
-      document.addEventListener("mousemove",pointermove);
-      document.addEventListener("touchmove",pointermove,{passive:false});
-      document.addEventListener("mouseup",pointerup);
-      document.addEventListener("touchend",pointerup);
-      document.addEventListener("touchcancel",pointerup);
-      if(this.enable) {
-        ++this.press;
-        pointermove(e);
-      }
+      this.drag=0;
       e.preventDefault();
     }
     sendEventFromKey(s,k){
@@ -1472,7 +1497,6 @@ webaudio-keyboard{
   }
   window.addEventListener("load",()=>{
     document.body.appendChild(midimenu);
-    document.body.appendChild(tooltip);
   });
   if(window.UseWebAudioControlsMidi||opt.useMidi)
     window.webAudioControlsMidiManager = new WebAudioControlsMidiManager();
