@@ -1328,8 +1328,9 @@ webaudio-keyboard{
       else if(this.press)
         p=[e];
       else
-        return;
-      this.drag=1;
+        p=[];
+      if(p.length>0)
+        this.drag=1;
       for(let i=0;i<p.length;++i) {
         let px=p[i].clientX-r.left;
         let py=p[i].clientY-r.top;
