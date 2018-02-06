@@ -218,7 +218,7 @@ if(window.customElements){
     }
     pointerover(e) {
       this.hover=1;
-      this.showtip(1);
+      this.showtip(0.6);
     }
     pointerout(e) {
       this.hover=0;
@@ -292,7 +292,7 @@ webaudio-knob{
       this.ttframe=root.childNodes[3];
       this.enable=this.getAttr("enable",1);
       this._src=this.getAttr("src",opt.knobSrc); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
-      this.convValue=this._value=this.getAttr("value",0); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
+      this._value=this.getAttr("value",0); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
       this.defvalue=this.getAttr("defvalue",0);
       this._min=this.getAttr("min",0); Object.defineProperty(this,"min",{get:()=>{return this._min},set:(v)=>{this._min=+v;this.redraw()}});
       this._max=this.getAttr("max",100); Object.defineProperty(this,"max",{get:()=>{return this._max},set:(v)=>{this._max=+v;this.redraw()}});
@@ -303,10 +303,14 @@ webaudio-knob{
       this._diameter=this.getAttr("diameter",opt.knobDiameter); Object.defineProperty(this,"diameter",{get:()=>{return this._diameter},set:(v)=>{this._diameter=v;this.setupImage()}});
       this._colors=this.getAttr("colors",opt.knobColors); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.outline=this.getAttr("outline",opt.outline);
-      this.conv=this.getAttr("conv",null);
       this.sensitivity=this.getAttr("sensitivity",1);
       this.valuetip=this.getAttr("valuetip",1);
       this.tooltip=this.getAttr("tooltip",null);
+      this.conv=this.getAttr("conv",null);
+      if(this.conv)
+        this.convValue=eval(this.conv)(this._value);
+      else
+        this.convValue=this._value;
       this.midilearn=this.getAttr("midilearn",opt.midilearn);
       this.midicc=this.getAttr("midicc",null);
 
@@ -541,7 +545,7 @@ webaudio-slider{
       this.enable=this.getAttr("enable",1);
       this._src=this.getAttr("src",opt.sliderSrc); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
       this._knobsrc=this.getAttr("knobsrc",opt.sliderKnobsrc); Object.defineProperty(this,"knobsrc",{get:()=>{return this._knobsrc},set:(v)=>{this._knobsrc=v;this.setupImage()}});
-      this.convValue=this._value=this.getAttr("value",0); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
+      this._value=this.getAttr("value",0); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
       this.defvalue=this.getAttr("defvalue",0);
       this._min=this.getAttr("min",0); Object.defineProperty(this,"min",{get:()=>{return this._min},set:(v)=>{this._min=v;this.redraw()}});
       this._max=this.getAttr("max",100); Object.defineProperty(this,"max",{get:()=>{return this._max},set:(v)=>{this._max=v;this.redraw()}});
@@ -566,6 +570,11 @@ webaudio-slider{
       this.sensitivity=this.getAttr("sensitivity",1);
       this.valuetip=this.getAttr("valuetip",1);
       this.tooltip=this.getAttr("tooltip",null);
+      this.conv=this.getAttr("conv",null);
+      if(this.conv)
+        this.convValue=eval(this.conv)(this._value);
+      else
+        this.convValue=this._value;
       this.midilearn=this.getAttr("midilearn",opt.midilearn);
       this.midicc=this.getAttr("midicc",null);
       this.midiController={};
@@ -1062,7 +1071,8 @@ webaudio-param{
       this.elem.style.outline=this.outline?"":"none";
       let l=document.getElementById(this.link);
       if(l){
-        l.addEventListener("input",(e)=>{this.setValue(l.value.toFixed(l.digits))})
+        this.setValue(l.value.toFixed(l.digits));
+        l.addEventListener("input",(e)=>{this.setValue(l.value.toFixed(l.digits))});
       }
       this.redraw();
     }
