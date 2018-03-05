@@ -242,6 +242,7 @@ if(window.customElements){
   margin:0 -1000px;
   z-index: 999;
   background:#eee;
+  color:#000;
   border:1px solid #666;
   border-radius:4px;
   padding:5px 10px;
@@ -523,6 +524,7 @@ webaudio-knob{
   margin:0 -1000px;
   z-index: 999;
   background:#eee;
+  color:#000;
   border:1px solid #666;
   border-radius:4px;
   padding:5px 10px;
@@ -846,6 +848,7 @@ webaudio-slider{
   margin:0 -1000px;
   z-index: 999;
   background:#eee;
+  color:#000;
   border:1px solid #666;
   border-radius:4px;
   padding:5px 10px;
@@ -1074,6 +1077,7 @@ webaudio-switch{
   margin:0 -1000px;
   z-index: 999;
   background:#eee;
+  color:#000;
   border:1px solid #666;
   border-radius:4px;
   padding:5px 10px;
@@ -1256,6 +1260,7 @@ webaudio-param{
   margin:0 -1000px;
   z-index: 999;
   background:#eee;
+  color:#000;
   border:1px solid #666;
   border-radius:4px;
   padding:5px 10px;
