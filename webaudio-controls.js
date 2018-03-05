@@ -64,39 +64,7 @@ if(window.customElements){
 .webaudioctrl-context-menu__item:hover {
   background-color: #b8b8b8;
 }
-.webaudioctrl-tooltip{
-  display:inline-block;
-  position:absolute;
-  margin:0 -1000px;
-  z-index: 999;
-  background:#eee;
-  border:1px solid #666;
-  border-radius:4px;
-  padding:5px 10px;
-  text-align:center;
-  left:0; top:0;
-  font-size:11px;
-  opacity:0;
-  visibility:hidden;
-}
-.webaudioctrl-tooltip:before{
-  content: "";
-	position: absolute;
-	top: 100%;
-	left: 50%;
- 	margin-left: -8px;
-	border: 8px solid transparent;
-	border-top: 8px solid #666;
-}
-.webaudioctrl-tooltip:after{
-  content: "";
-	position: absolute;
-	top: 100%;
-	left: 50%;
- 	margin-left: -6px;
-	border: 6px solid transparent;
-	border-top: 6px solid #eee;
-}`;
+`;
   document.head.appendChild(styles);
   let midimenu=document.createElement("ul");
   midimenu.id="webaudioctrl-context-menu";
@@ -268,6 +236,39 @@ if(window.customElements){
         root=this;
       root.innerHTML=
 `<style>
+.webaudioctrl-tooltip{
+  display:inline-block;
+  position:absolute;
+  margin:0 -1000px;
+  z-index: 999;
+  background:#eee;
+  border:1px solid #666;
+  border-radius:4px;
+  padding:5px 10px;
+  text-align:center;
+  left:0; top:0;
+  font-size:11px;
+  opacity:0;
+  visibility:hidden;
+}
+.webaudioctrl-tooltip:before{
+  content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+ 	margin-left: -8px;
+	border: 8px solid transparent;
+	border-top: 8px solid #666;
+}
+.webaudioctrl-tooltip:after{
+  content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+ 	margin-left: -6px;
+	border: 6px solid transparent;
+	border-top: 6px solid #eee;
+}
 webaudio-knob{
   display:inline-block;
   position:relative;
@@ -325,7 +326,8 @@ webaudio-knob{
       this.digits=0;
       this.coltab=["#e00","#000","#000"];
       if(window.webAudioControlsMidiManager)
-        window.webAudioControlsMidiManager.updateWidgets();
+//        window.webAudioControlsMidiManager.updateWidgets();
+        window.webAudioControlsMidiManager.addWidget(this);
     }
     disconnectedCallback(){}
     setupImage(){
@@ -515,6 +517,39 @@ webaudio-knob{
         root=this;
       root.innerHTML=
 `<style>
+.webaudioctrl-tooltip{
+  display:inline-block;
+  position:absolute;
+  margin:0 -1000px;
+  z-index: 999;
+  background:#eee;
+  border:1px solid #666;
+  border-radius:4px;
+  padding:5px 10px;
+  text-align:center;
+  left:0; top:0;
+  font-size:11px;
+  opacity:0;
+  visibility:hidden;
+}
+.webaudioctrl-tooltip:before{
+  content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+ 	margin-left: -8px;
+	border: 8px solid transparent;
+	border-top: 8px solid #666;
+}
+.webaudioctrl-tooltip:after{
+  content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+ 	margin-left: -6px;
+	border: 6px solid transparent;
+	border-top: 6px solid #eee;
+}
 webaudio-slider{
   display:inline-block;
   position:relative;
@@ -587,7 +622,8 @@ webaudio-slider{
       this.setupImage();
       this.digits=0;
       if(window.webAudioControlsMidiManager)
-        window.webAudioControlsMidiManager.updateWidgets();
+//        window.webAudioControlsMidiManager.updateWidgets();
+        window.webAudioControlsMidiManager.addWidget(this);
       this.elem.onclick=(e)=>{e.stopPropagation()};
     }
     disconnectedCallback(){}
@@ -804,6 +840,39 @@ webaudio-slider{
         root=this;
       root.innerHTML=
 `<style>
+.webaudioctrl-tooltip{
+  display:inline-block;
+  position:absolute;
+  margin:0 -1000px;
+  z-index: 999;
+  background:#eee;
+  border:1px solid #666;
+  border-radius:4px;
+  padding:5px 10px;
+  text-align:center;
+  left:0; top:0;
+  font-size:11px;
+  opacity:0;
+  visibility:hidden;
+}
+.webaudioctrl-tooltip:before{
+  content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+ 	margin-left: -8px;
+	border: 8px solid transparent;
+	border-top: 8px solid #666;
+}
+.webaudioctrl-tooltip:after{
+  content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+ 	margin-left: -6px;
+	border: 6px solid transparent;
+	border-top: 6px solid #eee;
+}
 webaudio-switch{
   display:inline-block;
   margin:0;
@@ -849,7 +918,8 @@ webaudio-switch{
       this.setupImage();
       this.digits=0;
       if(window.webAudioControlsMidiManager)
-        window.webAudioControlsMidiManager.updateWidgets();
+//        window.webAudioControlsMidiManager.updateWidgets();
+        window.webAudioControlsMidiManager.addWidget(this);
       this.elem.onclick=(e)=>{e.stopPropagation()};
     }
     disconnectedCallback(){}
@@ -998,6 +1068,39 @@ webaudio-switch{
         root=this;
       root.innerHTML=
 `<style>
+.webaudioctrl-tooltip{
+  display:inline-block;
+  position:absolute;
+  margin:0 -1000px;
+  z-index: 999;
+  background:#eee;
+  border:1px solid #666;
+  border-radius:4px;
+  padding:5px 10px;
+  text-align:center;
+  left:0; top:0;
+  font-size:11px;
+  opacity:0;
+  visibility:hidden;
+}
+.webaudioctrl-tooltip:before{
+  content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+ 	margin-left: -8px;
+	border: 8px solid transparent;
+	border-top: 8px solid #666;
+}
+.webaudioctrl-tooltip:after{
+  content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+ 	margin-left: -6px;
+	border: 6px solid transparent;
+	border-top: 6px solid #eee;
+}
 webaudio-param{
   display:inline-block;
   user-select:none;
@@ -1044,7 +1147,8 @@ webaudio-param{
       }
       this.setupImage();
       if(window.webAudioControlsMidiManager)
-        window.webAudioControlsMidiManager.updateWidgets();
+//        window.webAudioControlsMidiManager.updateWidgets();
+        window.webAudioControlsMidiManager.addWidget(this);
       this.fromLink=((e)=>{
         this.setValue(e.target.convValue.toFixed(e.target.digits));
       }).bind(this);
@@ -1146,6 +1250,39 @@ webaudio-param{
         root=this;
       root.innerHTML=
 `<style>
+.webaudioctrl-tooltip{
+  display:inline-block;
+  position:absolute;
+  margin:0 -1000px;
+  z-index: 999;
+  background:#eee;
+  border:1px solid #666;
+  border-radius:4px;
+  padding:5px 10px;
+  text-align:center;
+  left:0; top:0;
+  font-size:11px;
+  opacity:0;
+  visibility:hidden;
+}
+.webaudioctrl-tooltip:before{
+  content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+ 	margin-left: -8px;
+	border: 8px solid transparent;
+	border-top: 8px solid #666;
+}
+.webaudioctrl-tooltip:after{
+  content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+ 	margin-left: -6px;
+	border: 6px solid transparent;
+	border-top: 6px solid #eee;
+}
 webaudio-keyboard{
   display:inline-block;
   position:relative;
@@ -1194,7 +1331,8 @@ webaudio-keyboard{
       this.addEventListener("touchend",this.pointerup);
       this.addEventListener("touchcancel",this.pointerup);
       if(window.webAudioControlsMidiManager)
-        window.webAudioControlsMidiManager.updateWidgets();
+//        window.webAudioControlsMidiManager.updateWidgets();
+        window.webAudioControlsMidiManager.addWidget(this);
     }
     disconnectedCallback(){}
     setupImage(){
@@ -1419,12 +1557,16 @@ webaudio-keyboard{
   class WebAudioControlsMidiManager {
     constructor(){
       this.midiAccess = null;
+      this.listOfWidgets = [];
       this.listOfExternalMidiListeners = [];
       this.updateWidgets();
       this.initWebAudioControls();
     }
+    addWidget(w){
+      this.listOfWidgets.push(w);
+    }
     updateWidgets(){
-      this.listOfWidgets = document.querySelectorAll("webaudio-knob,webaudio-slider,webaudio-switch");
+//      this.listOfWidgets = document.querySelectorAll("webaudio-knob,webaudio-slider,webaudio-switch");
     }
     initWebAudioControls() {
       if(navigator.requestMIDIAccess) {
@@ -1479,7 +1621,7 @@ webaudio-keyboard{
       menu.knob=knob;
       menu.classList.add("active");
       menu.knob.focus();
-      document.activeElement.onblur=this.contextMenuClose;
+//      document.activeElement.onblur=this.contextMenuClose;
       menu.knob.addEventListener("keydown",this.contextMenuCloseByKey.bind(this));
     }
     contextMenuCloseByKey(e){

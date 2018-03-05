@@ -22,7 +22,7 @@ table td {
 <body style="background-color:#eee;">
     <h1>WebAudio-Controls Live Demo</h1>
     <div style="position:relative;background-image: url('img/bg.png');width:512px;height:240px;margin:30px auto;padding:0px;">
-        <webaudio-knob midilearn="1" midicc="1.21" style="position:absolute;left:48px;top:76px" src="../knobs/LittlePhatty.png" value="50" max="100" step="1" width="64" height="64" sprites="100" tooltip="Knob1 tooltip %d"></webaudio-knob>
+        <webaudio-knob midilearn="1" midicc="1.1" style="position:absolute;left:48px;top:76px" src="../knobs/LittlePhatty.png" value="50" max="100" step="1" width="64" height="64" sprites="100" tooltip="Knob1 tooltip %d"></webaudio-knob>
         <webaudio-knob midilearn="1" midicc="8.7" style="position:absolute;left:128px;top:76px" src="../knobs/LittlePhatty.png" value="1" min="0" max="3" step="0.01" diameter="64" sprites="100" tooltip="Knob2 tooltip <br/> %.2f Hz" conv="(x)=>{return Math.pow(10,x)*20}"></webaudio-knob>
         <webaudio-knob midilearn="1" midicc="1.22" id="knob3" style="position:absolute;left:232px;top:48px" src="../knobs/vernier.png" value="30" max="100" step="1" diameter="128" sprites="50" valuetip="0" tooltip="Knob3"></webaudio-knob>
         <webaudio-param style="position:absolute;left:328px;top:162px" link="knob3"></webaudio-param>
