@@ -214,13 +214,35 @@ if(window.customElements){
       const channel = event.data[0] & 0xf;
       const controlNumber = event.data[1];
       if(this.midiMode == 'learn') {
-          this.setMidiController(channel, controlNumber);
-          webAudioControlsMidiManager.contextMenuClose();
-          this.midiMode = 'normal';
+        this.setMidiController(channel, controlNumber);
+        webAudioControlsMidiManager.contextMenuClose();
+        this.midiMode = 'normal';
       }
       if(this.listeningToThisMidiController(channel, controlNumber)) {
+        if(this.tagName=="WEBAUDIO-SWITCH"){
+          switch(this.type){
+          case "toggle":
+            if(event.data[2]>=64)
+              this.setValue(1-this.value,true);
+            break;
+          case "kick":
+            this.setValue(event.data[2]>=64?1:0);
+            break;
+          case "radio":
+            let els=document.querySelectorAll("webaudio-switch[type='radio'][group='"+this.group+"']");
+            for(let i=0;i<els.length;++i){
+              if(els[i]==this)
+                els[i].setValue(1);
+              else
+                els[i].setValue(0);
+            }
+            break;
+          }
+        }
+        else{
           const val = this.min+(this.max-this.min)*event.data[2]/127;
           this.setValue(val, true);
+        }
       }
     }
   }
@@ -963,6 +985,7 @@ webaudio-switch{
         style.backgroundPosition = "0px 0px";
     }
     setValue(v,f){
+      console.log(v,f)
       this.value=v;
       this.checked=(!!v);
       if(this.value!=this.oldvalue){
@@ -1031,7 +1054,7 @@ webaudio-switch{
         this.sendEvent("change");
         break;
       case "radio":
-        let els=document.querySelectorAll("webaudio-switch[type='radio'][group="+this.group+"]");
+        let els=document.querySelectorAll("webaudio-switch[type='radio'][group='"+this.group+"']");
         for(let i=0;i<els.length;++i){
           if(els[i]==this)
             els[i].setValue(1);
