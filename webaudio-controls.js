@@ -77,6 +77,7 @@ if(window.customElements){
   let opt={
     useMidi:0,
     midilearn:0,
+    mididump:0,
     outline:1,
     knobSrc:null,
     knobSprites:0,
@@ -1616,6 +1617,8 @@ webaudio-keyboard{
         if(w.processMidiEvent)
           w.processMidiEvent(event);
       }
+      if(opt.mididump)
+        console.log(event.data);
     }
     contextMenuOpen(e,knob){
       if(!this.midiAccess)
