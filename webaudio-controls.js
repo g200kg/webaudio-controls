@@ -928,7 +928,7 @@ webaudio-switch{
       this._height=this.getAttr("height",0); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
       this._diameter=this.getAttr("diameter",0); Object.defineProperty(this,"diameter",{get:()=>{return this._diameter},set:(v)=>{this._diameter=v;this.setupImage()}});
       this.invert=this.getAttr("invert",0);
-      this._colors=this.getAttr("colors","#e00;#000;#fcc"); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
+      this._colors=this.getAttr("colors",opt.switchColors); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.outline=this.getAttr("outline",opt.outline);
       this.valuetip=0;
       this.tooltip=this.getAttr("tooltip",null);
