@@ -355,8 +355,6 @@ webaudio-knob{
     }
     disconnectedCallback(){}
     setupImage(){
-      this.kw=this.width||this.diameter;
-      this.kh=this.height||this.diameter;
       if(!this.src){
         if(this.colors)
           this.coltab = this.colors.split(";");
@@ -373,18 +371,17 @@ webaudio-knob{
         }
         svg += "</svg>";
         this.elem.style.backgroundImage = "url(data:image/svg+xml;base64,"+btoa(svg)+")";
-//        this.elem.style.backgroundSize = "100% 10100%";
-        this.elem.style.backgroundSize = `${this.kw}px ${this.kh*101}px`;
+        this.elem.style.backgroundSize = "100% 10100%";
       }
       else{
         this.elem.style.backgroundImage = "url("+(this.src)+")";
         if(!this.sprites)
           this.elem.style.backgroundSize = "100% 100%";
-        else{
-//          this.elem.style.backgroundSize = `100% ${(this.sprites+1)*100}%`;
-          this.elem.style.backgroundSize = `${this.kw}px ${this.kh*(this.sprites+1)}px`;
-        }
+        else
+          this.elem.style.backgroundSize = `100% ${(this.sprites+1)*100}%`;
       }
+      this.kw=this.width||this.diameter;
+      this.kh=this.height||this.diameter;
       this.elem.style.outline=this.outline?"":"none";
       this.elem.style.width=this.kw+"px";
       this.elem.style.height=this.kh+"px";
@@ -409,7 +406,7 @@ webaudio-knob{
       let sp = this.src?this.sprites:100;
       if(sp>=1){
         let offset = ((sp * (this.value - this.min) / range) | 0);
-        style.backgroundPosition = "0px " + (-offset*this.kh) + "px";
+        style.backgroundPosition = "0px -" + (offset*this.kh) + "px";
         style.transform = 'rotate(0deg)';
       } else {
         let deg = 270 * ((this.value - this.min) / range - 0.5);
