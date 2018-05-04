@@ -62,6 +62,7 @@ Operation | Component | Description
 * Install  
   * The main file is `webaudio-controls.js`. If you want to support non-WebComponents ready browsers, webcomponents.js is also needed.
   * Use command `bower install --save g200kg/webaudio-controls`, if you use bower. Or download zipped file and deploy appropriately.
+  * If you want to load webaudio-controls.js directly from this GitHub page, installation is not necessary.
 
 
 * [for WebComponents polyfill] load webcomponents.js  
@@ -70,6 +71,8 @@ Operation | Component | Description
 
 - load webaudio-contols  
   * &lt;script src="bower_components/webaudio-controls/webaudio-controls.js"&gt;&lt;/script&gt;
+  * Or, if you want to load webaudio-controls.js directly from this GitHub page as CDN: <br/>
+&lt;script src="https://g200kg.github.io/webaudio-controls/webaudio-controls.js" &gt;&lt;/script&gt;
 
 
 * insert **webaudio-knob/slider/switch/param/keyboard** elements. for example...
