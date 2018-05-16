@@ -183,6 +183,8 @@ if(window.customElements){
         return "";
       }
       function numformat(s,x){
+        if(typeof(x)=="undefined")
+          return;
         let i=s.indexOf("%");
         let c=[0,0],type=0,m=0,r="",j=i+1;
         for(;j<s.length;++j){
@@ -949,7 +951,6 @@ webaudio-switch{
         style.backgroundPosition = "0px 0px";
     }
     setValue(v,f){
-      console.log(v,f)
       this.value=v;
       this.checked=(!!v);
       if(this.value!=this.oldvalue){
