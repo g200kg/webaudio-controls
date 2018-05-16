@@ -311,7 +311,6 @@ ${this.basestyle}
 webaudio-knob{
   display:inline-block;
   position:relative;
-  z-index:1;
   margin:0;
   padding:0;
   cursor:pointer;
@@ -321,7 +320,6 @@ webaudio-knob{
 .webaudio-knob-body{
   display:inline-block;
   position:relative;
-  z-index:1;
   margin:0;
   padding:0;
   vertical-align:bottom;
@@ -1118,6 +1116,7 @@ webaudio-param{
         this.setValue(e.target.convValue.toFixed(e.target.digits));
       }).bind(this);
       this.elem.onchange=()=>{
+        this.value=this.elem.value;
         let le=document.getElementById(this.link);
         if(le)
           le.setValue(+this.elem.value);
@@ -1172,34 +1171,7 @@ webaudio-param{
           return;
       }
       this.elem.focus();
-      this.drag=1;
-      this.showtip(0);
-      let pointermove=(e)=>{
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      }
-      let pointerup=(e)=>{
-        this.drag=0;
-        this.showtip(0);
-        window.removeEventListener('mouseup', pointerup);
-        window.removeEventListener('touchend', pointerup);
-        window.removeEventListener('touchcancel', pointerup);
-        document.body.removeEventListener('touchstart', preventScroll,{passive:false});
-      }
-      let preventScroll=(e)=>{
-        e.preventDefault();
-      }
-      window.addEventListener('mouseup', pointerup);
-      window.addEventListener('touchend', pointerup);
-      window.addEventListener('touchcancel', pointerup);
-      document.body.addEventListener('touchstart', preventScroll,{passive:false});
       this.redraw();
-      if(e.preventDefault)
-        e.preventDefault();
-      if(e.stopPropagation)
-        e.stopPropagation();
-      return false;
     }
   });
 } catch(error){
