@@ -1138,7 +1138,7 @@ webaudio-param{
       this.elem.style.fontSize=this.fontsize+"px";
       this.elem.style.outline=this.outline?"":"none";
       let l=document.getElementById(this.link);
-      if(l&&l.value){
+      if(l&&typeof(l.value)!="undefined"){
         this.setValue(l.value.toFixed(l.digits));
         l.addEventListener("input",(e)=>{this.setValue(l.value.toFixed(l.digits))});
       }
