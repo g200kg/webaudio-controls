@@ -6,6 +6,7 @@
         <script src="webcomponents-lite.js"></script>
         <script>
         WebAudioControlsOptions={
+          useMidi:1,
           knobSrc:"../knobs/simplegray.png",
           knobSprites:100,
           sliderSrc:"../knobs/vsliderbody.png",
@@ -37,24 +38,24 @@
 <div id="base">
   <table>
     <tr>
-      <td><webaudio-knob diameter="80" value="50"></webaudio-knob></td>
-      <td><webaudio-knob diameter="80" value="50"></webaudio-knob></td>
-      <td><webaudio-knob diameter="80" value="50"></webaudio-knob></td>
-      <td><webaudio-knob diameter="80" value="50"></webaudio-knob></td>
-      <td><webaudio-knob diameter="80" value="50"></webaudio-knob></td>
-      <td><webaudio-knob diameter="80" value="50"></webaudio-knob></td>
-      <td><webaudio-knob diameter="80" value="50"></webaudio-knob></td>
-      <td><webaudio-knob diameter="80" value="50"></webaudio-knob></td>
+      <td><webaudio-knob diameter="80" value="50" midicc="0.16" midilearn="1"></webaudio-knob></td>
+      <td><webaudio-knob diameter="80" value="50" midicc="0.17" midilearn="1"></webaudio-knob></td>
+      <td><webaudio-knob diameter="80" value="50" midicc="0.18" midilearn="1"></webaudio-knob></td>
+      <td><webaudio-knob diameter="80" value="50" midicc="0.19" midilearn="1"></webaudio-knob></td>
+      <td><webaudio-knob diameter="80" value="50" midicc="0.20" midilearn="1"></webaudio-knob></td>
+      <td><webaudio-knob diameter="80" value="50" midicc="0.21" midilearn="1"></webaudio-knob></td>
+      <td><webaudio-knob diameter="80" value="50" midicc="0.22" midilearn="1"></webaudio-knob></td>
+      <td><webaudio-knob diameter="80" value="50" midicc="0.23" midilearn="1"></webaudio-knob></td>
     </tr>
     <tr>
-      <td><webaudio-slider width="50" height="300"></webaudio-slider></td>
-      <td><webaudio-slider width="50" height="300"></webaudio-slider></td>
-      <td><webaudio-slider width="50" height="300"></webaudio-slider></td>
-      <td><webaudio-slider width="50" height="300"></webaudio-slider></td>
-      <td><webaudio-slider width="50" height="300"></webaudio-slider></td>
-      <td><webaudio-slider width="50" height="300"></webaudio-slider></td>
-      <td><webaudio-slider width="50" height="300"></webaudio-slider></td>
-      <td><webaudio-slider width="50" height="300"></webaudio-slider></td>
+      <td><webaudio-slider width="50" height="300" midicc="0.0" midilearn="1"></webaudio-slider></td>
+      <td><webaudio-slider width="50" height="300" midicc="0.1" midilearn="1"></webaudio-slider></td>
+      <td><webaudio-slider width="50" height="300" midicc="0.2" midilearn="1"></webaudio-slider></td>
+      <td><webaudio-slider width="50" height="300" midicc="0.3" midilearn="1"></webaudio-slider></td>
+      <td><webaudio-slider width="50" height="300" midicc="0.4" midilearn="1"></webaudio-slider></td>
+      <td><webaudio-slider width="50" height="300" midicc="0.5" midilearn="1"></webaudio-slider></td>
+      <td><webaudio-slider width="50" height="300" midicc="0.6" midilearn="1"></webaudio-slider></td>
+      <td><webaudio-slider width="50" height="300" midicc="0.7" midilearn="1"></webaudio-slider></td>
     </tr>
   </table>
 </div>
