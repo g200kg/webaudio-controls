@@ -1,4 +1,3 @@
-<!--
 /* *
  *
  *  WebAudio-Controls is based on
@@ -22,7 +21,6 @@
  *	 limitations under the License.
  *
  * */
--->
 if(window.customElements){
   let styles=document.createElement("style");
   styles.innerHTML=
@@ -309,7 +307,7 @@ try{
 `<style>
 ${this.basestyle}
 webaudio-knob{
-  display:inline-block;
+/*  display:inline-block;*/
   position:relative;
   margin:0;
   padding:0;
@@ -565,7 +563,7 @@ try{
 `<style>
 ${this.basestyle}
 webaudio-slider{
-  display:inline-block;
+/*  display:inline-block;*/
   position:relative;
   margin:0;
   padding:0;
@@ -862,7 +860,7 @@ try{
 `<style>
 ${this.basestyle}
 webaudio-switch{
-  display:inline-block;
+/*  display:inline-block;*/
   margin:0;
   padding:0;
   font-family: sans-serif;
@@ -1064,7 +1062,7 @@ try{
 `<style>
 ${this.basestyle}
 webaudio-param{
-  display:inline-block;
+/*  display:inline-block;*/
   user-select:none;
   margin:0;
   padding:0;
@@ -1193,7 +1191,7 @@ try{
 `<style>
 ${this.basestyle}
 webaudio-keyboard{
-  display:inline-block;
+/*  display:inline-block;*/
   position:relative;
   margin:0;
   padding:0;
@@ -1499,7 +1497,6 @@ try{
 `<style>
 ${this.basestyle}
 webaudio-xypad{
-  display:inline-block;
   position:relative;
   margin:0;
   padding:0;
