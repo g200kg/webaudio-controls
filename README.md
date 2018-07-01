@@ -35,6 +35,7 @@ iOS and Android touch devices compatible
  (need Web MIDI API support)  
 [Renoid : Practical application using webaudio-controls](http://www.g200kg.com/renoid/)  
 [webaudio-controls Resize Test](https://g200kg.github.io/webaudio-controls/2.0/resizetest.html)  
+[webaudio-controls NonLinear values Test](https://g200kg.github.io/webaudio-controls/2.0/nonlinear.html)
 
 Using with external image-files.  
 [![](img/demo.png)](https://g200kg.github.io/webaudio-controls/2.0/sample1.html)  

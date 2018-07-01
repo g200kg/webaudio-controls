@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>WebAudio-Controls Live Demo (NonLinear values)</title>
+<script src="webcomponents-lite.js"></script>
+<script>
+WebAudioControlsOptions={
+  useMidi:1,
+  knobSrc:"../knobs/simplegray.png",
+  knobSprites:100,
+  knobDiameter:100,
+}
+</script>
+<script src="../webaudio-controls.js"></script>
+<script>
+function input(elem){
+    document.getElementById("raw").innerHTML="Raw Value : knob.value = "+elem.value;
+    document.getElementById("conv").innerHTML="Converted Value : knob.convValue = "+elem.convValue;
+}
+</script>
+</head>
+<body>
+<h1>webaudio-controls sample (NonLinear)</h1>
+<p>This is a non-linear value knob sample.</p>
+<p>Here the `conv` attribute is conv="(x)=>{return Math.pow(10000,x/100)}",
+it means the knob's raw value range 0-100 is converted to exponential 1-10000.</p>
+<p>To get converted value, use `knob.convValue` instead of `knob.value`.
+</p>
+<div id="base">
+<webaudio-knob conv="(x)=>{return Math.pow(10000,x/100)}" oninput="input(this)"></webaudio-knob><br/>
+
+<code style="font-size:22px;background:#000;color:#0f0">&lt;webaudio-knob conv="(x)=>{return Math.pow(10000,x/100)}"&gt;&lt;/webaudio-knob&gt;</code>
+
+</div>
+<div id="raw">Raw Value : knob.value = 0</div>
+<div id="conv">Converted Value : knob.convValue = 1</div>
+</body>
+</html>
