@@ -108,7 +108,7 @@ if(window.customElements){
       this.addEventListener("keydown",this.keydown);
       this.addEventListener("mousedown",this.pointerdown,{passive:false});
       this.addEventListener("touchstart",this.pointerdown,{passive:false});
-      this.addEventListener("wheel",this.wheel);
+      this.addEventListener("wheel",this.wheel,{passive:false});
       this.addEventListener("mouseover",this.pointerover);
       this.addEventListener("mouseout",this.pointerout);
       this.addEventListener("contextmenu",this.contextMenu);

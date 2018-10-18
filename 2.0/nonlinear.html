@@ -18,6 +18,10 @@ function input(elem){
     document.getElementById("raw").innerHTML="Raw Value : knob.value = "+elem.value;
     document.getElementById("conv").innerHTML="Converted Value : knob.convValue = "+elem.convValue;
 }
+function input2(elem){
+    document.getElementById("raw2").innerHTML="Raw Value : knob.value = "+elem.value;
+    document.getElementById("conv2").innerHTML="Converted Value : knob.convValue = "+elem.convValue;
+}
 </script>
 </head>
 <body>
@@ -27,13 +31,23 @@ function input(elem){
 it means the knob's raw value range 0-100 is converted to exponential 1-10000.</p>
 <p>To get converted value, use `knob.convValue` instead of `knob.value`.
 </p>
-<div id="base">
-<webaudio-knob conv="(x)=>{return Math.pow(10000,x/100)}" oninput="input(this)"></webaudio-knob><br/>
 
-<code style="font-size:22px;background:#000;color:#0f0">&lt;webaudio-knob conv="(x)=>{return Math.pow(10000,x/100)}"&gt;&lt;/webaudio-knob&gt;</code>
-
-</div>
+<div>
+<webaudio-knob conv="x=>Math.pow(10000,x/100)" oninput="input(this)"></webaudio-knob><br/>
+<code style="font-size:22px;background:#000;color:#0f0">&lt;webaudio-knob conv="x=>Math.pow(10000,x/100)"&gt;&lt;/webaudio-knob&gt;</code>
 <div id="raw">Raw Value : knob.value = 0</div>
 <div id="conv">Converted Value : knob.convValue = 1</div>
+</div>
+
+<div>
+<webaudio-knob min="10" max="10000" conv="x=>Math.pow(this.max/this.min,(x-this.min)/(this.max-this.min))*this.min" oninput="input2(this)"></webaudio-knob><br/>
+<code style="font-size:22px;background:#000;color:#0f0">&lt;webaudio-knob conv="(x)=>{return Math.pow(10000,x/100)}"&gt;&lt;/webaudio-knob&gt;</code>
+<div id="raw2">Raw Value : knob.value = 0</div>
+<div id="conv2">Converted Value : knob.convValue = 1</div>
+</div>
+
+<script>
+</script>
+</script>
 </body>
 </html>
