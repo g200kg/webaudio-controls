@@ -459,6 +459,8 @@ webaudio-knob{
         this.sendEvent("input"),this.sendEvent("change");
     }
     wheel(e) {
+      if (!this.enable)
+        return;
       let delta=(this.max-this.min)*0.01;
       delta=e.deltaY>0?-delta:delta;
       if(!e.shiftKey)
