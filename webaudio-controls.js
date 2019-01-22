@@ -98,6 +98,7 @@ if(window.customElements){
     paramWidth:32,
     paramHeight:16,
     paramColors:"#fff;#000",
+    valuetip:0,
     xypadColors:"#e00;#000;#fcc",
   };
   if(window.WebAudioControlsOptions)
@@ -341,11 +342,15 @@ webaudio-knob{
       this._colors=this.getAttr("colors",opt.knobColors); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.outline=this.getAttr("outline",opt.outline);
       this.sensitivity=this.getAttr("sensitivity",1);
-      this.valuetip=this.getAttr("valuetip",1);
+      this.valuetip=this.getAttr("valuetip",opt.valuetip);
       this.tooltip=this.getAttr("tooltip",null);
       this.conv=this.getAttr("conv",null);
-      if(this.conv)
-        this.convValue=eval(this.conv)(this._value);
+      if(this.conv){
+        const x=this._value;
+        this.convValue=eval(this.conv);
+        if(typeof(this.convValue)=="function")
+          this.convValue=this.convValue(x);
+      }
       else
         this.convValue=this._value;
       this.midilearn=this.getAttr("midilearn",opt.midilearn);
@@ -362,7 +367,6 @@ webaudio-knob{
       this.digits=0;
       this.coltab=["#e00","#000","#000"];
       if(window.webAudioControlsMidiManager)
-//        window.webAudioControlsMidiManager.updateWidgets();
         window.webAudioControlsMidiManager.addWidget(this);
     }
     disconnectedCallback(){}
@@ -436,8 +440,12 @@ webaudio-knob{
       this._value=Math.min(this.max,Math.max(this.min,v));
       if(this._value!=this.oldvalue){
         this.oldvalue=this._value;
-        if(this.conv)
-          this.convValue=eval(this.conv)(this._value);
+        if(this.conv){
+          const x=this._value;
+          this.convValue=eval(this.conv);
+          if(typeof(this.convValue)=="function")
+            this.convValue=this.convValue(x);
+        }
         else
           this.convValue=this._value;
         this.redraw();
@@ -616,11 +624,15 @@ webaudio-slider{
       this._colors=this.getAttr("colors",opt.sliderColors); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.outline=this.getAttr("outline",opt.outline);
       this.sensitivity=this.getAttr("sensitivity",1);
-      this.valuetip=this.getAttr("valuetip",1);
+      this.valuetip=this.getAttr("valuetip",opt.valuetip);
       this.tooltip=this.getAttr("tooltip",null);
       this.conv=this.getAttr("conv",null);
-      if(this.conv)
-        this.convValue=eval(this.conv)(this._value);
+      if(this.conv){
+        const x=this._value;
+        this.convValue=eval(this.conv);
+        if(typeof(this.convValue)=="function")
+          this.convValue=this.convValue(x);
+      }
       else
         this.convValue=this._value;
       this.midilearn=this.getAttr("midilearn",opt.midilearn);
@@ -730,8 +742,12 @@ webaudio-slider{
       this._value=Math.min(this.max,Math.max(this.min,v));
       if(this._value!=this.oldvalue){
         this.oldvalue=this._value;
-        if(this.conv)
-          this.convValue=eval(this.conv)(this._value);
+        if(this.conv){
+          const x=this._value;
+          this.convValue=eval(this.conv);
+          if(typeof(this.convValue)=="function")
+            this.convValue=this.convValue(x);
+        }
         else
           this.convValue=this._value;
         this.redraw();
@@ -1138,7 +1154,7 @@ webaudio-param{
       this.elem.style.outline=this.outline?"":"none";
       let l=document.getElementById(this.link);
       if(l&&typeof(l.value)!="undefined"){
-        this.setValue(l.value.toFixed(l.digits));
+        this.setValue(l.convValue.toFixed(l.digits));
         l.addEventListener("input",(e)=>{this.setValue(l.value.toFixed(l.digits))});
       }
       this.redraw();
@@ -1543,14 +1559,19 @@ webaudio-xypad{
       this._knobheight=this.getAttr("knbheight",28); Object.defineProperty(this,"knobheight",{get:()=>{return this._knobheight},set:(v)=>{this._knobheight=v;this.setupImage()}});
       this._colors=this.getAttr("colors",opt.sliderColors); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.outline=this.getAttr("outline",opt.outline);
-      this.valuetip=this.getAttr("valuetip",1);
+      this.valuetip=this.getAttr("valuetip",opt.valuetip);
       this.tooltip=this.getAttr("tooltip",null);
       this.conv=this.getAttr("conv",null);
       if(this.conv){
-        this.convValue={x:eval(this.conv)(this._x),y:eval(this.conv)(this._y)};
+        const x=this._x;
+        const y=this._y;
+        this.convValue=eval(this.conv);
+        if(typeof(this.convValue)=="function")
+          this.convValue=this.convValue(x,y);
       }
       else
         this.convValue={x:this._x,y:this._y};
+  
       this.midilearn=this.getAttr("midilearn",opt.midilearn);
       this.midicc=this.getAttr("midicc",null);
       this.midiController={};
@@ -1632,7 +1653,11 @@ webaudio-xypad{
       if(this._x!=this.oldx){
         this.oldx=this._x;
         if(this.conv){
-          this.convValue={x:eval(this.conv)(this._x),y:eval(this.conv)(this._y)};
+          const x=this._x;
+          const y=this._y;
+          this.convValue=eval(this.conv);
+          if(typeof(this.convValue)=="function")
+            this.convValue=this.convValue(x,y);
         }
         else
           this.convValue={x:this._x,y:this._y};
@@ -1648,7 +1673,11 @@ webaudio-xypad{
       if(this._y!=this.oldy){
         this.oldy=this._y;
         if(this.conv){
-          this.convValue={x:eval(this.conv)(this._x),y:eval(this.conv)(this._y)};
+          const x=this._x;
+          const y=this._y;
+          this.convValue=eval(this.conv);
+          if(typeof(this.convValue)=="function")
+            this.convValue=this.convValue(x,y);
         }
         else
           this.convValue={x:this._x,y:this._y};
