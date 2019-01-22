@@ -1118,8 +1118,10 @@ webaudio-param{
       this._height=this.getAttr("height",20); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
       this._colors=this.getAttr("colors","#fff;#000"); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.outline=this.getAttr("outline",opt.outline);
+      this.rconv=this.getAttr("rconv",null);
       this.midiController={};
       this.midiMode="normal";
+      this.currentLink=null;
       if(this.midicc) {
         let ch = parseInt(this.midicc.substring(0, this.midicc.lastIndexOf("."))) - 1;
         let cc = parseInt(this.midicc.substring(this.midicc.lastIndexOf(".") + 1));
@@ -1133,10 +1135,16 @@ webaudio-param{
         this.setValue(e.target.convValue.toFixed(e.target.digits));
       }).bind(this);
       this.elem.onchange=()=>{
-        this.value=this.elem.value;
-        let le=document.getElementById(this.link);
-        if(le)
-          le.setValue(+this.elem.value);
+        if(!this.currentLink.target.conv || (this.currentLink.target.conv&&this.rconv)){
+          let val = this.value=this.elem.value;
+          if(this.rconv){
+            let x=+this.elem.value;
+            val=eval(this.rconv);
+          }
+          if(this.currentLink){
+            this.currentLink.target.setValue(val);
+          }
+        }
       }
     }
     disconnectedCallback(){}
@@ -1157,7 +1165,11 @@ webaudio-param{
       let l=document.getElementById(this.link);
       if(l&&typeof(l.value)!="undefined"){
         this.setValue(l.convValue.toFixed(l.digits));
-        l.addEventListener("input",(e)=>{this.setValue(l.value.toFixed(l.digits))});
+        if(this.currentLink)
+          this.currentLink.removeEventListener("input",this.currentLink.func);
+        this.currentLink={target:l, func:(e)=>{this.setValue(l.convValue.toFixed(l.digits))}};
+        this.currentLink.target.addEventListener("input",this.currentLink.func);
+//        l.addEventListener("input",(e)=>{this.setValue(l.convValue.toFixed(l.digits))});
       }
       this.redraw();
     }
