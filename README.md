@@ -128,7 +128,7 @@ Attribute       | Options| Default | Description
 **knobheight**  | int    | same as 'width' if 'direction' is `vert`, or same as 'height' if 'direction' is `horz` | Slider knob part height in px.
 **ditchlength** | int    | ('height'-'knobheight') or ('width'-'knobwidth')  depends on 'direction' | Knob movable length.
 **direction**   | `"vert"`,`"horz"`| `"vert"` | Slider direction. vertical or horizontal.
-**tracking**    | `0`,`1`| `0`     | The slider follows 1:1 to the position of the pointing device. In this mode sensitivity is ignored. Otherwise, the slider will move by the offset you dragged the pointing device.
+**tracking**    | `rel`,`abs`| `rel` | If 'abs', the slider follows 1:1 to the position of the pointing device. In this mode, sensitivity is ignored. Otherwise, the slider will move by the offset you dragged the pointing device.
 **sensitivity** | float  | `1`     | Pointing device sensitivity. min-max range correspond to (128 / 'sensitivity') px.
 **valuetip**    | `0`,`1`| `1`     | Enable the overlaid value-tip display.
 **tooltip**     | string | `null`  | Tooltip text that will be shown when mouse hover a while. If the text include a C-printf style value formatter like `%8.2f`, it will be replaced by current value. This formatter should be `%[n][.][m]{d,f,x,X,s}`. Here the 'n' is total columns, 'm' is after the decimal point columns. If the `conv` function is specified, the converted value `convValue` is used for display.

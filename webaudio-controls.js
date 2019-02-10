@@ -601,7 +601,7 @@ webaudio-slider{
       this.knob=this.elem.childNodes[0];
       this.ttframe=root.childNodes[3];
       this.enable=this.getAttr("enable",1);
-      this.tracking=this.getAttr("tracking",0); 
+      this.tracking=this.getAttr("tracking","rel"); 
       this._src=this.getAttr("src",opt.sliderSrc); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
       this._knobsrc=this.getAttr("knobsrc",opt.sliderKnobsrc); Object.defineProperty(this,"knobsrc",{get:()=>{return this._knobsrc},set:(v)=>{this._knobsrc=v;this.setupImage()}});
       this._value=this.getAttr("value",0); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
@@ -806,13 +806,13 @@ webaudio-slider{
           this.startPosY = e.pageY;
           this.startVal = this.value;
         }
-        if(this.tracking){
+        if(this.tracking=="abs"){
           const rc = this.getBoundingClientRect();
           let val;
           if(this.direction=="horz")
             val = Math.max(0,Math.min(1,(e.pageX-rc.left-this.kwidth*0.5)/(this.width-this.kwidth)));
           else
-            val = Math.max(0,Math.min(1,(e.pageY-rc.top-this.kheight*0.5)/(this.height-this.kheight)));
+            val = 1 - Math.max(0,Math.min(1,(e.pageY-rc.top-this.kheight*0.5)/(this.height-this.kheight)));
           this._setValue(this.min + (this.max - this.min)*val);
         }
         else{
