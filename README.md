@@ -61,16 +61,17 @@ Operation | Component | Description
 ## How to use
 
 * Install  
+  * If you want to load webaudio-controls.js directly from this GitHub page, installation is not necessary.
   * The main file is `webaudio-controls.js`. If you want to support non-WebComponents ready browsers, webcomponents.js is also needed.
   * Use command `bower install --save g200kg/webaudio-controls`, if you use bower. Or download zipped file and deploy appropriately.
-  * If you want to load webaudio-controls.js directly from this GitHub page, installation is not necessary.
 
 
 * [for WebComponents polyfill] load webcomponents.js  
+  * If you want to support only WebComponent ready browsers (Chrome, Firefox), this polyfill is not required.
   * &lt;script src="bower_components/webcomponentsjs/webcomponents-lite.js"&gt;&lt;/script&gt;
 
 
-- load webaudio-contols  
+- load webaudio-controls  
   * &lt;script src="bower_components/webaudio-controls/webaudio-controls.js"&gt;&lt;/script&gt;
   * Or, if you want to load webaudio-controls.js directly from this GitHub page as CDN: <br/>
 &lt;script src="https://g200kg.github.io/webaudio-controls/webaudio-controls.js" &gt;&lt;/script&gt;
@@ -115,19 +116,20 @@ Attribute       | Options| Default| Description
 Attribute       | Options| Default | Description
 ----------------|--------|---------|------------
 **src**         | string | null    | url of the slider background image. Solid background color if not specified.
-**knobsrc**     | string | null    | url of the slider knob part image. Internal embedded resouce is used if not specified
-**value**       | float  | `0`     | The current value. Also used as initial value if specified
-**defvalue**    | float  | Initial 'value' is used if not specified | The default value that will be used when ctrl+click
-**min**         | float  | `0`     | Minimum value of the slider
-**max**         | float  | `100`   | Maximum value of the slider
-**step**        | float  | `1`     | Value step of the control. The 'value' is always rounded to multiple of 'step'
-**width**       | int    | `24`    | Slider display width in px
-**height**      | int    | `128`   | Slider display height in px
-**knobwidth**   | int    | same as 'width' if 'direction' is `vert`, or same as 'height' if 'direction' is `horz` | Slider knob part width in px
-**knobheight**  | int    | same as 'width' if 'direction' is `vert`, or same as 'height' if 'direction' is `horz` | Slider knob part height in px
-**ditchlength** | int    | ('height'-'knobheight') or ('width'-'knobwidth')  depends on 'direction' | Knob movable length
-**direction**   | `"vert"`,`"horz"`| `"vert"` | Slider direction. vertical or horizontal
-**sensitivity** | float  | `1`     | Pointing device sensitivity. min-max range correspond to (128 / 'sensitivity') px
+**knobsrc**     | string | null    | url of the slider knob part image. Internal embedded resouce is used if not specified.
+**value**       | float  | `0`     | The current value. Also used as initial value if specified.
+**defvalue**    | float  | Initial 'value' is used if not specified | The default value that will be used when ctrl+click.
+**min**         | float  | `0`     | Minimum value of the slider.
+**max**         | float  | `100`   | Maximum value of the slider.
+**step**        | float  | `1`     | Value step of the control. The 'value' is always rounded to multiple of 'step'.
+**width**       | int    | `24`    | Slider display width in px.
+**height**      | int    | `128`   | Slider display height in px.
+**knobwidth**   | int    | same as 'width' if 'direction' is `vert`, or same as 'height' if 'direction' is `horz` | Slider knob part width in px.
+**knobheight**  | int    | same as 'width' if 'direction' is `vert`, or same as 'height' if 'direction' is `horz` | Slider knob part height in px.
+**ditchlength** | int    | ('height'-'knobheight') or ('width'-'knobwidth')  depends on 'direction' | Knob movable length.
+**direction**   | `"vert"`,`"horz"`| `"vert"` | Slider direction. vertical or horizontal.
+**tracking**    | `0`,`1`| `0`     | The slider follows 1:1 to the position of the pointing device. In this mode sensitivity is ignored. Otherwise, the slider will move by the offset you dragged the pointing device.
+**sensitivity** | float  | `1`     | Pointing device sensitivity. min-max range correspond to (128 / 'sensitivity') px.
 **valuetip**    | `0`,`1`| `1`     | Enable the overlaid value-tip display.
 **tooltip**     | string | `null`  | Tooltip text that will be shown when mouse hover a while. If the text include a C-printf style value formatter like `%8.2f`, it will be replaced by current value. This formatter should be `%[n][.][m]{d,f,x,X,s}`. Here the 'n' is total columns, 'm' is after the decimal point columns. If the `conv` function is specified, the converted value `convValue` is used for display.
 **conv**        | string | `null`  | If this attribute is specified, That string will be evaluated as an expression and stored as `convValue`. This `convValue` will be used for the value chip and the linked webaudio-param display. In this expression, the `x` will represent current `value`. For example, `conv="Math.pow(10,x)*20"` is specified, for range of value between 0 and 3, the range of convValue corresponds to 20 to 20000.

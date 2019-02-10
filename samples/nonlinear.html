@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>WebAudio-Controls Live Demo (NonLinear values)</title>
+<script src="https://unpkg.com/@webcomponents/custom-elements"></script>
+<script>
+WebAudioControlsOptions={
+  useMidi:1,
+  knobSrc:"../knobs/simplegray.png",
+  knobSprites:100,
+  knobDiameter:100,
+}
+</script>
+<script src="../webaudio-controls.js"></script>
+<script>
+function input(elem){
+    document.getElementById("raw").innerHTML="Raw Value : knob.value = "+elem.value;
+    document.getElementById("conv").innerHTML="Converted Value : knob.convValue = "+elem.convValue;
+}
+function input2(elem){
+    document.getElementById("raw2").innerHTML="Raw Value : knob.value = "+elem.value;
+    document.getElementById("conv2").innerHTML="Converted Value : knob.convValue = "+elem.convValue;
+}
+</script>
+</head>
+<body>
+<h1>webaudio-controls sample (NonLinear)</h1>
+<p>This is a non-linear value knob sample.</p>
+<p>Here the `conv` attribute is conv="Math.pow(10000,x/100)",
+it means the knob's raw value range 0-100 is converted to exponential 1-10000.</p>
+<p>When using with webaudio-param, 
+by adding an inverse conversion expression to the `rconv` of webaudio-param attribute,
+directly number-edit in webaudio-param will be possible.</p>
+<p>To get converted value, use `knob.convValue` instead of `knob.value`.
+</p>
+
+<div>
+<webaudio-knob id="knob1" conv="Math.pow(10000,x/100)" oninput="input(this)"></webaudio-knob>
+<webaudio-param link="knob1" rconv="Math.log10(x)/4*100"></webaudio-param><br/>
+<code style="font-size:22px;background:#000;color:#0f0">
+&lt;webaudio-knob conv="Math.pow(10000,x/100)"&gt;&lt;/webaudio-knob&gt;<br/>
+&lt;webaudio-param link="knob1" rconv="Math.log10(x)/4*100"&gt;&lt;/webaudio-param&gt;<br/>
+</code>
+<div id="raw">Raw Value : knob.value = 0</div>
+<div id="conv">Converted Value : knob.convValue = 1</div>
+<p>Example of converting a value from 0 to 100 exponentially from 1 to 10000</p>
+<p>If use with &lt;webaudio-param&gt;, it will show the convValue.</p>
+</div>
+<br/><br/>
+
+<script>
+</script>
+</script>
+</body>
+</html>

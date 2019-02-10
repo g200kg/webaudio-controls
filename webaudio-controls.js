@@ -601,6 +601,7 @@ webaudio-slider{
       this.knob=this.elem.childNodes[0];
       this.ttframe=root.childNodes[3];
       this.enable=this.getAttr("enable",1);
+      this.tracking=this.getAttr("tracking",0); 
       this._src=this.getAttr("src",opt.sliderSrc); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
       this._knobsrc=this.getAttr("knobsrc",opt.sliderKnobsrc); Object.defineProperty(this,"knobsrc",{get:()=>{return this._knobsrc},set:(v)=>{this._knobsrc=v;this.setupImage()}});
       this._value=this.getAttr("value",0); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
@@ -805,8 +806,19 @@ webaudio-slider{
           this.startPosY = e.pageY;
           this.startVal = this.value;
         }
-        let offset = ((this.startPosY - e.pageY)*this.sensey - (this.startPosX - e.pageX)*this.sensex) * this.sensitivity;
-        this._setValue(this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4 : 1) * this.dlen)) - this.min) / this.step) | 0) * this.step);
+        if(this.tracking){
+          const rc = this.getBoundingClientRect();
+          let val;
+          if(this.direction=="horz")
+            val = Math.max(0,Math.min(1,(e.pageX-rc.left-this.kwidth*0.5)/(this.width-this.kwidth)));
+          else
+            val = Math.max(0,Math.min(1,(e.pageY-rc.top-this.kheight*0.5)/(this.height-this.kheight)));
+          this._setValue(this.min + (this.max - this.min)*val);
+        }
+        else{
+          let offset = ((this.startPosY - e.pageY)*this.sensey - (this.startPosX - e.pageX)*this.sensex) * this.sensitivity;
+          this._setValue(this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4 : 1) * this.dlen)) - this.min) / this.step) | 0) * this.step);
+        }
         this.sendEvent("input");
         if(e.preventDefault)
           e.preventDefault();
@@ -854,6 +866,7 @@ webaudio-slider{
       window.addEventListener('touchend', pointerup);
       window.addEventListener('touchcancel', pointerup);
       document.body.addEventListener('touchstart', preventScroll,{passive:false});
+      pointermove(ev);
       e.preventDefault();
       e.stopPropagation();
       return false;
