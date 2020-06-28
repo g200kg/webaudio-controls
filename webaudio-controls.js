@@ -365,6 +365,10 @@ webaudio-knob{
       }
       this.setupImage();
       this.digits=0;
+      if(this.step && this.step < 1) {
+        for(let n = this.step ; n < 1; n *= 10)
+          ++this.digits;
+      }
       this.coltab=["#e00","#000","#000"];
       if(window.webAudioControlsMidiManager)
         window.webAudioControlsMidiManager.addWidget(this);
@@ -649,6 +653,10 @@ webaudio-slider{
       }
       this.setupImage();
       this.digits=0;
+      if(this.step && this.step < 1) {
+        for(let n = this.step ; n < 1; n *= 10)
+          ++this.digits;
+      }
       if(window.webAudioControlsMidiManager)
 //        window.webAudioControlsMidiManager.updateWidgets();
         window.webAudioControlsMidiManager.addWidget(this);
@@ -935,6 +943,10 @@ webaudio-switch{
       }
       this.setupImage();
       this.digits=0;
+      if(this.step && this.step < 1) {
+        for(let n = this.step ; n < 1; n *= 10)
+          ++this.digits;
+      }
       if(window.webAudioControlsMidiManager)
 //        window.webAudioControlsMidiManager.updateWidgets();
         window.webAudioControlsMidiManager.addWidget(this);
@@ -1277,6 +1289,10 @@ webaudio-keyboard{
       }
       this.setupImage();
       this.digits=0;
+      if(this.step && this.step < 1) {
+        for(let n = this.step ; n < 1; n *= 10)
+          ++this.digits;
+      }
       if(window.webAudioControlsMidiManager)
         window.webAudioControlsMidiManager.addWidget(this);
     }
