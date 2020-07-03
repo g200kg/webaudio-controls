@@ -274,7 +274,7 @@ switchHeight|0        | height for switches
 switchDiameter|24     | diameter for switches
 switchColors|"#e00;#000;#fcc"| color setting for switches
 paramWidth  |32       | width for param
-paramHeight |16       | height for param
+paramHeight |20       | height for param
 paramColors |"#fff;#000"| color setting for param
 
 ---

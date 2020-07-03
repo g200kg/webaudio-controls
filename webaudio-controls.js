@@ -96,7 +96,7 @@ if(window.customElements){
     switchDiameter:24,
     switchColors:"#e00;#000;#fcc",
     paramWidth:32,
-    paramHeight:16,
+    paramHeight:20,
     paramColors:"#fff;#000",
     valuetip:0,
     xypadColors:"#e00;#000;#fcc",
@@ -1139,8 +1139,8 @@ webaudio-param{
       this._fontsize=this.getAttr("fontsize",9); Object.defineProperty(this,"fontsize",{get:()=>{return this._fontsize},set:(v)=>{this._fontsize=v;this.setupImage()}});
       this._src=this.getAttr("src",null); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
       this.link=this.getAttr("link","");
-      this._width=this.getAttr("width",32); Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});
-      this._height=this.getAttr("height",20); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
+      this._width=this.getAttr("width",opt.paramWidth); Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});
+      this._height=this.getAttr("height",opt.paramHeight); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
       this._colors=this.getAttr("colors","#fff;#000"); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.outline=this.getAttr("outline",opt.outline);
       this.rconv=this.getAttr("rconv",null);
