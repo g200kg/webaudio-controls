@@ -87,8 +87,8 @@ if(window.customElements){
     sliderKnobsrc:null,
     sliderWidth:0,
     sliderHeight:0,
-    sliderKnobwidth:0,
-    sliderKnobheight:0,
+    sliderKnobWidth:0,
+    sliderKnobHeight:0,
     sliderDitchlength:0,
     sliderColors:"#e00;#000;#fcc",
     switchWidth:0,
@@ -300,14 +300,14 @@ try{
     }
     connectedCallback(){
       let root;
-//      if(this.attachShadow)
-//        root=this.attachShadow({mode: 'open'});
-//      else
+      if(this.attachShadow)
+        root=this.attachShadow({mode: 'open'});
+      else
         root=this;
       root.innerHTML=
 `<style>
 ${this.basestyle}
-webaudio-knob{
+:host{
   display:inline-block;
   position:relative;
   margin:0;
@@ -569,14 +569,14 @@ try{
     }
     connectedCallback(){
       let root;
-//      if(this.attachShadow)
-//        root=this.attachShadow({mode: 'open'});
-//      else
+      if(this.attachShadow)
+        root=this.attachShadow({mode: 'open'});
+      else
         root=this;
       root.innerHTML=
 `<style>
 ${this.basestyle}
-webaudio-slider{
+:host{
   display:inline-block;
   position:relative;
   margin:0;
@@ -625,8 +625,8 @@ webaudio-slider{
         if(this._width==0) this._width=24;
         if(this._height==0) this._height=128;
       }
-      this._knobwidth=this.getAttr("knobwidth",opt.sliderKnobwidth); Object.defineProperty(this,"knobwidth",{get:()=>{return this._knobwidth},set:(v)=>{this._knobwidth=v;this.setupImage()}});
-      this._knobheight=this.getAttr("knbheight",opt.sliderKnobheight); Object.defineProperty(this,"knobheight",{get:()=>{return this._knobheight},set:(v)=>{this._knobheight=v;this.setupImage()}});
+      this._knobwidth=this.getAttr("knobwidth",opt.sliderKnobWidth); Object.defineProperty(this,"knobwidth",{get:()=>{return this._knobwidth},set:(v)=>{this._knobwidth=v;this.setupImage()}});
+      this._knobheight=this.getAttr("knobheight",opt.sliderKnobHeight); Object.defineProperty(this,"knobheight",{get:()=>{return this._knobheight},set:(v)=>{this._knobheight=v;this.setupImage()}});
       this._ditchlength=this.getAttr("ditchlength",opt.sliderDitchlength); Object.defineProperty(this,"ditchlength",{get:()=>{return this._ditchlength},set:(v)=>{this._ditchlength=v;this.setupImage()}});
       this._colors=this.getAttr("colors",opt.sliderColors); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.outline=this.getAttr("outline",opt.outline);
@@ -891,14 +891,14 @@ try{
     }
     connectedCallback(){
       let root;
-//      if(this.attachShadow)
-//        root=this.attachShadow({mode: 'open'});
-//      else
+      if(this.attachShadow)
+        root=this.attachShadow({mode: 'open'});
+      else
         root=this;
       root.innerHTML=
 `<style>
 ${this.basestyle}
-webaudio-switch{
+:host{
   display:inline-block;
   margin:0;
   padding:0;
@@ -1097,14 +1097,14 @@ try{
     }
     connectedCallback(){
       let root;
-//      if(this.attachShadow)
-//        root=this.attachShadow({mode: 'open'});
-//      else
+      if(this.attachShadow)
+        root=this.attachShadow({mode: 'open'});
+      else
         root=this;
       root.innerHTML=
 `<style>
 ${this.basestyle}
-webaudio-param{
+:host{
   display:inline-block;
   user-select:none;
   margin:0;
@@ -1119,14 +1119,13 @@ webaudio-param{
   display:inline-block;
   position:relative;
   text-align:center;
-  border:1px solid #888;
   background:none;
-  border-radius:4px;
   margin:0;
   padding:0;
   font-family:sans-serif;
   font-size:11px;
   vertical-align:bottom;
+  border:none;
 }
 </style>
 <input class='webaudio-param-body' value='0' tabindex='1' touch-action='none'/><div class='webaudioctrl-tooltip'></div>
@@ -1137,7 +1136,7 @@ webaudio-param{
       this._value=this.getAttr("value",0); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
       this.defvalue=this.getAttr("defvalue",0);
       this._fontsize=this.getAttr("fontsize",9); Object.defineProperty(this,"fontsize",{get:()=>{return this._fontsize},set:(v)=>{this._fontsize=v;this.setupImage()}});
-      this._src=this.getAttr("src",null); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
+      this._src=this.getAttr("src",opt.paramSrc); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
       this.link=this.getAttr("link","");
       this._width=this.getAttr("width",opt.paramWidth); Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});
       this._height=this.getAttr("height",opt.paramHeight); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
@@ -1239,14 +1238,14 @@ try{
     }
     connectedCallback(){
       let root;
-//      if(this.attachShadow)
-//        root=this.attachShadow({mode: 'open'});
-//      else
+      if(this.attachShadow)
+        root=this.attachShadow({mode: 'open'});
+      else
         root=this;
       root.innerHTML=
 `<style>
 ${this.basestyle}
-webaudio-keyboard{
+:host{
   display:inline-block;
   position:relative;
   margin:0;
@@ -1554,14 +1553,14 @@ try{
     }
     connectedCallback(){
       let root;
-//      if(this.attachShadow)
-//        root=this.attachShadow({mode: 'open'});
-//      else
+      if(this.attachShadow)
+        root=this.attachShadow({mode: 'open'});
+      else
         root=this;
       root.innerHTML=
 `<style>
 ${this.basestyle}
-webaudio-xypad{
+:host{
   display:inline-block;
   position:relative;
   margin:0;
@@ -1604,7 +1603,7 @@ webaudio-xypad{
       this._width=this.getAttr("width",128); Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});
       this._height=this.getAttr("height",128); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
       this._knobwidth=this.getAttr("knobwidth",28); Object.defineProperty(this,"knobwidth",{get:()=>{return this._knobwidth},set:(v)=>{this._knobwidth=v;this.setupImage()}});
-      this._knobheight=this.getAttr("knbheight",28); Object.defineProperty(this,"knobheight",{get:()=>{return this._knobheight},set:(v)=>{this._knobheight=v;this.setupImage()}});
+      this._knobheight=this.getAttr("knobheight",28); Object.defineProperty(this,"knobheight",{get:()=>{return this._knobheight},set:(v)=>{this._knobheight=v;this.setupImage()}});
       this._colors=this.getAttr("colors",opt.sliderColors); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.outline=this.getAttr("outline",opt.outline);
       this.valuetip=this.getAttr("valuetip",opt.valuetip);

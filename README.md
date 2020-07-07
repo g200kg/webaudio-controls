@@ -102,12 +102,12 @@ Attribute       | Options| Default| Description
 **diameter**    | int    | `64`   | Knob diameter in px. This attribute can be used instead of width / height if the display image is square.
 **sprites**     | int    | `0`    | if `0`, the `src` image should be single frame image that indicate middle position. the image will be rotated -135deg to +135deg. If `sprirites` is not `0`, the `src` image should be vertically stitched multi-framed image. `sprites` specify the max frame number in the stitched knob image. Note that this is (number of frames) - 1
 **sensitivity** | float  | `1`    | Pointing device sensitivity. min-max range correspond to (128 / `sensitivity`) px
-**valuetip**    | `0`,`1`| `1`    | Enable the overlaid value-tip display.
+**valuetip**    | `0`,`1`| `0`    | Enable the overlaid value-tip display.
 **tooltip**     | string | `null` | Tooltip text that will be shown when mouse hover a while. If the text include a C-printf style value formatter like `%8.2f`, it will be replaced by current value. This formatter should be `%[n][.][m]{d,f,x,X,s}`. Here the 'n' is total columns, 'm' is after the decimal point columns. If the `conv` function is specified, the converted value `convValue` is used for display.
 **conv**        | string | `null` | If this attribute is specified, That string will be evaluated as an expression and stored as `convValue`. This `convValue` will be used for the value chip and the linked webaudio-param display. In this expression, the `x` will represent current `value`. For example, `conv="Math.pow(10,x)*20"` is specified, for range of value between 0 and 3, the range of convValue corresponds to 20 to 20000.
 **enable**      | `0`,`1`| `1`    | Enable control with the pointing device.
 **colors**      | string | "#e00;#000;#000" | Semicolon separated 3 colors for 'indicator', 'body' and 'highlight'. These colors are used in default knob (when `src` is not provided).
-**outline**     | `0`,`1`| `1`    | Border display when focused.
+**outline**     | `0`,`1`| `0`    | Border display when focused.
 **midilearn**   | `0`,`1`| `0`    | If `1`, MIDI learn function with right-click menu is enabled.
 **midicc**      | string | null   | Assign MIDI control change to this knob, with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
@@ -130,12 +130,12 @@ Attribute       | Options| Default | Description
 **direction**   | `"vert"`,`"horz"`| `"vert"` | Slider direction. vertical or horizontal.
 **tracking**    | `rel`,`abs`| `rel` | If 'abs', the slider follows 1:1 to the position of the pointing device. In this mode, sensitivity is ignored. Otherwise, the slider will move by the offset you dragged the pointing device.
 **sensitivity** | float  | `1`     | Pointing device sensitivity. min-max range correspond to (128 / 'sensitivity') px.
-**valuetip**    | `0`,`1`| `1`     | Enable the overlaid value-tip display.
+**valuetip**    | `0`,`1`| `0`     | Enable the overlaid value-tip display.
 **tooltip**     | string | `null`  | Tooltip text that will be shown when mouse hover a while. If the text include a C-printf style value formatter like `%8.2f`, it will be replaced by current value. This formatter should be `%[n][.][m]{d,f,x,X,s}`. Here the 'n' is total columns, 'm' is after the decimal point columns. If the `conv` function is specified, the converted value `convValue` is used for display.
 **conv**        | string | `null`  | If this attribute is specified, That string will be evaluated as an expression and stored as `convValue`. This `convValue` will be used for the value chip and the linked webaudio-param display. In this expression, the `x` will represent current `value`. For example, `conv="Math.pow(10,x)*20"` is specified, for range of value between 0 and 3, the range of convValue corresponds to 20 to 20000.
 **enable**      |`0`, `1`| `1`     | Enable control with the pointing device.
 **colors**      | string | "#e00;#000;#fff" | Semicolon separated 3 colors for 'knob', 'background' and 'highlight'. These colors are used in default knob (when `src` or `knobsrc` is not provided).
-**outline**     | `0`,`1`| `1`     | Border display when focused.
+**outline**     | `0`,`1`| `0`     | Border display when focused.
 **midilearn**   | `0`,`1`| `0`     | If `1`, MIDI learn function with right-click menu is enabled.
 **midicc**      | string | null    | Assign MIDI control change to this slider. with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
@@ -155,7 +155,7 @@ Attribute       | Options   | Default | Description
 **tooltip**     | string    | `null`  | Tooltip text that will be shown when mouse hover a while
 **enable**      | `0`,`1`   | `1`     | Enable control with the pointing device.
 **colors**      | string    | "#e00;#000;#fff" | Semicolon separated 3 colors for 'knob', 'background' and 'highlight'. These colors are used in default switch (when `src` is not provided).
-**outline**     | `0`,`1`   | `1`     | Border display when focused.
+**outline**     | `0`,`1`   | `0`     | Border display when focused.
 **midilearn**   | string    | null    | If `true`, MIDI learn function with right-click menu is enabled.
 **midicc**      | string    | null    | Assign MIDI control change to this switch. with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
@@ -166,10 +166,10 @@ Attribute      | Options | Default | Description
 **src**        | string  | Black rectangle if not specified | Background image or color. Transparent if set to `""`, or url to background image.
 **value**      | float   | `0`     | The current value. Usually same as linked control
 **width**      | int     | `32`    | Parameter display width in px
-**height**     | int     | `16`    | Parameter display height in px
+**height**     | int     | `20`    | Parameter display height in px
 **fontsize**   | int     | `9`     | Font-size of the parameter display
 **colors**     | string  | `"#e00;#000"` | Semicolon separated 2 colors for text and background. background color is used when `src` is not defined.
-**outline**    | `0`,`1` | `1`     | Border display when focused.
+**outline**    | `0`,`1` | `0`     | Border display when focused.
 **link**       | string  | `null`  | Specify the linked webaudio-knob/slider/switch by Id
 **rconv**      | string  | `null`  | Specify the reverse conversion of target's `conv`. It is needed if the target knob/slider use conversion by `conv` attribute and the user edit the `webaudio-param` value directory by keyboard. The reverse converted value will be set to linked target. For example, when the target knob/slider use `conv="Math.pow(10,x)*20"` attribute, this `webaudio-param` should be `rconv="Math.log10(x/20)"`.
 
@@ -183,7 +183,7 @@ Attribute  | Options   | Default| Description
 **min**    | int       | `0`    | Lowest Key number. Each key is numbered incrementally from this number. If the "min" is not `0` and the modulo 12 is not zero, the keyboard is started from corresponding position (not-C). Note that the specified key should be a 'white-key'.
 **keys**   | int       | `25`   | Number of keys. `25` means 25 keys keyboard.
 **colors** | string    | '#222; #eee;#ccc; #333;#000; #e88;#c44; #c33;#800' | semicolon separated 9 keyboard colors. 'border; whitekey-grad-from;whitekey-grad-to; blackkey-grad-from;blackkey-grad-to; active-whitekey-grad-from;active-whitekey-grad-to; active-blackkey-grad-from;active-blackkey-grad-to'. Each key surface can has garadient left to right with 'from' and 'to'.
-**outline**| `0`,`1`   | `1`    | Border display when focused.
+**outline**| `0`,`1`   | `0`    | Border display when focused.
 **enable** | `0`,`1`   | `1`    | Enable control with the pointing device.
 
 ---
@@ -258,8 +258,8 @@ name        | default | description
 ------------|---------|----------------
 useMidi     |0        | enable control from midi devices
 midilearn   |0        | enable midilearn function for each knobs/sliders/switches
-outline     |1        | border display when focused
-valuetip    |1        | valuetip display
+outline     |0        | border display when focused
+valuetip    |0        | valuetip display
 knobWidth   |0        | width for knobs
 knobHeight  |0        | height for knobs
 knobDiameter|64       | diameter for knobs
@@ -275,6 +275,7 @@ switchDiameter|24     | diameter for switches
 switchColors|"#e00;#000;#fcc"| color setting for switches
 paramWidth  |32       | width for param
 paramHeight |20       | height for param
+paramSrc    |null     | param background image source
 paramColors |"#fff;#000"| color setting for param
 
 ---
