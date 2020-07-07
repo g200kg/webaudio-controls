@@ -1533,11 +1533,16 @@ webaudio-keyboard{
         if(n>=0) this.dispvalues.splice(n,1);
       }
     }
-    setNote(state,note) {
-      this.setdispvalues(state,note);
-      this.redraw();
-    }
-  });
+    setNote(state,note,actx,when) {
+      const t=(actx&&when-actx.currentTime);
+      if(t>0){
+        setTimeout(()=>{this.setNote(state,note)},t*1000);
+      }
+      else{
+        this.setdispvalues(state,note);
+        this.redraw();
+      }
+    }  });
 } catch(error){
   console.log("webaudio-keyboard already defined");
 }

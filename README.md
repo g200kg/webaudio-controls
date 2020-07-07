@@ -194,9 +194,9 @@ Attribute  | Options   | Default| Description
 If the `fire` parameter is `undefined` or `false`, this function will not fire `'change'` event. Or the `change` event will be fired.
 
 
-### setNote(state,note)  
+### setNote(state, note [,audioContext, when])  
 `webaudio-keyboard`  
-**description**: webaudio-keyboard can be setup pressing state with this function from JavaScript. corresponding key specified by the `note` is pressed if the `state` is non-zero otherwise the key is released. This function will NOT fire the 'change' event.
+**description**: webaudio-keyboard can be setup pressing state with this function from JavaScript. corresponding key specified by the `note` is pressed if the `state` is non-zero otherwise the key is released. This function will NOT fire the 'change' event. If the `audioContext` and `when` arguments are specified, the pressing state will be updated after the specified time. `when` is the time in seconds on the `currentTime` time axis of the `audioContext`.
 
 ---
 ## Events
