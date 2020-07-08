@@ -924,8 +924,8 @@ ${this.basestyle}
       this.defvalue=this.getAttr("defvalue",0);
       this.type=this.getAttr("type","toggle");
       this.group=this.getAttr("group","");
-      this._width=this.getAttr("width",0); Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});
-      this._height=this.getAttr("height",0); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
+      this._width=this.getAttr("width",opt.switchWidth); Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});
+      this._height=this.getAttr("height",opt.switchHeight); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
       this._diameter=this.getAttr("diameter",0); Object.defineProperty(this,"diameter",{get:()=>{return this._diameter},set:(v)=>{this._diameter=v;this.setupImage()}});
       this.invert=this.getAttr("invert",0);
       this._colors=this.getAttr("colors",opt.switchColors); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
@@ -1074,8 +1074,8 @@ ${this.basestyle}
       window.addEventListener('touchcancel', pointerup);
       document.body.addEventListener('touchstart', preventScroll,{passive:false});
       this.redraw();
-      e.preventDefault();
-      e.stopPropagation();
+      ev.preventDefault();
+      ev.stopPropagation();
       return false;
     }
   });

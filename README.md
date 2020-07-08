@@ -268,6 +268,8 @@ knobSprites |0        | knob image number of frames
 knobColors  |"#e00;#000;#000"| color setting for knobs
 sliderWidth |24       | width for sliders
 sliderHeight|128      | height for sliders
+sliderKnobWidth|0     | width of slider knob
+sliderKnobHeight|0    | height of sliderknob
 sliderColors|"#e00;#000;#fcc"| color setting for sliders
 switchWidth |0        | width for switches
 switchHeight|0        | height for switches
