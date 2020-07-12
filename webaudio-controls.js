@@ -181,11 +181,14 @@ if(window.customElements){
         }
         return "";
       }
-      function numformat(s,x){
-        if(typeof(x)=="undefined")
-          return;
+      function numformat(s,x1,x2){
+//        if(typeof(x)=="undefined")
+//          return;
         let i=s.indexOf("%");
         let c=[0,0],type=0,m=0,r="",j=i+1;
+        if(s.indexOf("%s")>=0){
+          return s.replace("%s",x2);
+        }
         for(;j<s.length;++j){
           if("dfxXs".indexOf(s[j])>=0){
             type=s[j];
@@ -196,10 +199,10 @@ if(window.customElements){
           else
             c[m]=c[m]*10+parseInt(s[j]);
         }
-        if(typeof(x)=="number")
-          r=valstr(x,c[1],type);
+        if(typeof(x1)=="number")
+          r=valstr(x1,c[1],type);
         else
-          r=valstr(x.x,c[1],type)+","+valstr(x.y,c[1],type);
+          r=valstr(x1.x,c[1],type)+","+valstr(x1.y,c[1],type);
         if(c[0]>0)
           r=("               "+r).slice(-c[0]);
         r=s.replace(/%.*[xXdfs]/,r);
@@ -209,12 +212,12 @@ if(window.customElements){
       if(this.drag||this.hover){
         if(this.valuetip){
           if(s==null)
-            s=`%.${this.digits}f`;
+            s=`%s`;
           else if(s.indexOf("%")<0)
-            s+=` : %.${this.digits}f`;
+            s+=` : %s`;
         }
         if(s){
-          this.ttframe.innerHTML=numformat(s,this.convValue);
+          this.ttframe.innerHTML=numformat(s,this._value,this.convValue);
           this.ttframe.style.display="inline-block";
           this.ttframe.style.width="auto";
           this.ttframe.style.height="auto";
@@ -369,6 +372,7 @@ ${this.basestyle}
         for(let n = this.step ; n < 1; n *= 10)
           ++this.digits;
       }
+      this._setValue(this._value);
       this.coltab=["#e00","#000","#000"];
       if(window.webAudioControlsMidiManager)
         window.webAudioControlsMidiManager.addWidget(this);
@@ -452,6 +456,9 @@ ${this.basestyle}
         }
         else
           this.convValue=this._value;
+        if(typeof(this.convValue)=="number"){
+          this.convValue=this.convValue.toFixed(this.digits);
+        }
         this.redraw();
         this.showtip(0);
         return 1;
@@ -1191,10 +1198,18 @@ ${this.basestyle}
       this.elem.style.outline=this.outline?"":"none";
       let l=document.getElementById(this.link);
       if(l&&typeof(l.value)!="undefined"){
-        this.setValue(l.convValue.toFixed(l.digits));
+        if(typeof(l.convValue)=="number")
+          this.setValue(l.convValue.toFixed(l.digits));
+        else
+          this.setValue(l.convValue);
         if(this.currentLink)
           this.currentLink.removeEventListener("input",this.currentLink.func);
-        this.currentLink={target:l, func:(e)=>{this.setValue(l.convValue.toFixed(l.digits))}};
+        this.currentLink={target:l, func:(e)=>{
+          if(typeof(l.convValue)=="number")
+            this.setValue(l.convValue.toFixed(l.digits));
+          else
+            this.setValue(l.convValue);
+        }};
         this.currentLink.target.addEventListener("input",this.currentLink.func);
 //        l.addEventListener("input",(e)=>{this.setValue(l.convValue.toFixed(l.digits))});
       }
