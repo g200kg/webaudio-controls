@@ -344,6 +344,7 @@ ${this.basestyle}
       this._diameter=this.getAttr("diameter",opt.knobDiameter); Object.defineProperty(this,"diameter",{get:()=>{return this._diameter},set:(v)=>{this._diameter=v;this.setupImage()}});
       this._colors=this.getAttr("colors",opt.knobColors); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.outline=this.getAttr("outline",opt.outline);
+      this.log=this.getAttr("log",0);
       this.sensitivity=this.getAttr("sensitivity",1);
       this.valuetip=this.getAttr("valuetip",opt.valuetip);
       this.tooltip=this.getAttr("tooltip",null);
@@ -397,7 +398,6 @@ ${this.basestyle}
         }
         svg += "</svg>";
         this.elem.style.backgroundImage = "url(data:image/svg+xml;base64,"+btoa(svg)+")";
-//        this.elem.style.backgroundSize = "100% 10100%";
         this.elem.style.backgroundSize = `${this.kw}px ${this.kh*101}px`;
       }
       else{
@@ -405,7 +405,6 @@ ${this.basestyle}
         if(!this.sprites)
           this.elem.style.backgroundSize = "100% 100%";
         else{
-//          this.elem.style.backgroundSize = `100% ${(this.sprites+1)*100}%`;
           this.elem.style.backgroundSize = `${this.kw}px ${this.kh*(this.sprites+1)}px`;
         }
       }
@@ -416,6 +415,7 @@ ${this.basestyle}
       this.redraw();
     }
     redraw() {
+      let ratio;
       this.digits=0;
       if(this.step && this.step < 1) {
         for(let n = this.step ; n < 1; n *= 10)
@@ -423,21 +423,22 @@ ${this.basestyle}
       }
       if(this.value<this.min){
         this.value=this.min;
-        return;
       }
       if(this.value>this.max){
         this.value=this.max;
-        return;
       }
-      let range = this.max - this.min;
+      if(this.log)
+        ratio = Math.log(this.value/this.min) / Math.log(this.max/this.min);
+      else
+        ratio = (this.value - this.min) / (this.max - this.min);
       let style = this.elem.style;
       let sp = this.src?this.sprites:100;
       if(sp>=1){
-        let offset = ((sp * (this.value - this.min) / range) | 0);
+        let offset = (sp * ratio) | 0;
         style.backgroundPosition = "0px " + (-offset*this.kh) + "px";
         style.transform = 'rotate(0deg)';
       } else {
-        let deg = 270 * ((this.value - this.min) / range - 0.5);
+        let deg = 270 * (ratio - 0.5);
         style.backgroundPosition="0px 0px";
         style.transform = 'rotate(' + deg + 'deg)';
       }
@@ -472,13 +473,23 @@ ${this.basestyle}
     wheel(e) {
       if (!this.enable)
         return;
-      let delta=(this.max-this.min)*0.01;
-      delta=e.deltaY>0?-delta:delta;
-      if(!e.shiftKey)
-        delta*=5;
-      if(Math.abs(delta) < this.step)
-        delta = (delta > 0) ? +this.step : -this.step;
-      this.setValue(+this.value+delta,true);
+      if(this.log){
+        let r=Math.log(this.value/this.min)/Math.log(this.max/this.min);
+        let d = (e.deltaY>0?-0.01:0.01);
+        if(!e.shiftKey)
+          d*=5;
+        r += d;
+        this.setValue(this.min*Math.pow(this.max/this.min,r),true);
+      }
+      else{
+        let delta=(this.max-this.min)*0.01;
+        delta=e.deltaY>0?-delta:delta;
+        if(!e.shiftKey)
+          delta*=5;
+        if(Math.abs(delta) < this.step)
+          delta = (delta > 0) ? +this.step : -this.step;
+        this.setValue(+this.value+delta,true);
+      }
       e.preventDefault();
       e.stopPropagation();
     }
@@ -514,7 +525,16 @@ ${this.basestyle}
           this.startVal = this.value;
         }
         let offset = (this.startPosY - e.pageY - this.startPosX + e.pageX) * this.sensitivity;
-        this._setValue(this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4 : 1) * 128)) - this.min) / this.step) | 0) * this.step);
+        if(this.log){
+          let r = Math.log(this.startVal / this.min) / Math.log(this.max / this.min);
+          r += offset/((e.shiftKey?4:1)*128);
+          if(r<0) r=0;
+          if(r>1) r=1;
+          this._setValue(this.min * Math.pow(this.max/this.min, r));
+        }
+        else{
+          this._setValue(this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4 : 1) * 128)) - this.min) / this.step) | 0) * this.step);
+        }
         this.sendEvent("input");
         if(e.preventDefault)
           e.preventDefault();
@@ -622,6 +642,7 @@ ${this.basestyle}
       this._step=this.getAttr("step",1); Object.defineProperty(this,"step",{get:()=>{return this._step},set:(v)=>{this._step=v;this.redraw()}});
       this._sprites=this.getAttr("sprites",0); Object.defineProperty(this,"sprites",{get:()=>{return this._sprites},set:(v)=>{this._sprites=v;this.setupImage()}});
       this._direction=this.getAttr("direction",null); Object.defineProperty(this,"direction",{get:()=>{return this._direction},set:(v)=>{this._direction=v;this.setupImage()}});
+      this.log=this.getAttr("log",0);
       this._width=this.getAttr("width",opt.sliderWidth); Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});
       this._height=this.getAttr("height",opt.sliderHeight); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
       if(this._direction=="horz"){
@@ -729,6 +750,7 @@ ${this.basestyle}
       this.redraw();
     }
     redraw() {
+      let ratio;
       this.digits=0;
       if(this.step && this.step < 1) {
         for(let n = this.step ; n < 1; n *= 10)
@@ -736,22 +758,24 @@ ${this.basestyle}
       }
       if(this.value<this.min){
         this.value=this.min;
-        return;
       }
       if(this.value>this.max){
         this.value=this.max;
-        return;
       }
+      if(this.log)
+        ratio = Math.log(this.value/this.min) / Math.log(this.max/this.min);
+      else
+        ratio = (this.value - this.min) / (this.max - this.min);
       let range = this.max - this.min;
       let style = this.knob.style;
       if(this.dr=="vert"){
         style.left=(this.width-this.kwidth)*0.5+"px";
-        style.top=(1-(this.value-this.min)/range)*this.dlen+"px";
+        style.top=(1-ratio)*this.dlen+"px";
         this.sensex=0; this.sensey=1;
       }
       else{
         style.top=(this.height-this.kheight)*0.5+"px";
-        style.left=(this.value-this.min)/range*this.dlen+"px";
+        style.left=ratio*this.dlen+"px";
         this.sensex=1; this.sensey=0;
       }
     }
@@ -768,6 +792,9 @@ ${this.basestyle}
         }
         else
           this.convValue=this._value;
+        if(typeof(this.convValue)=="number"){
+          this.convValue=this.convValue.toFixed(this.digits);
+        }
         this.redraw();
         this.showtip(0);
         return 1;
@@ -779,16 +806,27 @@ ${this.basestyle}
         this.sendEvent("input"),this.sendEvent("change");
     }
     wheel(e) {
-      let delta=(this.max-this.min)*0.01;
-      delta=e.deltaY>0?-delta:delta;
-      if(!e.shiftKey)
-        delta*=5;
-      if(Math.abs(delta) < this.step)
-        delta = (delta > 0) ? +this.step : -this.step;
-      this.setValue(+this.value+delta,true);
+      if (!this.enable)
+        return;
+      if(this.log){
+        let r=Math.log(this.value/this.min)/Math.log(this.max/this.min);
+        let d = (e.deltaY>0?-0.01:0.01);
+        if(!e.shiftKey)
+          d*=5;
+        r += d;
+        this.setValue(this.min*Math.pow(this.max/this.min,r),true);
+      }
+      else{
+        let delta=(this.max-this.min)*0.01;
+        delta=e.deltaY>0?-delta:delta;
+        if(!e.shiftKey)
+          delta*=5;
+        if(Math.abs(delta) < this.step)
+          delta = (delta > 0) ? +this.step : -this.step;
+        this.setValue(+this.value+delta,true);
+      }
       e.preventDefault();
       e.stopPropagation();
-      this.redraw();
     }
     pointerdown(ev){
       if(!this.enable)
@@ -828,11 +866,24 @@ ${this.basestyle}
             val = Math.max(0,Math.min(1,(e.pageX-rc.left-this.kwidth*0.5)/(this.width-this.kwidth)));
           else
             val = 1 - Math.max(0,Math.min(1,(e.pageY-rc.top-this.kheight*0.5)/(this.height-this.kheight)));
-          this._setValue(this.min + (this.max - this.min)*val);
+          if(this.log){
+            this._setValue(this.min * Math.pow(this.max/this.min, val));
+          }
+          else
+            this._setValue(this.min + (this.max - this.min)*val);
         }
         else{
           let offset = ((this.startPosY - e.pageY)*this.sensey - (this.startPosX - e.pageX)*this.sensex) * this.sensitivity;
-          this._setValue(this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4 : 1) * this.dlen)) - this.min) / this.step) | 0) * this.step);
+          if(this.log){
+            let r = Math.log(this.startVal / this.min) / Math.log(this.max / this.min);
+            r += offset/((e.shiftKey?4:1)*128);
+            if(r<0) r=0;
+            if(r>1) r=1;
+            this._setValue(this.min * Math.pow(this.max/this.min, r));
+          }
+          else{
+            this._setValue(this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4 : 1) * this.dlen)) - this.min) / this.step) | 0) * this.step);
+          }
         }
         this.sendEvent("input");
         if(e.preventDefault)
