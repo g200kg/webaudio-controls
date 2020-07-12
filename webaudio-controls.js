@@ -83,7 +83,6 @@ if(window.customElements){
     knobHeight:0,
     knobDiameter:64,
     knobColors:"#e00;#000;#000",
-    sliderSrc:null,
     sliderKnobsrc:null,
     sliderWidth:0,
     sliderHeight:0,
@@ -160,7 +159,7 @@ if(window.customElements){
     }
     getAttr(n,def){
       let v=this.getAttribute(n);
-      if(v==""||v==null) return def;
+      if(v==null) return def;
       switch(typeof(def)){
       case "number":
         if(v=="true") return 1;
@@ -726,7 +725,10 @@ ${this.basestyle}
       this.kheight=this.knobheight||(this.dr=="horz"?this.height:this.width);
       this.knob.style.width = this.kwidth+"px";
       this.knob.style.height = this.kheight+"px";
-      if(!this.src){
+      if(this.src==""){
+        this.elem.style.backgroundImage = "none";
+      }
+      else if(!this.src){
         let r=Math.min(this.width,this.height)*0.5;
         let svgbody=
 `<svg xmlns="http://www.w3.org/2000/svg" width="${this.width}" height="${this.height}" preserveAspectRatio="none">
@@ -1233,7 +1235,7 @@ ${this.basestyle}
     setupImage(){
       this.coltab = this.colors.split(";");
       this.elem.style.color=this.coltab[0];
-      if(this.src===""){
+      if(this.src==""){
         this.elem.style.background="none";
       }
       else if(!this.src){
