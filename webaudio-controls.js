@@ -1175,7 +1175,10 @@ ${this.basestyle}
     setupImage(){
       this.coltab = this.colors.split(";");
       this.elem.style.color=this.coltab[0];
-      if(!this.src){
+      if(this.src===""){
+        this.elem.style.background="none";
+      }
+      else if(!this.src){
         this.elem.style.backgroundColor=this.coltab[1];
       }
       else{
