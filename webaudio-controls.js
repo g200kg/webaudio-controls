@@ -1140,7 +1140,7 @@ ${this.basestyle}
       this.link=this.getAttr("link","");
       this._width=this.getAttr("width",opt.paramWidth); Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});
       this._height=this.getAttr("height",opt.paramHeight); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
-      this._colors=this.getAttr("colors","#fff;#000"); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
+      this._colors=this.getAttr("colors",opt.paramColors); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.outline=this.getAttr("outline",opt.outline);
       this.rconv=this.getAttr("rconv",null);
       this.midiController={};

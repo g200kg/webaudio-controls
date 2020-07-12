@@ -168,7 +168,7 @@ Attribute      | Options | Default | Description
 **width**      | int     | `32`    | Parameter display width in px
 **height**     | int     | `20`    | Parameter display height in px
 **fontsize**   | int     | `9`     | Font-size of the parameter display
-**colors**     | string  | `"#e00;#000"` | Semicolon separated 2 colors for text and background. background color is used when `src` is not defined.
+**colors**     | string  | `"#fff;#000"` | Semicolon separated 2 colors for text and background. background color is used when `src` is not defined.
 **outline**    | `0`,`1` | `0`     | Border display when focused.
 **link**       | string  | `null`  | Specify the linked webaudio-knob/slider/switch by Id
 **rconv**      | string  | `null`  | Specify the reverse conversion of target's `conv`. It is needed if the target knob/slider use conversion by `conv` attribute and the user edit the `webaudio-param` value directory by keyboard. The reverse converted value will be set to linked target. For example, when the target knob/slider use `conv="Math.pow(10,x)*20"` attribute, this `webaudio-param` should be `rconv="Math.log10(x/20)"`.
