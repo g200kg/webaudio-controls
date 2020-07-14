@@ -5,13 +5,13 @@ Especially suitable for audio-applications like VST plugins.
 
 **webaudio-controls** is consist of following components  
 
-Component         | Description|
-------------------|------------|------
-webaudio-knob     | Rotating or some other frame-by-frame animation knob| 
-webaudio-slider   | Vertical or Horizontal slider|
-webaudio-switch   | Toggle/Kick/Radio switches|
-webaudio-param    | Editable value display field|
-webaudio-keyboard | Mouse/Touch playable keyboard. multi-touch support.|
+Component         | Description
+------------------|------------
+webaudio-knob     | Rotating or some other frame-by-frame animation knob.
+webaudio-slider   | Vertical or Horizontal slider.
+webaudio-switch   | Toggle/Kick/Radio switches.
+webaudio-param    | Editable value display field.
+webaudio-keyboard | Mouse/Touch playable keyboard. multi-touch support.
 
 * Also available 'webaudio-pianoroll' at : [https://github.com/g200kg/webaudio-pianoroll/](https://github.com/g200kg/webaudio-pianoroll/)
 
