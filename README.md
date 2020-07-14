@@ -5,25 +5,17 @@ Especially suitable for audio-applications like VST plugins.
 
 **webaudio-controls** is consist of following components  
 
-Component         | Description
-------------------|------------
-webaudio-knob     | Rotating or some other frame-by-frame animation knob
-webaudio-slider   | Vertical or Horizontal slider
-webaudio-switch   | Toggle/Kick/Radio switches
-webaudio-param    | Editable value display field
-webaudio-keyboard | Mouse/Touch playable keyboard. multi-touch support.
+Component         | Description|
+------------------|------------|------
+webaudio-knob     | Rotating or some other frame-by-frame animation knob| 
+webaudio-slider   | Vertical or Horizontal slider|
+webaudio-switch   | Toggle/Kick/Radio switches|
+webaudio-param    | Editable value display field|
+webaudio-keyboard | Mouse/Touch playable keyboard. multi-touch support.|
 
 * Also available 'webaudio-pianoroll' at : [https://github.com/g200kg/webaudio-pianoroll/](https://github.com/g200kg/webaudio-pianoroll/)
 
-#### Difference from old version
-There are some difference from old [Polymer 1.4] version.
-* Current **webaudio-controls** uses the Custom Elements V1 API directly. In Chrome / Safari / Firefox (59 and later) it works without polyfill. Please install webcomponentsjs on Firefox (58 or less), Edge etc Custom Elements non-compatible browsers.  
-
-* Event firing. Knobs/Sliders fires 'input' event instead of 'change' during drag. This is same behavior as input type=range tags.
-
-* Value post-conversion `conv` attribute is available. It will help for implement, for example, exponential curve parameters. Also Tooltip and Valuetip is integrated. It is now acceptable C-like formatting string for current value display.  
-
-Chrome / Firefox / Safari / Opera compatible  
+Chrome / Firefox / Edge compatible  
 iOS and Android touch devices compatible  
 
 [Live Demo (with external image-files)](https://g200kg.github.io/webaudio-controls/2.0/sample1.html)  
@@ -48,14 +40,14 @@ Following user actions are supported.
 
 Operation | Component | Description
 ---|---|---
-**Click** | Switch/Param | toggle / activate the switch or focus the param
-**Drag** | Knob/Slider | up/right to increase value / down/left to decrease value
-**Shift+Drag** | Knob/Slider | fine control
-**Ctrl+Click / Command+Click(Mac)** | Knob/Slider/Switch | set to default value
-**Keyboard** | Param/Keyboard | edit the param value directly / [ZSXDCV...for lowest visible 'C' octave] and [Q2W3E... one octave higher] as a music keyboard
-**MouseWheel** | Knob/Slider | rotate upward to increase value / downward to decrease value
-**Shift+MouseWheel** | Knob/Slider | fine control
-**Mouse Button Press / Touch** | Keyboard | play keyboard. multi-touch is supported
+**Click** | Switch/Other | Switch : Toggle / activate the switch.<br/>Other : Focus the component.
+**Drag** | Knob/Slider | Up/Right to increase value<br/>Down/Left to decrease value.
+**Shift+Drag** | Knob/Slider | Fine control. Increase or decrease by the value specified in the `step`.
+**Ctrl+Click <br/> Command+Click(Mac)** | Knob/Slider/Switch | Set to default value.
+**Keyboard** | Knob/Slider/Param/Keyboard | To manipulate with the keyboard, it is necessary to get the focus by clicking each component once.<br/><br/>Knob/Slider : ArrowUp/ArrowDown to increase or decrease by the value specified in the `step`.<br/>Param : Edit the param value directly.<br/>Keyboard : [ZSXDCV...for lowest visible 'C' octave] and [Q2W3E... one octave higher] as a music keyboard.
+**MouseWheel** | Knob/Slider | Rotate upward to increase value, downward to decrease value.
+**Shift+MouseWheel** | Knob/Slider | Fine control. Increase or decrease by the value specified in the `step`.
+**Mouse Button Press / Touch** | Keyboard | Play keyboard. multi-touch is supported.
 
 ---
 ## How to use
@@ -105,10 +97,10 @@ Attribute       | Options| Default| Description
 **log**         | int    | `0`    | If this value is set to 1, then the value change is logarithmic. For example, if `min="10"` and `max="1000"`, then the center value of the knob will be 100. Here, if `min` is 0 or negative, an error occurs. If `log` is set to 0, then the change in value is linear.
 **valuetip**    | `0`,`1`| `0`    | Enable the overlaid value-tip display. This is equivalent to `tooltip="%s"`.
 **tooltip**     | string | `null` | Specifies the tooltip text that appears when you hover the mouse cursor for a while. If the text contains "%s", it will be replaced with the current value. Also, if the `conv` attribute is specified, the converted current value, `convValue` is  used for display. 
-**conv**        | string | `null` | If this attribute is specified, That string will be evaluated as an expression and stored as `convValue` as a string. This `convValue` will be used for the valuetip, tooltip and the linked webaudio-param display. In this expression, the `x` will represent current `value`. For example, `conv="(Math.pow(10,x)*20).toFixed(0)"` is specified, for range of value between 0 and 3, the range of convValue corresponds to 20 to 20000. As another example, if `conv="['sin','saw','sqr','tri'][x]"` is specified, for values from 0 to 3, each string are assigned respectively.
+**conv**        | string | `null` | If this attribute is specified, That string will be evaluated as an expression and stored to `convValue` as a string. This `convValue` will be used for the valuetip, tooltip and the linked webaudio-param display. In this expression, the `x` will represent current `value`. For example, `conv="(Math.pow(10,x)*20).toFixed(0)"` is specified, for range of value between 0 and 3, the range of convValue corresponds to 20 to 20000. As another example, if `conv="['sin','saw','sqr','tri'][x]"` is specified, for values from 0 to 3, each string are assigned respectively.
 **enable**      | `0`,`1`| `1`    | Enable control with the pointing device.
 **colors**      | string | "#e00;#000;#000" | Semicolon separated 3 colors for 'indicator', 'body' and 'highlight'. These colors are used in default knob (when `src` is not provided).
-**outline**     | `0`,`1`| `0`    | Border display when focused.
+**outline**     | `0`,`1`, string| `0`    | Border style when focused. `0`:no outline. `1`:equivalent to `"1px solid #ccc"`. Any other string will be applied to the style's outline attribute only when it has focus. 
 **midilearn**   | `0`,`1`| `0`    | If `1`, MIDI learn function with right-click menu is enabled.
 **midicc**      | string | null   | Assign MIDI control change to this knob, with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
@@ -137,7 +129,7 @@ Attribute       | Options| Default | Description
 **conv**        | string | `null`  | If this attribute is specified, That string will be evaluated as an expression and stored as `convValue` as a string. This `convValue` will be used for the valuetip, tooltip and the linked webaudio-param display. In this expression, the `x` will represent current `value`. For example, `conv="(Math.pow(10,x)*20).toFixed(0)"` is specified, for range of value between 0 and 3, the range of convValue corresponds to 20 to 20000. As another example, if `conv="['sin','saw','sqr','tri'][x]"` is specified, for values from 0 to 3, each string are assigned respectively.
 **enable**      |`0`, `1`| `1`     | Enable control with the pointing device.
 **colors**      | string | "#e00;#000;#fff" | Semicolon separated 3 colors for 'knob', 'background' and 'highlight'. These colors are used in default knob (when `src` or `knobsrc` is not provided).
-**outline**     | `0`,`1`| `0`     | Border display when focused.
+**outline**     | `0`,`1`, string| `0`    | Border style when focused. `0`:no outline. `1`:equivalent to `"1px solid #ccc"`. Any other string will be applied to the style's outline attribute only when it has focus. 
 **midilearn**   | `0`,`1`| `0`     | If `1`, MIDI learn function with right-click menu is enabled.
 **midicc**      | string | null    | Assign MIDI control change to this slider. with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
@@ -157,7 +149,7 @@ Attribute       | Options   | Default | Description
 **tooltip**     | string    | `null`  | Tooltip text that will be shown when mouse hover a while
 **enable**      | `0`,`1`   | `1`     | Enable control with the pointing device.
 **colors**      | string    | "#e00;#000;#fff" | Semicolon separated 3 colors for 'knob', 'background' and 'highlight'. These colors are used in default switch (when `src` is not provided).
-**outline**     | `0`,`1`   | `0`     | Border display when focused.
+**outline**     | `0`,`1`, string| `0`    | Border style when focused. `0`:no outline. `1`:equivalent to `"1px solid #ccc"`. Any other string will be applied to the style's outline attribute only when it has focus. 
 **midilearn**   | string    | null    | If `true`, MIDI learn function with right-click menu is enabled.
 **midicc**      | string    | null    | Assign MIDI control change to this switch. with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
@@ -171,7 +163,7 @@ Attribute      | Options | Default | Description
 **height**     | int     | `20`    | Parameter display height in px
 **fontsize**   | int     | `9`     | Font-size of the parameter display
 **colors**     | string  | `"#fff;#000"` | Semicolon separated 2 colors for text and background. background color is used when `src` is not defined.
-**outline**    | `0`,`1` | `0`     | Border display when focused.
+**outline**     | `0`,`1`, string| `0`    | Border style when focused. `0`:no outline. `1`:equivalent to `"1px solid #ccc"`. Any other string will be applied to the style's outline attribute only when it has focus. 
 **link**       | string  | `null`  | Specify the linked webaudio-knob/slider/switch by Id
 **rconv**      | string  | `null`  | Specify the reverse conversion of target's `conv`. It is needed if the target knob/slider use conversion by `conv` attribute and the user edit the `webaudio-param` value directory by keyboard. The reverse converted value will be set to linked target. For example, when the target knob/slider use `conv="Math.pow(10,x)*20"` attribute, this `webaudio-param` should be `rconv="Math.log10(x/20)"`.
 
@@ -185,7 +177,7 @@ Attribute  | Options   | Default| Description
 **min**    | int       | `0`    | Lowest Key number. Each key is numbered incrementally from this number. If the "min" is not `0` and the modulo 12 is not zero, the keyboard is started from corresponding position (not-C). Note that the specified key should be a 'white-key'.
 **keys**   | int       | `25`   | Number of keys. `25` means 25 keys keyboard.
 **colors** | string    | '#222; #eee;#ccc; #333;#000; #e88;#c44; #c33;#800' | semicolon separated 9 keyboard colors. 'border; whitekey-grad-from;whitekey-grad-to; blackkey-grad-from;blackkey-grad-to; active-whitekey-grad-from;active-whitekey-grad-to; active-blackkey-grad-from;active-blackkey-grad-to'. Each key surface can has garadient left to right with 'from' and 'to'.
-**outline**| `0`,`1`   | `0`    | Border display when focused.
+**outline**     | `0`,`1`, string| `0`    | Border style when focused. `0`:no outline. `1`:equivalent to `"1px solid #ccc"`. Any other string will be applied to the style's outline attribute only when it has focus. 
 **enable** | `0`,`1`   | `1`    | Enable control with the pointing device.
 
 ---

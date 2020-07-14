@@ -1,0 +1,23 @@
+{
+  "name": "@g200kg/webaudio-controls",
+  "version": "2.1.0",
+  "description": "GUI parts library for Web Audio applications",
+  "main": "webaudio-controls.js",
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/g200kg/webaudio-controls.git"
+  },
+  "keywords": [
+    "gui",
+    "webaudio",
+    "knob"
+  ],
+  "author": "g200kg",
+  "license": "Apache-2.0",
+  "bugs": { "url": "https://github.com/g200kg/webaudio-controls/issues" },
+  "homepage": "https://github.com/g200kg/webaudio-controls#readme"
+}

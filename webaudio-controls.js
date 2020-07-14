@@ -76,7 +76,7 @@ if(window.customElements){
     useMidi:0,
     midilearn:0,
     mididump:0,
-    outline:0,
+    outline:null,
     knobSrc:null,
     knobSprites:0,
     knobWidth:0,
@@ -150,6 +150,17 @@ if(window.customElements){
   border-top: 6px solid #eee;
 }
 `;
+      this.onblur=()=>{
+        this.elem.style.outline="none";
+      }
+      this.onfocus=()=>{
+        switch(this.outline){
+        case null:
+        case "0": this.elem.style.outline="none"; break;
+        case "1": this.elem.style.outline="1px solid #ccc"; break;
+        default: this.elem.style.outline=this.outline;
+        }
+      }
     }
     sendEvent(ev){
       let event;
@@ -407,7 +418,6 @@ ${this.basestyle}
           this.elem.style.backgroundSize = `${this.kw}px ${this.kh*(this.sprites+1)}px`;
         }
       }
-      this.elem.style.outline=this.outline?"":"none";
       this.elem.style.width=this.kw+"px";
       this.elem.style.height=this.kh+"px";
       this.style.height=this.kh+"px";
@@ -469,6 +479,23 @@ ${this.basestyle}
       if(this._setValue(v) && f)
         this.sendEvent("input"),this.sendEvent("change");
     }
+    keydown(e){
+      const delta = this.step;
+      if(delta==0)
+        delta=1;
+      switch(e.key){
+      case "ArrowUp":
+        this.setValue(this.value+delta,true);
+        break;
+      case "ArrowDown":
+        this.setValue(this.value-delta,true);
+        break;
+      default:
+          return;
+      }
+      e.preventDefault();
+      e.stopPropagation();
+    }
     wheel(e) {
       if (!this.enable)
         return;
@@ -481,12 +508,10 @@ ${this.basestyle}
         this.setValue(this.min*Math.pow(this.max/this.min,r),true);
       }
       else{
-        let delta=(this.max-this.min)*0.01;
+        let delta=Math.max(this.step, (this.max-this.min)*0.05);
+        if(e.shiftKey)
+          delta=this.step?this.step:1;
         delta=e.deltaY>0?-delta:delta;
-        if(!e.shiftKey)
-          delta*=5;
-        if(Math.abs(delta) < this.step)
-          delta = (delta > 0) ? +this.step : -this.step;
         this.setValue(+this.value+delta,true);
       }
       e.preventDefault();
@@ -807,6 +832,23 @@ ${this.basestyle}
       if(this._setValue(v)&&f)
         this.sendEvent("input"),this.sendEvent("change");
     }
+    keydown(e){
+      const delta = this.step;
+      if(delta==0)
+        delta=1;
+      switch(e.key){
+      case "ArrowUp":
+        this.setValue(this.value+delta,true);
+        break;
+      case "ArrowDown":
+        this.setValue(this.value-delta,true);
+        break;
+      default:
+          return;
+      }
+      e.preventDefault();
+      e.stopPropagation();
+    }
     wheel(e) {
       if (!this.enable)
         return;
@@ -819,12 +861,10 @@ ${this.basestyle}
         this.setValue(this.min*Math.pow(this.max/this.min,r),true);
       }
       else{
-        let delta=(this.max-this.min)*0.01;
+        let delta=Math.max(this.step, (this.max-this.min)*0.05);
+        if(e.shiftKey)
+          delta=this.step?this.step:1;
         delta=e.deltaY>0?-delta:delta;
-        if(!e.shiftKey)
-          delta*=5;
-        if(Math.abs(delta) < this.step)
-          delta = (delta > 0) ? +this.step : -this.step;
         this.setValue(+this.value+delta,true);
       }
       e.preventDefault();
@@ -1333,7 +1373,7 @@ ${this.basestyle}
 </style>
 <canvas class='webaudio-keyboard-body' tabindex='1' touch-action='none'></canvas><div class='webauioctrl-tooltip'></div>
 `;
-      this.cv=root.childNodes[2];
+      this.elem=this.cv=root.childNodes[2];
       this.ttframe=root.childNodes[3];
       this.ctx=this.cv.getContext("2d");
       this._values=[];
@@ -1895,7 +1935,7 @@ ${this.basestyle}
         e.preventDefault();
       }
       if(e.touches)
-        e = e.touches[0];
+        e = e.touches[0]; 
       if(e.ctrlKey || e.metaKey)
         this.setValue(this.defvalue,true);
       else {
@@ -1990,7 +2030,6 @@ ${this.basestyle}
       menu.knob=knob;
       menu.classList.add("active");
       menu.knob.focus();
-//      document.activeElement.onblur=this.contextMenuClose;
       menu.knob.addEventListener("keydown",this.contextMenuCloseByKey.bind(this));
     }
     contextMenuCloseByKey(e){
