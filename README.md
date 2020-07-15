@@ -7,7 +7,7 @@ Especially suitable for audio-applications like VST plugins.
 
 Component         | Description
 ------------------|------------
-webaudio-knob     | Rotating or some other frame-by-frame animation knob.
+webaudio-knob     | Rotating or some other frame-by-frame animation knob. 
 webaudio-slider   | Vertical or Horizontal slider.
 webaudio-switch   | Toggle/Kick/Radio switches.
 webaudio-param    | Editable value display field.
@@ -18,22 +18,19 @@ webaudio-keyboard | Mouse/Touch playable keyboard. multi-touch support.
 Chrome / Firefox / Edge compatible  
 iOS and Android touch devices compatible  
 
-[Live Demo (with external image-files)](https://g200kg.github.io/webaudio-controls/2.0/sample1.html)  
-[Live Demo (with code example)](https://g200kg.github.io/webaudio-controls/2.0/sample2.html)  
-[Live Demo (Knob/Slider/Switch/Param/Keyboard default style)](https://g200kg.github.io/webaudio-controls/2.0/sample3.html)  
-[Live Demo (Various Knob Images)](https://g200kg.github.io/webaudio-controls/2.0/knobsamples.html)  
-[Live Demo (Multi-Touch Fader)](https://g200kg.github.io/webaudio-controls/2.0/multifader.html)  
-[Live Demo (webaudio-keyboard to Web MIDI API)](https://g200kg.github.io/webaudio-controls/2.0/sample4.html)  
- (need Web MIDI API support)  
-[Renoid : Practical application using webaudio-controls](http://www.g200kg.com/renoid/)  
-[webaudio-controls Resize Test](https://g200kg.github.io/webaudio-controls/2.0/resizetest.html)  
-[webaudio-controls NonLinear values Test](https://g200kg.github.io/webaudio-controls/2.0/nonlinear.html)
-
-Using with external image-files.  
 [![](img/demo.png)](https://g200kg.github.io/webaudio-controls/2.0/sample1.html)  
 
-Default style with no external image-files.  
-[![](img/sample3.png)](https://g200kg.github.io/webaudio-controls/2.0/sample3.html)  
+# Samples
+
+- [Live Demo with external knob image-files](./samples/sample1.html)  
+- [Default styles](./samples/default.html)  
+- [With code example](./samples/code.html)  
+- [Various knob images](./samples/knobsamples.html)  
+- [Multi-Touch Fader](./samples/multifader.html)  
+- [webaudio-keyboard to MIDI](./samples/keyboard.html)  
+- [Renoid : Practical application using webaudio-controls](http://www.g200kg.com/renoid/)  
+- [webaudio-controls Resize Test](./samples/resizetest.html)  
+- [webaudio-controls NonLinear values Test](./samples/nonlinear.html)
 
 ## To Operate  
 Following user actions are supported.
@@ -53,28 +50,24 @@ Operation | Component | Description
 ## How to use
 
 * Install  
-  * If you want to load webaudio-controls.js directly from this GitHub page, installation is not necessary.
-  * The main file is `webaudio-controls.js`. If you want to support non-WebComponents ready browsers, webcomponents.js is also needed.
-  * Use command `bower install --save g200kg/webaudio-controls`, if you use bower. Or download zipped file and deploy appropriately.
+  * Place `webaudio-controls.js` in an appropriate directory. This is the only file needed.
 
+* WebComponents polyfill
+  * If you want to support legacy browser that not support WebComponents, the polyfill is needed :  
+  `<script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>`
 
-* [for WebComponents polyfill] load webcomponents.js  
-  * If you want to support only WebComponent ready browsers (Chrome, Firefox), this polyfill is not required.
-  * &lt;script src="bower_components/webcomponentsjs/webcomponents-lite.js"&gt;&lt;/script&gt;
-
-
-- load webaudio-controls  
-  * &lt;script src="bower_components/webaudio-controls/webaudio-controls.js"&gt;&lt;/script&gt;
+* load webaudio-controls  
+  * `<script src="bower_components/webaudio-controls/webaudio-controls.js"></script>`
   * Or, if you want to load webaudio-controls.js directly from this GitHub page as CDN: <br/>
-&lt;script src="https://g200kg.github.io/webaudio-controls/webaudio-controls.js" &gt;&lt;/script&gt;
+`<script src="https://g200kg.github.io/webaudio-controls/webaudio-controls.js"></script>`
 
 
 * insert **webaudio-knob/slider/switch/param/keyboard** elements. for example...
-  * &lt;webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"&gt;&lt;/webaudio-knob&gt;  
-  * &lt;webaudio-slider src="img/hsliderbody.png"&gt;&lt;/webaudio-slider&gt;  
-  * &lt;webaudio-switch src="img/switch_toggle.png" width="32" height="32"&gt;&lt;/webaudio-switch&gt;  
-  * &lt;webaudio-param src="" link="knob-1"&gt;&lt;/webaudio-param&gt;  
-  * &lt;webaudio-keyboard keys="25" &gt;&lt;/webaudio-keyboard&gt;  
+  * `<webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"></webaudio-knob>`
+  * `<webaudio-slider src="img/hsliderbody.png"></webaudio-slider>`
+  * `<webaudio-switch src="img/switch_toggle.png" width="32" height="32"></webaudio-switch>`
+  * `<webaudio-param src="" link="knob-1"></webaudio-param>`
+  * `<webaudio-keyboard keys="25" ></webaudio-keyboard>`
 
 ---
 ## Attributes
@@ -283,8 +276,8 @@ This image will be rotated from -135deg to +135deg. This approach will works wel
 
 webaudio-knob (with non zero "sprites") use a vertical 'stitched' multi-frames animation image, and webaudio-switch use a vertical 'stitched' two-frames animation image.
 For example,   
-![](https://raw.github.com/g200kg/webaudio-controls/master/img/LittlePhatty_sample.png)
-![](https://raw.github.com/g200kg/webaudio-controls/master/img/switch_toggle.png)  
+![](img/LittlePhatty_sample.png)
+![](img/switch_toggle.png)  
 
 This knob example has only 5 frames but it should has more frames for smooth animation. I recommend to use JKnobMan/WebKnobMan for making these stitched images,
 
