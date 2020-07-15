@@ -22,15 +22,15 @@ iOS and Android touch devices compatible
 
 # Samples
 
-- [Live Demo with external knob image-files](./samples/sample1.html)  
-- [Default styles](./samples/default.html)  
-- [With code example](./samples/code.html)  
-- [Various knob images](./samples/knobsamples.html)  
-- [Multi-Touch Fader](./samples/multifader.html)  
-- [webaudio-keyboard to MIDI](./samples/keyboard.html)  
+- [Live Demo with external knob image-files](https://g200kg.github.io/webaudio-controls/samples/sample1.html)  
+- [Default styles](https://g200kg.github.io/webaudio-controls/samples/default.html)  
+- [With code example](https://g200kg.github.io/webaudio-controls/samples/code.html)  
+- [Various knob images](https://g200kg.github.io/webaudio-controls/samples/knobsamples.html)  
+- [Multi-Touch Fader](https://g200kg.github.io/webaudio-controls/samples/multifader.html)  
+- [webaudio-keyboard to MIDI](https://g200kg.github.io/webaudio-controls/samples/keyboard.html)  
 - [Renoid : Practical application using webaudio-controls](http://www.g200kg.com/renoid/)  
-- [webaudio-controls Resize Test](./samples/resizetest.html)  
-- [webaudio-controls NonLinear values Test](./samples/nonlinear.html)
+- [webaudio-controls Resize Test](https://g200kg.github.io/webaudio-controls/samples/resizetest.html)  
+- [webaudio-controls NonLinear values Test](https://g200kg.github.io/webaudio-controls/samples/nonlinear.html)
 
 ## To Operate  
 Following user actions are supported.
