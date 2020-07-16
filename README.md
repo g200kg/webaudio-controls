@@ -18,7 +18,7 @@ webaudio-keyboard | Mouse/Touch playable keyboard. multi-touch support.
 Chrome / Firefox / Edge compatible  
 iOS and Android touch devices compatible  
 
-[![](img/demo.png)](https://g200kg.github.io/webaudio-controls/2.0/sample1.html)  
+[![](img/demo.png)](https://g200kg.github.io/webaudio-controls/samples/sample1.html)  
 
 # Samples
 
