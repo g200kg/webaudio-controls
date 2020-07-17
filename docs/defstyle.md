@@ -17,7 +17,7 @@ As each element is manipulated, events such as 'input' or 'change' are issued,
 so that the handlers can catch them.
 The captured events are displayed on the Events window on the right.  
 
-<div id="base" style="color:#224;width:500px;height:650px;position:relative;background:linear-gradient(#444 0%,#aaa 3%,#888 97%,#444 100%);">
+<div id="base" style="color:#224;width:560px;height:650px;position:relative;background:linear-gradient(#444 0%,#aaa 3%,#888 97%,#444 100%);">
   <webaudio-knob id="knob1" style="position:absolute;left:50px;top:60px"></webaudio-knob>
   <webaudio-knob id="knob2" style="position:absolute;left:130px;top:60px"></webaudio-knob>
   <webaudio-param link="knob1" style="position:absolute;left:65px;top:130px"></webaudio-param>
