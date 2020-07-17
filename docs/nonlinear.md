@@ -19,9 +19,7 @@ function input2(elem){
 }
 </script>
 
-# webaudio-controls
-
-## Non-Linear Knobs / Sliders
+# Non-Linear Knobs / Sliders
 
 In some cases, you may want the knob to vary nonlinear changes with respect to the rotation of the knob.
 For example, a knob for setting a frequency in the range of 20Hz to 20,000Hz will make an exponential change with rotation.  
@@ -29,7 +27,7 @@ There are two approaches to realize a knob that changes nonlinearly.
 The 'log' attribute simply makes the number change curve an exponential change, and the 'conv' attribute allows for more complex behavior.  
 
 ---
-### "log" attribute
+## "log" attribute
 If you specify log="1" as an attribute, the change in `value` will be exponential.  
 In this mode, the value increases at the same rate for a fixed rotation angle of the rotating knob.
 For example, if min="1" and max="100", it will be "10" in the center of the knob.  
@@ -45,7 +43,7 @@ value must be able to reach from min value to max value in geometric progression
 
 ---
 
-### "conv" attribute
+## "conv" attribute
 
 The'conv' attribute can specify a conversion function. 
 The value of the knob changes linearly, but the value passed through the conversion function is stored as convValue.
