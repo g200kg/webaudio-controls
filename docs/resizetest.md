@@ -10,94 +10,114 @@ Attributes such as "diameter", "width", and "height" can be changed later to res
 
 ## Knob
 Size :
-<button onclick="document.getElementById('knob').diameter=25">Small</button>
-<button onclick="document.getElementById('knob').diameter=50">Mid</button>
-<button onclick="document.getElementById('knob').diameter=100">Large</button>  
-<webaudio-knob id="knob" diameter="50"></webaudio-knob>
+<button onclick="document.getElementById('knob1').diameter=25">
+  Small</button>
+<button onclick="document.getElementById('knob1').diameter=50">
+  Mid</button>
+<button onclick="document.getElementById('knob1').diameter=100">
+  Large</button>  
+<webaudio-knob id="knob1" diameter="50"></webaudio-knob>
   
 ```html
-<button onclick="document.getElementById('knob').diameter=25">Small</button>
-<button onclick="document.getElementById('knob').diameter=50">Mid</button>
-<button onclick="document.getElementById('knob').diameter=100">Large</button>  
-<webaudio-knob id="knob" diameter="50"></webaudio-knob>
+<button onclick="document.getElementById('knob1').diameter=25">
+  Small</button>
+<button onclick="document.getElementById('knob1').diameter=50">
+  Mid</button>
+<button onclick="document.getElementById('knob1').diameter=100">
+  Large</button>  
+<webaudio-knob id="knob1" diameter="50"></webaudio-knob>
 ```  
   
   
 ## Param
 Size :
-<button onclick="document.getElementById('param').width=25">Width Small</button>
-<button onclick="document.getElementById('param').width=100">Width Large</button>
-<button onclick="document.getElementById('param').height=16">Height Small</button>
-<button onclick="document.getElementById('param').height=48">Height Large</button>
-<button onclick="document.getElementById('param').fontsize=9">Font Small</button>
-<button onclick="document.getElementById('param').fontsize=48">Font Large</button>  
-<webaudio-param id="param" link="knob" width="100" height="16"></webaudio-param>  
+<button onclick="document.getElementById('param1').width=25">
+  Width Small</button>
+<button onclick="document.getElementById('param1').width=100">
+  Width Large</button>
+<button onclick="document.getElementById('param1').height=16">
+  Height Small</button>
+<button onclick="document.getElementById('param1').height=48">
+  Height Large</button>
+<button onclick="document.getElementById('param1').fontsize=9">
+  Font Small</button>
+<button onclick="document.getElementById('param1').fontsize=48">
+  Font Large</button>  
+<webaudio-param id="param1" link="knob" width="100" height="16">
+</webaudio-param>  
 
 ```html
-<button onclick="document.getElementById('param').width=25">Width Small</button>
-<button onclick="document.getElementById('param').width=100">Width Large</button>
-<button onclick="document.getElementById('param').height=16">Height Small</button>
-<button onclick="document.getElementById('param').height=48">Height Large</button>
-<button onclick="document.getElementById('param').fontsize=9">Font Small</button>
-<button onclick="document.getElementById('param').fontsize=48">Font Large</button>  
-<webaudio-param id="param" link="knob" width="100" height="16"></webaudio-param>  
+<button onclick="document.getElementById('param1').width=25">
+  Width Small</button>
+<button onclick="document.getElementById('param1').width=100">
+  Width Large</button>
+<button onclick="document.getElementById('param1').height=16">
+  Height Small</button>
+<button onclick="document.getElementById('param1').height=48">
+  Height Large</button>
+<button onclick="document.getElementById('param1').fontsize=9">
+  Font Small</button>
+<button onclick="document.getElementById('param1').fontsize=48">
+  Font Large</button>  
+<webaudio-param id="param1" link="knob" width="100" height="16">
+</webaudio-param>   
 ```
   
 
 ## Slider
 Size :
-<button onclick="document.getElementById('sli').height=50;document.getElementById('sli').width=10">Small</button>
-<button onclick="document.getElementById('sli').height=100;document.getElementById('sli').width=20">Mid</button>
-<button onclick="document.getElementById('sli').height=200;document.getElementById('sli').width=40">Large</button>  
-<webaudio-slider id="sli" height="100" width="20"></webaudio-slider>  
+<button onclick="$('sli1').height=50;$('sli1').width=10">Small</button>
+<button onclick="$('sli1').height=100;$('sli1').width=20">Mid</button>
+<button onclick="$('sli1').height=200;$('sli1').width=40">Large</button>  
+<webaudio-slider id="sli1" height="100" width="20"></webaudio-slider>  
 
 ```html
-<button onclick="document.getElementById('sli').height=50;document.getElementById('sli').width=10">Small</button>
-<button onclick="document.getElementById('sli').height=100;document.getElementById('sli').width=20">Mid</button>
-<button onclick="document.getElementById('sli').height=200;document.getElementById('sli').width=40">Large</button>  
-<webaudio-slider id="sli" height="100" width="20"></webaudio-slider>  
+<button onclick="$('sli1').height=50;$('sli1').width=10">Small</button>
+<button onclick="$('sli1').height=100;$('sli1').width=20">Mid</button>
+<button onclick="$('sli1').height=200;$('sli1').width=40">Large</button>  
+<webaudio-slider id="sli1" height="100" width="20"></webaudio-slider>  
 ```
   
 
 ## Switch
 Size :
-<button onclick="document.getElementById('sw').height=25;document.getElementById('sw').width=25">Small</button>
-<button onclick="document.getElementById('sw').height=50;document.getElementById('sw').width=50">Mid</button>
-<button onclick="document.getElementById('sw').height=100;document.getElementById('sw').width=100">Large</button>  
-<webaudio-switch id="sw" height="50" width="50"></webaudio-switch>
+<button onclick="$('sw1').height=25;$('sw1').width=25">Small</button>
+<button onclick="$('sw1').height=50;$('sw1').width=50">Mid</button>
+<button onclick="$('sw1').height=100;$('sw1').width=100">Large</button>  
+<webaudio-switch id="sw1" height="50" width="50"></webaudio-switch>
 
 ```html
-<button onclick="document.getElementById('sw').height=25;document.getElementById('sw').width=25">Small</button>
-<button onclick="document.getElementById('sw').height=50;document.getElementById('sw').width=50">Mid</button>
-<button onclick="document.getElementById('sw').height=100;document.getElementById('sw').width=100">Large</button>  
-<webaudio-switch id="sw" height="50" width="50"></webaudio-switch>
+<button onclick="$('sw1').height=25;$('sw1').width=25">Small</button>
+<button onclick="$('sw1').height=50;$('sw1').width=50">Mid</button>
+<button onclick="$('sw1').height=100;$('sw1').width=100">Large</button>  
+<webaudio-switch id="sw1" height="50" width="50"></webaudio-switch>
 ```
   
   
 ## Keyboard
 Size :
-<button onclick="document.getElementById('keyb').width=100;document.getElementById('keyb').height=20;">Small</button>
-<button onclick="document.getElementById('keyb').width=200;document.getElementById('keyb').height=40;">Mid</button>
-<button onclick="document.getElementById('keyb').width=400;document.getElementById('keyb').height=80;">Large</button>  
+<button onclick="$('kbd1').width=100;$('kbd1').height=20;">Small</button>
+<button onclick="$('kbd1').width=200;$('kbd1').height=40;">Mid</button>
+<button onclick="$('kbd1').width=400;$('kbd1').height=80;">Large</button>  
 Keys :
-<button onclick="document.getElementById('keyb').keys=13;">13 Keys</button>
-<button onclick="document.getElementById('keyb').keys=25;">25 Keys</button>
-<button onclick="document.getElementById('keyb').keys=49;">49 Keys</button>
-<button onclick="document.getElementById('keyb').keys=61;">61 Keys</button>  
-<webaudio-keyboard id="keyb" width="400" height="80" onchange="console.log(event.note)"></webaudio-keyboard>
+<button onclick="$('kbd1').keys=13;">13 Keys</button>
+<button onclick="$('kbd1').keys=25;">25 Keys</button>
+<button onclick="$('kbd1').keys=49;">49 Keys</button>
+<button onclick="$('kbd1').keys=61;">61 Keys</button>  
+<webaudio-keyboard id="kbd1" width="400" height="80"></webaudio-keyboard>
   
   
 ```html
 Size :
-<button onclick="document.getElementById('keyb').width=100;document.getElementById('keyb').height=20;">Small</button>
-<button onclick="document.getElementById('keyb').width=200;document.getElementById('keyb').height=40;">Mid</button>
-<button onclick="document.getElementById('keyb').width=400;document.getElementById('keyb').height=80;">Large</button>  
+<button onclick="$('kbd1').width=100;$('kbd1').height=20;">Small</button>
+<button onclick="$('kbd1').width=200;$('kbd1').height=40;">Mid</button>
+<button onclick="$('kbd1').width=400;$('kbd1').height=80;">Large</button>  
 Keys :
-<button onclick="document.getElementById('keyb').keys=13;">13 Keys</button>
-<button onclick="document.getElementById('keyb').keys=25;">25 Keys</button>
-<button onclick="document.getElementById('keyb').keys=49;">49 Keys</button>
-<button onclick="document.getElementById('keyb').keys=61;">61 Keys</button>  
-<webaudio-keyboard id="keyb" width="400" height="80" onchange="console.log(event.note)"></webaudio-keyboard>
+<button onclick="$('kbd1').keys=13;">13 Keys</button>
+<button onclick="$('kbd1').keys=25;">25 Keys</button>
+<button onclick="$('kbd1').keys=49;">49 Keys</button>
+<button onclick="$('kbd1').keys=61;">61 Keys</button>  
+<webaudio-keyboard id="kbd1" width="400" height="80"></webaudio-keyboard>
 ```  
   
 ---
