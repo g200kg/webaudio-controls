@@ -63,11 +63,11 @@ function Clear() {
 window.onload=Init;
 </script>
 
-<div id="side" style="position:fixed;right:5%;top:90px;height:80%">
-  <div id="consframe" style="color:#222;width:300px;height:100%;background:#dcb;overflow:scroll;margin:0;padding:0px 10px">
+<div id="side" style="position:fixed;right:0%;top:90px;height:80%">
+  <div id="consframe" style="color:#fff;width:240px;height:100%;background:rgba(0,0,0,0.4);overflow:scroll;margin:0;padding:5px">
     <div id="cons"><br/><br/>--- Events ---<br/></div>
   </div>
-  <button onclick="Clear()" style="position:absolute;left:0;top:0">Clear</button>
+  <button onclick="Clear()" style="position:absolute;left:0;top:-20px">Clear</button>
 </div>
 
 # Examples of Various Attributes

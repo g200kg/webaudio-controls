@@ -12,12 +12,12 @@ then simply pressing or dragging anywhere in the slider will change the value to
 Fine control (Shift + drag) is ignored when "abs" mode.  
 
 ---
-## tracking="rel"
+## tracking="rel"  
 
 <webaudio-slider id="slider1" tracking="rel"
   value="50" min="0" max="100" width="400" height="32">
 </webaudio-slider>
-<webaudio-param link="slider1"></webaudio-param><br/><br/>
+<webaudio-param link="slider1"></webaudio-param>
 
 ```html
 <webaudio-slider id="slider1" tracking="rel"
@@ -28,12 +28,12 @@ Fine control (Shift + drag) is ignored when "abs" mode.
 
 ---
 
-## tracking="abs"
+## tracking="abs"  
 
 <webaudio-slider id="slider2" tracking="abs"
   value="50" min="0" max="100" width="400" height="32">
 </webaudio-slider>
-<webaudio-param link="slider2"></webaudio-param><br/><br/>
+<webaudio-param link="slider2"></webaudio-param>
 
 ```html
 <webaudio-slider id="slider2" tracking="abs"
@@ -45,7 +45,7 @@ Fine control (Shift + drag) is ignored when "abs" mode.
 Which of "rel" and "abs" is better depends on the case, but "abs" can be used also as changeover switches.  
 <table style="font-size:11px;background:#223;padding:8px">
   <tr>
-  <td rowspan="4" style="width:50px"><webaudio-slider id="slider3" tracking="abs" min="0" max="3" width="24" height="128"></webaudio-slider></td>
+  <td rowspan="4" style="width:30px"><webaudio-slider id="slider3" tracking="abs" min="0" max="3" width="24" height="128"></webaudio-slider></td>
   <td>Triangle</td></tr>
   <tr><td>Square</td></tr>
   <tr><td>Sawtooth</td></tr>
