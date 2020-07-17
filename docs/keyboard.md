@@ -60,6 +60,8 @@ from a GUI consisted with **webaduio-controls**.
 The synth built into this page is Web Audio API based 
 "<a href="https://github.com/g200kg/webaudio-tinysynth" target="_blank">webaudio-tinysynth</a>".  
 
+**Note : Confirm that the connection is via "HTTPS". Due to privacy policy, this demo can't make any sound over http connection.**
+
 ---
 
 <webaudio-tinysynth id="synth"></webaudio-tinysynth>  
@@ -76,6 +78,7 @@ Volume : <webaudio-knob id="volume" min="0" max="127" value="100" diameter="64">
 
 <webaudio-keyboard id="keyboard" min="36" keys="37" width="800" height="150"></webaudio-keyboard>  
   
+<br/>
 
 After clicking keyboard once and `webaudio-keyboard` gets the focus, you can play with `[z][x][c][v]....` on your PC keyboard.  
 This demo uses the `outline` attribute to indicate that the element has focus.  

@@ -44,8 +44,6 @@ The MIDI function can be controlled by right-clicking each element to display a 
       <td><webaudio-knob diameter="80" value="50" midicc="0.19" midilearn="1"></webaudio-knob></td>
       <td><webaudio-knob diameter="80" value="50" midicc="0.20" midilearn="1"></webaudio-knob></td>
       <td><webaudio-knob diameter="80" value="50" midicc="0.21" midilearn="1"></webaudio-knob></td>
-      <td><webaudio-knob diameter="80" value="50" midicc="0.22" midilearn="1"></webaudio-knob></td>
-      <td><webaudio-knob diameter="80" value="50" midicc="0.23" midilearn="1"></webaudio-knob></td>
     </tr>
     <tr>
       <td><webaudio-slider width="50" height="300" midicc="0.0" midilearn="1"></webaudio-slider></td>
@@ -54,8 +52,6 @@ The MIDI function can be controlled by right-clicking each element to display a 
       <td><webaudio-slider width="50" height="300" midicc="0.3" midilearn="1"></webaudio-slider></td>
       <td><webaudio-slider width="50" height="300" midicc="0.4" midilearn="1"></webaudio-slider></td>
       <td><webaudio-slider width="50" height="300" midicc="0.5" midilearn="1"></webaudio-slider></td>
-      <td><webaudio-slider width="50" height="300" midicc="0.6" midilearn="1"></webaudio-slider></td>
-      <td><webaudio-slider width="50" height="300" midicc="0.7" midilearn="1"></webaudio-slider></td>
     </tr>
   </table>
 </div>  

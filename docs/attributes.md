@@ -74,7 +74,7 @@ window.onload=Init;
 
 You can customize the appearance and behavior of webaudio-controls by adding attributes to the tags. Here are some examples.  
   
-  
+
 
 ## WebAudio-Knobs
 
@@ -265,7 +265,7 @@ Number of keys, width and height settings. Also the lowest key is set to note "A
 
 ```html
   <webaudio-keyboard id="kbd2"
-    keys="88" min="9" width="600" height="64>
+    keys="88" min="9" width="600" height="64">
   </webaudio-keyboard>
 ```
 

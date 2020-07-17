@@ -1,7 +1,17 @@
 # webaudio-controls
-**WebAudioControls** is GUI parts Custom Elements library for Web application using WebComponents.  
-Especially suitable for audio-applications like VST plugins.  
 
+**webaudio-controls** is a Javascript library for displaying the GUI parts required to Web Music applications.  
+webaudio-controls consists of knobs, sliders, switches, parameter displays and keyboards.
+By loading webaudio-controls.js to your page, custom tags for component display will be added using WebComponents.  
+You can configure the GUI screen just by writing custom tags in HTML.  
+
+<br/>
+
+**Webaudio-controls is Available At**
+* GitHub Repository : **<a href="https://github.com/g200kg/webaudio-controls">https://github.com/g200kg/webaudio-controls</a>**
+* Introduction Page : **<a href="https://g200kg.github.io/webaudio-controls">https://g200kg.github.io/webaudio-controls</a>**
+
+<br/>
 
 **webaudio-controls** is consist of following components  
 
@@ -20,17 +30,16 @@ iOS and Android touch devices compatible
 
 [![](img/demo.png)](https://g200kg.github.io/webaudio-controls/samples/sample1.html)  
 
-# Samples
+## Working Samples 
 
-- [Live Demo with external knob image-files](https://g200kg.github.io/webaudio-controls/samples/introduction.html)  
-- [Default styles](https://g200kg.github.io/webaudio-controls/samples/defstyle.html)  
-- [Examples of various attributes](https://g200kg.github.io/webaudio-controls/samples/attributes.html)  
-- [Various knob images](https://g200kg.github.io/webaudio-controls/samples/knobsamples.html)  
-- [Multi-Touch Fader](https://g200kg.github.io/webaudio-controls/samples/multifader.html)  
-- [webaudio-keyboard to MIDI](https://g200kg.github.io/webaudio-controls/samples/keyboard.html)  
+- [Default styles](https://g200kg.github.io/webaudio-controls/docs/defstyle.html)  
+- [Examples of various attributes](https://g200kg.github.io/webaudio-controls/docs/attributes.html)  
+- [Various knob images](https://g200kg.github.io/webaudio-controls/docs/knobsamples.html)  
+- [Multi-Touch Fader](https://g200kg.github.io/webaudio-controls/docs/multifader.html)  
+- [webaudio-keyboard to MIDI](https://g200kg.github.io/webaudio-controls/docs/keyboard.html)  
+- [webaudio-controls Resize Test](https://g200kg.github.io/webaudio-controls/docs/resizetest.html)  
+- [webaudio-controls NonLinear values Test](https://g200kg.github.io/webaudio-controls/docs/nonlinear.html)
 - [Renoid : Practical application using webaudio-controls](http://www.g200kg.com/renoid/)  
-- [webaudio-controls Resize Test](https://g200kg.github.io/webaudio-controls/samples/resizetest.html)  
-- [webaudio-controls NonLinear values Test](https://g200kg.github.io/webaudio-controls/samples/nonlinear.html)
 
 ## To Operate  
 Following user actions are supported.
@@ -49,25 +58,26 @@ Operation | Component | Description
 ---
 ## How to use
 
-* Install  
-  * Place `webaudio-controls.js` in an appropriate directory. This is the only file needed.
 
-* WebComponents polyfill
-  * If you want to support legacy browser that not support WebComponents, the polyfill is needed :  
-  `<script src="./webcomponents-lite.js"></script>`
+- webaudio-controls.js
+  - Place "webaudio-controls.js" to an appropriate directory. <br/>This is the only file needed. There are no dependencies on other libraries.
 
-* load webaudio-controls  
-  * `<script src="./webaudio-controls.js"></script>`
-  * Or, if you want to load webaudio-controls.js directly from this GitHub page as CDN: <br/>
-`<script src="https://g200kg.github.io/webaudio-controls/webaudio-controls.js"></script>`
+- WebComponents polyfill
+  - If you want to support legacy browsers that not support WebComponents, the polyfill for WebComponents is needed :  
+  ```<script src="./webcomponents-lite.js"></script>```
 
+- load webaudio-controls :  
+  - ```<script src="./webaudio-controls.js"></script>```  
+  Or, if you want to load webaudio-controls.js directly from this GitHub page as CDN :  
+  - ```<script src="https://g200kg.github.io/webaudio-controls/webaudio-controls.js"></script>```
 
-* insert **webaudio-knob/slider/switch/param/keyboard** elements. for example...
-  * `<webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"></webaudio-knob>`
-  * `<webaudio-slider src="img/hsliderbody.png"></webaudio-slider>`
-  * `<webaudio-switch src="img/switch_toggle.png" width="32" height="32"></webaudio-switch>`
-  * `<webaudio-param src="" link="knob-1"></webaudio-param>`
-  * `<webaudio-keyboard keys="25" ></webaudio-keyboard>`
+- insert webaudio-knob / slider / switch / param / keyboard elements. For example...  
+  - `<webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"></webaudio-knob>`
+  - `<webaudio-slider src="img/hsliderbody.png"></webaudio-slider>`
+  - `<webaudio-switch src="img/switch_toggle.png" width="32" height="32"></webaudio-switch>`
+  - `<webaudio-param src="" link="knob-1"></webaudio-param>`
+  - `<webaudio-keyboard keys="25"></webaudio-keyboard>`
+
 
 ---
 ## Attributes
