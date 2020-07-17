@@ -151,14 +151,24 @@ if(window.customElements){
 }
 `;
       this.onblur=()=>{
+        console.log("onblur")
         this.elem.style.outline="none";
       }
       this.onfocus=()=>{
+        console.log("onfocus", this.outline)
         switch(this.outline){
         case null:
-        case "0": this.elem.style.outline="none"; break;
-        case "1": this.elem.style.outline="1px solid #ccc"; break;
-        default: this.elem.style.outline=this.outline;
+        case 0:
+          this.elem.style.outline="none";
+          console.log("0");
+          break;
+        case 1:
+          this.elem.style.outline="1px solid #ccc";
+          console.log("1");
+          break;
+        default:
+          this.elem.style.outline=this.outline;
+          console.log("*");
         }
       }
     }
@@ -186,18 +196,16 @@ if(window.customElements){
         case "x": return (x|0).toString(16);
         case "X": return (x|0).toString(16).toUpperCase();
         case "d": return (x|0).toString();
-        case "f": return x.toFixed(c);
+        case "f": return parseFloat(x).toFixed(c);
         case "s": return x.toString();
         }
         return "";
       }
-      function numformat(s,x1,x2){
-//        if(typeof(x)=="undefined")
-//          return;
+      function numformat(s,x){
         let i=s.indexOf("%");
         let c=[0,0],type=0,m=0,r="",j=i+1;
         if(s.indexOf("%s")>=0){
-          return s.replace("%s",x2);
+          return s.replace("%s",x);
         }
         for(;j<s.length;++j){
           if("dfxXs".indexOf(s[j])>=0){
@@ -209,10 +217,7 @@ if(window.customElements){
           else
             c[m]=c[m]*10+parseInt(s[j]);
         }
-        if(typeof(x1)=="number")
-          r=valstr(x1,c[1],type);
-        else
-          r=valstr(x1.x,c[1],type)+","+valstr(x1.y,c[1],type);
+        r=valstr(x,c[1],type);
         if(c[0]>0)
           r=("               "+r).slice(-c[0]);
         r=s.replace(/%.*[xXdfs]/,r);
@@ -227,7 +232,7 @@ if(window.customElements){
             s+=` : %s`;
         }
         if(s){
-          this.ttframe.innerHTML=numformat(s,this._value,this.convValue);
+          this.ttframe.innerHTML=numformat(s,this.convValue);
           this.ttframe.style.display="inline-block";
           this.ttframe.style.width="auto";
           this.ttframe.style.height="auto";
@@ -717,47 +722,37 @@ ${this.basestyle}
     disconnectedCallback(){}
     setupImage(){
       this.coltab = this.colors.split(";");
-      this.dr=this.direction;
+      this.dr = this._direction;
+      if(this.dr==null){
+        if(this._width>this._height)
+          this.dr="horz";
+        else
+          this.dr="vert";
+      }
       this.dlen=this.ditchlength;
-      if(!this.width){
+      if(!this.dlen){
         if(this.dr=="horz")
-          this.width=128;
+          this.dlen=this._width-this._height;
         else
-          this.width=24;
-      }
-      if(!this.height){
-        if(this.dr=="horz")
-          this.height=24;
-        else
-          this.height=128;
-      }
-      if(!this.dr)
-        this.dr=(this.width<=this.height)?"vert":"horz";
-      if(this.dr=="vert"){
-        if(!this.dlen)
-          this.dlen=this.height-this.width;
-      }
-      else{
-        if(!this.dlen)
-          this.dlen=this.width-this.height;
+          this.dlen=this._height-this._width;
       }
       this.knob.style.backgroundSize = "100% 100%";
       this.elem.style.backgroundSize = "100% 100%";
-      this.elem.style.width=this.width+"px";
-      this.elem.style.height=this.height+"px";
-      this.style.height=this.height+"px";
-      this.kwidth=this.knobwidth||(this.dr=="horz"?this.height:this.width);
-      this.kheight=this.knobheight||(this.dr=="horz"?this.height:this.width);
+      this.elem.style.width=this._width+"px";
+      this.elem.style.height=this._height+"px";
+      this.style.height=this._height+"px";
+      this.kwidth=this.knobwidth||(this.dr=="horz"?this._height:this._width);
+      this.kheight=this.knobheight||(this.dr=="horz"?this._height:this._width);
       this.knob.style.width = this.kwidth+"px";
       this.knob.style.height = this.kheight+"px";
       if(this.src==""){
         this.elem.style.backgroundImage = "none";
       }
       else if(!this.src){
-        let r=Math.min(this.width,this.height)*0.5;
+        let r=Math.min(this._width,this._height)*0.5;
         let svgbody=
-`<svg xmlns="http://www.w3.org/2000/svg" width="${this.width}" height="${this.height}" preserveAspectRatio="none">
-<rect x="1" y="1" rx="${r}" ry="${r}" width="${this.width-2}" height="${this.height-2}" fill="${this.coltab[1]}"/></svg>`;
+`<svg xmlns="http://www.w3.org/2000/svg" width="${this._width}" height="${this._height}" preserveAspectRatio="none">
+<rect x="1" y="1" rx="${r}" ry="${r}" width="${this._width-2}" height="${this._height-2}" fill="${this.coltab[1]}"/></svg>`;
         this.elem.style.backgroundImage = "url(data:image/svg+xml;base64,"+btoa(svgbody)+")";
       }
       else{
@@ -793,17 +788,16 @@ ${this.basestyle}
         ratio = Math.log(this.value/this.min) / Math.log(this.max/this.min);
       else
         ratio = (this.value - this.min) / (this.max - this.min);
-      let range = this.max - this.min;
       let style = this.knob.style;
-      if(this.dr=="vert"){
-        style.left=(this.width-this.kwidth)*0.5+"px";
-        style.top=(1-ratio)*this.dlen+"px";
-        this.sensex=0; this.sensey=1;
-      }
-      else{
-        style.top=(this.height-this.kheight)*0.5+"px";
+      if(this.dr=="horz"){
+        style.top=(this._height-this.kheight)*0.5+"px";
         style.left=ratio*this.dlen+"px";
         this.sensex=1; this.sensey=0;
+      }
+      else{
+        style.left=(this._width-this.kwidth)*0.5+"px";
+        style.top=(1-ratio)*this.dlen+"px";
+        this.sensex=0; this.sensey=1;
       }
     }
     _setValue(v){
@@ -904,10 +898,10 @@ ${this.basestyle}
         if(this.tracking=="abs"){
           const rc = this.getBoundingClientRect();
           let val;
-          if(this.direction=="horz")
-            val = Math.max(0,Math.min(1,(e.pageX-rc.left-this.kwidth*0.5)/(this.width-this.kwidth)));
+          if(this.dr=="horz")
+            val = Math.max(0,Math.min(1,(e.pageX-rc.left-window.pageXOffset-this.kwidth*0.5)/(this.width-this.kwidth)));
           else
-            val = 1 - Math.max(0,Math.min(1,(e.pageY-rc.top-this.kheight*0.5)/(this.height-this.kheight)));
+            val = 1 - Math.max(0,Math.min(1,(e.pageY-rc.top-window.pageYOffset-this.kheight*0.5)/(this.height-this.kheight)));
           if(this.log){
             this._setValue(this.min * Math.pow(this.max/this.min, val));
           }
@@ -969,12 +963,12 @@ ${this.basestyle}
         this.startVal = this.value;
         window.addEventListener('mousemove', pointermove);
         window.addEventListener('touchmove', pointermove, {passive:false});
+        pointermove(ev);
       }
       window.addEventListener('mouseup', pointerup);
       window.addEventListener('touchend', pointerup);
       window.addEventListener('touchcancel', pointerup);
       document.body.addEventListener('touchstart', preventScroll,{passive:false});
-      pointermove(ev);
       e.preventDefault();
       e.stopPropagation();
       return false;
@@ -1266,7 +1260,7 @@ ${this.basestyle}
             val=eval(this.rconv);
           }
           if(this.currentLink){
-            this.currentLink.target.setValue(val);
+            this.currentLink.target.setValue(val, true);
           }
         }
       }

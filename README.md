@@ -22,9 +22,9 @@ iOS and Android touch devices compatible
 
 # Samples
 
-- [Live Demo with external knob image-files](https://g200kg.github.io/webaudio-controls/samples/sample1.html)  
-- [Default styles](https://g200kg.github.io/webaudio-controls/samples/default.html)  
-- [With code example](https://g200kg.github.io/webaudio-controls/samples/code.html)  
+- [Live Demo with external knob image-files](https://g200kg.github.io/webaudio-controls/samples/introduction.html)  
+- [Default styles](https://g200kg.github.io/webaudio-controls/samples/defstyle.html)  
+- [Examples of various attributes](https://g200kg.github.io/webaudio-controls/samples/attributes.html)  
 - [Various knob images](https://g200kg.github.io/webaudio-controls/samples/knobsamples.html)  
 - [Multi-Touch Fader](https://g200kg.github.io/webaudio-controls/samples/multifader.html)  
 - [webaudio-keyboard to MIDI](https://g200kg.github.io/webaudio-controls/samples/keyboard.html)  
@@ -54,10 +54,10 @@ Operation | Component | Description
 
 * WebComponents polyfill
   * If you want to support legacy browser that not support WebComponents, the polyfill is needed :  
-  `<script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>`
+  `<script src="./webcomponents-lite.js"></script>`
 
 * load webaudio-controls  
-  * `<script src="bower_components/webaudio-controls/webaudio-controls.js"></script>`
+  * `<script src="./webaudio-controls.js"></script>`
   * Or, if you want to load webaudio-controls.js directly from this GitHub page as CDN: <br/>
 `<script src="https://g200kg.github.io/webaudio-controls/webaudio-controls.js"></script>`
 

@@ -1,0 +1,61 @@
+html{
+  margin:0;
+  padding:0;
+}
+body{
+  margin:0;
+  padding:0;
+  background:#222;
+  font-family: 'Open Sans', sans-serif;
+  font-size:17px;
+}
+h1{
+  line-height:60px;
+  font-size: 26px;
+}
+h2{
+  color:#fc4;
+  background:#222;
+  padding:4px 20px;
+  margin:0;
+  width:100%;
+  font-size: 30px;
+}
+h3{
+  color:#fa8;
+}
+#main a{
+  color:#ccf;
+}
+#main a:visited{
+  color:#f8d;
+}
+pre{
+  font-size:16px;
+  line-height: 20px;
+}
+#header{
+  position:relative;
+  background:#fc4;
+  margin:auto;
+  padding:0px 20px;
+  height:70px;
+  line-height:70px;
+  width:90%;
+  padding:10px 20px;
+  color:#660;
+}
+#header p{
+  position:absolute;
+  top:0;
+  right:20px;
+  font-size:16px;
+}
+#main{
+  position:relative;
+  background:#444;
+  width:90%;
+  margin:auto;
+  padding:20px;
+  color:#fff;
+}

@@ -2,8 +2,13 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>WebAudio-Controls Live Demo (NonLinear values)</title>
-<script src="https://unpkg.com/@webcomponents/custom-elements"></script>
+<title>Slider tracking "rel" and "abs"</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./sample.css">
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/a11y-dark.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <script>
 WebAudioControlsOptions={
   useMidi:1,
@@ -25,11 +30,19 @@ function input2(elem){
 </script>
 </head>
 <body>
-<h1>webaudio-controls sample (NonLinear)</h1>
-<p>This is a non-linear value knob samples. There are two approaches to realize a knob that changes nonlinearly.
-</p>
+<div id="header">
+  <h1>webaudio-controls</h1>
+  <p>GitHub : <a href="https://github.com/g200kg/webaudio-controls">https://github.com/g200kg/webaudio-controls</a></p>
+</div>
+<div id="main">
+<h2>Non-Linear Knobs / Sliders</h2>
+
+<p>In some cases, you may want the knob to vary nonlinear changes with respect to the rotation of the knob.  
+  For example, a knob for setting a frequency in the range of 20Hz to 20,000Hz will make an exponential change with rotation.</p>
+<p>There are two approaches to realize a knob that changes nonlinearly. 
+The 'log' attribute simply makes the number change curve an exponential change, and the 'conv' attribute allows for more complex behavior.</p>
 <hr/>
-<h2>"log" attribute</h2>
+<h3>"log" attribute</h3>
 <p>If you specify log="1" as an attribute, the change in `value` will be exponential.</p>
 <p>In this mode, the value increases at the same rate for a fixed rotation angle of the rotating knob.
   For example, if min="1" and max="100", it will be "10" in the center of the knob.</p>
@@ -37,14 +50,17 @@ function input2(elem){
 
 <webaudio-knob id="knob0" min="1" max="100" log="1"></webaudio-knob>
 <webaudio-param link="knob0"></webaudio-param><br/><br/>
-<div style="background:#223;padding:10px;font-size:16px;color:#0f0">
-<pre>
+<pre><code>
 &lt;webaudio-knob id="knob0" min="1" max="100" log="1"&gt;&lt;/webaudio-knob&gt;
 &lt;webaudio-param link="knob0"&gt;&lt;/webaudio-param&gt;
-</pre>
-</div>
+
+</code></pre>
+
 <hr/>
-<h2>"conv" attribute</h2>
+
+<h3>"conv" attribute</h3>
+<p>The'conv' attribute can specify a conversion function.
+  The value of the knob changes linearly, but the value passed through the conversion function is stored as convValue.</p>
 <p>This is a example of converting a value from 0 to 100 exponentially from 1 to 10000 by "conv" attribute.</p>
 <p>Here the `conv` attribute is `conv="Math.pow(10000,x/100)"`,
 it means the knob's raw value range 0-100 is converted to exponential 1-10000. 
@@ -52,25 +68,25 @@ If use with &lt;webaudio-param&gt;, it will show the convValue.</p>
 <p>When using with webaudio-param, 
 by adding an inverse conversion expression to the `rconv` of webaudio-param attribute,
 directly number-edit in webaudio-param will be possible.</p>
-<p>To get converted value, use `knob.convValue` instead of `knob.value`.
+<p>To get converted value, use `knob.convValue` instead of `knob.value`.  
+  Note that the `convValue` is a string, then you can make more complex display not only number values.
 </p>
 
-<div>
 <webaudio-knob id="knob1" valuetip="1" conv="Math.pow(10000,x/100)" oninput="input(this)"></webaudio-knob>
 <webaudio-param link="knob1" rconv="Math.log10(x)/4*100"></webaudio-param><br/>
-<div style="background:#223;padding:10px;font-size:16px;color:#0f0">
-<pre>
+
+<pre><code>
 &lt;webaudio-knob id="knob1" conv="Math.pow(10000,x/100)"&gt;&lt;/webaudio-knob&gt;
 &lt;webaudio-param link="knob1" rconv="Math.log10(x)/4*100"&gt;&lt;/webaudio-param&gt;
-</pre>
-</div>
+
+</code></pre>
 <div id="raw">Raw Value : knob.value = 0</div>
 <div id="conv">Converted Value : knob.convValue = 1</div>
-</div>
+
 <br/>
 <p>With this approach, it is possible to realize a knob that has a special action other than exponential change.</p>
 <p>The following example changes exponentially from "20" to "20000" for the change of value 0-100,
-   and if the converted value is 1000 or more, "kHz" is displayed, otherwise "Hz". "Display.</p>
+   and if the converted value is 1000 or over, "kHz" is displayed, otherwise "Hz".</p>
 <br/><br/>
 <script>
 function valueconv(x){
@@ -81,8 +97,8 @@ function valueconv(x){
 </script>
 <webaudio-knob id="knob2" valuetip="1" min="0" max="100" conv="valueconv"></webaudio-knob>
 <webaudio-param link="knob2" width="80"></webaudio-param><br/>
-<div style="background:#223;padding:10px;font-size:16px;color:#0f0">
-<pre>
+
+<pre><code>
 &lt;script&gt;
 function valueconv(x){
   x = 20 * Math.pow( 1000, x / 100 );
@@ -91,8 +107,9 @@ function valueconv(x){
 }
 &lt;/script&gt;
 &lt;webaudio-knob id="knob2" valuetip="1" min="0" max="100" conv="valueconv"&gt;&lt;/webaudio-knob&gt;
-&lt;webaudio-param link="knob2" width="80"&gt;&lt;/webaudio-param>
-</pre>
+&lt;webaudio-param link="knob2" width="80"&gt;&lt;/webaudio-param&gt;
+
+</code></pre>
 </div>
 </body>
 </html>

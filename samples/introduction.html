@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Slider tracking "rel" and "abs"</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./sample.css">
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/a11y-dark.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="../webaudio-controls.js"></script>
+<style type="text/css">
+table {
+  border: 1px solid #666;
+}
+table td {
+  border: 1px solid #666;
+  padding:4px 8px;
+}
+</style>
+</head>
+<body>
+  <div id="header">
+    <h1>webaudio-controls</h1>
+    <p>GitHub : <a href="https://github.com/g200kg/webaudio-controls">https://github.com/g200kg/webaudio-controls</a></p>
+  </div>
+  <div id="main">
+  <h2>Introduction</h2>
+  <div style="position:relative;background-image: url('../img/bg.png');width:512px;height:240px;margin:30px auto;padding:0px;">
+      <webaudio-knob id="knob1" midilearn="1" midicc="1.1" style="position:absolute;left:48px;top:76px" src="../knobs/LittlePhatty.png" value="50" max="100" step="1" width="64" height="64" sprites="100" tooltip="Knob1 tooltip %d"></webaudio-knob>
+      <webaudio-knob midilearn="1" midicc="8.7" style="position:absolute;left:128px;top:76px" src="../knobs/LittlePhatty.png" value="1" min="20" max="20000" log="1" step="0.1" diameter="64" sprites="100" tooltip="Knob2 tooltip <br/> %s Hz"></webaudio-knob>
+      <webaudio-knob midilearn="1" midicc="1.22" id="knob3" style="position:absolute;left:232px;top:48px" src="../knobs/vernier.png" value="30" max="100" step="1" diameter="128" sprites="50" valuetip="0" tooltip="Knob3"></webaudio-knob>
+      <webaudio-param style="position:absolute;left:328px;top:162px" link="knob3"></webaudio-param>
+      <webaudio-slider midilearn="1" midicc="1.23" style="position:absolute;left:368px;top:24px" src="../img/vsliderbody.png" knobsrc="../img/vsliderknob.png" value="0" min="0" max="100" step="1" basewidth="24" baseheight="128" knobwidth="24" knobheight="24" ditchLength="100" tooltip="Slider-L"></webaudio-slider>
+      <webaudio-slider midilearn="1"  midicc="1.24" style="position:absolute;left:400px;top:24px" src="../img/vsliderbody.png" knobsrc="../img/vsliderknob.png" value="0" min="0" max="100" step="1" basewidth="24" baseheight="128" knobwidth="24" knobheight="24" ditchLength="100" units="%" tooltip="Slider-R"></webaudio-slider>
+      <webaudio-switch midilearn="1" style="position:absolute;left:440px;top:38px" src="../knobs/switch_toggle.png" value="0" height="56" width="56" tooltip="Switch-A Tooltip text test"></webaudio-switch>
+      <webaudio-switch midilearn="1" style="position:absolute;left:440px;top:102px" src="../knobs/switch_toggle.png" value="0" height="56" width="56" tooltip="Switch-B"></webaudio-switch>
+</div>
+<p><b>webaudio-controls</b> is a Javascript library for displaying the GUI parts required to Web Music applications.</p>
+<p>webaudio-controls consists of knobs, sliders, switches, parameter displays and keyboards.
+  By loading webaudio-controls.js to your page, custom tags for component display will be added using WebComponents.
+  You can configure the GUI screen just by writing custom tags in HTML.</p>
+
+<h3>Webaudio-controls is Available At</h3>
+<ul><li><b><a href="https://github.com/g200kg/webaudio-controls">https://github.com/g200kg/webaudio-controls</a></b></li></ul>
+<br/>
+
+<h3>Index of application notes</h3>
+<ul>
+  <li>Introduction</li>
+  <li><a href="./defstyle.html">Default Style of Controls</a></li>
+  <li><a href="./attributes.html">Examples of Various Attribute</a></li>
+  <li><a href="./keyboard.html">Working Keyboard Demo</a></li>
+  <li><a href="./resizetest.html">Resizing after Creation</a></li>
+  <li><a href="./knobsamples.html">WebAudio-Controls Knob Samples from KnobGallery</a></li>
+  <li><a href="./multifader.html">Multi-Touch Device Support</a></li>
+  <li><a href="./nonlinear.html">Non-Linear knobs / Sliders</a></li>
+</ul>
+
+<h3>To Operate</h3>
+<table>
+<tr><th>Operation</th><th>Component</th><th>Description</th></tr>
+<tr><td><b>Click</b></td><td>Switch / Other</td><td>Switch : Toggle / activate the switch.<br/>Other : Focus the component to control from a keyboard.</td></tr>
+<tr><td><b>Drag</b></td><td>Knob / Slider</td><td>Up / Right to increase value. Down / Left to decrease value.</td></tr>
+<tr><td><b>Shift+Drag</b></td><td>Knob / Slider</td><td>Fine control. Increase or decrease by the value specified in the `step`.</td></tr>
+<tr><td><b>Ctrl+Click<br/>Command+Click(Mac)</b></td><td>Knob / Slider / Switch</td><td>Set to default value</td></tr>
+<tr><td><b>Keyboard</b></td><td>Knob / Slider / Param / keyboard</td><td>
+  To manipulate with the keyboard, it is necessary to get the focus by clicking each component once.  <br/><br/>
+  Knob / Slider : ArrowUp / ArrowDown to increase or decrease by the value specified in the `step`.<br/>
+  Param : Edit the param value directly.<br/>
+  Keyboard : [ZSXDCV...for lowest visible 'C' octave] and [Q2W3E... one octave higher] as a music keyboard.</td></tr>
+<tr><td><b>MouseWheel</b></td><td>Knob / Slider</td><td>Rotate upward to increase value, downward to decrease value.</td></tr>
+<tr><td><b>Shift+MouseWheel</b></td><td>Knob / Slider</td><td>Fine control. Increase or decrease by the value specified in the `step`.</td></tr>
+</table>
+<br/>
+<h3>Install</h3>
+
+<ul>
+<li>
+  webaudio-controls.js
+  <ul><li>Place "webaudio-controls.js" to an appropriate directory. <br/>This is the only file needed. There are no dependencies on other libraries.</li></ul>
+<br/>
+<li>
+  WebComponents polyfill
+  <ul><li>If you want to support legacy browsers that not support WebComponents, the polyfill for WebComponents is needed: <br/>
+  <pre><code class="language-html">&lt;script src="./webcomponents-lite.js"&gt;&lt;/script&gt;</code></pre></li></ul>
+</li>
+
+<li>
+  load webaudio-controls  
+  <ul><li><pre><code class="language-html">&lt;script src="./webaudio-controls.js"&gt;&lt;/script&gt;</code></pre>
+  Or, if you want to load webaudio-controls.js directly from this GitHub page as CDN: <br/>
+  <pre><code class="language-html">&lt;script src="https://g200kg.github.io/webaudio-controls/webaudio-controls.js"&gt;&lt;/script&gt;</code></pre></li></ul>
+</li>
+
+<li>
+  insert <b>webaudio-knob / slider / switch / param / keyboard</b> elements. for example...
+  <ul>
+  <li><pre><code class="language-html">
+  &lt;webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"&gt;&lt;/webaudio-knob&gt;
+  &lt;webaudio-slider src="img/hsliderbody.png"&gt;&lt;/webaudio-slider&gt;
+  &lt;webaudio-switch src="img/switch_toggle.png" width="32" height="32"&gt;&lt;/webaudio-switch&gt;
+  &lt;webaudio-param src="" link="knob-1"&gt;&lt;/webaudio-param&gt;
+  &lt;webaudio-keyboard keys="25"&gt;&lt;/webaudio-keyboard&gt;
+  </li></ul>
+</ul>
+
+<div>
+<h3>License</h3>
+webaudio-controls is based on:
+<ul>
+<li><a href="https://github.com/agektmr/webaudio-knob" target="_blank">WebAudio-Knob</a> by <a href="http://google.com/+agektmr" target="_blank">Eiji Kitamura</a></li>
+<li><a href="https://github.com/ryoyakawai/webaudio-slider" target="_blank">WebAudio-Slider</a> by <a href="https://plus.google.com/108242669191458983485/posts" target="_blank">Ryoya Kawai</a></li>
+<li><a href="http://aikelab.net/switch/" target="_blank">WebAudio-Switch</a> by <a href="http://d.hatena.ne.jp/aike/" target="_blank">Keisuke Ai</a></li>
+<li>Integrated and enhanced by <a href="http://www.g200kg.com/" target="_blank">g200kg</a></li>
+</ul>
+
+<p><b>webaudio-controls</b> is licensed under the Apache License, Version 2.0<br/>
+Copyright (c) 2013 Eiji Kitamura / Ryoya KAWAI / Keisuke Ai / g200kg (Tatsuya Shinyagaito)<br/>
+</p>
+<hr/>
+Knob/Switch images are from <a href="http://www.g200kg.com/en/webknobman/gallery.php" target="_blank">Knob Gallery</a><br/>
+<a href="http://www.g200kg.com/en/webknobman/gallery.php?m=p&p=58" target="_blank">switch_toggle.knob</a> by <a href="http://bji.yukihotaru.com/" target="_blank">az</a> Copyright (c) 2011 <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC-BY</a>
+</div>
+</div>
+</body>
+</html>
