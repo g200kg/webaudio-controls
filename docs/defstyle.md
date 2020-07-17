@@ -9,7 +9,7 @@ As each element is manipulated, events such as 'input' or 'change' are issued,
 so that the handlers can catch them.
 The captured events are displayed on the Events window on the right.  
 
-<div id="base" style="width:400px;height:500px;position:relative;background:linear-gradient(#444 0%,#aaa 3% #888 97%,#444 100%);">
+<div id="base" style="width:600px;height:500px;position:relative;background:linear-gradient(#444 0%,#aaa 3% #888 97%,#444 100%);">
   <webaudio-knob id="knob1" style="position:absolute;left:50px;top:60px"></webaudio-knob>
   <webaudio-knob id="knob2" style="position:absolute;left:130px;top:60px"></webaudio-knob>
   <webaudio-param link="knob1" style="position:absolute;left:65px;top:130px"></webaudio-param>
@@ -32,9 +32,8 @@ The captured events are displayed on the Events window on the right.
   <span style="position:absolute;left:460px;top:50px">toggle(default)</span>
   <span style="position:absolute;left:460px;top:90px">kick</span>
   <span style="position:absolute;left:460px;top:130px">radio</span>
-  <div style="position:absolute;right:0;top:0">
-  <h3>Events</h3>
-  <div id="events" style="background:rgba(128,128,255,0.5);padding:10px;color:#fff;text-align:left;width:300px;height:380px;overflow:scroll"></div>
+  <div style="position:absolute;left:0;top:380px">
+  <div id="events" style="background:rgba(128,128,255,0.5);padding:10px;color:#fff;text-align:left;width:400px;height:200px;overflow:scroll"></div>
   </div>
 </div>
 
