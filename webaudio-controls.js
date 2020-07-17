@@ -151,24 +151,19 @@ if(window.customElements){
 }
 `;
       this.onblur=()=>{
-        console.log("onblur")
         this.elem.style.outline="none";
       }
       this.onfocus=()=>{
-        console.log("onfocus", this.outline)
         switch(this.outline){
         case null:
         case 0:
           this.elem.style.outline="none";
-          console.log("0");
           break;
         case 1:
           this.elem.style.outline="1px solid #ccc";
-          console.log("1");
           break;
         default:
           this.elem.style.outline=this.outline;
-          console.log("*");
         }
       }
     }

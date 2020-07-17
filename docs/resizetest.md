@@ -15,6 +15,8 @@ Size :
 <button onclick="$('#knob1')[0].diameter=100">Large</button>  
 <webaudio-knob id="knob1" diameter="50"></webaudio-knob>
   
+<br/>
+
 ```html
 <button onclick="$('#knob1')[0].diameter=25">Small</button>
 <button onclick="$('#knob1')[0].diameter=50">Mid</button>
@@ -22,8 +24,11 @@ Size :
 <webaudio-knob id="knob1" diameter="50"></webaudio-knob>
 ```  
   
-  
-## Param
+<br/>
+
+---
+
+## Param  
 Size :
 <button onclick="$('#para1')[0].width=25">Width Small</button>
 <button onclick="$('#para1')[0].width=100">Width Large</button>
@@ -31,7 +36,9 @@ Size :
 <button onclick="$('#para1')[0].height=48">Height Large</button>
 <button onclick="$('#para1')[0].fontsize=9">Font Small</button>
 <button onclick="$('#para1')[0].fontsize=48">Font Large</button>  
-<webaudio-param id="param1" width="100" height="16"></webaudio-param>  
+<webaudio-param id="para1" width="100" height="16"></webaudio-param>  
+  
+<br/>
 
 ```html
 <button onclick="$('#para1')[0].width=25">Width Small</button>
@@ -43,6 +50,9 @@ Size :
 <webaudio-param id="para1" width="100" height="16"></webaudio-param>  
 ```
   
+<br/>
+
+---
 
 ## Slider
 Size :
@@ -51,6 +61,8 @@ Size :
 <button onclick="$('#sl1')[0].height=200;$('#sl1')[0].width=40">Large</button>  
 <webaudio-slider id="sl1" height="100" width="20"></webaudio-slider>  
 
+<br/>
+
 ```html
 <button onclick="$('#sl1')[0].height=50;$('#sl1')[0].width=10">Small</button>
 <button onclick="$('#sl1')[0].height=100;$('#sl1')[0].width=20">Mid</button>
@@ -58,6 +70,9 @@ Size :
 <webaudio-slider id="sl1" height="100" width="20"></webaudio-slider>  
 ```
   
+<br/>
+
+---
 
 ## Switch
 Size :
@@ -66,6 +81,8 @@ Size :
 <button onclick="$('#sw1')[0].height=100;$('#sw1')[0].width=100">Large</button>  
 <webaudio-switch id="sw1" height="50" width="50"></webaudio-switch>
 
+<br/>
+
 ```html
 <button onclick="$('#sw1')[0].height=25;$('#sw1')[0].width=25">Small</button>
 <button onclick="$('#sw1')[0].height=50;$('#sw1')[0].width=50">Mid</button>
@@ -73,7 +90,10 @@ Size :
 <webaudio-switch id="sw1" height="50" width="50"></webaudio-switch>
 ```
   
-  
+<br/>
+
+---
+
 ## Keyboard
 Size :
 <button onclick="$('#kb1')[0].width=100;$('#kb1')[0].height=20;">Small</button>
@@ -86,7 +106,8 @@ Keys :
 <button onclick="$('#kb1')[0].keys=61;">61 Keys</button>  
 <webaudio-keyboard id="kb1" width="400" height="80"></webaudio-keyboard>
   
-  
+<br/>
+
 ```html
 Size :
 <button onclick="$('#kb1')[0].width=100;$('#kb1')[0].height=20;">Small</button>
