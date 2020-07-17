@@ -72,6 +72,10 @@ window.onload=Init;
 
 # Examples of Various Attributes
 
+You can customize the appearance and behavior of webaudio-controls by adding attributes to the tags. Here are some examples.  
+  
+  
+
 ## WebAudio-Knobs
 
 These are default webaudio-knobs. If no knob-image is specified, simple embedded image resource is used. But colors are customizable.  
