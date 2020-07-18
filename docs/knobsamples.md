@@ -55,8 +55,8 @@ These are published as public domain or Creative-Commons data by the following p
   <div><webaudio-knob src="../knobs/LittlePhatty.png" sprites="100" value="78" diameter="70"></webaudio-knob><br/><a href="../knobs/LittlePhatty.png">LittlePhatty</a></div>
   <div><webaudio-knob src="../knobs/m400.png" sprites="100" value="89" diameter="70"></webaudio-knob><br/><a href="../knobs/m400.png">m400</a></div>
   <div><webaudio-knob src="../knobs/MiniMoog_Main.png" sprites="100" value="12" diameter="70"></webaudio-knob><br/><a href="../knobs/MiniMoog_Main.png">MiniMoog_Main</a></div>
-  <div><webaudio-knob src="../knobs/SimpleFlat3.png" sprites="100" value="23" diameter="70"></webaudio-knob><br/><a href="../knobs/SimpleFlat3.png">SimpleFlat3</a></div>
   <div><webaudio-knob src="../knobs/WOK_vintage_AbbeyRoad_PAN_Knob.png" sprites="127" value="12" width="70" height="80"></webaudio-knob><br/><a href="../knobs/WOK_vintage_AbbeyRoad_PAN_Knob.png">WOK_vintage_AbbeyRoad_PAN</a></div>
+  <div><webaudio-knob src="../knobs/SimpleFlat3.png" sprites="100" value="23" diameter="70"></webaudio-knob><br/><a href="../knobs/SimpleFlat3.png">SimpleFlat3</a></div>
   <div><webaudio-knob src="../knobs/Vintage_Knob.png" sprites="100" value="62" diameter="80"></webaudio-knob><br/><a href="../knobs/Vintage_Knob.png">Vintage_Knob</a></div>
   <div><webaudio-knob src="../knobs/Vintage_VUMeter_2.png" sprites="50" value="12" diameter="120"></webaudio-knob><br/><a href="../knobs/Vintage_VUMeter_2.png">Vintage_VUMeter</a></div>
   <div><webaudio-knob src="../knobs/knob_metal_mesh.png" sprites="100" value="12" diameter="120"></webaudio-knob><br/><a href="../knobs/knob_metal_mesh.png">knob_metal_mesh</a></div>
