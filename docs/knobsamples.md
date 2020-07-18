@@ -26,7 +26,6 @@
 # Knob Samples from KnobGallery
 
 These knobs are randomly picked up from the "knob gallery".  
-These are published as public domain or Creative-Commons data by the following people's efforts.  
 
 <a href="http://www.g200kg.com/en/webknobman/gallery.php" target="_blank">Knob Gallery</a>  
 
@@ -52,6 +51,9 @@ These are published as public domain or Creative-Commons data by the following p
   <div><webaudio-knob src="../knobs/nice_lamp_knob.png" sprites="59" value="12" diameter="60"></webaudio-knob><br/><a href="../knobs/nice_lamp_knob.png">nice_lamp_knob</a></div>
 </div>
 <br/>
+
+These knobs are published by following people's efforts.  
+
 <table style="font-size:12px">
 <tr><td>g200kg</td><td>Aqua / Vernier / lineShadow / lineShadow2</td></tr>
 <tr><td>aike</td><td>m400 / plastic_knob</td></tr>
