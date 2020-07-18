@@ -12,7 +12,8 @@ var midiout=null;
 var kbd=null;
 var synth;
 async function Init() {
-  navigator.requestMIDIAccess({sysex:false}).then(scb,ecb);
+  if(navigator.requestMIDIAccess)
+    navigator.requestMIDIAccess({sysex:false}).then(scb,ecb);
   kbd = document.getElementById("keyboard");
   document.getElementById("midiout").addEventListener("change",function(e) {
     midiout=midioutputs[document.getElementById("midiout").selectedIndex];
