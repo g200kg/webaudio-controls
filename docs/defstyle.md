@@ -75,7 +75,7 @@ var key2=document.getElementById("key2");
 
 function Dump(e) {
     var str="";
-    if(e.target.id=="keyboard") {
+    if(e.note) {
         key2.setNote(e.note[0],e.note[1]);
         str=e.type + " : " + e.target.id + " e.note = [" + e.note + "] ";
     }
