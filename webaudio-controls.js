@@ -78,10 +78,10 @@ if(window.customElements){
     mididump:0,
     outline:null,
     knobSrc:null,
-    knobSprites:0,
-    knobWidth:0,
-    knobHeight:0,
-    knobDiameter:64,
+    knobSprites:null,
+    knobWidth:null,
+    knobHeight:null,
+    knobDiameter:null,
     knobColors:"#e00;#000;#000",
     sliderKnobsrc:null,
     sliderWidth:0,
@@ -408,20 +408,34 @@ ${this.basestyle}
         }
         svg += "</svg>";
         this.elem.style.backgroundImage = "url(data:image/svg+xml;base64,"+btoa(svg)+")";
+        if(this.kw==null) this.kw=64;
+        if(this.kh==null) this.kh=64;
         this.elem.style.backgroundSize = `${this.kw}px ${this.kh*101}px`;
+        this.elem.style.width=this.kw+"px";
+        this.elem.style.height=this.kh+"px";
+//        this.style.height=this.kh+"px";
+        this.redraw();
+        return;
       }
       else{
-        this.elem.style.backgroundImage = "url("+(this.src)+")";
-        if(!this.sprites)
-          this.elem.style.backgroundSize = "100% 100%";
-        else{
-          this.elem.style.backgroundSize = `${this.kw}px ${this.kh*(this.sprites+1)}px`;
-        }
+        this.img=new Image();
+        this.img.onload=()=>{
+          this.elem.style.backgroundImage = "url("+(this.src)+")";
+//          console.log(this.sprites, typeof(this.sprites))
+          if(this.sprites==null) this.sprites=this.img.height/this.img.width-1;
+          if(this.kw==null) this.kw=this.img.width;
+          if(this.kh==null) this.kh=this.img.height/(this.sprites+1);
+          if(!this.sprites)
+            this.elem.style.backgroundSize = "100% 100%";
+          else
+            this.elem.style.backgroundSize = `${this.kw}px ${this.kh*(this.sprites+1)}px`;
+          this.elem.style.width=this.kw+"px";
+          this.elem.style.height=this.kh+"px";
+//          this.style.height=this.kh+"px";
+          this.redraw();
+        };
+        this.img.src=this.src;
       }
-      this.elem.style.width=this.kw+"px";
-      this.elem.style.height=this.kh+"px";
-      this.style.height=this.kh+"px";
-      this.redraw();
     }
     redraw() {
       let ratio;

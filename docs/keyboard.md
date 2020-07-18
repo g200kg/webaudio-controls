@@ -10,7 +10,8 @@ WebAudioControlsOptions={
 var midioutputs=[null];
 var midiout=null;
 var kbd=null;
-function Init() {
+var synth;
+async function Init() {
   navigator.requestMIDIAccess({sysex:false}).then(scb,ecb);
   kbd = document.getElementById("keyboard");
   document.getElementById("midiout").addEventListener("change",function(e) {
@@ -26,6 +27,8 @@ function Init() {
   document.getElementById("volume").addEventListener("change",function(e) {
     Send([0xb0,7,e.target.value]);
   });
+  synth = document.getElementById("synth");
+  await synth.ready();
   DisplayTimbreName(0);
 }
 function ecb(e) { console.log(e); }
@@ -39,14 +42,14 @@ function scb(midiaccess) {
   midiout=midioutputs[0];
 }
 function DisplayTimbreName(val){
-  const name=document.getElementById("synth").getTimbreName(0,val);
+  const name=synth.getTimbreName(0,val);
   document.getElementById("timbrename").innerText = name;
 }
 function Send(mess){
   if(midiout)
     midiout.send(mess);
   else
-    document.getElementById("synth").send(mess);
+    synth.send(mess);
 }
 window.onload=Init;
 </script>

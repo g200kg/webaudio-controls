@@ -77,7 +77,7 @@ function Dump(e) {
     var str="";
     if(e.target.id=="keyboard") {
         key2.setNote(e.note[0],e.note[1]);
-        str=e.type + " : " + e.target.id + " event.note = [" + e.note + "] ";
+        str=e.type + " : " + e.target.id + " e.note = [" + e.note + "] ";
     }
     else
         str=e.type + " : " + e.target.id + ".value = " + e.target.value + " ";
