@@ -78,7 +78,7 @@ if(window.customElements){
     mididump:0,
     outline:null,
     knobSrc:null,
-    knobSprites:null,
+    knobSprites:0,
     knobWidth:null,
     knobHeight:null,
     knobDiameter:null,
@@ -413,7 +413,7 @@ ${this.basestyle}
         this.elem.style.backgroundSize = `${this.kw}px ${this.kh*101}px`;
         this.elem.style.width=this.kw+"px";
         this.elem.style.height=this.kh+"px";
-//        this.style.height=this.kh+"px";
+        this.style.height=this.kh+"px";
         this.redraw();
         return;
       }
@@ -421,8 +421,6 @@ ${this.basestyle}
         this.img=new Image();
         this.img.onload=()=>{
           this.elem.style.backgroundImage = "url("+(this.src)+")";
-//          console.log(this.sprites, typeof(this.sprites))
-          if(this.sprites==null) this.sprites=this.img.height/this.img.width-1;
           if(this.kw==null) this.kw=this.img.width;
           if(this.kh==null) this.kh=this.img.height/(this.sprites+1);
           if(!this.sprites)
@@ -431,7 +429,7 @@ ${this.basestyle}
             this.elem.style.backgroundSize = `${this.kw}px ${this.kh*(this.sprites+1)}px`;
           this.elem.style.width=this.kw+"px";
           this.elem.style.height=this.kh+"px";
-//          this.style.height=this.kh+"px";
+          this.style.height=this.kh+"px";
           this.redraw();
         };
         this.img.src=this.src;
