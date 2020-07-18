@@ -78,7 +78,7 @@ if(window.customElements){
     mididump:0,
     outline:null,
     knobSrc:null,
-    knobSprites:0,
+    knobSprites:null,
     knobWidth:null,
     knobHeight:null,
     knobDiameter:null,
@@ -421,6 +421,10 @@ ${this.basestyle}
         this.img=new Image();
         this.img.onload=()=>{
           this.elem.style.backgroundImage = "url("+(this.src)+")";
+          if(this._sprites==null)
+            this._sprites=this.img.height/this.img.width - 1;
+          else
+            this._sprites=+this._sprites;
           if(this.kw==null) this.kw=this.img.width;
           if(this.kh==null) this.kh=this.img.height/(this.sprites+1);
           if(!this.sprites)
