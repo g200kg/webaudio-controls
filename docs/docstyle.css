@@ -1,9 +1,9 @@
 .item{
-  background:#444;
+  background:#000;
   margin:4px;
   padding:0px 3px;
 }
 .cur{
-  background:#000;
-  border:1px solid #440;
+  background:#444;
+  border:1px solid #000;
 }
