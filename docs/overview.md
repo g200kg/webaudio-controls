@@ -4,6 +4,8 @@ WebAudioControlsOptions={
   useMidi:1,
 };
 </script>
+<script src="../webaudio-controls.js"></script>
+
 <style>
 .item{
   background:#444;
@@ -11,9 +13,8 @@ WebAudioControlsOptions={
   padding:0px 3px;
 }
 </style>
-<script src="../webaudio-controls.js"></script>
 <div style="display:flex;width:100%;flex-wrap:wrap">
-<div class="item"><a href="./overview.html">Overview</a></div>
+<div class="item">Overview</div>
 <div class="item"><a href="./defstyle.html">Default Style of Controls</a></div>
 <div class="item"><a href="./attrubutes.html">Examples of Various Attributes</a></div>
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
