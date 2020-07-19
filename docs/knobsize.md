@@ -20,7 +20,7 @@ Basic Usage :
 </div>
 <br/>
 
-Advanced Usage and Application Note :
+Advanced Usage and Application Notes :
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
 <div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
@@ -38,7 +38,7 @@ Advanced Usage and Application Note :
 
 There are several factors that determine the knob size. The following factors have higher priority from the top and are checked in order.
 
-Note that the specification in the style sheet does not affect the size of the knob display, although the outline of the element changes.
+Note that the `width` / `height` specification in the style sheet does not affect the size of the knob display, although the outline of the element changes.
 
 - `width`, `height` attributes of the element
 - `diameter` attribute of the element

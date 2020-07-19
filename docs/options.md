@@ -20,7 +20,7 @@ Basic Usage :
 </div>
 <br/>
 
-Advanced Usage and Application Note :
+Advanced Usage and Application Notes :
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
 <div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
@@ -35,6 +35,7 @@ Advanced Usage and Application Note :
 ---
 
 ## WebAudioControlsOptions
+
 By setting the global object, `WebAudioControlsOptions`, you can specify default values such as the knob size or colors etc when attribute setting on each tag is omitted.
 This declaration should be prior to the `webaduio-controls.js` loading.
 

@@ -20,7 +20,7 @@ Basic Usage :
 </div>
 <br/>
 
-Advanced Usage and Application Note :
+Advanced Usage and Application Notes :
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
 <div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
@@ -51,6 +51,8 @@ webaudio-switch   | Toggle / Kick / Radio switches.
 webaudio-param    | Editable value display field that can auto-link to knobs or sliders.
 webaudio-keyboard | Mouse / Touch playable keyboard. multi-touch support.
 
+Chrome / Firefox / Edge compatible
+iOS and Android touch devices compatible
 
 This is an example of a typical GUI screen created using webaudio-controls. Knobs, sliders, switches etc. can be manipulated with a mouse or touch device. It is also possible to operate from a connected MIDI controller.  
 

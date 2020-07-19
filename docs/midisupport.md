@@ -20,7 +20,7 @@ Basic Usage :
 </div>
 <br/>
 
-Advanced Usage and Application Note :
+Advanced Usage and Application Notes :
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
 <div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>

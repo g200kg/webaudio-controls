@@ -20,7 +20,7 @@ Basic Usage :
 </div>
 <br/>
 
-Advanced Usage and Application Note :
+Advanced Usage and Application Notes :
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
 <div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
@@ -37,7 +37,7 @@ Advanced Usage and Application Note :
 # Default Style of Controls  
 
 This is a sample using the default styles of 
-    'knob', 'param', 'slider', 'switch' and 'keyboard' without external image files.  
+'knob', 'param', 'slider', 'switch' and 'keyboard' without external image files.  
 
 ```html
 <webaudio-knob></webaudio-knob>
