@@ -53,9 +53,9 @@ Each component fires an event when manipulated and can be handled by a javascrip
 	</div>
 </div>
 
-## Source COde is Available At
+## Source Code is Available At
 
-GitHub : ** [https://github.com/g200kg/webaudio-controls](https://github.com/g200kg/webaudio-controls) **
+GitHub Repository :  [https://github.com/g200kg/webaudio-controls](https://github.com/g200kg/webaudio-controls)  
 
 <br/>
 
@@ -84,8 +84,8 @@ webaudio-controls is based on:
 - <a href="http://aikelab.net/switch/" target="_blank">WebAudio-Switch</a> by <a href="http://d.hatena.ne.jp/aike/" target="_blank">Keisuke Ai</a>
 - Integrated and enhanced by <a href="http://www.g200kg.com/" target="_blank">g200kg</a>
 
-**webaudio-controls** is licensed under the Apache License, Version 2.0  
-Copyright (c) 2013 Eiji Kitamura / Ryoya KAWAI / Keisuke Ai / g200kg (Tatsuya Shinyagaito)  
+Copyright (c) 2013 Eiji Kitamura / Ryoya KAWAI / Keisuke Ai / g200kg / @micbuffa / @CellouBalde
+Licensed under the Apache License, Version 2.0 
 
 ---
 
