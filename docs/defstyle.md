@@ -8,8 +8,7 @@
 
 <script src="../webaudio-controls.js"></script>
 
-Basic Usage :  
-
+Basic Usage :
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./index.html">Overview</a></div>
 <div class="item"><a href="./install.html">Install</a></div>
@@ -17,11 +16,11 @@ Basic Usage :
 <div class="item"><a href="./options.html">WebAudioControlsOptions</a></div>
 <div class="item"><a href="./knobimage.html">Creating Knob Images</a></div>
 <div class="item cur"><a href="./defstyle.html">Default Style of Controls</a></div>
-<div class="item"><a href="./attributes.html">Examples of Various Attributes</a></div>
+<div class="item"><a href="./example.html">Examples of Various Attributes</a></div>
 </div>
+<br/>
 
-Advanced Usage and Application Note :  
-
+Advanced Usage and Application Note :
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
 <div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
