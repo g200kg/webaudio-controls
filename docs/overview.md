@@ -7,10 +7,11 @@ WebAudioControlsOptions={
 <style>
 .item{
   background:#555;
+  margin:4px;
 }
 </style>
 <script src="../webaudio-controls.js"></script>
-<div style="display:flex;width:100%">
+<div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./overview.html">Overview</a></div>
 <div class="item"><a href="./defstyle.html">Default Style of Controls</a></div>
 <div class="item"><a href="./attrubutes.html">Examples of Various Attributes</a></div>
