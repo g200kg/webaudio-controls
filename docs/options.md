@@ -23,9 +23,11 @@
 <div class="item"><a href="./resizetest.html">Resizing After Creation</a></div>
 </div>
 
+---
+
 ## WebAudioControlsOptions
-By setting the global object, WebAudioControlsOptions, you can specify default values such as the knob size or colors etc when attribute setting on each tag is omitted.
-This declaration should be prior to the webaduio-controls.js loading.
+By setting the global object, `WebAudioControlsOptions`, you can specify default values such as the knob size or colors etc when attribute setting on each tag is omitted.
+This declaration should be prior to the `webaduio-controls.js` loading.
 
 ```html
 <script>
@@ -65,3 +67,5 @@ paramWidth  |32       | width for param
 paramHeight |20       | height for param
 paramSrc    |null     | param background image source
 paramColors |"#fff;#000"| color setting for param
+
+---

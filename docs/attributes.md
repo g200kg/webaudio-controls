@@ -1,90 +1,28 @@
-<script src="../webaudio-controls.js"></script>
-<script type="text/javascript">
-function Init() {
-  var knobs = document.getElementsByTagName('webaudio-knob');
-  for(var i = 0; i < knobs.length; ++i){
-    knobs[i].addEventListener('input', AddLogValue);
-    knobs[i].addEventListener('change', AddLogValue);
-    knobs[i].addEventListener('click', AddLogValue);
-  }
-  var sliders = document.getElementsByTagName('webaudio-slider');
-  for(var i = 0; i < sliders.length; ++i){
-    sliders[i].addEventListener('input', AddLogValue);
-    sliders[i].addEventListener('change', AddLogValue);
-    knobs[i].addEventListener('click', AddLogValue);
-  }
-  var switches = document.getElementsByTagName('webaudio-switch');
-  for(var i = 0; i < switches.length; ++i){
-    switches[i].addEventListener('input', AddLogValue);
-    switches[i].addEventListener('change', AddLogValue);
-    switches[i].addEventListener('click', AddLogValue);
-  }
-  var kbds = document.getElementsByTagName('webaudio-keyboard');
-  for(var i = 0; i < kbds.length; ++i){
-    kbds[i].addEventListener('input', AddLogKbd);
-    kbds[i].addEventListener('change', AddLogKbd);
-    kbds[i].addEventListener('click', AddLogKbd);
-  }
-  window.addEventListener('scroll',Scroll);
-}
-function AddLogValue(e) {
-  var str = `"${e.type}": ${e.target.id}.value = ${e.target.value}`;
-  var con = document.getElementById("cons");
-  var conframe = document.getElementById("consframe");
-  con.innerHTML += (str+"<br/>");
-  conframe.scrollTop = con.scrollHeight;
-}
-function AddLogKbd(e) {
-  var str;
-  switch(e.type){
-  case "change":
-    str = `"${e.type}": ${e.target.id} ev.note = [${e.note}]`;
-    break;
-  default:
-    str = `"${e.type}": ${e.target.id}`;
-    break;
-  }
-  var con = document.getElementById("cons");
-  var conframe = document.getElementById("consframe");
-  con.innerHTML += (str+"<br/>");
-  conframe.scrollTop = con.scrollHeight;
-}
-function LogClick(e) {
-  var str="click:"+e.target.id;
-  document.getElementById("cons").innerHTML += (str+"<br/>");
-  console.log(str);
-}
-function Scroll() {
-  document.getElementById("consframe").style.top=window.scrollY+"px";
-}
-function Clear() {
-  document.getElementById("cons").innerHTML="--- Events ---<br/>";
-}
-window.onload=Init;
+<link rel="stylesheet" href="./docstyle.css">
+
+<script>
+  WebAudioControlsOptions={
+
+  };
 </script>
 
-<div id="side" style="position:fixed;right:0%;top:90px;height:80%">
-  <div id="consframe" style="color:#fff;width:240px;height:100%;background:rgba(0,0,0,0.4);overflow:scroll;margin:0;padding:5px">
-    <div id="cons"><br/><br/>--- Events ---<br/></div>
-  </div>
-  <button onclick="Clear()" style="position:absolute;left:0;top:-20px">Clear</button>
-</div>
+<script src="../webaudio-controls.js"></script>
 
-<style>
-.item{
-  background:#444;
-  margin:4px;
-  padding:0px 3px;
-}
-</style>
+Basic Usage :  
+
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./index.html">Overview</a></div>
 <div class="item"><a href="./install.html">Install</a></div>
 <div class="item"><a href="./specs.html">Attributes, Functions, Events</a></div>
 <div class="item"><a href="./options.html">WebAudioControlsOptions</a></div>
 <div class="item"><a href="./knobimage.html">Creating Knob Images</a></div>
-<div class="item"><a href="./defstyle.html">Default Style of Controls</a></div>
+<div class="item cur"><a href="./defstyle.html">Default Style of Controls</a></div>
 <div class="item"><a href="./attributes.html">Examples of Various Attributes</a></div>
+</div>
+
+Advanced Usage and Application Note :  
+
+<div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
 <div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
 <div class="item"><a href="./knobsize.html">Determining Knob Size</a></div>
@@ -96,6 +34,14 @@ window.onload=Init;
 </div>
 
 ---
+
+<div id="side" style="position:fixed;right:0%;top:90px;height:80%">
+  <div id="consframe" style="color:#fff;width:240px;height:100%;background:rgba(0,0,0,0.4);overflow:scroll;margin:0;padding:5px">
+    <div id="cons"><br/><br/>--- Events ---<br/></div>
+  </div>
+  <button onclick="Clear()" style="position:absolute;left:0;top:-20px">Clear</button>
+</div>
+
 
 # Examples of Various Attributes
 
@@ -297,3 +243,67 @@ Number of keys, width and height settings. Also the lowest key is set to note "A
 ```
 
 ---
+
+<script type="text/javascript">
+function Init() {
+  var knobs = document.getElementsByTagName('webaudio-knob');
+  for(var i = 0; i < knobs.length; ++i){
+    knobs[i].addEventListener('input', AddLogValue);
+    knobs[i].addEventListener('change', AddLogValue);
+    knobs[i].addEventListener('click', AddLogValue);
+  }
+  var sliders = document.getElementsByTagName('webaudio-slider');
+  for(var i = 0; i < sliders.length; ++i){
+    sliders[i].addEventListener('input', AddLogValue);
+    sliders[i].addEventListener('change', AddLogValue);
+    knobs[i].addEventListener('click', AddLogValue);
+  }
+  var switches = document.getElementsByTagName('webaudio-switch');
+  for(var i = 0; i < switches.length; ++i){
+    switches[i].addEventListener('input', AddLogValue);
+    switches[i].addEventListener('change', AddLogValue);
+    switches[i].addEventListener('click', AddLogValue);
+  }
+  var kbds = document.getElementsByTagName('webaudio-keyboard');
+  for(var i = 0; i < kbds.length; ++i){
+    kbds[i].addEventListener('input', AddLogKbd);
+    kbds[i].addEventListener('change', AddLogKbd);
+    kbds[i].addEventListener('click', AddLogKbd);
+  }
+  window.addEventListener('scroll',Scroll);
+}
+function AddLogValue(e) {
+  var str = `"${e.type}": ${e.target.id}.value = ${e.target.value}`;
+  var con = document.getElementById("cons");
+  var conframe = document.getElementById("consframe");
+  con.innerHTML += (str+"<br/>");
+  conframe.scrollTop = con.scrollHeight;
+}
+function AddLogKbd(e) {
+  var str;
+  switch(e.type){
+  case "change":
+    str = `"${e.type}": ${e.target.id} ev.note = [${e.note}]`;
+    break;
+  default:
+    str = `"${e.type}": ${e.target.id}`;
+    break;
+  }
+  var con = document.getElementById("cons");
+  var conframe = document.getElementById("consframe");
+  con.innerHTML += (str+"<br/>");
+  conframe.scrollTop = con.scrollHeight;
+}
+function LogClick(e) {
+  var str="click:"+e.target.id;
+  document.getElementById("cons").innerHTML += (str+"<br/>");
+  console.log(str);
+}
+function Scroll() {
+  document.getElementById("consframe").style.top=window.scrollY+"px";
+}
+function Clear() {
+  document.getElementById("cons").innerHTML="--- Events ---<br/>";
+}
+window.onload=Init;
+</script>

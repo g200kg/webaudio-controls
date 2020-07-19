@@ -167,11 +167,11 @@ If the `fire` parameter is `undefined` or `false`, this function will not fire `
 
 ### 'change'  
 `webaudio-knob` | `webaudio-slider` | `webaudio-switch` | `webaudio-keyboard`  
-**description**: 'change' event is fired when value changes is decided. It means mouse button release for knobs and sliders, or switch / keyboard state changes.
+**description**: `change` event is fired when value changes is decided. It means mouse button release for knobs and sliders, or switch / keyboard state changes.
  Also issued when setValue() function call with fire flag is nonzero.
 In the event handler of `webaudio-knob`,`webaudio-slider` or `webaudio-switch`, current value can be get with referring `event.target.value`.  
 
-```
+```js
 var knobs = document.getElementsByTagName('webaudio-knob');
 for (var i = 0; i < knobs.length; i++) {
   var knob = knobs[i];
@@ -183,16 +183,18 @@ for (var i = 0; i < knobs.length; i++) {
 
 For the `webaudio-keyboard`, each 'change' event has the property '.note' that contain a array `[key-state, key-number]`. For example `event.note = [1, 60]` if the key#60 is on, or `event.note = [0, 60]` if the key#60 is off.
 
-```
+```js
 var keyboard = document.getElementsById('keyboard');
 keyboard.addEventListener('change', function(e) {
-	if(e.note[0])
-		console.log("Note-On:"+e.note[1]);
-	else
-		console.log("Note-Off:"+e.note[1]);
+  if(e.note[0])
+    console.log("Note-On:"+e.note[1]);
+  else
+    console.log("Note-Off:"+e.note[1]);
 });
 ```
 
 ### 'click'  
 `webaudio-switch (kick)`  
 **description**: 'click' event is emitted if the 'kick' type webaudio-switch has clicked.
+
+---

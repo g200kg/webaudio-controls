@@ -125,6 +125,4 @@ If one frame of the knob image is not square, the `sprites` attribute should be 
 ---
 
 
-<hr/>
-
 

@@ -23,8 +23,10 @@
 <div class="item"><a href="./resizetest.html">Resizing After Creation</a></div>
 </div>
 
+---
+
 ## Creating knob images
-webaudio-knob (with sprites is `0` (default)) use a single frame knob image that indicate center position.
+webaudio-knob with sprites attribute is `0` use a single frame knob image that indicate center position.
 For example,  
 
 ![](../img/testknob.png)  
@@ -37,7 +39,7 @@ For example,
 ![](../img/LittlePhatty_sample.png)
 ![](../img/switch_toggle.png)  
 
-This knob example has only 5 frames but it should has more frames for smooth animation. I recommend to use JKnobMan/WebKnobMan for making these stitched images,
+This knob example has only 5 frames but it should has more frames for smooth animation. I recommend to use JKnobMan / WebKnobMan for making these stitched images,
 
 - [JKnobMan](http://www.g200kg.com/en/software/knobman.html) -- Java based Knob image creation tool.
 - [WebKnobMan](http://www.g200kg.com/en/webknobman/) -- WebApp version of the JknobMan
@@ -54,3 +56,4 @@ Here is a brief instruction  to export knob-image from KnobGallery
 
 **Note: comply with license requirements**
 
+---

@@ -1,24 +1,28 @@
+<link rel="stylesheet" href="./docstyle.css">
+
 <script>
-WebAudioControlsOptions={
-};
+  WebAudioControlsOptions={
+
+  };
 </script>
+
 <script src="../webaudio-controls.js"></script>
 
-<style>
-.item{
-  background:#444;
-  margin:4px;
-  padding:0px 3px;
-}
-</style>
+Basic Usage :  
+
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./index.html">Overview</a></div>
 <div class="item"><a href="./install.html">Install</a></div>
 <div class="item"><a href="./specs.html">Attributes, Functions, Events</a></div>
 <div class="item"><a href="./options.html">WebAudioControlsOptions</a></div>
 <div class="item"><a href="./knobimage.html">Creating Knob Images</a></div>
-<div class="item"><a href="./defstyle.html">Default Style of Controls</a></div>
+<div class="item cur"><a href="./defstyle.html">Default Style of Controls</a></div>
 <div class="item"><a href="./attributes.html">Examples of Various Attributes</a></div>
+</div>
+
+Advanced Usage and Application Note :  
+
+<div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
 <div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
 <div class="item"><a href="./knobsize.html">Determining Knob Size</a></div>
@@ -34,7 +38,9 @@ WebAudioControlsOptions={
 # Install
 
 - **webaudio-controls.js**
-  - Place "webaudio-controls.js" to an appropriate directory. <br/>This is the only file needed. There are no dependencies on other libraries.
+  - Place "webaudio-controls.js" to an appropriate directory. <br/>This is the only file needed. There are no dependencies on other libraries.  
+
+  [webaudio-controls.js](../webaudio-controls.js)
 
 - **WebComponents polyfill**
   - If you want to support legacy browsers that not support WebComponents, the polyfill for WebComponents is needed :  
@@ -52,3 +58,4 @@ WebAudioControlsOptions={
   - `<webaudio-param src="" link="knob-1"></webaudio-param>`
   - `<webaudio-keyboard keys="25"></webaudio-keyboard>`
 
+---

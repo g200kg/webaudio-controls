@@ -1,20 +1,28 @@
+<link rel="stylesheet" href="./docstyle.css">
+
+<script>
+  WebAudioControlsOptions={
+
+  };
+</script>
+
 <script src="../webaudio-controls.js"></script>
 
-<style>
-.item{
-  background:#444;
-  margin:4px;
-  padding:0px 3px;
-}
-</style>
+Basic Usage :  
+
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./index.html">Overview</a></div>
 <div class="item"><a href="./install.html">Install</a></div>
 <div class="item"><a href="./specs.html">Attributes, Functions, Events</a></div>
 <div class="item"><a href="./options.html">WebAudioControlsOptions</a></div>
 <div class="item"><a href="./knobimage.html">Creating Knob Images</a></div>
-<div class="item"><a href="./defstyle.html">Default Style of Controls</a></div>
+<div class="item cur"><a href="./defstyle.html">Default Style of Controls</a></div>
 <div class="item"><a href="./attributes.html">Examples of Various Attributes</a></div>
+</div>
+
+Advanced Usage and Application Note :  
+
+<div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
 <div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
 <div class="item"><a href="./knobsize.html">Determining Knob Size</a></div>
@@ -71,6 +79,8 @@ The captured events are displayed on the Events window on the right.
   <div id="events" style="background:rgba(128,128,255,0.5);padding:10px;color:#fff;text-align:left;width:400px;height:150px;overflow:scroll"></div>
   </div>
 </div>
+
+---
 
 <script>
 var message="";

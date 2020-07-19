@@ -1,26 +1,28 @@
+<link rel="stylesheet" href="./docstyle.css">
 
 <script>
-WebAudioControlsOptions={
-  useMidi:1,
-};
+  WebAudioControlsOptions={
+
+  };
 </script>
+
 <script src="../webaudio-controls.js"></script>
 
-<style>
-.item{
-  background:#444;
-  margin:4px;
-  padding:0px 3px;
-}
-</style>
+Basic Usage :  
+
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./index.html">Overview</a></div>
 <div class="item"><a href="./install.html">Install</a></div>
 <div class="item"><a href="./specs.html">Attributes, Functions, Events</a></div>
 <div class="item"><a href="./options.html">WebAudioControlsOptions</a></div>
 <div class="item"><a href="./knobimage.html">Creating Knob Images</a></div>
-<div class="item"><a href="./defstyle.html">Default Style of Controls</a></div>
+<div class="item cur"><a href="./defstyle.html">Default Style of Controls</a></div>
 <div class="item"><a href="./attributes.html">Examples of Various Attributes</a></div>
+</div>
+
+Advanced Usage and Application Note :  
+
+<div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
 <div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
 <div class="item"><a href="./knobsize.html">Determining Knob Size</a></div>
@@ -90,6 +92,8 @@ Copyright (c) 2013 Eiji Kitamura / Ryoya KAWAI / Keisuke Ai / g200kg (Tatsuya Sh
 
 Knob/Switch images are from <a href="http://www.g200kg.com/en/webknobman/gallery.php" target="_blank">Knob Gallery</a><br/>
 <a href="http://www.g200kg.com/en/webknobman/gallery.php?m=p&p=58" target="_blank">switch_toggle.knob</a> by <a href="http://bji.yukihotaru.com/" target="_blank">az</a> Copyright (c) 2011 <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC-BY</a>
+
+---
 
 <script>
 webAudioControlsMidiManager.addMidiListener(function(event) {

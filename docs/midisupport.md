@@ -30,27 +30,40 @@
 
 # MIDI Support
 
-## MIDI support: knobs, sliders and switches have midilearn/midicc support built-in
+**knobs, sliders and switches have midilearn/midicc support built-in**  
 
-To enable MIDI related functions, add the following line before the &lt;link&gt; tag that loads `webaudio-controls.js`  
+To enable MIDI related functions, specify `useMidi:1` in `WebAudioControlsOptions` before loading `webaudio-controls.js`. 
 
-`<script>WebAudioControlsOptions={useMidi:1}</script>`
+```html
+<script>WebAudioControlsOptions = {
+  useMidi:1,
+}</script>
+<script src="webaudio-controls.js"></script>
+```
 
-<b>Midilearn right click menu</b>: add a <code>midilearn=1</code> attribute to the <code>&lt;webaudio-knob&gt;</code>,  <code>&lt;webaudio-slider&gt;</code> and  <code>&lt;webaudio-switch&gt;</code> elements. Then right click on the element in the GUI, a midi learn menu should appear. Then, operate one of your midi controller and it should start actionning the webaudio-controls widget in the HTML page. <!--You can associate more than one controller to each widget. -->You can hot plug/unplug midi devices, they will be detected.
+**Midilearn right click menu** :  
+ Add a `midilearn=1` attribute to the `<webaudio-knob>`,  `<webaudio-slider>` and  `<webaudio-switch>` elements. Then right click on the element in the GUI, a midi learn menu should appear. Then, operate one of your midi controller and it should start actionning the webaudio-controls widget in the HTML page. You can hot plug/unplug midi devices, they will be detected.
 
 ![Midi Learn Menu](../img/midilearn.png)
 
-<b>Declarative association between a midi controller and a GUI webaudiocontrol</b>: There is also an HTML <code>midicc="channel.cc#"</code> attribute that works like this:  <code>midicc="3.2"</code> means "listen to a cc event on channel 3, cc number 2". If you don't know the channel/cc number of your controller: 1) add a <code>midilearn=1</code> attribute so that a right click on the GUI widget will display the midilearn menu, 2) select "learn" in the menu, 3) operate your knob/slider/switch, normally the midi controller and the GUI object are in sync. 4) look at the devtool console, there is a message indicating the channel and cc number, for example "channel 0, cc 28". Then if you add the attribute midicc="0.28" to the HTML of your knob/slider/switch, the midi mapping between your GUI webaudiocontrol and your midi controller will be automatic. Follow the links at the end of this section and look at the HTML source code to see some examples.
+**Declarative association between a midi controller and a GUI webaudiocontrol** :  
+ There is also an HTML `midicc="channel.cc#"` attribute that works like this:  
+ `midicc="3.2"` means "listen to a CC event on channel 3, CC number 2". If you don't know the channel/CC number of your controller:  
+  1) add a `midilearn=1` attribute so that a right click on the GUI widget will display the midilearn menu,  
+  2) select "learn" in the menu,  
+  3) operate your knob/slider/switch, normally the midi controller and the GUI object are in sync.  
+  4) look at the devtool console, there is a message indicating the channel and CC number, for example "channel 0, cc 28". Then if you add the attribute `midicc="0.28"` to the HTML of your knob/slider/switch, the midi mapping between your GUI webaudio-controls and your midi controller will be automatic. Follow the links at the end of this section and look at the HTML source code to see some examples.
 
 Example: associate a knob with a controller on channel 7, cc number 7:
 
-```
+```html
 <webaudio-knob midilearn=true midicc="7.7" ...></webaudio-knob>
 ```
 
-<b>External midi event listener (hook): </b>you can also declare in your HTML file your own midi event listener (for example for listening to program changes events): use the <code>webAudioControlsMidiManager</code> object, that comes with an <code>addMidiListener</code> method. Like that you will benefit from the MIDI code included in the webaudiocontrols. Here is an example (also, look at the source code of the Sample1.html demo, and open the devtool console to see midi messages received by the hook at the end of the HTML file).
+**External midi event listener (hook)** :  
+ You can also declare in your HTML file your own midi event listener (for example for listening to program changes events): use the `webAudioControlsMidiManager` object, that comes with an `addMidiListener` method. Like that you will benefit from the MIDI code included in the webaudio-controls. Here is an example (also, look at the source code of the [overview](./index.html) demo, and open the devtool console to see midi messages received by the hook at the end of the HTML file).
 
-```
+```html
 <script>
 // add this to your html page that uses webaudiocontrols
 webAudioControlsMidiManager.addMidiListener(function(event) {
@@ -66,7 +79,7 @@ webAudioControlsMidiManager.addMidiListener(function(event) {
 </script>
 ```
 
-Demo at: https://wasabi.i3s.unice.fr/AmpSimFA/ and at https://wasabi.i3s.unice.fr/AmpSimFA/sample1.html
+Demo at: [https://wasabi.i3s.unice.fr/AmpSimFA/](https://wasabi.i3s.unice.fr/AmpSimFA/) and at [https://wasabi.i3s.unice.fr/AmpSimFA/sample1.html](https://wasabi.i3s.unice.fr/AmpSimFA/sample1.html)
 
 
 ---

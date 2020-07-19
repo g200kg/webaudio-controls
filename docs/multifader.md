@@ -31,9 +31,13 @@ td{
   margin:4px;
   padding:0px 3px;
 }
+.focus{
+  background:#000;
+  border:1px solid #440;
+}
 </style>
 <div style="display:flex;width:100%;flex-wrap:wrap">
-<div class="item"><a href="./index.html">Overview</a></div>
+<div class="item focus"><a href="./index.html">Overview</a></div>
 <div class="item"><a href="./install.html">Install</a></div>
 <div class="item"><a href="./specs.html">Attributes, Functions, Events</a></div>
 <div class="item"><a href="./options.html">WebAudioControlsOptions</a></div>
@@ -96,3 +100,4 @@ The MIDI function can be controlled by right-clicking each element to display a 
   .
   .
 ```
+---
