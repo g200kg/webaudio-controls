@@ -6,7 +6,7 @@ WebAudioControlsOptions={
 </script>
 <script src="../webaudio-controls.js"></script>
 
-[Overview](./overview.html) | [Default Style of Controls](./defstyle.html) | [Examples of Various Attributes](./attributes.html) | [Knob Samples from KnobGallery](./knobsamples.html) | [Working Keyboard Demo](./keyboard.html)
+[Overview](./overview.html) | [Default Style of Controls](./defstyle.html) | [Examples of Various Attributes](./attributes.html) | [Knob Samples from KnobGallery](./knobsamples.html) | [Working Keyboard Demo](./keyboard.html) | [Determining Knob Size](./knobsize.html) | [Slider tracking "rel" and "abs"](./tracking.html) | [Non-Linear Knobs / Sliders](./nonlinear.html) | [Multi-Touch Device Support](./multifader.html) | [MIDI Support](./midisupport.html) | [Resizing After Creation](./resizetest.html)
 
 # Overview
 
