@@ -51,9 +51,9 @@ Advanced Usage and Application Notes :
   - ```<script src="https://g200kg.github.io/webaudio-controls/webaudio-controls.js"></script>```
 
 - **insert webaudio-knob / slider / switch / param / keyboard elements.**
-  - `<webaudio-knob id="knob-1" src="../img/LittlePhatty.png" sprites="100" min="0" max="100"></webaudio-knob>`
-  - `<webaudio-slider src="../img/hsliderbody.png"></webaudio-slider>`
-  - `<webaudio-switch src="../img/switch_toggle.png" width="32" height="32"></webaudio-switch>`
+  - `<webaudio-knob id="knob-1" src="../knobs/LittlePhatty.png" min="0" max="100"></webaudio-knob>`
+  - `<webaudio-slider></webaudio-slider>`
+  - `<webaudio-switch src="../knobs/switch_toggle.png" width="32" height="32"></webaudio-switch>`
   - `<webaudio-param src="" link="knob-1"></webaudio-param>`
   - `<webaudio-keyboard keys="25"></webaudio-keyboard>`
 
