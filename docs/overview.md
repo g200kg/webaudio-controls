@@ -6,8 +6,9 @@ WebAudioControlsOptions={
 </script>
 <style>
 .item{
-  background:#555;
+  background:#444;
   margin:4px;
+  padding:0px 3px;
 }
 </style>
 <script src="../webaudio-controls.js"></script>
@@ -24,6 +25,8 @@ WebAudioControlsOptions={
 <div class="item"><a href="./midisupport.html">MIDI Support</a></div>
 <div class="item"><a href="./resizetest.html">Resizing After Creation</a></div>
 </div>
+
+---
 
 # Overview
 
@@ -47,6 +50,8 @@ Each component fires an event when manipulated and can be handled by a javascrip
 ## Available At
 <b><a href="https://github.com/g200kg/webaudio-controls">https://github.com/g200kg/webaudio-controls</a></b>
 
+<br/>
+
 ## To Operate
 
 Operation               | Component        | Description
@@ -58,7 +63,9 @@ Ctrl+Click/Command+Click|Knob/Slider/Switch|set to default value
 Edit with Keyboard      |Param             |edit the value directly
 MouseWheel              |Knob/Slider       |rotate upward to increase value / downward to decrease value
 Shift+MouseWheel        |Knob/Slider       |fine control
+RClick                  |Knob/Slider/Switch|MIDI learn menu
 
+<br/>
 
 ## License
 webaudio-controls is based on:
@@ -66,8 +73,6 @@ webaudio-controls is based on:
 - <a href="https://github.com/ryoyakawai/webaudio-slider" target="_blank">WebAudio-Slider</a> by <a href="https://plus.google.com/108242669191458983485/posts" target="_blank">Ryoya Kawai</a>
 - <a href="http://aikelab.net/switch/" target="_blank">WebAudio-Switch</a> by <a href="http://d.hatena.ne.jp/aike/" target="_blank">Keisuke Ai</a>
 - Integrated and enhanced by <a href="http://www.g200kg.com/" target="_blank">g200kg</a>
-
-<br/>
 
 **webaudio-controls** is licensed under the Apache License, Version 2.0  
 Copyright (c) 2013 Eiji Kitamura / Ryoya KAWAI / Keisuke Ai / g200kg (Tatsuya Shinyagaito)  
