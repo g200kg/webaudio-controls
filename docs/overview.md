@@ -10,18 +10,18 @@ WebAudioControlsOptions={
 }
 </style>
 <script src="../webaudio-controls.js"></script>
-<div style="display:flex">
-<div class="item">[Overview](./overview.html)</div>
-<div class="item">[Default Style of Controls](./defstyle.html)</div>
-<div class="item">[Examples of Various Attributes](./attributes.html)</div>
-<div class="item">[Knob Samples from KnobGallery](./knobsamples.html)</div>
-<div class="item">[Working Keyboard Demo](./keyboard.html)</div>
-<div class="item">[Determining Knob Size](./knobsize.html)</div>
-<div class="item">[Slider tracking "rel" and "abs"](./tracking.html)</div>
-<div class="item">[Non-Linear Knobs / Sliders](./nonlinear.html)</div>
-<div class="item">[Multi-Touch Device Support](./multifader.html)</div>
-<div class="item">[MIDI Support](./midisupport.html)</div>
-<div class="item">[Resizing After Creation](./resizetest.html)</div>
+<div style="display:flex;width:100%">
+<div class="item"><a href="./overview.html">Overview</a></div>
+<div class="item"><a href="./defstyle.html">Default Style of Controls</a></div>
+<div class="item"><a href="./attrubutes.html">Examples of Various Attributes</a></div>
+<div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
+<div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
+<div class="item"><a href="./knobsize.html">Determining Knob Size</a></div>
+<div class="item"><a href="./tracking.html">Slider tracking "rel" and "abs"</a></div>
+<div class="item"><a href="./nonlinear.html">Non-Linear Knobs / Sliders</a></div>
+<div class="item"><a href="./multifader.html">Multi-Touch Device Support</a></div>
+<div class="item"><a href="./midisupport.html">MIDI Support</a></div>
+<div class="item"><a href="./resizetest.html">Resizing After Creation</a></div>
 </div>
 
 # Overview
