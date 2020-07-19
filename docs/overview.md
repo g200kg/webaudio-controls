@@ -6,9 +6,13 @@ WebAudioControlsOptions={
 </script>
 <script src="../webaudio-controls.js"></script>
 
+[Overview](./overview.html) | [Default Style of Controls](./defstyle.html) | [Examples of Various Attributes](./attributes.html) | [Knob Samples from KnobGallery](./knobsamples.html) | [Working Keyboard Demo](./keyboard.html)
+
 # Overview
 
-This is an example of a typical GUI screen created using webaudio-controls. Knobs, sliders, switches etc. can be manipulated with a mouse or touch device. It is also possible to operate from a connected MIDI controller. Each component fires an event when manipulated and can be handled by a javascript program.
+This is an example of a typical GUI screen created using webaudio-controls. Knobs, sliders, switches etc. can be manipulated with a mouse or touch device. It is also possible to operate from a connected MIDI controller.  
+
+Each component fires an event when manipulated and can be handled by a javascript program.
 
 <div>
     <div style="position:relative;background-image: url('../img/bg.png');width:512px;height:240px;margin:30px auto;padding:0px;">
@@ -21,40 +25,41 @@ This is an example of a typical GUI screen created using webaudio-controls. Knob
         <webaudio-switch midilearn="1" style="position:absolute;left:440px;top:38px" src="../knobs/switch_toggle.png" value="0" height="56" width="56" tooltip="Switch-A Tooltip text test"></webaudio-switch>
         <webaudio-switch midilearn="1" style="position:absolute;left:440px;top:102px" src="../knobs/switch_toggle.png" value="0" height="56" width="56" tooltip="Switch-B"></webaudio-switch>
 	</div>
-<div>
-<h2>Available At</h2>
+</div>
+
+## Available At
 <b><a href="https://github.com/g200kg/webaudio-controls">https://github.com/g200kg/webaudio-controls</a></b>
 
-<h2>To Operate</h2>
-<table>
-<tr><th>Operation</th><th>Component</th><th>Description</th></tr>
-<tr><td><b>Click</b></td><td>Switch/Param</td><td>toggle / activate the switch or focus the param</td></tr>
-<tr><td><b>Drag</b></td><td>Knob/Slider</td><td>up/right to increase value / down/left to decrease value</td></tr>
-<tr><td><b>Shift+Drag</b></td><td>Knob/Slider</td><td>fine control</td></tr>
-<tr><td><b>Ctrl+Click/Command+Click</b></td><td>Knob/Slider/Switch</td><td>set to default value</td></tr>
-<tr><td><b>Edit with Keyboard</strong></td><td>Param</td><td>edit the value directly</td></tr>
-<tr><td><b>MouseWheel</b></td><td>Knob/Slider</td><td>rotate upward to increase value / downward to decrease value</td></tr>
-<tr><td><b>Shift+MouseWheel</b></td><td>Knob/Slider</td><td>fine control</td></tr>
-</table>
-</div>
+## To Operate
 
-<div>
-<h2>License</h2>
+Operation               | Component        | Description
+------------------------|------------------|------------------
+Click                   |Switch/Param      |toggle / activate the switch or focus the param
+Drag                    |Knob/Slider       |up/right to increase value / down/left to decrease value
+Shift+Drag              |Knob/Slider       |fine control
+Ctrl+Click/Command+Click|Knob/Slider/Switch|set to default value
+Edit with Keyboard      |Param             |edit the value directly
+MouseWheel              |Knob/Slider       |rotate upward to increase value / downward to decrease value
+Shift+MouseWheel        |Knob/Slider       |fine control
+
+
+## License
 webaudio-controls is based on:
-<ul>
-<li><a href="https://github.com/agektmr/webaudio-knob" target="_blank">WebAudio-Knob</a> by <a href="http://google.com/+agektmr" target="_blank">Eiji Kitamura</a></li>
-<li><a href="https://github.com/ryoyakawai/webaudio-slider" target="_blank">WebAudio-Slider</a> by <a href="https://plus.google.com/108242669191458983485/posts" target="_blank">Ryoya Kawai</a></li>
-<li><a href="http://aikelab.net/switch/" target="_blank">WebAudio-Switch</a> by <a href="http://d.hatena.ne.jp/aike/" target="_blank">Keisuke Ai</a></li>
-<li>Integrated and enhanced by <a href="http://www.g200kg.com/" target="_blank">g200kg</a></li>
-</ul>
+- <a href="https://github.com/agektmr/webaudio-knob" target="_blank">WebAudio-Knob</a> by <a href="http://google.com/+agektmr" target="_blank">Eiji Kitamura</a>
+- <a href="https://github.com/ryoyakawai/webaudio-slider" target="_blank">WebAudio-Slider</a> by <a href="https://plus.google.com/108242669191458983485/posts" target="_blank">Ryoya Kawai</a>
+- <a href="http://aikelab.net/switch/" target="_blank">WebAudio-Switch</a> by <a href="http://d.hatena.ne.jp/aike/" target="_blank">Keisuke Ai</a>
+- Integrated and enhanced by <a href="http://www.g200kg.com/" target="_blank">g200kg</a>
 
-<p><b>webaudio-controls</b> is licensed under the Apache License, Version 2.0<br/>
-Copyright (c) 2013 Eiji Kitamura / Ryoya KAWAI / Keisuke Ai / g200kg (Tatsuya Shinyagaito)<br/>
-</p>
-<hr/>
+<br/>
+
+**webaudio-controls** is licensed under the Apache License, Version 2.0  
+Copyright (c) 2013 Eiji Kitamura / Ryoya KAWAI / Keisuke Ai / g200kg (Tatsuya Shinyagaito)  
+
+---
+
 Knob/Switch images are from <a href="http://www.g200kg.com/en/webknobman/gallery.php" target="_blank">Knob Gallery</a><br/>
 <a href="http://www.g200kg.com/en/webknobman/gallery.php?m=p&p=58" target="_blank">switch_toggle.knob</a> by <a href="http://bji.yukihotaru.com/" target="_blank">az</a> Copyright (c) 2011 <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC-BY</a>
-</div>
+
 <script>
 webAudioControlsMidiManager.addMidiListener(function(event) {
     var data = event.data;
