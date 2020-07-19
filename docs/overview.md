@@ -4,9 +4,25 @@ WebAudioControlsOptions={
   useMidi:1,
 };
 </script>
+<style>
+.item{
+  background:#555;
+}
+</style>
 <script src="../webaudio-controls.js"></script>
-
-[Overview](./overview.html) | [Default Style of Controls](./defstyle.html) | [Examples of Various Attributes](./attributes.html) | [Knob Samples from KnobGallery](./knobsamples.html) | [Working Keyboard Demo](./keyboard.html) | [Determining Knob Size](./knobsize.html) | [Slider tracking "rel" and "abs"](./tracking.html) | [Non-Linear Knobs / Sliders](./nonlinear.html) | [Multi-Touch Device Support](./multifader.html) | [MIDI Support](./midisupport.html) | [Resizing After Creation](./resizetest.html)
+<div style="display:flex">
+<div class="item">[Overview](./overview.html)</div>
+<div class="item">[Default Style of Controls](./defstyle.html)</div>
+<div class="item">[Examples of Various Attributes](./attributes.html)</div>
+<div class="item">[Knob Samples from KnobGallery](./knobsamples.html)</div>
+<div class="item">[Working Keyboard Demo](./keyboard.html)</div>
+<div class="item">[Determining Knob Size](./knobsize.html)</div>
+<div class="item">[Slider tracking "rel" and "abs"](./tracking.html)</div>
+<div class="item">[Non-Linear Knobs / Sliders](./nonlinear.html)</div>
+<div class="item">[Multi-Touch Device Support](./multifader.html)</div>
+<div class="item">[MIDI Support](./midisupport.html)</div>
+<div class="item">[Resizing After Creation](./resizetest.html)</div>
+</div>
 
 # Overview
 
