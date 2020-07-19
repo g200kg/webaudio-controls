@@ -75,7 +75,7 @@ When `width` and `height` attributes are specified individually.
 <webaudio-knob id="knob4" src="../knobs/Aqua.png"></webaudio-knob>
 <br/>
 
-If a `src` image is specified and nothing else is provided, the size of the image is used.
+If a `src` image is specified and nothing else is provided, the original size of the image is used.
 At this time, `sprites` are automatically calculated assuming that one frame of the knob image is square.  
 ```html
 <webaudio-knob src="../knobs/Aqua.png"></webaudio-knob>

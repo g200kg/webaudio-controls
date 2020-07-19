@@ -349,9 +349,9 @@ ${this.basestyle}
       this._max=this.getAttr("max",100); Object.defineProperty(this,"max",{get:()=>{return this._max},set:(v)=>{this._max=+v;this.redraw()}});
       this._step=this.getAttr("step",1); Object.defineProperty(this,"step",{get:()=>{return this._step},set:(v)=>{this._step=+v;this.redraw()}});
       this._sprites=this.getAttr("sprites",opt.knobSprites); Object.defineProperty(this,"sprites",{get:()=>{return this._sprites},set:(v)=>{this._sprites=v;this.setupImage()}});
-      this._width=this.getAttr("width",this.getAttr("diameter",opt.knobWidth)); Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});
-      this._height=this.getAttr("height",this.getAttr("diameter",opt.knobHeight)); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
-      this._diameter=this.getAttr("diameter",opt.knobDiameter); Object.defineProperty(this,"diameter",{get:()=>{return this._diameter},set:(v)=>{this._diameter=v;this.setupImage()}});
+      this._width=this.getAttr("width", null); Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});
+      this._height=this.getAttr("height", null); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
+      this._diameter=this.getAttr("diameter", null); Object.defineProperty(this,"diameter",{get:()=>{return this._diameter},set:(v)=>{this._diameter=v;this.setupImage()}});
       this._colors=this.getAttr("colors",opt.knobColors); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.outline=this.getAttr("outline",opt.outline);
       this.log=this.getAttr("log",0);
@@ -390,8 +390,8 @@ ${this.basestyle}
     }
     disconnectedCallback(){}
     setupImage(){
-      this.kw=this.width||this.diameter;
-      this.kh=this.height||this.diameter;
+      this.kw=this._width||this._diameter||opt.knobWidth||opt.knobDiameter;
+      this.kh=this._height||this._diameter||opt.knobHeight||opt.knobDiameter;
       if(!this.src){
         if(this.colors)
           this.coltab = this.colors.split(";");
