@@ -14,7 +14,11 @@ WebAudioControlsOptions={
 }
 </style>
 <div style="display:flex;width:100%;flex-wrap:wrap">
-<div class="item">Overview</div>
+<div class="item"><a href="./index.html">Overview</a></div>
+<div class="item"><a href="./install.html">Install</a></div>
+<div class="item"><a href="./specs.html">Attributes, Functions, Events</a></div>
+<div class="item"><a href="./options.html">WebAudioControlsOptions</a></div>
+<div class="item"><a href="./knobimage.html">Creating Knob Images</a></div>
 <div class="item"><a href="./defstyle.html">Default Style of Controls</a></div>
 <div class="item"><a href="./attributes.html">Examples of Various Attributes</a></div>
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
@@ -48,23 +52,27 @@ Each component fires an event when manipulated and can be handled by a javascrip
 	</div>
 </div>
 
-## Available At
-<b><a href="https://github.com/g200kg/webaudio-controls">https://github.com/g200kg/webaudio-controls</a></b>
+## Source COde is Available At
+
+GitHub : ** [https://github.com/g200kg/webaudio-controls](https://github.com/g200kg/webaudio-controls) **
 
 <br/>
 
 ## To Operate
 
-Operation               | Component        | Description
-------------------------|------------------|------------------
-Click                   |Switch/Param      |toggle / activate the switch or focus the param
-Drag                    |Knob/Slider       |up/right to increase value / down/left to decrease value
-Shift+Drag              |Knob/Slider       |fine control
-Ctrl+Click/Command+Click|Knob/Slider/Switch|set to default value
-Edit with Keyboard      |Param             |edit the value directly
-MouseWheel              |Knob/Slider       |rotate upward to increase value / downward to decrease value
-Shift+MouseWheel        |Knob/Slider       |fine control
-RClick                  |Knob/Slider/Switch|MIDI learn menu
+Following user actions are supported.
+
+Operation | Component | Description
+---|---|---
+**Click** | Switch<br/>Other | Switch : Toggle / activate the switch.<br/>Other : Focus the component.
+**Drag** | Knob<br/>Slider | Up/Right to increase value<br/>Down/Left to decrease value.
+**Shift+Drag** | Knob<br/>Slider | Fine control. Increase or decrease by the value specified in the `step`.
+**Ctrl+Click <br/> Command+Click(Mac)** | Knob<br/>Slider<br/>Switch | Set to default value.
+**Keyboard** | Knob<br/>Slider<br/>Param<br/>Keyboard | To manipulate with the keyboard, it is necessary to get the focus by clicking each component once.<br/><br/>Knob/Slider : ArrowUp/ArrowDown to increase or decrease by the value specified in the `step`.<br/>Param : Edit the param value directly.<br/>Keyboard : [ZSXDCV...for lowest visible 'C' octave] and [Q2W3E... one octave higher] as a music keyboard.
+**MouseWheel** | Knob<br/>Slider | Rotate upward to increase value, downward to decrease value.
+**Shift+MouseWheel** | Knob<br/>Slider | Fine control. Increase or decrease by the value specified in the `step`.
+**Mouse Button Press <br/> Touch** | Keyboard | Play keyboard. multi-touch is supported.
+**R-Click**     |Knob<br/>Slider<br/>Switch | Open MIDI learn menu.
 
 <br/>
 

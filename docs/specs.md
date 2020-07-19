@@ -1,88 +1,42 @@
-# webaudio-controls
 
-**webaudio-controls** is a Javascript library for displaying the GUI parts required to Web Music applications.  
-webaudio-controls consists of knobs, sliders, switches, parameter displays and keyboards.
-By loading webaudio-controls.js to your page, custom tags for component display will be added using WebComponents.  
-You can configure the GUI screen just by writing custom tags in HTML.  
+<script>
+WebAudioControlsOptions={
+};
+</script>
+<script src="../webaudio-controls.js"></script>
 
-<br/>
-
-**Webaudio-controls is Available At**
-* GitHub Repository : **<a href="https://github.com/g200kg/webaudio-controls">https://github.com/g200kg/webaudio-controls</a>**
-* Introduction Page : **<a href="https://g200kg.github.io/webaudio-controls">https://g200kg.github.io/webaudio-controls</a>**
-
-<br/>
-
-**webaudio-controls** is consist of following components  
-
-Component         | Description
-------------------|------------
-webaudio-knob     | Rotating or some other frame-by-frame animation knob. 
-webaudio-slider   | Vertical or Horizontal slider.
-webaudio-switch   | Toggle/Kick/Radio switches.
-webaudio-param    | Editable value display field.
-webaudio-keyboard | Mouse/Touch playable keyboard. multi-touch support.
-
-* Also available 'webaudio-pianoroll' at : [https://github.com/g200kg/webaudio-pianoroll/](https://github.com/g200kg/webaudio-pianoroll/)
-
-Chrome / Firefox / Edge compatible  
-iOS and Android touch devices compatible  
-
-[![](img/demo.png)](https://g200kg.github.io/webaudio-controls/samples/sample1.html)  
-
-## Working Samples 
-
-- [Default styles](https://g200kg.github.io/webaudio-controls/docs/defstyle.html)  
-- [Examples of various attributes](https://g200kg.github.io/webaudio-controls/docs/attributes.html)  
-- [Various knob images](https://g200kg.github.io/webaudio-controls/docs/knobsamples.html)  
-- [Multi-Touch Fader](https://g200kg.github.io/webaudio-controls/docs/multifader.html)  
-- [webaudio-keyboard to MIDI](https://g200kg.github.io/webaudio-controls/docs/keyboard.html)  
-- [webaudio-controls Resize Test](https://g200kg.github.io/webaudio-controls/docs/resizetest.html)  
-- [webaudio-controls NonLinear values Test](https://g200kg.github.io/webaudio-controls/docs/nonlinear.html)
-- [Renoid : Practical application using webaudio-controls](http://www.g200kg.com/renoid/)  
-
-## To Operate  
-Following user actions are supported.
-
-Operation | Component | Description
----|---|---
-**Click** | Switch<br/>Other | Switch : Toggle / activate the switch.<br/>Other : Focus the component.
-**Drag** | Knob<br/>Slider | Up/Right to increase value<br/>Down/Left to decrease value.
-**Shift+Drag** | Knob<br/>Slider | Fine control. Increase or decrease by the value specified in the `step`.
-**Ctrl+Click <br/> Command+Click(Mac)** | Knob<br/>Slider<br/>Switch | Set to default value.
-**Keyboard** | Knob<br/>Slider<br/>Param<br/>Keyboard | To manipulate with the keyboard, it is necessary to get the focus by clicking each component once.<br/><br/>Knob/Slider : ArrowUp/ArrowDown to increase or decrease by the value specified in the `step`.<br/>Param : Edit the param value directly.<br/>Keyboard : [ZSXDCV...for lowest visible 'C' octave] and [Q2W3E... one octave higher] as a music keyboard.
-**MouseWheel** | Knob<br/>Slider | Rotate upward to increase value, downward to decrease value.
-**Shift+MouseWheel** | Knob<br/>Slider | Fine control. Increase or decrease by the value specified in the `step`.
-**Mouse Button Press <br/> Touch** | Keyboard | Play keyboard. multi-touch is supported.
+<style>
+.item{
+  background:#444;
+  margin:4px;
+  padding:0px 3px;
+}
+</style>
+<div style="display:flex;width:100%;flex-wrap:wrap">
+<div class="item"><a href="./index.html">Overview</a></div>
+<div class="item"><a href="./install.html">Install</a></div>
+<div class="item"><a href="./specs.html">Attributes, Functions, Events</a></div>
+<div class="item"><a href="./options.html">WebAudioControlsOptions</a></div>
+<div class="item"><a href="./knobimage.html">Creating Knob Images</a></div>
+<div class="item"><a href="./defstyle.html">Default Style of Controls</a></div>
+<div class="item"><a href="./attributes.html">Examples of Various Attributes</a></div>
+<div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
+<div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
+<div class="item"><a href="./knobsize.html">Determining Knob Size</a></div>
+<div class="item"><a href="./tracking.html">Slider tracking "rel" and "abs"</a></div>
+<div class="item"><a href="./nonlinear.html">Non-Linear Knobs / Sliders</a></div>
+<div class="item"><a href="./multifader.html">Multi-Touch Device Support</a></div>
+<div class="item"><a href="./midisupport.html">MIDI Support</a></div>
+<div class="item"><a href="./resizetest.html">Resizing After Creation</a></div>
+</div>
 
 ---
-## How to use
 
-
-- webaudio-controls.js
-  - Place "webaudio-controls.js" to an appropriate directory. <br/>This is the only file needed. There are no dependencies on other libraries.
-
-- WebComponents polyfill
-  - If you want to support legacy browsers that not support WebComponents, the polyfill for WebComponents is needed :  
-  ```<script src="./webcomponents-lite.js"></script>```
-
-- load webaudio-controls :  
-  - ```<script src="./webaudio-controls.js"></script>```  
-  Or, if you want to load webaudio-controls.js directly from this GitHub page as CDN :  
-  - ```<script src="https://g200kg.github.io/webaudio-controls/webaudio-controls.js"></script>```
-
-- insert webaudio-knob / slider / switch / param / keyboard elements. For example...  
-  - `<webaudio-knob src="img/LittlePhatty.png" sprites="100" min="0" max="100"></webaudio-knob>`
-  - `<webaudio-slider src="img/hsliderbody.png"></webaudio-slider>`
-  - `<webaudio-switch src="img/switch_toggle.png" width="32" height="32"></webaudio-switch>`
-  - `<webaudio-param src="" link="knob-1"></webaudio-param>`
-  - `<webaudio-keyboard keys="25"></webaudio-keyboard>`
-
-
----
 ## Attributes
 
 ### webaudio-knob
+
+<webaudio-knob></webaudio-knob>
 
 Attribute       | Options| Default| Description
 ----------------|--------|--------|------------
@@ -108,6 +62,8 @@ Attribute       | Options| Default| Description
 **midicc**      | string | null   | Assign MIDI control change to this knob, with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
 
 ### webaudio-slider
+
+<webaudio-slider direction="horz"></webaudio-slider>
 
 Attribute       | Options| Default | Description
 ----------------|--------|---------|------------
@@ -139,6 +95,8 @@ Attribute       | Options| Default | Description
 
 ### webaudio-switch
 
+<webaudio-switch></webaudio-switch>
+
 Attribute       | Options   | Default | Description
 ----------------|-----------|---------|------------
 **src**         | string    | Internal embedded resource is used if not specified | url of the vertical stitched switch image
@@ -158,6 +116,8 @@ Attribute       | Options   | Default | Description
 
 ### webaudio-param
 
+<webaudio-param></webaudio-param>
+
 Attribute      | Options | Default | Description
 ---------------|---------|---------|------------
 **src**        | string  | Black rectangle if not specified | Background image or color. Transparent if set to `""`, or url to background image.
@@ -172,6 +132,8 @@ Attribute      | Options | Default | Description
 
 ### webaudio-keyboard
 
+<webaudio-keyboard></webaudio-keyboard>
+
 Attribute  | Options   | Default| Description
 -----------|-----------|--------|------------
 **values** | int array | `[]`   | The array of current pressed key numbers. "values" may has more than one element in multi-touch environment.
@@ -185,6 +147,7 @@ Attribute  | Options   | Default| Description
 
 ---
 ## Functions
+
 ### setValue(value, fire)  
 `webaudio-knob` | `webaudio-slider` | `webaudio-switch`  
 **description**: Each control can be setup and redraw by calling this function from JavaScript.
@@ -233,131 +196,3 @@ keyboard.addEventListener('change', function(e) {
 ### 'click'  
 `webaudio-switch (kick)`  
 **description**: 'click' event is emitted if the 'kick' type webaudio-switch has clicked.
-
----
-## WebAudioControlsOptions
-By setting the global object, WebAudioControlsOptions, you can specify default values such as the knob size or colors etc when attribute setting on each tag is omitted.
-This declaration should be prior to the webaduio-controls.js loading.
-```
-<script>
-WebAudioControlsOptions={
-  useMidi:1,
-  knobDiameter:80,
-  switchWidth:40,
-  switchHeight:20,
-};
-</script>
-<script src="webaudio-controls.js"></script>
-```
-The items that can be set are as follows
-
-name        | default | description
-------------|---------|----------------
-useMidi     |0        | enable control from midi devices
-midilearn   |0        | enable midilearn function for each knobs/sliders/switches
-outline     |0        | border display when focused
-valuetip    |0        | valuetip display
-knobWidth   |0        | width for knobs
-knobHeight  |0        | height for knobs
-knobDiameter|64       | diameter for knobs
-knobSrc     |null     | knob image source
-knobSprites |0        | knob image number of frames
-knobColors  |"#e00;#000;#000"| color setting for knobs
-sliderWidth |24       | width for sliders
-sliderHeight|128      | height for sliders
-sliderKnobWidth|0     | width of slider knob
-sliderKnobHeight|0    | height of sliderknob
-sliderColors|"#e00;#000;#fcc"| color setting for sliders
-switchWidth |0        | width for switches
-switchHeight|0        | height for switches
-switchDiameter|24     | diameter for switches
-switchColors|"#e00;#000;#fcc"| color setting for switches
-paramWidth  |32       | width for param
-paramHeight |20       | height for param
-paramSrc    |null     | param background image source
-paramColors |"#fff;#000"| color setting for param
-
----
-## Creating knob images
-webaudio-knob (with sprites is `0` (default)) use a single frame knob image that indicate center position.
-For example,  
-![](img/testknob.png)  
-This image will be rotated from -135deg to +135deg. This approach will works well if the image is flat designed, but more complex animation (for example, drop-shadowed, highlighted or something elastic) will need pre-rendered frame-by-frame animation as below.
-
-webaudio-knob (with non zero "sprites") use a vertical 'stitched' multi-frames animation image, and webaudio-switch use a vertical 'stitched' two-frames animation image.
-For example,   
-![](img/LittlePhatty_sample.png)
-![](img/switch_toggle.png)  
-
-This knob example has only 5 frames but it should has more frames for smooth animation. I recommend to use JKnobMan/WebKnobMan for making these stitched images,
-
-- [JKnobMan](http://www.g200kg.com/en/software/knobman.html) -- Java based Knob image creation tool.
-- [WebKnobMan](http://www.g200kg.com/en/webknobman/) -- WebApp version of the JknobMan
-- [KnobGallery](http://www.g200kg.com/en/webknobman/gallery.php) -- knob data sharing space
-
----
-
-Here is a brief instruction  to export knob-image from KnobGallery
-
-- Go to [KnobGallery](http://www.g200kg.com/en/webknobman/gallery.php)
-- Find your favorite knob design and click 'Open with WebKnobMan'
-- Click on 'Export' to download `png` file
-- Of course, you can create your own!
-
-**Note: comply with license requirements**
-
----
-## MIDI support: knobs, sliders and switches have midilearn/midicc support built-in
-
-To enable MIDI related functions, add the following line before the &lt;link&gt; tag that loads `webaudio-controls.html`  
-
-`<script>WebAudioControlsOptions={useMidi:1}</script>`
-
-<b>Midilearn right click menu</b>: add a <code>midilearn=1</code> attribute to the <code>&lt;webaudio-knob&gt;</code>,  <code>&lt;webaudio-slider&gt;</code> and  <code>&lt;webaudio-switch&gt;</code> elements. Then right click on the element in the GUI, a midi learn menu should appear. Then, operate one of your midi controller and it should start actionning the webaudio-controls widget in the HTML page. <!--You can associate more than one controller to each widget. -->You can hot plug/unplug midi devices, they will be detected.
-
-![Midi Learn Menu](img/midilearn.png)
-
-<b>Declarative association between a midi controller and a GUI webaudiocontrol</b>: There is also an HTML <code>midicc="channel.cc#"</code> attribute that works like this:  <code>midicc="3.2"</code> means "listen to a cc event on channel 3, cc number 2". If you don't know the channel/cc number of your controller: 1) add a <code>midilearn=1</code> attribute so that a right click on the GUI widget will display the midilearn menu, 2) select "learn" in the menu, 3) operate your knob/slider/switch, normally the midi controller and the GUI object are in sync. 4) look at the devtool console, there is a message indicating the channel and cc number, for example "channel 0, cc 28". Then if you add the attribute midicc="0.28" to the HTML of your knob/slider/switch, the midi mapping between your GUI webaudiocontrol and your midi controller will be automatic. Follow the links at the end of this section and look at the HTML source code to see some examples.
-
-Example: associate a knob with a controller on channel 7, cc number 7:
-
-```
-<webaudio-knob midilearn=true midicc="7.7" ...></webaudio-knob>
-```
-
-<b>External midi event listener (hook): </b>you can also declare in your HTML file your own midi event listener (for example for listening to program changes events): use the <code>webAudioControlsMidiManager</code> object, that comes with an <code>addMidiListener</code> method. Like that you will benefit from the MIDI code included in the webaudiocontrols. Here is an example (also, look at the source code of the Sample1.html demo, and open the devtool console to see midi messages received by the hook at the end of the HTML file).
-
-```
-<script>
-// add this to your html page that uses webaudiocontrols
-webAudioControlsMidiManager.addMidiListener(function(event) {
-    var data = event.data;
-    var channel = data[0] & 0xf;
-    var controlNumber = data[1];
-
-    console.log("Midi event hook: data:[" + data + "] channel:" + channel + " cc:"+controlNumber);
-
-    // do whatever you want with the event
-    // ...
-});
-</script>
-```
-
-Demo at: https://wasabi.i3s.unice.fr/AmpSimFA/ and at https://wasabi.i3s.unice.fr/AmpSimFA/sample1.html
-
-
----
-## License
-WebAudio-Controls is developped based on:  
-- [WebAudio-Knob](https://github.com/agektmr/webaudio-knob) by [Eiji Kitamura](http://google.com/+agektmr)  
-- [WebAudio-Slider](https://github.com/ryoyakawai/webaudio-slider) by [Ryoya KAWAI](https://plus.google.com/108242669191458983485/posts)  
-- [WebAudio-Switch](http://aikelab.net/switch/) by [Keisuke Ai](http://d.hatena.ne.jp/aike/)  
-Integrated and enhanced by [g200kg](http://www.g200kg.com/)
-
-Copyright (c) 2013 Eiji Kitamura / Ryoya KAWAI / Keisuke Ai / g200kg /  @micbuffa / @CellouBalde  
-Licensed under the Apache License, Version 2.0
-
----
-
-Knob/Switch images in samples are from [Knob Gallery](http://www.g200kg.com/en/webknobman/gallery.php)  
-[switch_toggle.knob](http://www.g200kg.com/en/webknobman/gallery.php?m=p&p=58) by [az](http://bji.yukihotaru.com/) (c) 2011 [CC-BY](http://creativecommons.org/licenses/by/3.0/)  

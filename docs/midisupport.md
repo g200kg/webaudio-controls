@@ -10,6 +10,10 @@
 </style>
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./index.html">Overview</a></div>
+<div class="item"><a href="./install.html">Install</a></div>
+<div class="item"><a href="./specs.html">Attributes, Functions, Events</a></div>
+<div class="item"><a href="./options.html">WebAudioControlsOptions</a></div>
+<div class="item"><a href="./knobimage.html">Creating Knob Images</a></div>
 <div class="item"><a href="./defstyle.html">Default Style of Controls</a></div>
 <div class="item"><a href="./attributes.html">Examples of Various Attributes</a></div>
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
@@ -18,7 +22,7 @@
 <div class="item"><a href="./tracking.html">Slider tracking "rel" and "abs"</a></div>
 <div class="item"><a href="./nonlinear.html">Non-Linear Knobs / Sliders</a></div>
 <div class="item"><a href="./multifader.html">Multi-Touch Device Support</a></div>
-<div class="item">MIDI Support</div>
+<div class="item"><a href="./midisupport.html">MIDI Support</a></div>
 <div class="item"><a href="./resizetest.html">Resizing After Creation</a></div>
 </div>
 
