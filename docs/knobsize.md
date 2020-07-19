@@ -6,11 +6,14 @@
   margin:4px;
   padding:0px 3px;
 }
+webaudio-knob{
+  border:1px solid #f00;
+}
 </style>
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./index.html">Overview</a></div>
 <div class="item"><a href="./defstyle.html">Default Style of Controls</a></div>
-<div class="item"><a href="./attrubutes.html">Examples of Various Attributes</a></div>
+<div class="item"><a href="./attributes.html">Examples of Various Attributes</a></div>
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
 <div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
 <div class="item">Determining Knob Size</div>
@@ -36,57 +39,87 @@ Note that the specification in the style sheet does not affect the size of the k
 - Image size specified by `src`
 - Default size (64px x 64px)
 
-<webaudio-knob id="knob1" ></webaudio-knob>  
-```html
+---
+
 <webaudio-knob id="knob1" ></webaudio-knob>
+<br/>
+
+The default size (64 x 64px) is used if there is no other size factor.
+```html
+<webaudio-knob></webaudio-knob>
 ```
 
-<br/>
+---
 
 <webaudio-knob id="knob2" diameter="32"></webaudio-knob>  
-```html
-<webaudio-knob id="knob2" diameter="32"></webaudio-knob>
-```
-
 <br/>
 
+If the `diameter` is specified, the knob will be that size
+```html
+<webaudio-knob diameter="32"></webaudio-knob>
+```
+
+---
 
 <webaudio-knob id="knob3" width="200" height="50"></webaudio-knob>  
+<br/>
+
+When `width` and `height` attributes are specified individually.
 ```html
-<webaudio-knob id="knob3" width="200" height="50"></webaudio-knob>
+<webaudio-knob width="200" height="50"></webaudio-knob>
 ```
 
-<br/>
+---
+
 
 <webaudio-knob id="knob4" src="../knobs/Aqua.png"></webaudio-knob>
-```html
-<!-- Original Aqua.png image size (64x64) is used -->
-<webaudio-knob id="knob4" src="../knobs/Aqua.png"></webaudio-knob>
-```
-
 <br/>
 
-<webaudio-knob id="knob5" src="../knobs/Aqua.png" diameter="32"></webaudio-knob>
+If a `src` image is specified and nothing else is provided, the size of the image is used.
+At this time, `sprites` are automatically calculated assuming that one frame of the knob image is square.  
 ```html
-<webaudio-knob id="knob5" src="../knobs/Aqua.png" diameter="32"></webaudio-knob>
+<webaudio-knob src="../knobs/Aqua.png"></webaudio-knob>
 ```
 
+---
+
+<webaudio-knob id="knob5" src="../knobs/Aqua.png" diameter="32"></webaudio-knob>  
 <br/>
 
-<webaudio-knob id="knob6" src="../knobs/Aqua.png" sprites="100"></webaudio-knob>
-
+If `src` and `diameter` is specified, the original image will be resized.
 ```html
-<webaudio-knob id="knob6" src="../knobs/Aqua.png" sprites="100"></webaudio-knob>
+<webaudio-knob src="../knobs/Aqua.png" diameter="32">
+</webaudio-knob>
 ```
 
+---
+
+<webaudio-knob id="knob7" src="../knobs/Aqua.png"
+   sprites="100"
+   width="200" height="50">
+</webaudio-knob>  
 <br/>
 
-<webaudio-knob id="knob7" src="../knobs/Aqua.png" sprites="100" width="200" height="50"></webaudio-knob>
+When width height is specified individually with src.
 ```html
-<webaudio-knob id="knob7" src="../knobs/Aqua.png" sprites="100" width="200" height="50"></webaudio-knob>
+<webaudio-knob src="../knobs/Aqua.png"
+  sprites="100" 
+  width="200" height="50">
+</webaudio-knob>
 ```
 
+---
+<webaudio-knob id="knob5" src="../knobs/hsw5.png" sprites="4"></webaudio-knob>  
 <br/>
+
+If one frame of the knob image is not square, the `sprites` attribute should be set to (number of frames - 1).
+```html
+<webaudio-knob src="../knobs/hsw5.png" sprites="4">
+</webaudio-knob>
+```
+
+---
+
 
 <hr/>
 

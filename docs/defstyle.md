@@ -10,7 +10,7 @@
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./index.html">Overview</a></div>
 <div class="item">Default Style of Controls</div>
-<div class="item"><a href="./attrubutes.html">Examples of Various Attributes</a></div>
+<div class="item"><a href="./attributes.html">Examples of Various Attributes</a></div>
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
 <div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
 <div class="item"><a href="./knobsize.html">Determining Knob Size</a></div>
