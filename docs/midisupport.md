@@ -2,7 +2,7 @@
 
 <script>
   WebAudioControlsOptions={
-
+    useMidi:1,
   };
 </script>
 
