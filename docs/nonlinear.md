@@ -19,6 +19,29 @@ function input2(elem){
 }
 </script>
 
+<style>
+.item{
+  background:#444;
+  margin:4px;
+  padding:0px 3px;
+}
+</style>
+<div style="display:flex;width:100%;flex-wrap:wrap">
+<div class="item"><a href="./index.html">Overview</a></div>
+<div class="item"><a href="./defstyle.html">Default Style of Controls</a></div>
+<div class="item"><a href="./attributes.html">Examples of Various Attributes</a></div>
+<div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
+<div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
+<div class="item"><a href="./knobsize.html">Determining Knob Size</a></div>
+<div class="item"><a href="./tracking.html">Slider tracking "rel" and "abs"</a></div>
+<div class="item">Non-Linear Knobs / Sliders</div>
+<div class="item"><a href="./multifader.html">Multi-Touch Device Support</a></div>
+<div class="item"><a href="./midisupport.html">MIDI Support</a></div>
+<div class="item"><a href="./resizetest.html">Resizing After Creation</a></div>
+</div>
+
+---
+
 # Non-Linear Knobs / Sliders
 
 In some cases, you may want the knob to vary nonlinear changes with respect to the rotation of the knob.

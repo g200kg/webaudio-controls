@@ -8,7 +8,7 @@
 }
 </style>
 <div style="display:flex;width:100%;flex-wrap:wrap">
-<div class="item"><a href="./overview.html">Overview</a></div>
+<div class="item"><a href="./index.html">Overview</a></div>
 <div class="item">Default Style of Controls</div>
 <div class="item"><a href="./attrubutes.html">Examples of Various Attributes</a></div>
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
@@ -20,6 +20,8 @@
 <div class="item"><a href="./midisupport.html">MIDI Support</a></div>
 <div class="item"><a href="./resizetest.html">Resizing After Creation</a></div>
 </div>
+
+---
 
 # Default Style of Controls  
 
