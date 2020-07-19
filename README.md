@@ -92,10 +92,10 @@ Attribute       | Options| Default| Description
 **min**         | float  | `0`    | Minimum value of the knob
 **max**         | float  | `100`  | Maximum value of the knob
 **step**        | float  | `1`    | Value step of the control. The 'value' is always rounded to multiple of 'step'
-**width**       | int    | `0`    | Knob width in px. diameter value is used if this value is `0`.
-**height**      | int    | `0`    | Knob height in px. diameter value is used if this value is `0`.
+**width**       | int    | `null` | Knob width in px. diameter value is used if this value is not specified.
+**height**      | int    | `null` | Knob height in px. diameter value is used if this value is not specified.
 **diameter**    | int    | `64`   | Knob diameter in px. This attribute can be used instead of width / height if the display image is square.
-**sprites**     | int    | `0`    | If `0`, the `src` image should be single frame image that indicate middle position. the image will be rotated -135deg to +135deg. If `sprirites` is not `0`, the `src` image should be vertically stitched multi-framed image. `sprites` specify the max frame number in the stitched knob image. Note that this is (number of frames) - 1
+**sprites**     | int    | `null` | If `0`, the `src` image should be single frame knob image that indicate middle position. the image will be rotated -135deg to +135deg.<br/>If `sprites` is 1 or more, the `src` image should be vertically stitched multi-framed image. `sprites` specify the max frame number in the stitched knob image. Note that this is (number of frames) - 1.<br/> If `sprites` attribute is not specified (default), assuming one knob image is a square, it will be calculated from the width and height of the image specified in `src`, i.e. height / width - 1 will be used as the `sprites`.
 **sensitivity** | float  | `1`    | Pointing device sensitivity. min-max range correspond to (128 / `sensitivity`) px
 **log**         | int    | `0`    | If this value is set to 1, then the value change is logarithmic. For example, if `min="10"` and `max="1000"`, then the center value of the knob will be 100. Here, if `min` is 0 or negative, an error occurs. If `log` is set to 0, then the change in value is linear.
 **valuetip**    | `0`,`1`| `0`    | Enable the overlaid value-tip display. This is equivalent to `tooltip="%s"`.
