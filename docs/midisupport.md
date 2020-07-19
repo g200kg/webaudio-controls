@@ -14,11 +14,11 @@
 <div class="item"><a href="./attrubutes.html">Examples of Various Attributes</a></div>
 <div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
 <div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
-<div class="item">Determining Knob Size</div>
+<div class="item"><a href="./knobsize.html">Determining Knob Size</a></div>
 <div class="item"><a href="./tracking.html">Slider tracking "rel" and "abs"</a></div>
 <div class="item"><a href="./nonlinear.html">Non-Linear Knobs / Sliders</a></div>
 <div class="item"><a href="./multifader.html">Multi-Touch Device Support</a></div>
-<div class="item"><a href="./midisupport.html">MIDI Support</a></div>
+<div class="item">MIDI Support</div>
 <div class="item"><a href="./resizetest.html">Resizing After Creation</a></div>
 </div>
 
@@ -34,7 +34,7 @@ To enable MIDI related functions, add the following line before the &lt;link&gt;
 
 <b>Midilearn right click menu</b>: add a <code>midilearn=1</code> attribute to the <code>&lt;webaudio-knob&gt;</code>,  <code>&lt;webaudio-slider&gt;</code> and  <code>&lt;webaudio-switch&gt;</code> elements. Then right click on the element in the GUI, a midi learn menu should appear. Then, operate one of your midi controller and it should start actionning the webaudio-controls widget in the HTML page. <!--You can associate more than one controller to each widget. -->You can hot plug/unplug midi devices, they will be detected.
 
-![Midi Learn Menu](img/midilearn.png)
+![Midi Learn Menu](../img/midilearn.png)
 
 <b>Declarative association between a midi controller and a GUI webaudiocontrol</b>: There is also an HTML <code>midicc="channel.cc#"</code> attribute that works like this:  <code>midicc="3.2"</code> means "listen to a cc event on channel 3, cc number 2". If you don't know the channel/cc number of your controller: 1) add a <code>midilearn=1</code> attribute so that a right click on the GUI widget will display the midilearn menu, 2) select "learn" in the menu, 3) operate your knob/slider/switch, normally the midi controller and the GUI object are in sync. 4) look at the devtool console, there is a message indicating the channel and cc number, for example "channel 0, cc 28". Then if you add the attribute midicc="0.28" to the HTML of your knob/slider/switch, the midi mapping between your GUI webaudiocontrol and your midi controller will be automatic. Follow the links at the end of this section and look at the HTML source code to see some examples.
 
