@@ -36,6 +36,22 @@ Advanced Usage and Application Note :
 
 # Overview
 
+**webaudio-controls** is a Javascript library for displaying the GUI parts required to Web Music applications.  
+webaudio-controls consists of knobs, sliders, switches, parameter displays and keyboards.
+By loading webaudio-controls.js to your page, custom tags for component display will be added using WebComponents.  
+You can configure the GUI screen just by writing custom tags in HTML.  
+
+**webaudio-controls** is consist of following components.  
+
+Component         | Description
+------------------|------------
+webaudio-knob     | Rotating or some other frame-by-frame animation knob. 
+webaudio-slider   | Vertical or Horizontal slider.
+webaudio-switch   | Toggle / Kick / Radio switches.
+webaudio-param    | Editable value display field that can auto-link to knobs or sliders.
+webaudio-keyboard | Mouse / Touch playable keyboard. multi-touch support.
+
+
 This is an example of a typical GUI screen created using webaudio-controls. Knobs, sliders, switches etc. can be manipulated with a mouse or touch device. It is also possible to operate from a connected MIDI controller.  
 
 Each component fires an event when manipulated and can be handled by a javascript program.
