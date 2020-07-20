@@ -84,15 +84,15 @@ if(window.customElements){
     knobDiameter:null,
     knobColors:"#e00;#000;#000",
     sliderKnobsrc:null,
-    sliderWidth:0,
-    sliderHeight:0,
-    sliderKnobWidth:0,
-    sliderKnobHeight:0,
-    sliderDitchlength:0,
+    sliderWidth:null,
+    sliderHeight:null,
+    sliderKnobWidth:null,
+    sliderKnobHeight:null,
+    sliderDitchlength:null,
     sliderColors:"#e00;#000;#fcc",
-    switchWidth:0,
-    switchHeight:0,
-    switchDiameter:24,
+    switchWidth:null,
+    switchHeight:null,
+    switchDiameter:null,
     switchColors:"#e00;#000;#fcc",
     paramWidth:32,
     paramHeight:20,
@@ -156,10 +156,10 @@ if(window.customElements){
       this.onfocus=()=>{
         switch(this.outline){
         case null:
-        case 0:
+        case "0":
           this.elem.style.outline="none";
           break;
-        case 1:
+        case "1":
           this.elem.style.outline="1px solid #ccc";
           break;
         default:
@@ -685,14 +685,6 @@ ${this.basestyle}
       this.log=this.getAttr("log",0);
       this._width=this.getAttr("width",opt.sliderWidth); Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});
       this._height=this.getAttr("height",opt.sliderHeight); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
-      if(this._direction=="horz"){
-        if(this._width==0) this._width=128;
-        if(this._height==0) this._height=24;
-      }
-      else{
-        if(this._width==0) this._width=24;
-        if(this._height==0) this._height=128;
-      }
       this._knobwidth=this.getAttr("knobwidth",opt.sliderKnobWidth); Object.defineProperty(this,"knobwidth",{get:()=>{return this._knobwidth},set:(v)=>{this._knobwidth=v;this.setupImage()}});
       this._knobheight=this.getAttr("knobheight",opt.sliderKnobHeight); Object.defineProperty(this,"knobheight",{get:()=>{return this._knobheight},set:(v)=>{this._knobheight=v;this.setupImage()}});
       this._ditchlength=this.getAttr("ditchlength",opt.sliderDitchlength); Object.defineProperty(this,"ditchlength",{get:()=>{return this._ditchlength},set:(v)=>{this._ditchlength=v;this.setupImage()}});
@@ -733,54 +725,74 @@ ${this.basestyle}
     disconnectedCallback(){}
     setupImage(){
       this.coltab = this.colors.split(";");
-      this.dr = this._direction;
-      if(this.dr==null){
-        if(this._width>this._height)
-          this.dr="horz";
-        else
-          this.dr="vert";
-      }
-      this.dlen=this.ditchlength;
-      if(!this.dlen){
-        if(this.dr=="horz")
-          this.dlen=this._width-this._height;
-        else
-          this.dlen=this._height-this._width;
-      }
-      this.knob.style.backgroundSize = "100% 100%";
-      this.elem.style.backgroundSize = "100% 100%";
-      this.elem.style.width=this._width+"px";
-      this.elem.style.height=this._height+"px";
-      this.style.height=this._height+"px";
-      this.kwidth=this.knobwidth||(this.dr=="horz"?this._height:this._width);
-      this.kheight=this.knobheight||(this.dr=="horz"?this._height:this._width);
-      this.knob.style.width = this.kwidth+"px";
-      this.knob.style.height = this.kheight+"px";
-      if(this.src==""){
-        this.elem.style.backgroundImage = "none";
-      }
-      else if(!this.src){
-        let r=Math.min(this._width,this._height)*0.5;
-        let svgbody=
+      this.bodyimg=new Image();
+      this.knobimg=new Image();
+      this.srcurl=null;
+      if(this.src==null||this.src==""){
+        if(this._direction=="horz"){
+          if(this._width==null) this._width=128;
+          if(this._height==null) this._height=24;
+        }
+        else{
+          if(this._width==null) this._width=24;
+          if(this._height==null) this._height=128;
+        }
+        const r=Math.min(this._width,this._height)*0.5;
+        const svgbody=
 `<svg xmlns="http://www.w3.org/2000/svg" width="${this._width}" height="${this._height}" preserveAspectRatio="none">
 <rect x="1" y="1" rx="${r}" ry="${r}" width="${this._width-2}" height="${this._height-2}" fill="${this.coltab[1]}"/></svg>`;
-        this.elem.style.backgroundImage = "url(data:image/svg+xml;base64,"+btoa(svgbody)+")";
+        this.srcurl = "data:image/svg+xml;base64,"+btoa(svgbody);
       }
       else{
-        this.elem.style.backgroundImage = "url("+(this.src)+")";
+        this.srcurl = this.src;
       }
-      if(!this.knobsrc){
-        let svgthumb=
-`<svg xmlns="http://www.w3.org/2000/svg" width="${this.kwidth}" height="${this.kheight}" preserveAspectRatio="none">
-<radialGradient id="gr" cx="30%" cy="30%"><stop offset="0%" stop-color="${this.coltab[2]}"/><stop offset="100%" stop-color="${this.coltab[0]}"/></radialGradient>
-<rect x="2" y="2" width="${this.kwidth-4}" height="${this.kheight-4}" rx="${this.kwidth*0.5}" ry="${this.kheight*0.5}" fill="url(#gr)"/></svg>`;
-        this.knob.style.backgroundImage = "url(data:image/svg+xml;base64,"+btoa(svgthumb)+")";
-      }
-      else{
-        this.knob.style.backgroundImage = "url("+(this.knobsrc)+")";
-      }
-      this.elem.style.outline=this.outline?"":"none";
-      this.redraw();
+      this.bodyimg.onload=()=>{
+        if(this.src!="")
+          this.elem.style.backgroundImage = "url("+this.srcurl+")";
+        this.sw=this._width;
+        this.sh=this._height;
+        if(this.sw==null) this.sw=this.bodyimg.width;
+        if(this.sh==null) this.sh=this.bodyimg.height;
+        this.sw=+this.sw;
+        this.sh=+this.sh;
+        if(this.dr==null){
+          if(this.sw>this.sh)
+            this.dr="horz";
+          else
+            this.dr="vert";
+        }
+        this.dlen=this.ditchlength;
+        this.kw=this.knobwidth||(this.dr=="horz"?this.sh:this.sw);
+        this.kh=this.knobheight||(this.dr=="horz"?this.sh:this.sw);
+        if(this.dlen==null){
+          if(this.dr=="horz")
+            this.dlen=this.sw-this.kw;
+          else
+            this.dlen=this.sh-this.kh;
+        }
+
+        if(this._knobsrc==null){
+          const svgknob=
+`<svg xmlns="http://www.w3.org/2000/svg" width="${this.kw}" height="${this.kh}" preserveAspectRatio="none">
+<radialGradient id="gr" cx="30%" cy="30%"><stop offset="0%" stop-color="${this.coltab[2]}"/><stop offset="100%" stop-color="${this.coltab[0]}"/></radialGradient><rect x="2" y="2" width="${this.kw-4}" height="${this.kh-4}" rx="${this.kw*0.5}" ry="${this.kh*0.5}" fill="url(#gr)"/></svg>`;
+          this.knobsrcurl = "data:image/svg+xml;base64,"+btoa(svgknob);
+        }
+        else{
+          this.knobsrcurl = this.knobsrc;
+        }
+        this.knobimg.onload=()=>{
+          this.knob.style.backgroundImage = "url("+this.knobsrcurl+")";
+          this.knob.style.backgroundSize = "100% 100%";
+          this.knob.style.width = this.kw+"px";
+          this.knob.style.height = this.kh+"px";
+          this.elem.style.backgroundSize = "100% 100%";
+          this.elem.style.width=this.sw+"px";
+          this.elem.style.height=this.sh+"px";
+          this.redraw();
+        };
+        this.knobimg.src=this.knobsrcurl;
+      };
+      this.bodyimg.src=this.srcurl;
     }
     redraw() {
       let ratio;
@@ -801,13 +813,13 @@ ${this.basestyle}
         ratio = (this.value - this.min) / (this.max - this.min);
       let style = this.knob.style;
       if(this.dr=="horz"){
-        style.top=(this._height-this.kheight)*0.5+"px";
-        style.left=ratio*this.dlen+"px";
+        style.top=(this.sh-this.kh)*0.5+"px";
+        style.left=((this.sw-this.kw-this.dlen)*0.5+ratio*this.dlen)+"px";
         this.sensex=1; this.sensey=0;
       }
       else{
-        style.left=(this._width-this.kwidth)*0.5+"px";
-        style.top=(1-ratio)*this.dlen+"px";
+        style.left=(this.sw-this.kw)*0.5+"px";
+        style.top=((this.sh-this.kh-this.dlen)*0.5+(1-ratio)*this.dlen)+"px";
         this.sensex=0; this.sensey=1;
       }
     }
@@ -1026,12 +1038,12 @@ ${this.basestyle}
       this.enable=this.getAttr("enable",1);
       this._src=this.getAttr("src",null); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
       this._value=this.getAttr("value",0); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
-      this.defvalue=this.getAttr("defvalue",0);
+      this.defvalue=this.getAttr("defvalue",this._value);
       this.type=this.getAttr("type","toggle");
       this.group=this.getAttr("group","");
-      this._width=this.getAttr("width",opt.switchWidth); Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});
-      this._height=this.getAttr("height",opt.switchHeight); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
-      this._diameter=this.getAttr("diameter",0); Object.defineProperty(this,"diameter",{get:()=>{return this._diameter},set:(v)=>{this._diameter=v;this.setupImage()}});
+      this._width=this.getAttr("width",null); Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});
+      this._height=this.getAttr("height",null); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
+      this._diameter=this.getAttr("diameter",null); Object.defineProperty(this,"diameter",{get:()=>{return this._diameter},set:(v)=>{this._diameter=v;this.setupImage()}});
       this.invert=this.getAttr("invert",0);
       this._colors=this.getAttr("colors",opt.switchColors); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.outline=this.getAttr("outline",opt.outline);
@@ -1059,33 +1071,36 @@ ${this.basestyle}
     }
     disconnectedCallback(){}
     setupImage(){
-      let w=this.width||this.diameter||opt.switchWidth||opt.switchDiameter;
-      let h=this.height||this.diameter||opt.switchHeight||opt.switchDiameter;
-      if(!this.src){
-        this.coltab = this.colors.split(";");
-        let mm=Math.min(w,h);
+      this.coltab = this.colors.split(";");
+      this.kw=this._width||this._diameter||opt.switchWidth||opt.switchDiameter;
+      this.kh=this._height||this._diameter||opt.switchHeight||opt.switchDiameter;
+      this.img=new Image();
+      this.srcurl=null;
+      if(this.src==null||this.src==""){
+        if(this.kw==null) this.kw=32;
+        if(this.kh==null) this.kh=32;
+        let mm=Math.min(this.kw,this.kh);
         let svg=
-`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h*2}" preserveAspectRatio="none">
+`<svg xmlns="http://www.w3.org/2000/svg" width="${this.kw}" height="${this.kh*2}" preserveAspectRatio="none">
 <radialGradient id="gr" cx="30%" cy="30%"><stop offset="0%" stop-color="${this.coltab[2]}"/><stop offset="100%" stop-color="${this.coltab[0]}"/></radialGradient>
-<rect x="${w*0.05}" y="${h*0.05}" width="${w*0.9}" height="${h*0.9}" rx="${mm*0.1}" ry="${mm*0.1}" fill="${this.coltab[1]}"/>
-<rect x="${w*0.05}" y="${h*1.05}" width="${w*0.9}" height="${h*0.9}" rx="${mm*0.1}" ry="${mm*0.1}" fill="${this.coltab[1]}"/>
-<circle cx="${w*0.5}" cy="${h*0.5}" r="${mm*0.3}" stroke="${this.coltab[0]}" stroke-width="2"/>
-<circle cx="${w*0.5}" cy="${h*1.5}" r="${mm*0.3}" stroke="${this.coltab[0]}" stroke-width="2" fill="url(#gr)"/></svg>`;
-        this.elem.style.backgroundImage = "url(data:image/svg+xml;base64,"+btoa(svg)+")";
+<rect x="${this.kw*0.05}" y="${this.kh*0.05}" width="${this.kw*0.9}" height="${this.kh*0.9}" rx="${mm*0.1}" ry="${mm*0.1}" fill="${this.coltab[1]}"/>
+<rect x="${this.kw*0.05}" y="${this.kh*1.05}" width="${this.kw*0.9}" height="${this.kh*0.9}" rx="${mm*0.1}" ry="${mm*0.1}" fill="${this.coltab[1]}"/>
+<circle cx="${this.kw*0.5}" cy="${this.kh*0.5}" r="${mm*0.3}" stroke="${this.coltab[0]}" stroke-width="2"/>
+<circle cx="${this.kw*0.5}" cy="${this.kh*1.5}" r="${mm*0.3}" stroke="${this.coltab[0]}" stroke-width="2" fill="url(#gr)"/></svg>`;
+        this.srcurl="data:image/svg+xml;base64,"+btoa(svg);
+      }
+      else
+        this.srcurl=this.src;
+      this.img.onload=()=>{
+        if(this.kw==null) this.kw=this.img.width;
+        if(this.kh==null) this.kh=this.img.height*0.5;
+        this.elem.style.backgroundImage = "url("+this.srcurl+")";
         this.elem.style.backgroundSize = "100% 200%";
+        this.elem.style.width=this.kw+"px";
+        this.elem.style.height=this.kh+"px";
+        this.redraw();
       }
-      else{
-        this.elem.style.backgroundImage = "url("+(this.src)+")";
-        if(!this.sprites)
-          this.elem.style.backgroundSize = "100% 200%";
-        else
-          this.elem.style.backgroundSize = `100% ${(this.sprites+1)*100}%`;
-      }
-      this.elem.style.width=w+"px";
-      this.elem.style.height=h+"px";
-      this.style.height=h+"px";
-      this.elem.style.outline=this.outline?"":"none";
-      this.redraw();
+      this.img.src=this.srcurl;
     }
     redraw() {
       let style = this.elem.style;
