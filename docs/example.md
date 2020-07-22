@@ -141,7 +141,7 @@ If you don't specify the `width` and `height`, and you don't specify the `direct
 </webaudio-slider>
 ```
 
-An example of color variation by `colors` attribute
+examples of color variation by `colors` attribute :
 
 |    | colors attribute
 |----|----

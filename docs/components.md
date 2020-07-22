@@ -195,7 +195,7 @@ The basic behavior of `<webaudio-param>` does not require any Javascript program
 
 ## webaudio-keyboard
 
-`<webaudio-keyboard>` is a tag for displaying the music keyboard.
+`webaudio-keyboard` is a tag for creating a music keyboard. It can be played with a mouse or touch device, and also supports multi-touch.
 
 The default display looks like this:  
 
@@ -216,8 +216,8 @@ The default display looks like this:
 </script>
 ```
 
-About event behavior, a "change" event is issued when a key is pressed/released.
-This "change" event is accompanied by a `note` property, which holds the key on/off state and note number. (Note that the `note` property is attached to the event object, not the webaudio-keyboard element.)  
+About event behavior, a `"change"` event is issued when a key is pressed/released.
+This `"change"` event is accompanied by a `note` property, which holds the key on/off state and note number. (Note that the `note` property is attached to the event object, not the webaudio-keyboard element.)  
 
 You can specify the `width`, `height` and number of `keys`. In addition, the note of the lowest `key` can be specified with `min` attribute.  
 
@@ -244,6 +244,7 @@ You can specify 9 colors of border, start and end of each gradation of white key
 
 <webaudio-keyboard colors="#000;#ec0;#db0;#222;#000;#0e3;#0c2;#0e3;#0c2">
 </webaudio-keyboard>
+
 ```html
 <webaudio-keyboard colors="#000;#ec0;#db0;#222;#000;#0e3;#0c2;#0e3;#0c2">
 </webaudio-keyboard>
@@ -253,8 +254,10 @@ You can specify 9 colors of border, start and end of each gradation of white key
 
 <webaudio-keyboard colors="#222;#9dc;#8ca;#4ca;#3a9;#f8a;#f8a;#f8a;#f8a">
 </webaudio-keyboard>
+
 ```html
 <webaudio-keyboard colors="#222;#9dc;#8ca;#4ca;#3a9;#f8a;#f8a;#f8a;#f8a">
 </webaudio-keyboard>
 ```
+
 ---
