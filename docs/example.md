@@ -59,7 +59,7 @@ By default, the webaudio-knob tag looks like this.
 <webaudio-knob id="knb1"></webaudio-knob>
 ```
 
-An example of color variation by `colors` attribute.
+Examples of color variation by `colors` attribute.
 
 |    | colors attribute
 |----|------------------------
@@ -70,8 +70,8 @@ An example of color variation by `colors` attribute.
 |<webaudio-knob id="knb2e" colors="#f88;#400;#a00"></webaudio-knob>|`colors="#f88;#400;#a00"`
 |<webaudio-knob id="knb2f" colors="#888;#000;#0f0"></webaudio-knob>|`colors="#888;#000;#0f0"`
 
-Knob image file is assigned by the `src` attribute.  
-Also, specify the range of values in min/max. The initial value is "60". The value is changed in step of "20".  
+An external Knob image-file can be assigned by the `src` attribute.  
+Also, specify the range of the value in `min`/`max`. The initial value is "60". The value is changed in `step` of "20".  
 
 <webaudio-knob id="knob3" src="../knobs/LittlePhatty.png"
  sprites="100" value="60" min="-100" max="100" step="20" diameter="64" valuetip="1"></webaudio-knob>
@@ -84,7 +84,7 @@ Also, specify the range of values in min/max. The initial value is "60". The val
   </webaudio-knob>
 ```
 
-The knob image will be resized to specified size (even recommended to prepare required size image for clear display)  
+The knob image will be resized to specified size (even recommended to prepare required size image for clear display).  
 
 <webaudio-knob id="knb4" src="../knobs/LittlePhatty.png" sprites="100" diameter="32"></webaudio-knob><br/>
 
@@ -95,7 +95,7 @@ The knob image will be resized to specified size (even recommended to prepare re
   </webaudio-knob>
 ```
 
-non-square image can be used with specifying width/height instead of diameter.  
+Non-square image can be used with specifying `width`/`height` instead of diameter.  
 
 <webaudio-knob id="knb5" src="../img/hsw5.png" sprites="4" value="2" min="0" max="4" width="128" height="32"></webaudio-knob><br/>
 
@@ -107,7 +107,7 @@ non-square image can be used with specifying width/height instead of diameter.
   </webaudio-knob>
 ```
 
-webaudio-knob can has tooltip-text and editable parameter display field with webaudio-param.  
+`webaudio-knob` can has tooltip-text and editable parameter display field with `webaudio-param`.  
 
 <webaudio-knob id="knb6" src="../knobs/LittlePhatty.png" sprites="100" diameter="64" valuetip="0" tooltip="Knob Test : %s"></webaudio-knob>
 <webaudio-param link="knb6"></webaudio-param><br/>
@@ -125,7 +125,7 @@ webaudio-knob can has tooltip-text and editable parameter display field with web
 
 ## WebAudio-Sliders
 
-If no knob image is provided by the `src` attribute, a simple built-in image will be used. 
+If no slider image is provided by the `src` attribute, a simple built-in image will be used. 
 
 The direction of the slider is automatically determined by specifying the `width` and `height`, but can also be specified explicitly with the `direction` attribute.  
 
@@ -141,7 +141,7 @@ If you don't specify the `width` and `height`, and you don't specify the `direct
 </webaudio-slider>
 ```
 
-examples of color variation by `colors` attribute :
+These are examples of color variation by `colors` attribute :
 
 |    | colors attribute
 |----|----
@@ -152,7 +152,7 @@ examples of color variation by `colors` attribute :
 |<webaudio-slider id="sli2e" colors="#f88;#400;#fcc" width="200" height="30"></webaudio-slider>|`"#f88;#400;#fcc"`
 |<webaudio-slider id="sli2f" colors="#888;#000;#0f0" width="200" height="30"></webaudio-slider>|`"#888;#000;#0f0"`
 
-If you specify a slider-base and a thumb image, it will look like this.
+If you specify a slider background image and a thumb image, it will look like this.
 
 <webaudio-slider id="sli3" direction="horz" src="../img/hsliderbody.png" knobsrc="../img/hsliderknob.png"></webaudio-slider><br/>
 
@@ -183,8 +183,8 @@ Value step is specified, resized, tooltip-text and webaudio-param are added.
 
 ## WebAudio-Switches
 
-These are default webaudio-switch. If no switch-image is specified, simple built-in image resource is used.  
-default switch type is "toggle".  
+These are default `webaudio-switch`. If no switch image is specified, simple built-in image resource is used.  
+Default switch type is "toggle".  
 
 <webaudio-switch id="sw1"></webaudio-switch>
 
