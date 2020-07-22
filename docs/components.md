@@ -108,7 +108,7 @@ Each type is specified by the `type` attribute. In the case of a `radio` button,
 <webaudio-switch id="sw1" type="toggle"></webaudio-switch> toggle(default)<br/>
 <webaudio-switch id="sw2" type="kick"></webaudio-switch> kick<br/>
 <webaudio-switch id="sw3" type="radio" group="radio1"></webaudio-switch>
-<webaudio-switch id="sw4" type="radio" group="radio1"></webaudio-switch>
+<webaudio-switch id="sw4" type="radio" group="radio1" value="1"></webaudio-switch>
 <webaudio-switch id="sw5" type="radio" group="radio1"></webaudio-switch> radio<br/>
 <script>
 elms=document.getElementsByTagName("webaudio-switch");
