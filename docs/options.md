@@ -12,11 +12,12 @@ Basic Usage :
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./index.html">Overview</a></div>
 <div class="item"><a href="./install.html">Install</a></div>
+<div class="item"><a href="./components.html">How it works</a></div>
 <div class="item"><a href="./specs.html">Attributes, Functions, Events</a></div>
 <div class="item cur"><a href="./options.html">WebAudioControlsOptions</a></div>
 <div class="item"><a href="./knobimage.html">Creating Knob Images</a></div>
 <div class="item"><a href="./defstyle.html">Default Style of Controls</a></div>
-<div class="item"><a href="./example.html">Examples of Various Attributes</a></div>
+<div class="item "><a href="./example.html">Examples of Various Attributes</a></div>
 </div>
 <br/>
 
@@ -63,12 +64,14 @@ knobHeight  |null     | height for knobs
 knobDiameter|64       | diameter for knobs
 knobSrc     |null     | knob image source
 knobSprites |null     | knob image number of frames
-knobColors  |"#e00;#000;#000"| color setting for knobs
+knobColors  |"#e00;#000;#fff"| color setting for knobs
 sliderWidth |24       | width for sliders
 sliderHeight|128      | height for sliders
-sliderKnobWidth|0     | width of slider knob
-sliderKnobHeight|0    | height of sliderknob
-sliderColors|"#e00;#000;#fcc"| color setting for sliders
+sliderSrc   |null     | background image of sliders
+sliderKnobWidth|0     | width of the slider thumb
+sliderKnobHeight|0    | height of the slider thumb
+sliderKnobSrc|null    | image of the slider thumb
+sliderColors|"#e00;#333;#fcc"| color setting for sliders
 switchWidth |0        | width for switches
 switchHeight|0        | height for switches
 switchDiameter|24     | diameter for switches

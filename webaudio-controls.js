@@ -83,9 +83,10 @@ if(window.customElements){
     knobHeight:null,
     knobDiameter:null,
     knobColors:"#e00;#000;#fff",
-    sliderKnobsrc:null,
+    sliderSrc:null,
     sliderWidth:null,
     sliderHeight:null,
+    sliderKnobSrc:null,
     sliderKnobWidth:null,
     sliderKnobHeight:null,
     sliderDitchlength:null,
@@ -698,7 +699,7 @@ ${this.basestyle}
       this.enable=this.getAttr("enable",1);
       this.tracking=this.getAttr("tracking","rel"); 
       this._src=this.getAttr("src",opt.sliderSrc); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
-      this._knobsrc=this.getAttr("knobsrc",opt.sliderKnobsrc); Object.defineProperty(this,"knobsrc",{get:()=>{return this._knobsrc},set:(v)=>{this._knobsrc=v;this.setupImage()}});
+      this._knobsrc=this.getAttr("knobsrc",opt.sliderKnobSrc); Object.defineProperty(this,"knobsrc",{get:()=>{return this._knobsrc},set:(v)=>{this._knobsrc=v;this.setupImage()}});
       this._value=this.getAttr("value",0); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
       this.defvalue=this.getAttr("defvalue",this._value);
       this._min=this.getAttr("min",0); Object.defineProperty(this,"min",{get:()=>{return this._min},set:(v)=>{this._min=v;this.redraw()}});

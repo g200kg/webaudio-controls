@@ -4,9 +4,10 @@
   WebAudioControlsOptions={
   useMidi:1,
   knobSrc:"../knobs/simplegray.png",
-  knobSprites:100,
   sliderSrc:"../knobs/vsliderbody.png",
-  sliderKnobsrc:"../knobs/vsliderknob.png",
+  sliderKnobSrc:"../knobs/vsliderknob.png",
+  sliderKnobWidth:100,
+  sliderKnobHeight:40,
   };
 </script>
 
@@ -16,6 +17,7 @@ Basic Usage :
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./index.html">Overview</a></div>
 <div class="item"><a href="./install.html">Install</a></div>
+<div class="item"><a href="./components.html">How it works</a></div>
 <div class="item"><a href="./specs.html">Attributes, Functions, Events</a></div>
 <div class="item"><a href="./options.html">WebAudioControlsOptions</a></div>
 <div class="item"><a href="./knobimage.html">Creating Knob Images</a></div>

@@ -12,6 +12,7 @@ Basic Usage :
 <div style="display:flex;width:100%;flex-wrap:wrap">
 <div class="item"><a href="./index.html">Overview</a></div>
 <div class="item"><a href="./install.html">Install</a></div>
+<div class="item"><a href="./components.html">How it works</a></div>
 <div class="item"><a href="./specs.html">Attributes, Functions, Events</a></div>
 <div class="item"><a href="./options.html">WebAudioControlsOptions</a></div>
 <div class="item cur"><a href="./knobimage.html">Creating Knob Images</a></div>
