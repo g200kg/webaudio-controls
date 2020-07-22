@@ -50,16 +50,27 @@ You can customize the appearance and behavior of webaudio-controls by adding att
 
 ## WebAudio-Knobs
 
-These are default webaudio-knobs. If no knob-image is specified, simple embedded image resource is used. But colors are customizable.  
+By default, the webaudio-knob tag looks like this.
 
-<webaudio-knob id="knob1a"></webaudio-knob> <webaudio-knob id="knob1b" colors="#fc0;#000;#444"></webaudio-knob>
+<webaudio-knob></webaudio-knob>
+
 ```html
-  <webaudio-knob id="knob1a"></webaudio-knob>
-  <webaudio-knob id="knob1b" colors="#fc0;#000;#444"></webaudio-knob>
+<webaudio-knob></webaudio-knob>
 ```
 
-Knob image file is assigned.
-  Value range can be specified by min/max. The initial value is "60". The value is changed in step of "20".  
+An example of color variation by `colors` attribute.
+
+|    | colors attribute
+|----|------------------------
+|<webaudio-knob id="knob1a" colors="#fc0;#000;#444"></webaudio-knob>|`colors="#fc0;#000;#444"`
+|<webaudio-knob id="knob1b" colors="#fc0;#8ab;#fff"></webaudio-knob>|`"colors=#fc0;#8ab;#fff"`
+|<webaudio-knob id="knob1c" colors="#08f;#800;#fff"></webaudio-knob>|`colors="#08f;#800;#fff"`
+|<webaudio-knob id="knob1d" colors="#fc0;#a0b;#fcc"></webaudio-knob>|`colors="#fc0;#a0b;#fcc"`
+|<webaudio-knob id="knob1e" colors="#f88;#400;#a00"></webaudio-knob>|`colors="#f88;#400;#a00"`
+|<webaudio-knob id="knob1f" colors="#888;#000;#0f0"></webaudio-knob>|`colors="#888;#000;#0f0"`
+
+Knob image file is assigned by the `src` attribute.  
+Also, specify the range of values in min/max. The initial value is "60". The value is changed in step of "20".  
 
 <webaudio-knob id="knob2" src="../knobs/LittlePhatty.png"
  sprites="100" value="60" min="-100" max="100" step="20" diameter="64" valuetip="1"></webaudio-knob>
@@ -113,21 +124,34 @@ webaudio-knob can has tooltip-text and editable parameter display field with web
 
 ## WebAudio-Sliders
 
-These are default webaudio-sliders. If no slider-image is specified, 
-  simple embedded image resource is used, but colors can be customize.
-  The slider direction is specified by "direction" attribute.  
+If no knob image is provided by the `src` attribute, a simple built-in image will be used. 
 
-<webaudio-slider id="slider1a"></webaudio-slider>
-<webaudio-slider id="slider1b" colors="#850;#230;#fff"></webaudio-slider>
-<webaudio-slider id="slider1c" direction="horz"></webaudio-slider><br/>
+The direction of the slider is automatically determined by specifying the `width` and `height`, but can also be specified explicitly with the `direction` attribute.  
+
+If you don't specify the `width` and `height`, and you don't specify the `direction`, the default is 128 x 24px. The default is horizontal direction. ( This differs from older versions, but this is for compatibility with `<input type="range">` ).
+
+<webaudio-slider id="slider1a" direction="vert"></webaudio-slider>
+<webaudio-slider id="slider1b" direction="horz"></webaudio-slider>
 
 ```html
-  <webaudio-slider id="slider1a"></webaudio-slider>
-  <webaudio-slider id="slider1b" colors="#850;#230;#fff"></webaudio-slider>
-  <webaudio-slider id="slider1c" direction="horz"></webaudio-slider>
+<webaudio-slider direction="vert">
+</webaudio-slider>
+<webaudio-slider direction="horz">
+</webaudio-slider>
 ```
 
-Specifying the sliderbase and sliderknob images.  
+An example of color variation by `colors` attribute
+
+|    | colors attribute
+|----|----
+|<webaudio-slider colors="#0f0;#000;#ff0" width="200" height="30"></webaudio-slider>|`"#0f0;#000;#ff0"`
+|<webaudio-slider colors="#fc0;#8ab;#fff" width="200" height="30"></webaudio-slider>|`"#fc0;#8ab;#fff"`
+|<webaudio-slider colors="#08f;#800;#fff" width="300" height="30"></webaudio-slider>|`"#08f;#800;#fff"`
+|<webaudio-slider colors="#fc0;#a0b;#fcc" width="300" height="30"></webaudio-slider>|`"#fc0;#a0b;#fcc"`
+|<webaudio-slider colors="#f88;#400;#fcc" width="300" height="30"></webaudio-slider>|`"#f88;#400;#fcc"`
+|<webaudio-slider colors="#888;#000;#0f0" width="300" height="30"></webaudio-slider>|`"#888;#000;#0f0"`
+
+If you specify a slider-base and a thumb image, it will look like this.
 
 <webaudio-slider id="slider3" direction="horz" src="../img/hsliderbody.png" knobsrc="../img/hsliderknob.png"></webaudio-slider><br/>
 
@@ -158,18 +182,28 @@ Value step is specified, resized, tooltip-text and webaudio-param are added.
 
 ## WebAudio-Switches
 
-These are default webaudio-switch. If no switch-image is specified, simple embedded image resource is used.
-  default switch type is "toggle".  
+These are default webaudio-switch. If no switch-image is specified, simple built-in image resource is used.  
+default switch type is "toggle".  
 
 <webaudio-switch id="sw1a"></webaudio-switch>
-<webaudio-switch id="sw1b" colors="#0c0;#008;#fff"></webaudio-switch>
 
 ```html
   <webaudio-switch id="sw1a"></webaudio-switch>
-  <webaudio-switch id="sw1b" colors="#0c0;#008;#fff"></webaudio-switch>
 ```
 
-Image file is specified. Images are resized to specified size.  
+An example of color variation by `colors` attribute.
+
+|    | colors attribute
+|----|----
+|<webaudio-switch colors="#0f0;#000;#ff0" width="50" height="50"></webaudio-switch>|`"#0f0;#000;#ff0"`
+|<webaudio-slider colors="#fc0;#8ab;#fff" width="50" height="50"></webaudio-slider>|`"#fc0;#8ab;#fff"`
+|<webaudio-slider colors="#08f;#800;#fff" width="50" height="50"></webaudio-slider>|`"#08f;#800;#fff"`
+|<webaudio-slider colors="#fc0;#a0b;#fcc" width="50" height="50"></webaudio-slider>|`"#fc0;#a0b;#fcc"`
+|<webaudio-slider colors="#f88;#400;#fcc" width="50" height="50"></webaudio-slider>|`"#f88;#400;#fcc"`
+|<webaudio-slider colors="#888;#000;#0f0" width="50" height="50"></webaudio-slider>|`"#888;#000;#0f0"`
+
+
+This is an example when a background image file is specified by `src` attribute. If the size is not specified, the image will be displayed at its original size, but if the `width` and `height` are specified, the image will be resized.
 
 <webaudio-switch id="sw2a" src="../knobs/switch_toggle.png" width="32" height="32"></webaudio-switch>
 <webaudio-switch id="sw2b" src="../knobs/switch_toggle.png" width="64" height="64"></webaudio-switch>  

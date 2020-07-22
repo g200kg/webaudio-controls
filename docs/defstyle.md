@@ -56,7 +56,7 @@ The captured events are displayed on the Events window on the right.
   <webaudio-knob id="knob2" style="position:absolute;left:130px;top:60px"></webaudio-knob>
   <webaudio-param link="knob1" style="position:absolute;left:65px;top:130px"></webaudio-param>
   <webaudio-param link="knob2" style="position:absolute;left:145px;top:130px"></webaudio-param>
-  <webaudio-slider id="slider1" style="position:absolute;left:240px;top:50px"></webaudio-slider>
+  <webaudio-slider id="slider1" direction="vert" style="position:absolute;left:240px;top:50px"></webaudio-slider>
   <webaudio-slider id="slider2" direction="horz" style="position:absolute;left:280px;top:50px"></webaudio-slider>
   <webaudio-switch id="switch1" style="position:absolute;left:430px;top:50px"></webaudio-switch>
   <webaudio-switch id="switch2" type="kick" style="position:absolute;left:430px;top:90px"></webaudio-switch>

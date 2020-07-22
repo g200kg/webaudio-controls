@@ -58,7 +58,7 @@ Attribute       | Options| Default| Description
 **tooltip**     | string | `null` | Specifies the tooltip text that appears when you hover the mouse cursor for a while. If the text contains "%s", it will be replaced with the current value. Also, if the `conv` attribute is specified, the converted current value, `convValue` is  used for display. 
 **conv**        | string | `null` | If this attribute is specified, That string will be evaluated as an expression and stored to `convValue` as a string. This `convValue` will be used for the valuetip, tooltip and the linked webaudio-param display. In this expression, the `x` will represent current `value`. For example, `conv="(Math.pow(10,x)*20).toFixed(0)"` is specified, for range of value between 0 and 3, the range of convValue corresponds to 20 to 20000. As another example, if `conv="['sin','saw','sqr','tri'][x]"` is specified, for values from 0 to 3, each string are assigned respectively.
 **enable**      | `0`<br/>`1`| `1`    | Enable control with the pointing device.
-**colors**      | string | "#e00;#000;#000" | Semicolon separated 3 colors for 'indicator', 'body' and 'highlight'. These colors are used in default knob (when `src` is not provided).
+**colors**      | string | "#e00;#000;#fff" | Semicolon separated 3 colors for 'indicator', 'body' and 'highlight'. These colors are used in default knob (when `src` is not provided).
 **outline**     | `0`<br/>`1`<br/>string| `0`    | Border style when focused. `0`:no outline. `1`:equivalent to `"1px solid #ccc"`. Any other string will be applied to the style's outline attribute only when it has focus. 
 **midilearn**   | `0`<br/>`1`| `0`    | If `1`, MIDI learn function with right-click menu is enabled.
 **midicc**      | string | null   | Assign MIDI control change to this knob, with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
@@ -76,8 +76,8 @@ Attribute       | Options| Default | Description
 **min**         | float  | `0`     | Minimum value of the slider.
 **max**         | float  | `100`   | Maximum value of the slider.
 **step**        | float  | `1`     | Value step of the control. The 'value' is always rounded to multiple of 'step'.
-**width**       | int    | `src` image width or `24`    | Slider display width in px. If not specified, the image width specified by the `src` attribute will be used as is. In addition, if no `src` is specified, it will be 24.
-**height**      | int    | `src` image height or `128`   | Slider display height in px. If not specified, the image height specified by the `src` attribute will be used as is. In addition, if no `src` is specified, it will be 24.
+**width**       | int    | `src` image width or `128`    | Slider display width in px. If not specified, the image width specified by the `src` attribute will be used as is. In addition, if no `src` is specified, it will be 128.
+**height**      | int    | `src` image height or `24`   | Slider display height in px. If not specified, the image height specified by the `src` attribute will be used as is. In addition, if no `src` is specified, it will be 24.
 **knobwidth**   | int    | same as 'width' if 'direction' is `vert`, or same as 'height' if 'direction' is `horz` | Slider knob part width in px.
 **knobheight**  | int    | same as 'width' if 'direction' is `vert`, or same as 'height' if 'direction' is `horz` | Slider knob part height in px.
 **ditchlength** | int    | ('height'-'knobheight') or ('width'-'knobwidth')  depends on 'direction' | Knob movable length.
@@ -112,7 +112,7 @@ Attribute       | Options   | Default | Description
 **invert**      | `0`<br/>`1`   | `0`     | exchange on and off image.
 **tooltip**     | string    | `null`  | Tooltip text that will be shown when mouse hover a while.
 **enable**      | `0`<br/>`1`   | `1`     | Enable control with the pointing device.
-**colors**      | string    | "#e00;#000;#fff" | Semicolon separated 3 colors for 'knob', 'background' and 'highlight'. These colors are used in default switch (when `src` is not provided).
+**colors**      | string    | "#e00;#333;#fff" | Semicolon separated 3 colors for 'knob', 'background' and 'highlight'. These colors are used in default switch (when `src` is not provided).
 **outline**     | `0`<br/>`1`<br/>string| `0`    | Border style when focused. `0`:no outline. `1`:equivalent to `"1px solid #ccc"`. Any other string will be applied to the style's outline attribute only when it has focus. 
 **midilearn**   | string    | null    | If `true`, MIDI learn function with right-click menu is enabled.
 **midicc**      | string    | null    | Assign MIDI control change to this switch. with format `ch.cn`, here the `ch` is channel (1-16, ignore channel if 0) and `cn` is control number (0-119).
@@ -125,12 +125,12 @@ Attribute      | Options | Default | Description
 ---------------|---------|---------|------------
 **src**        | string  | Black rectangle if not specified | Background image or color. Transparent if set to `""`, or url to background image.
 **value**      | float   | `0`     | The current value. Usually same as linked control
-**width**      | int     | `32`    | Parameter display width in px
-**height**     | int     | `20`    | Parameter display height in px
-**fontsize**   | int     | `9`     | Font-size of the parameter display
+**width**      | int     | `src` image width or `32`    | Parameter display width in px. If not specified, the image width specified by the `src` attribute will be used as is. In addition, if no `src` is specified, it will be 32.
+**height**     | int     | `src` image height or `20`    | Parameter display height in px. If not specified, the image height specified by the `src` attribute will be used as is. In addition, if no `src` is specified, it will be 20.
+**fontsize**   | int     | `9`     | Font-size of the parameter display.
 **colors**     | string  | `"#fff;#000"` | Semicolon separated 2 colors for text and background. background color is used when `src` is not defined.
 **outline**     | `0`<br/>`1`<br/>string| `0`    | Border style when focused. `0`:no outline. `1`:equivalent to `"1px solid #ccc"`. Any other string will be applied to the style's outline attribute only when it has focus. 
-**link**       | string  | `null`  | Specify the linked webaudio-knob/slider/switch by Id
+**link**       | string  | `null`  | Specify the linked webaudio-knob/slider/switch by Id.
 **rconv**      | string  | `null`  | Specify the reverse conversion of target's `conv`. It is needed if the target knob/slider use conversion by `conv` attribute and the user edit the `webaudio-param` value directory by keyboard. The reverse converted value will be set to linked target. For example, when the target knob/slider use `conv="Math.pow(10,x)*20"` attribute, this `webaudio-param` should be `rconv="Math.log10(x/20)"`.
 
 ### webaudio-keyboard

@@ -82,20 +82,21 @@ if(window.customElements){
     knobWidth:null,
     knobHeight:null,
     knobDiameter:null,
-    knobColors:"#e00;#000;#000",
+    knobColors:"#e00;#000;#fff",
     sliderKnobsrc:null,
     sliderWidth:null,
     sliderHeight:null,
     sliderKnobWidth:null,
     sliderKnobHeight:null,
     sliderDitchlength:null,
-    sliderColors:"#e00;#000;#fcc",
+    sliderColors:"#e00;#333;#fcc",
     switchWidth:null,
     switchHeight:null,
     switchDiameter:null,
     switchColors:"#e00;#000;#fcc",
-    paramWidth:32,
-    paramHeight:20,
+    paramWidth:null,
+    paramHeight:null,
+    paramFontSize:9,
     paramColors:"#fff;#000",
     valuetip:0,
     xypadColors:"#e00;#000;#fcc",
@@ -398,13 +399,30 @@ ${this.basestyle}
         if(!this.coltab)
           this.coltab=["#e00","#000","#000"];
         let svg=
-`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="6464" preserveAspectRatio="none">
-<radialGradient id="gr" cx="30%" cy="30%"><stop offset="0%" stop-color="${this.coltab[2]}"/><stop offset="100%" stop-color="${this.coltab[1]}"/></radialGradient>
-<defs><circle id="B" cx="32" cy="32" r="30" fill="url(#gr)"/></defs>
-<defs><line id="K" x1="32" y1="28" x2="32" y2="7" stroke-linecap="round" stroke-width="6" stroke="${this.coltab[0]}"/></defs>`;
+`<svg xmlns="http://www.w3.org/2000/svg" width="64" height="6464" preserveAspectRatio="none">
+<defs>
+  <filter id="f1">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="0.8" />
+  </filter>
+  <radialGradient id="g1" cx="50%" cy="10%">
+    <stop offset="0%" stop-color="${this.coltab[2]}"/>
+    <stop offset="100%" stop-color="${this.coltab[1]}"/>
+  </radialGradient>
+  <linearGradient id="g2" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.3"/>
+  </linearGradient>
+  <g id="B">
+    <circle cx="32" cy="32" r="31" fill="#000"/>
+    <circle cx="32" cy="32" r="29" fill="url(#g1)"/>
+    <circle cx="32" cy="32" r="29" fill="url(#g2)"/>
+    <circle cx="32" cy="32" r="25" fill="${this.coltab[1]}" filter="url(#f1)"/>
+    <circle cx="32" cy="32" r="29" fill="url(#g2)"/>
+  </g>
+  <line id="K" x1="32" y1="25" x2="32" y2="11" stroke-linecap="round" stroke-width="6" stroke="${this.coltab[0]}"/>
+</defs>`;
         for(let i=0;i<101;++i){
-          svg += `<use xlink:href="#B" y="${64*i}"/>`;
-          svg += `<use xlink:href="#K" y="${64*i}" transform="rotate(${(-135+270*i/101).toFixed(2)},32,${64*i+32})"/>`;
+          svg += `<use href="#B" y="${64*i}"/><use href="#K" y="${64*i}" transform="rotate(${(-135+270*i/101).toFixed(2)},32,${64*i+32})"/>`;
         }
         svg += "</svg>";
         this.elem.style.backgroundImage = "url(data:image/svg+xml;base64,"+btoa(svg)+")";
@@ -414,6 +432,7 @@ ${this.basestyle}
         this.elem.style.width=this.kw+"px";
         this.elem.style.height=this.kh+"px";
         this.style.height=this.kh+"px";
+        this.fireflag=true;
         this.redraw();
         return;
       }
@@ -473,6 +492,7 @@ ${this.basestyle}
         v=(Math.round((v-this.min)/this.step))*this.step+this.min;
       this._value=Math.min(this.max,Math.max(this.min,v));
       if(this._value!=this.oldvalue){
+        this.fireflag=true;
         this.oldvalue=this._value;
         if(this.conv){
           const x=this._value;
@@ -548,6 +568,7 @@ ${this.basestyle}
       this.elem.focus();
       this.drag=1;
       this.showtip(0);
+      this.oldvalue=this._value;
       let pointermove=(ev)=>{
         let e=ev;
         if(ev.touches){
@@ -575,7 +596,10 @@ ${this.basestyle}
         else{
           this._setValue(this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4 : 1) * 128)) - this.min) / this.step) | 0) * this.step);
         }
-        this.sendEvent("input");
+        if(this.fireflag){
+          this.sendEvent("input");
+          this.fireflag=false;
+        }
         if(e.preventDefault)
           e.preventDefault();
         if(e.stopPropagation)
@@ -717,6 +741,7 @@ ${this.basestyle}
         for(let n = this.step ; n < 1; n *= 10)
           ++this.digits;
       }
+      this.fireflag=true;
       if(window.webAudioControlsMidiManager)
 //        window.webAudioControlsMidiManager.updateWidgets();
         window.webAudioControlsMidiManager.addWidget(this);
@@ -733,14 +758,30 @@ ${this.basestyle}
           if(this._width==null) this._width=128;
           if(this._height==null) this._height=24;
         }
-        else{
+        else if(this._direction=="vert"){
           if(this._width==null) this._width=24;
           if(this._height==null) this._height=128;
+        }
+        else{
+          if(this._width==null) this._width=128;
+          if(this._height==null) this._height=24;
         }
         const r=Math.min(this._width,this._height)*0.5;
         const svgbody=
 `<svg xmlns="http://www.w3.org/2000/svg" width="${this._width}" height="${this._height}" preserveAspectRatio="none">
-<rect x="1" y="1" rx="${r}" ry="${r}" width="${this._width-2}" height="${this._height-2}" fill="${this.coltab[1]}"/></svg>`;
+<defs>
+  <filter id="f1">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="0.8" />
+  </filter>
+  <linearGradient id="g1" x1="0%" y1="0%" ${(this._width>this._height)?'x2="0%" y2="100%"':'x2="100%" y2="0%"'}>
+    <stop offset="0%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.3"/>
+  </linearGradient>
+</defs>
+<rect x="1" y="1" rx="${r}" ry="${r}" width="${this._width-2}" height="${this._height-2}" fill="#000"/>
+<rect x="3" y="3" rx="${r}" ry="${r}" width="${this._width-6}" height="${this._height-6}" fill="${this.coltab[1]}" filter="url(#f1)"/>
+<rect x="1" y="1" rx="${r}" ry="${r}" width="${this._width-2}" height="${this._height-2}" fill="url(#g1)"/>
+</svg>`;
         this.srcurl = "data:image/svg+xml;base64,"+btoa(svgbody);
       }
       else{
@@ -749,32 +790,50 @@ ${this.basestyle}
       this.bodyimg.onload=()=>{
         if(this.src!="")
           this.elem.style.backgroundImage = "url("+this.srcurl+")";
-        this.sw=this._width;
-        this.sh=this._height;
-        if(this.sw==null) this.sw=this.bodyimg.width;
-        if(this.sh==null) this.sh=this.bodyimg.height;
-        this.sw=+this.sw;
-        this.sh=+this.sh;
+        this.sw=+this._width;
+        this.sh=+this._height;
+        if(this._width==null) this.sw=this.bodyimg.width;
+        if(this._height==null) this.sh=this.bodyimg.height;
         if(this.dr==null){
           if(this.sw>this.sh)
             this.dr="horz";
           else
             this.dr="vert";
         }
-        this.dlen=this.ditchlength;
-        this.kw=this.knobwidth||(this.dr=="horz"?this.sh:this.sw);
-        this.kh=this.knobheight||(this.dr=="horz"?this.sh:this.sw);
-        if(this.dlen==null){
-          if(this.dr=="horz")
-            this.dlen=this.sw-this.kw;
-          else
-            this.dlen=this.sh-this.kh;
-        }
-
+        this.kw=+this._knobwidth;
+        this.kh=+this._knobheight;
         if(this._knobsrc==null){
+          if(this._knobwidth==null) this.kw=Math.min(this.sw,this.sh);
+          if(this._knobheight==null) this.kh=Math.min(this.sw,this.sh);
+          const mm=Math.min(this.kw,this.kh)*0.5;
+          const kw2=Math.max(1,this.kw-12);
+          const kh2=Math.max(1,this.kh-12);
+          console.log(this.coltab)
           const svgknob=
 `<svg xmlns="http://www.w3.org/2000/svg" width="${this.kw}" height="${this.kh}" preserveAspectRatio="none">
-<radialGradient id="gr" cx="30%" cy="30%"><stop offset="0%" stop-color="${this.coltab[2]}"/><stop offset="100%" stop-color="${this.coltab[0]}"/></radialGradient><rect x="2" y="2" width="${this.kw-4}" height="${this.kh-4}" rx="${this.kw*0.5}" ry="${this.kh*0.5}" fill="url(#gr)"/></svg>`;
+<defs>
+  <filter id="f1">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="0.8" />
+  </filter>
+  <linearGradient id="g1" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="${this.coltab[2]}"/>
+    <stop offset="50%" stop-color="${this.coltab[0]}"/>
+    <stop offset="100%" stop-color="${this.coltab[0]}" stop-opacity="0.5"/>
+  </linearGradient>
+  <linearGradient id="g2" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="${this.coltab[0]}"/>
+    <stop offset="100%" stop-color="${this.coltab[0]}"/>
+  </linearGradient>
+  <linearGradient id="g3" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.3"/>
+  </linearGradient>
+</defs>
+<rect x="2" y="2" width="${this.kw-4}" height="${this.kh-4}" rx="${mm}" ry="${mm}" fill="#000"/>
+<rect x="3" y="3" width="${this.kw-6}" height="${this.kh-6}" rx="${mm}" ry="${mm}" fill="url(#g1)"/>
+<rect x="6" y="6" width="${kw2}" height="${kh2}" rx="${mm}" ry="${mm}" fill="url(#g2)" filter="url(#f1)"/>
+<rect x="3" y="3" width="${this.kw-6}" height="${this.kh-6}" rx="${mm}" ry="${mm}" fill="url(#g3)"/>
+</svg>`;
           this.knobsrcurl = "data:image/svg+xml;base64,"+btoa(svgknob);
         }
         else{
@@ -782,6 +841,15 @@ ${this.basestyle}
         }
         this.knobimg.onload=()=>{
           this.knob.style.backgroundImage = "url("+this.knobsrcurl+")";
+          if(this._knobwidth==null) this.kw=this.knobimg.width;
+          if(this._knobheight==null) this.kh=this.knobimg.height;
+          this.dlen=this.ditchlength;
+          if(this.dlen==null){
+            if(this.dr=="horz")
+              this.dlen=this.sw-this.kw;
+            else
+              this.dlen=this.sh-this.kh;
+          }
           this.knob.style.backgroundSize = "100% 100%";
           this.knob.style.width = this.kw+"px";
           this.knob.style.height = this.kh+"px";
@@ -828,6 +896,7 @@ ${this.basestyle}
       this._value=Math.min(this.max,Math.max(this.min,v));
       if(this._value!=this.oldvalue){
         this.oldvalue=this._value;
+        this.fireflag=true;
         if(this.conv){
           const x=this._value;
           this.convValue=eval(this.conv);
@@ -944,7 +1013,10 @@ ${this.basestyle}
             this._setValue(this.min + ((((this.startVal + (this.max - this.min) * offset / ((e.shiftKey ? 4 : 1) * this.dlen)) - this.min) / this.step) | 0) * this.step);
           }
         }
-        this.sendEvent("input");
+        if(this.fireflag){
+          this.sendEvent("input");
+          this.fireflag=false;
+        }
         if(e.preventDefault)
           e.preventDefault();
         if(e.stopPropagation)
@@ -1079,14 +1151,37 @@ ${this.basestyle}
       if(this.src==null||this.src==""){
         if(this.kw==null) this.kw=32;
         if(this.kh==null) this.kh=32;
-        let mm=Math.min(this.kw,this.kh);
-        let svg=
+        const mm=Math.min(this.kw,this.kh);
+        const kw=this.kw,kh=this.kh;
+        const svg=
 `<svg xmlns="http://www.w3.org/2000/svg" width="${this.kw}" height="${this.kh*2}" preserveAspectRatio="none">
-<radialGradient id="gr" cx="30%" cy="30%"><stop offset="0%" stop-color="${this.coltab[2]}"/><stop offset="100%" stop-color="${this.coltab[0]}"/></radialGradient>
-<rect x="${this.kw*0.05}" y="${this.kh*0.05}" width="${this.kw*0.9}" height="${this.kh*0.9}" rx="${mm*0.1}" ry="${mm*0.1}" fill="${this.coltab[1]}"/>
-<rect x="${this.kw*0.05}" y="${this.kh*1.05}" width="${this.kw*0.9}" height="${this.kh*0.9}" rx="${mm*0.1}" ry="${mm*0.1}" fill="${this.coltab[1]}"/>
-<circle cx="${this.kw*0.5}" cy="${this.kh*0.5}" r="${mm*0.3}" stroke="${this.coltab[0]}" stroke-width="2"/>
-<circle cx="${this.kw*0.5}" cy="${this.kh*1.5}" r="${mm*0.3}" stroke="${this.coltab[0]}" stroke-width="2" fill="url(#gr)"/></svg>`;
+<defs>
+<linearGradient id="g1" x1="0%" y1="0%" x2="0%" y2="100%">
+  <stop offset="0%" stop-color="#000" stop-opacity="0"/>
+  <stop offset="100%" stop-color="#000" stop-opacity="0.2"/>
+</linearGradient>
+<radialGradient id="g2" cx="50%" cy="30%">
+    <stop offset="0%" stop-color="${this.coltab[2]}"/>
+    <stop offset="100%" stop-color="${this.coltab[0]}"/>
+  </radialGradient>
+  <filter id="f1">
+    <feGaussianBlur in="SourceGraphic" stdDeviation=".4" />
+  </filter>
+</defs>
+<g id="p1">
+  <rect x="${kw*.075}" y="${kh*.075}" width="${kw*.85}" height="${kh*.85}" rx="${mm*.1}" ry="${mm*.1}" fill="#000"/>
+  <rect x="${kw*.1}" y="${kh*.1}" width="${kw*.8}" height="${kh*.8}" rx="${mm*.1}" ry="${mm*.1}" fill="${this.coltab[1]}"/>
+</g>
+<g id="p2">
+  <circle cx="${kw*0.5}" cy="${kh*0.5}" r="${mm*0.35}" stroke="#000" stroke-width="${mm*.03}" fill="${this.coltab[0]}" filter="url(#f1)"/>
+  <circle cx="${kw*0.5}" cy="${kh*0.5}" r="${mm*0.27}" stroke="#000" stroke-width="${mm*.03}" fill="#000" filter="url(#f1)"/>
+  <rect x="${kw*.075}" y="${kh*.075}" width="${kw*.85}" height="${kh*.85}" rx="${mm*.1}" ry="${mm*.1}" fill="url(#g1)"/>
+</g>
+<use href="#p1" y="${kh}"/>
+<use href="#p2" y="${kh}"/>
+<circle cx="${kw*.5}" cy="${kh*1.5}" r="${mm*.25}" fill="url(#g2)" filter="url(#f1)"/>
+<circle cx="${kw*.5}" cy="${kh*1.5}" r="${mm*.25}" fill="url(#g1)"/>
+</svg>`;
         this.srcurl="data:image/svg+xml;base64,"+btoa(svg);
       }
       else
@@ -1293,40 +1388,54 @@ ${this.basestyle}
     }
     disconnectedCallback(){}
     setupImage(){
-      this.coltab = this.colors.split(";");
-      this.elem.style.color=this.coltab[0];
-      if(this.src==""){
-        this.elem.style.background="none";
-      }
-      else if(!this.src){
-        this.elem.style.backgroundColor=this.coltab[1];
-      }
-      else{
-        this.elem.style.backgroundImage = "url("+(this.src)+")";
-        this.elem.style.backgroundSize = "100% 100%";
-      }
-      this.elem.style.width=this.width+"px";
-      this.elem.style.height=this.height+"px";
-      this.elem.style.fontSize=this.fontsize+"px";
-      this.elem.style.outline=this.outline?"":"none";
-      let l=document.getElementById(this.link);
-      if(l&&typeof(l.value)!="undefined"){
-        if(typeof(l.convValue)=="number")
-          this.setValue(l.convValue.toFixed(l.digits));
-        else
-          this.setValue(l.convValue);
-        if(this.currentLink)
-          this.currentLink.removeEventListener("input",this.currentLink.func);
-        this.currentLink={target:l, func:(e)=>{
+      this.imgloaded=()=>{
+        if(this.src!=""&&this.src!=null){
+          this.elem.style.backgroundImage = "url("+this.src+")";
+          this.elem.style.backgroundSize = "100% 100%";
+          if(this._width==null) this._width=this.img.width;
+          if(this._height==null) this._height=this.img.height;
+        }
+        else{
+          if(this._width==null) this._width=32;
+          if(this._height==null) this._height=20;
+        }
+        this.elem.style.width=this._width+"px";
+        this.elem.style.height=this._height+"px";
+        this.elem.style.fontSize=this.fontsize+"px";
+        let l=document.getElementById(this.link);
+        if(l&&typeof(l.value)!="undefined"){
           if(typeof(l.convValue)=="number")
             this.setValue(l.convValue.toFixed(l.digits));
           else
             this.setValue(l.convValue);
-        }};
-        this.currentLink.target.addEventListener("input",this.currentLink.func);
-//        l.addEventListener("input",(e)=>{this.setValue(l.convValue.toFixed(l.digits))});
+          if(this.currentLink)
+            this.currentLink.removeEventListener("input",this.currentLink.func);
+          this.currentLink={target:l, func:(e)=>{
+            if(typeof(l.convValue)=="number")
+              this.setValue(l.convValue.toFixed(l.digits));
+            else
+              this.setValue(l.convValue);
+          }};
+          this.currentLink.target.addEventListener("input",this.currentLink.func);
+  //        l.addEventListener("input",(e)=>{this.setValue(l.convValue.toFixed(l.digits))});
+        }
+        this.redraw();
+      };
+      this.coltab = this.colors.split(";");
+      this.elem.style.color=this.coltab[0];
+      this.img=new Image();
+      this.img.onload=this.imgloaded.bind();
+      if(this.src==null){
+        this.elem.style.backgroundColor=this.coltab[1];
+        this.imgloaded();
       }
-      this.redraw();
+      else if(this.src==""){
+        this.elem.style.background="none";
+        this.imgloaded();
+      }
+      else{
+        this.img.src=this.src;
+      }
     }
     redraw() {
       this.elem.value=this.value;
