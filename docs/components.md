@@ -113,8 +113,12 @@ Each type is specified by the `type` attribute. In the case of a `radio` button,
 <script>
 elms=document.getElementsByTagName("webaudio-switch");
 for(var i=0;i<elms.length;++i){
-  elms[i].addEventListener("change",(event)=>{console.log("change", event.target.id, event.target.value)});
-  elms[i].addEventListener("click",(event)=>{console.log("click", event.target.id, event.target.value)});
+  elms[i].addEventListener("change",(event)=>{
+    console.log("change", event.target.id, event.target.value)
+  });
+  elms[i].addEventListener("click",(event)=>{
+    console.log("click", event.target.id, event.target.value)
+  });
 }
 </script>
 
@@ -141,9 +145,9 @@ for(var i=0;i<elms.length;++i){
 </script>
 ```
 
-As for the event, "change" is issued when the state changes and "click" when the user clicks on it.  
+As for the event, `"change"` is issued when the state changes and `"click"` is issued when the user clicks on it.  
 
-If you want to use an image file, you can set the src attribute to an image that is vertically stitched in the off and on states like:  
+If you want to use an image file, you can set the `src` attribute to an image that is vertically stitched in the off and on states like:  
 
 <img src="../knobs/redbutton128.png" width="64"/>  
 
@@ -161,10 +165,10 @@ Then you will see the following:<br/>
 
 ## WebAudio-Param
 
-`<webaudio-param>` is a small text field used to display the current value of `<webaudio-knob>` or <`webaudio-slider>`.  
-Additionally, you can edit this text field to manipulate the value of the knobs or sliders.  
+`<webaudio-param>` is a small text field used to display the current value of `<webaudio-knob>` or `<webaudio-slider>`.  
+Additionally, it allows manipulating the knob or slider value by editing this text field.
 <br/>
-The basic behavior of `<webaudio-param>` does not require any Javascript program; it will work automatically if you associate it with the target knob or slider via a `link` attribute.
+The basic behavior of `<webaudio-param>` does not require any Javascript program; it will work automatically if the `link` attribute is set to the target knob or slider's id.
 <br/>
 
 <webaudio-knob id="knob10"></webaudio-knob>
@@ -185,6 +189,8 @@ The basic behavior of `<webaudio-param>` does not require any Javascript program
   <webaudio-param link="knob10"></webaudio-param>
 ```
 
+<br/>
+
 ---
 
 ## webaudio-keyboard
@@ -193,14 +199,12 @@ The basic behavior of `<webaudio-param>` does not require any Javascript program
 
 The default display looks like this:  
 
-<br/>
 <webaudio-keyboard id="kbd"></webaudio-keyboard>
 <script>
   document.getElementById("kbd").addEventListener("change",(event)=>{
     console.log(event.note);
   });
 </script>
-<br/>
 
 ```html
 <webaudio-keyboard id="kbd"></webaudio-keyboard>
@@ -211,44 +215,46 @@ The default display looks like this:
   });
 </script>
 ```
-<br/>
 
-The event behavior is to fire a "change" event when a key is pressed/released.
-This "change" event is accompanied by a note property, which holds the key on/off and note number. (Note that the note property is attached to the event object, not the webaudio-keyboard element.)  
+About event behavior, a "change" event is issued when a key is pressed/released.
+This "change" event is accompanied by a `note` property, which holds the key on/off state and note number. (Note that the `note` property is attached to the event object, not the webaudio-keyboard element.)  
 
-<br/>
-<br/>
+You can specify the `width`, `height` and number of `keys`. In addition, the note of the lowest `key` can be specified with `min` attribute.  
 
-You can specify the width, height and number of keys. In addition, the note of the lowest note can be specified with "min".
-<br/><br/>
-<webaudio-keyboard width="600" height="40" keys="88" min="9"></webaudio-keyboard>
-<br/>
+<webaudio-keyboard width="600" height="40" keys="88" min="9">
+</webaudio-keyboard>
 
 ```html
-<webaudio-keyboard width="800" height="40" keys="88" min="9"></webaudio-keyboard>
+<webaudio-keyboard width="800" height="40" keys="88" min="9">
+</webaudio-keyboard>
 ```
-<br/><br/>
 
-
-
-There is no way to use an external image, but you can customize the colors.
+There is no way to use an external image, but you can customize the colors by `colors` attribute.
 You can specify 9 colors of border, start and end of each gradation of white key and black key, for each of normal state and pressed state.  
 
-<webaudio-keyboard colors="#888;#000;#000;#888;#777;#eee;#ddd;#333;#222"></webaudio-keyboard>
-<br/>
+<webaudio-keyboard colors="#888;#000;#000;#888;#777;#eee;#ddd;#333;#222">
+</webaudio-keyboard>
+
 ```html
-<webaudio-keyboard colors="#888;#000;#000;#888;#777;#eee;#ddd;#333;#222"></webaudio-keyboard>
+<webaudio-keyboard colors="#888;#000;#000;#888;#777;#eee;#ddd;#333;#222">
+</webaudio-keyboard>
 ```
 
-<webaudio-keyboard colors="#000;#ec0;#db0;#222;#000;#0e3;#0c2;#0e3;#0c2"></webaudio-keyboard>
 <br/>
+
+<webaudio-keyboard colors="#000;#ec0;#db0;#222;#000;#0e3;#0c2;#0e3;#0c2">
+</webaudio-keyboard>
 ```html
-<webaudio-keyboard colors="#000;#ec0;#db0;#222;#000;#0e3;#0c2;#0e3;#0c2"></webaudio-keyboard>
+<webaudio-keyboard colors="#000;#ec0;#db0;#222;#000;#0e3;#0c2;#0e3;#0c2">
+</webaudio-keyboard>
 ```
 
-<webaudio-keyboard colors="#222;#9dc;#8ca;#4ca;#3a9;#f8a;#f8a;#f8a;#f8a"></webaudio-keyboard>
 <br/>
+
+<webaudio-keyboard colors="#222;#9dc;#8ca;#4ca;#3a9;#f8a;#f8a;#f8a;#f8a">
+</webaudio-keyboard>
 ```html
-<webaudio-keyboard colors="#222;#9dc;#8ca;#4ca;#3a9;#f8a;#f8a;#f8a;#f8a"></webaudio-keyboard>
+<webaudio-keyboard colors="#222;#9dc;#8ca;#4ca;#3a9;#f8a;#f8a;#f8a;#f8a">
+</webaudio-keyboard>
 ```
 ---
