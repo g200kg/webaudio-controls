@@ -150,10 +150,10 @@ If you want to use an image file, you can set the src attribute to an image that
 <br/>
 Then you will see the following:<br/>
 
-<webaudio-switch src="../knobs/redbutton128.png"/></webaudio-switch>
+<webaudio-switch src="../knobs/redbutton128.png"></webaudio-switch>
 
 ```html
-  <webaudio-switch src="../knobs/redbutton128.png"/></webaudio-switch>
+  <webaudio-switch src="../knobs/redbutton128.png"></webaudio-switch>
 ```
 <br/>
 
