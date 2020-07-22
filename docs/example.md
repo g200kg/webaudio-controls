@@ -64,7 +64,7 @@ An example of color variation by `colors` attribute.
 |    | colors attribute
 |----|------------------------
 |<webaudio-knob id="knb2a" colors="#fc0;#000;#444"></webaudio-knob>|`colors="#fc0;#000;#444"`
-|<webaudio-knob id="knb2b" colors="#fc0;#8ab;#fff"></webaudio-knob>|`"colors=#fc0;#8ab;#fff"`
+|<webaudio-knob id="knb2b" colors="#fc0;#8ab;#fff"></webaudio-knob>|`colors="#fc0;#8ab;#fff"`
 |<webaudio-knob id="knb2c" colors="#08f;#800;#fff"></webaudio-knob>|`colors="#08f;#800;#fff"`
 |<webaudio-knob id="knb2d" colors="#fc0;#a0b;#fcc"></webaudio-knob>|`colors="#fc0;#a0b;#fcc"`
 |<webaudio-knob id="knb2e" colors="#f88;#400;#a00"></webaudio-knob>|`colors="#f88;#400;#a00"`
@@ -147,10 +147,10 @@ An example of color variation by `colors` attribute
 |----|----
 |<webaudio-slider id="sli2a" colors="#0f0;#000;#ff0" width="200" height="30"></webaudio-slider>|`"#0f0;#000;#ff0"`
 |<webaudio-slider id="sli2b" colors="#fc0;#8ab;#fff" width="200" height="30"></webaudio-slider>|`"#fc0;#8ab;#fff"`
-|<webaudio-slider id="sli2c" colors="#08f;#800;#fff" width="300" height="30"></webaudio-slider>|`"#08f;#800;#fff"`
-|<webaudio-slider id="sli2d" colors="#fc0;#a0b;#fcc" width="300" height="30"></webaudio-slider>|`"#fc0;#a0b;#fcc"`
-|<webaudio-slider id="sli2e" colors="#f88;#400;#fcc" width="300" height="30"></webaudio-slider>|`"#f88;#400;#fcc"`
-|<webaudio-slider id="sli2f" colors="#888;#000;#0f0" width="300" height="30"></webaudio-slider>|`"#888;#000;#0f0"`
+|<webaudio-slider id="sli2c" colors="#08f;#800;#fff" width="200" height="30"></webaudio-slider>|`"#08f;#800;#fff"`
+|<webaudio-slider id="sli2d" colors="#fc0;#a0b;#fcc" width="200" height="30"></webaudio-slider>|`"#fc0;#a0b;#fcc"`
+|<webaudio-slider id="sli2e" colors="#f88;#400;#fcc" width="200" height="30"></webaudio-slider>|`"#f88;#400;#fcc"`
+|<webaudio-slider id="sli2f" colors="#888;#000;#0f0" width="200" height="30"></webaudio-slider>|`"#888;#000;#0f0"`
 
 If you specify a slider-base and a thumb image, it will look like this.
 
