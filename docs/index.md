@@ -46,8 +46,8 @@ You can configure the GUI screen just by writing custom tags in HTML.
 
 Component         | Description
 ------------------|------------
-webaudio-knob     | Rotating or some other frame-by-frame animation knob. 
-webaudio-slider   | Vertical or Horizontal slider.
+webaudio-knob     | Rotating or some other frame-by-frame animation knobs. 
+webaudio-slider   | Vertical or Horizontal slidesrs.
 webaudio-switch   | Toggle / Kick / Radio switches.
 webaudio-param    | Editable value display field that can auto-link to knobs or sliders.
 webaudio-keyboard | Mouse / Touch playable keyboard. multi-touch support.
