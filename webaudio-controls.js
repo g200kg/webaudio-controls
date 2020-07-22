@@ -808,7 +808,6 @@ ${this.basestyle}
           const mm=Math.min(this.kw,this.kh)*0.5;
           const kw2=Math.max(1,this.kw-12);
           const kh2=Math.max(1,this.kh-12);
-          console.log(this.coltab)
           const svgknob=
 `<svg xmlns="http://www.w3.org/2000/svg" width="${this.kw}" height="${this.kh}" preserveAspectRatio="none">
 <defs>
@@ -991,9 +990,9 @@ ${this.basestyle}
           const rc = this.getBoundingClientRect();
           let val;
           if(this.dr=="horz")
-            val = Math.max(0,Math.min(1,(e.pageX-rc.left-window.pageXOffset-this.kwidth*0.5)/(this.width-this.kwidth)));
+            val = Math.max(0,Math.min(1,(e.pageX-rc.left-window.pageXOffset-this.kw*0.5)/(this.width-this.kw)));
           else
-            val = 1 - Math.max(0,Math.min(1,(e.pageY-rc.top-window.pageYOffset-this.kheight*0.5)/(this.height-this.kheight)));
+            val = 1 - Math.max(0,Math.min(1,(e.pageY-rc.top-window.pageYOffset-this.kh*0.5)/(this.height-this.kh)));
           if(this.log){
             this._setValue(this.min * Math.pow(this.max/this.min, val));
           }

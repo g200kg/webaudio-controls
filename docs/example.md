@@ -196,11 +196,11 @@ An example of color variation by `colors` attribute.
 |    | colors attribute
 |----|----
 |<webaudio-switch colors="#0f0;#000;#ff0" width="50" height="50"></webaudio-switch>|`"#0f0;#000;#ff0"`
-|<webaudio-slider colors="#fc0;#8ab;#fff" width="50" height="50"></webaudio-slider>|`"#fc0;#8ab;#fff"`
-|<webaudio-slider colors="#08f;#800;#fff" width="50" height="50"></webaudio-slider>|`"#08f;#800;#fff"`
-|<webaudio-slider colors="#fc0;#a0b;#fcc" width="50" height="50"></webaudio-slider>|`"#fc0;#a0b;#fcc"`
-|<webaudio-slider colors="#f88;#400;#fcc" width="50" height="50"></webaudio-slider>|`"#f88;#400;#fcc"`
-|<webaudio-slider colors="#888;#000;#0f0" width="50" height="50"></webaudio-slider>|`"#888;#000;#0f0"`
+|<webaudio-switch colors="#fc0;#8ab;#fff" width="50" height="50"></webaudio-switch>|`"#fc0;#8ab;#fff"`
+|<webaudio-switch colors="#08f;#800;#fff" width="50" height="50"></webaudio-switch>|`"#08f;#800;#fff"`
+|<webaudio-switch colors="#fc0;#a0b;#fcc" width="50" height="50"></webaudio-switch>|`"#fc0;#a0b;#fcc"`
+|<webaudio-switch colors="#f88;#400;#fcc" width="50" height="50"></webaudio-switch>|`"#f88;#400;#fcc"`
+|<webaudio-switch colors="#888;#000;#0f0" width="50" height="50"></webaudio-switch>|`"#888;#000;#0f0"`
 
 
 This is an example when a background image file is specified by `src` attribute. If the size is not specified, the image will be displayed at its original size, but if the `width` and `height` are specified, the image will be resized.
