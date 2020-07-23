@@ -110,13 +110,14 @@ Each type is specified by the `type` attribute. In the case of a `radio` button,
 <webaudio-switch id="sw3" type="radio" group="radio1"></webaudio-switch>
 <webaudio-switch id="sw4" type="radio" group="radio1" value="1"></webaudio-switch>
 <webaudio-switch id="sw5" type="radio" group="radio1"></webaudio-switch> radio<br/>
+
 <script>
 elms=document.getElementsByTagName("webaudio-switch");
-for(var i=0;i<elms.length;++i){
-  elms[i].addEventListener("change",(event)=>{
+for(var i = 0; i < elms.length; ++i){
+  elms[i].addEventListener("change", (event)=>{
     console.log("change", event.target.id, event.target.value)
   });
-  elms[i].addEventListener("click",(event)=>{
+  elms[i].addEventListener("click", (event)=>{
     console.log("click", event.target.id, event.target.value)
   });
 }

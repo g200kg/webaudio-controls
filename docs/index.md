@@ -37,9 +37,9 @@ Advanced Usage and Application Notes :
 
 # Overview
 
-**webaudio-controls** is a Javascript library for displaying the GUI parts required to Web Music applications.  
+**webaudio-controls** is a Javascript library to display the GUI components used in Web Music Applications.
 webaudio-controls consists of knobs, sliders, switches, parameter displays and keyboards.
-By loading webaudio-controls.js to your page, custom tags for component display will be added using WebComponents.  
+By loading `webaudio-controls.js` to your page, custom tags for component display will be added using WebComponents.  
 You can configure the GUI screen just by writing custom tags in HTML.  
 
 **webaudio-controls** is consist of following components.  
