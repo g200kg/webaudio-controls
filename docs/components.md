@@ -229,35 +229,4 @@ You can specify the `width`, `height` and number of `keys`. In addition, the not
 </webaudio-keyboard>
 ```
 
-There is no way to use an external image, but you can customize the colors by `colors` attribute.
-You can specify 9 colors of border, start and end of each gradation of white key and black key, for each of normal state and pressed state.  
-
-<webaudio-keyboard colors="#888;#000;#000;#888;#777;#eee;#ddd;#333;#222">
-</webaudio-keyboard>
-
-```html
-<webaudio-keyboard colors="#888;#000;#000;#888;#777;#eee;#ddd;#333;#222">
-</webaudio-keyboard>
-```
-
-<br/>
-
-<webaudio-keyboard colors="#000;#ec0;#db0;#222;#000;#0e3;#0c2;#0e3;#0c2">
-</webaudio-keyboard>
-
-```html
-<webaudio-keyboard colors="#000;#ec0;#db0;#222;#000;#0e3;#0c2;#0e3;#0c2">
-</webaudio-keyboard>
-```
-
-<br/>
-
-<webaudio-keyboard colors="#222;#9dc;#8ca;#4ca;#3a9;#f8a;#f8a;#f8a;#f8a">
-</webaudio-keyboard>
-
-```html
-<webaudio-keyboard colors="#222;#9dc;#8ca;#4ca;#3a9;#f8a;#f8a;#f8a;#f8a">
-</webaudio-keyboard>
-```
-
 ---

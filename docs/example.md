@@ -45,11 +45,11 @@ Advanced Usage and Application Notes :
 
 # Examples of Various Attributes
 
-You can customize the appearance and behavior of webaudio-controls by adding attributes to the tags. Here are some examples.  
+You can customize the appearance and behavior of `webaudio-controls` by adding attributes to the tags. Here are some examples.  
   
 
 
-## WebAudio-Knobs
+## webAudio-knob
 
 By default, the webaudio-knob tag looks like this.
 
@@ -123,7 +123,7 @@ Non-square image can be used with specifying `width`/`height` instead of diamete
 
 ---
 
-## WebAudio-Sliders
+## webAudio-slider
 
 If no slider image is provided by the `src` attribute, a simple built-in image will be used. 
 
@@ -181,7 +181,7 @@ Value step is specified, resized, tooltip-text and webaudio-param are added.
 
 ---
 
-## WebAudio-Switches
+## webAudio-switch
 
 These are default `webaudio-switch`. If no switch image is specified, simple built-in image resource is used.  
 Default switch type is "toggle".  
@@ -256,7 +256,7 @@ These are 'radio' type switches. In this mode, only one switch is activated in t
 
 ---
 
-## Keyboards
+## webaudio-keyboard
 
 This is a default keyboard. 25 keys, 480px X 128px is default.  
 
@@ -274,6 +274,34 @@ Number of keys, width and height settings. Also the lowest key is set to note "A
   <webaudio-keyboard id="kbd2"
     keys="88" min="9" width="600" height="64">
   </webaudio-keyboard>
+```
+
+Color customization by `colors` attribute. 
+
+<webaudio-keyboard colors="#888;#000;#000;#888;#777;#eee;#ddd;#333;#222">
+</webaudio-keyboard>
+
+```html
+<webaudio-keyboard colors="#888;#000;#000;#888;#777;#eee;#ddd;#333;#222">
+</webaudio-keyboard>
+```
+
+
+<webaudio-keyboard colors="#000;#ec0;#db0;#222;#000;#0e3;#0c2;#0e3;#0c2">
+</webaudio-keyboard>
+
+```html
+<webaudio-keyboard colors="#000;#ec0;#db0;#222;#000;#0e3;#0c2;#0e3;#0c2">
+</webaudio-keyboard>
+```
+
+
+<webaudio-keyboard colors="#222;#9dc;#8ca;#4ca;#3a9;#f8a;#f8a;#f8a;#f8a">
+</webaudio-keyboard>
+
+```html
+<webaudio-keyboard colors="#222;#9dc;#8ca;#4ca;#3a9;#f8a;#f8a;#f8a;#f8a">
+</webaudio-keyboard>
 ```
 
 ---
