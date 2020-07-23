@@ -6,7 +6,7 @@
   };
 </script>
 
-<script src="../webaudio-controls.js"></script>
+<script src="./webaudio-controls.js"></script>
 
 Basic Usage :
 <div style="display:flex;width:100%;flex-wrap:wrap">
@@ -67,10 +67,10 @@ The events are issued by operating this knob with a mouse or touch device, so yo
 Also if you assign a external filmstrip-type image file to a `<webaudio-knob>` with the `src` attribute, you can create an frame-by-frame animated knobs that changes not only rotation but changes shapes or colors as the value changes.
 
 <br/>
-<webaudio-knob id="knob2" src="../knobs/lineshadow.png"></webaudio-knob>
+<webaudio-knob id="knob2" src="./knobs/lineshadow.png"></webaudio-knob>
 
 ```html
-<webaudio-knob id="knob2" src="../knobs/lineshadow.png"></webaudio-knob>
+<webaudio-knob id="knob2" src="./knobs/lineshadow.png"></webaudio-knob>
 ```
 
 ---
@@ -84,14 +84,14 @@ Horizontal or vertical is automatically determined by the `width` and `height` s
 When specifying the image file, set the background part and the thumb part separately, then the thumb part will move horizontally or vertically on the background part.
 
 <webaudio-slider id="sli1" width="300" height="30"></webaudio-slider><br/><br/>
-<webaudio-slider id="sli2" width="300" src="../knobs/hsliderbody.png" knobsrc="../knobs/hsliderknob.png"></webaudio-slider><br/>
+<webaudio-slider id="sli2" width="300" src="./knobs/hsliderbody.png" knobsrc="./knobs/hsliderknob.png"></webaudio-slider><br/>
 
 ```html
   <webaudio-slider id="sli1" width="300" height="30"></webaudio-slider>
 
   <webaudio-slider id="sli2" width="300" 
-    src="../knobs/hsliderbody.png" 
-    knobsrc="../knobs/hsliderknob.png">
+    src="./knobs/hsliderbody.png" 
+    knobsrc="./knobs/hsliderknob.png">
   </webaudio-slider>
 ```
 
@@ -150,15 +150,15 @@ As for the event, `"change"` is issued when the state changes and `"click"` is i
 
 If you want to use an image file, you can set the `src` attribute to an image that is vertically stitched in the off and on states like:  
 
-<img src="../knobs/redbutton128.png" width="64"/>  
+<img src="./knobs/redbutton128.png" width="64"/>  
 
 <br/>
 Then you will see the following:<br/>
 
-<webaudio-switch src="../knobs/redbutton128.png"></webaudio-switch>
+<webaudio-switch src="./knobs/redbutton128.png"></webaudio-switch>
 
 ```html
-  <webaudio-switch src="../knobs/redbutton128.png"></webaudio-switch>
+  <webaudio-switch src="./knobs/redbutton128.png"></webaudio-switch>
 ```
 <br/>
 
