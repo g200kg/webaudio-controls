@@ -6,7 +6,7 @@
   };
 </script>
 
-<script src="../webaudio-controls.js"></script>
+<script src="https://raw.githubusercontent.com/g200kg/webaudio-controls/master/webaudio-controls.js"></script>
 
 Basic Usage :
 <div style="display:flex;width:100%;flex-wrap:wrap">
@@ -73,12 +73,12 @@ Examples of color variation by `colors` attribute.
 An external Knob image-file can be assigned by the `src` attribute.  
 Also, specify the range of the value in `min`/`max`. The initial value is "60". The value is changed in `step` of "20".  
 
-<webaudio-knob id="knob3" src="../knobs/LittlePhatty.png"
+<webaudio-knob id="knob3" src="./knobs/LittlePhatty.png"
  sprites="100" value="60" min="-100" max="100" step="20" diameter="64" valuetip="1"></webaudio-knob>
 
 ```html
   <webaudio-knob id="knb3"
-    src="../knobs/LittlePhatty.png" diameter="64"
+    src="./knobs/LittlePhatty.png" diameter="64"
     sprites="100" value="60"
     min="-100" max="100" step="20">
   </webaudio-knob>
@@ -86,22 +86,22 @@ Also, specify the range of the value in `min`/`max`. The initial value is "60". 
 
 The knob image will be resized to specified size (even recommended to prepare required size image for clear display).  
 
-<webaudio-knob id="knb4" src="../knobs/LittlePhatty.png" sprites="100" diameter="32"></webaudio-knob><br/>
+<webaudio-knob id="knb4" src="./knobs/LittlePhatty.png" sprites="100" diameter="32"></webaudio-knob><br/>
 
 ```html
   <webaudio-knob id="knb4"
-    src="../knobs/LittlePhatty.png" diameter="32"
+    src="./knobs/LittlePhatty.png" diameter="32"
     sprites="100">
   </webaudio-knob>
 ```
 
 Non-square image can be used with specifying `width`/`height` instead of diameter.  
 
-<webaudio-knob id="knb5" src="../img/hsw5.png" sprites="4" value="2" min="0" max="4" width="128" height="32"></webaudio-knob><br/>
+<webaudio-knob id="knb5" src="./img/hsw5.png" sprites="4" value="2" min="0" max="4" width="128" height="32"></webaudio-knob><br/>
 
 ```html
   <webaudio-knob id="knb5" 
-    src="../img/hsw5.png" sprites="4" 
+    src="./img/hsw5.png" sprites="4" 
     width="128" height="32"
     value="2" min="0" max="4">
   </webaudio-knob>
@@ -109,12 +109,12 @@ Non-square image can be used with specifying `width`/`height` instead of diamete
 
 `webaudio-knob` can has tooltip-text and editable parameter display field with `webaudio-param`.  
 
-<webaudio-knob id="knb6" src="../knobs/LittlePhatty.png" sprites="100" diameter="64" valuetip="0" tooltip="Knob Test : %s"></webaudio-knob>
+<webaudio-knob id="knb6" src="./knobs/LittlePhatty.png" sprites="100" diameter="64" valuetip="0" tooltip="Knob Test : %s"></webaudio-knob>
 <webaudio-param link="knb6"></webaudio-param><br/>
 
 ```html
   <webaudio-knob id="knb6"
-    src="../knobs/LittlePhatty.png"
+    src="./knobs/LittlePhatty.png"
     sprites="100" diameter="64"
     tooltip="Knob Test %s">
   </webaudio-knob>
@@ -154,24 +154,24 @@ These are examples of color variation by `colors` attribute :
 
 If you specify a slider background image and a thumb image, it will look like this.
 
-<webaudio-slider id="sli3" direction="horz" src="../img/hsliderbody.png" knobsrc="../img/hsliderknob.png"></webaudio-slider><br/>
+<webaudio-slider id="sli3" direction="horz" src="./img/hsliderbody.png" knobsrc="./img/hsliderknob.png"></webaudio-slider><br/>
 
 ```html
   <webaudio-slider id="sli3" direction="horz"
-    src="../img/hsliderbody.png"
-    knobsrc="../img/hsliderknob.png">
+    src="./img/hsliderbody.png"
+    knobsrc="./img/hsliderknob.png">
   </webaudio-slider>
 ```
 
 Value step is specified, resized, tooltip-text and webaudio-param are added.  
 
-<webaudio-slider id="sli4" direction="horz" src="../img/hsliderbody.png" knobsrc="../img/hsliderknob.png" min="0" max="1" step="0.1" width="60" height="20" valuetip="0" tooltip="Slider Test"></webaudio-slider>
+<webaudio-slider id="sli4" direction="horz" src="./img/hsliderbody.png" knobsrc="./img/hsliderknob.png" min="0" max="1" step="0.1" width="60" height="20" valuetip="0" tooltip="Slider Test"></webaudio-slider>
 <webaudio-param link="sli4"></webaudio-param><br/>
 
 ```html
   <webaudio-slider id="sli4" direction="horz"
-    src="../img/hsliderbody.png"
-    knobsrc="../img/hsliderknob.png"
+    src="./img/hsliderbody.png"
+    knobsrc="./img/hsliderknob.png"
     min="0" max="1" step="0.1"
     width="60" height="20"
     tooltip="Slider Test">
@@ -206,49 +206,49 @@ An example of color variation by `colors` attribute.
 
 This is an example when a background image file is specified by `src` attribute. If the size is not specified, the image will be displayed at its original size, but if the `width` and `height` are specified, the image will be resized.
 
-<webaudio-switch id="sw3a" src="../knobs/switch_toggle.png" width="32" height="32"></webaudio-switch>
-<webaudio-switch id="sw3b" src="../knobs/switch_toggle.png" width="64" height="64"></webaudio-switch>  
+<webaudio-switch id="sw3a" src="./knobs/switch_toggle.png" width="32" height="32"></webaudio-switch>
+<webaudio-switch id="sw3b" src="./knobs/switch_toggle.png" width="64" height="64"></webaudio-switch>  
 
 ```html
-  <webaudio-switch id="sw3a" src="../knobs/switch_toggle.png"
+  <webaudio-switch id="sw3a" src="./knobs/switch_toggle.png"
     width="32" height="32">
   </webaudio-switch>
-  <webaudio-switch id="sw3b" src="../knobs/switch_toggle.png"
+  <webaudio-switch id="sw3b" src="./knobs/switch_toggle.png"
     width="64" height="64">
   </webaudio-switch>
 ```
 
 This is a 'kick' type switch. This switch is 'on' only while pressing.  
 
-<webaudio-switch id="sw4" src="../knobs/switch_toggle.png" type="kick" width="54" height="54"></webaudio-switch>  
+<webaudio-switch id="sw4" src="./knobs/switch_toggle.png" type="kick" width="54" height="54"></webaudio-switch>  
 
 ```html
   <webaudio-switch id="sw4"
     type="kick" 
-    src="../knobs/switch_toggle.png"
+    src="./knobs/switch_toggle.png"
     width="54" height="54">
   </webaudio-switch>
 ```
 
 These are 'radio' type switches. In this mode, only one switch is activated in the group. A group is composed of those that match the `group` attribute.  
 
-<webaudio-switch id="sw5a" src="../knobs/switch_toggle.png" type="radio" group="radio1" width="54" height="54" invert="1" value="1" tooltip="Radio-A"></webaudio-switch>
-<webaudio-switch id="sw5b" src="../knobs/switch_toggle.png" type="radio" group="radio1" width="54" height="54" invert="1" tooltip="Radio-B"></webaudio-switch>
-<webaudio-switch id="sw5c" src="../knobs/switch_toggle.png" type="radio" group="radio1" width="54" height="54" invert="1" tooltip="Radio-C"></webaudio-switch><br/>
+<webaudio-switch id="sw5a" src="./knobs/switch_toggle.png" type="radio" group="radio1" width="54" height="54" invert="1" value="1" tooltip="Radio-A"></webaudio-switch>
+<webaudio-switch id="sw5b" src="./knobs/switch_toggle.png" type="radio" group="radio1" width="54" height="54" invert="1" tooltip="Radio-B"></webaudio-switch>
+<webaudio-switch id="sw5c" src="./knobs/switch_toggle.png" type="radio" group="radio1" width="54" height="54" invert="1" tooltip="Radio-C"></webaudio-switch><br/>
 
 ```html
   <webaudio-switch id="sw5a"
-    src="../knobs/switch_toggle.png"
+    src="./knobs/switch_toggle.png"
     type="radio" group="radio1"
     width="54" height="54" invert="1" value="1" tooltip="Radio-A">
   </webaudio-switch>
   <webaudio-switch id="sw5b"
-    src="../knobs/switch_toggle.png"
+    src="./knobs/switch_toggle.png"
     type="radio" group="radio1"
     width="54" height="54" invert="1" tooltip="Radio-B">
   </webaudio-switch>
   <webaudio-switch id="sw5c"
-    src="../knobs/switch_toggle.png"
+    src="./knobs/switch_toggle.png"
     type="radio" group="radio1"
     width="54" height="54" invert="1" tooltip="Radio-C">
   </webaudio-switch>

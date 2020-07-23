@@ -6,7 +6,7 @@
   };
 </script>
 
-<script src="../webaudio-controls.js"></script>
+<script src="https://raw.githubusercontent.com/g200kg/webaudio-controls/master/webaudio-controls.js"></script>
 
 Basic Usage :
 <div style="display:flex;width:100%;flex-wrap:wrap">
@@ -40,7 +40,7 @@ Advanced Usage and Application Notes :
 - **webaudio-controls.js**
   - Place "webaudio-controls.js" to an appropriate directory. <br/>This is the only file needed. There are no dependencies on other libraries.  
 
-  [webaudio-controls.js](../webaudio-controls.js)
+  [webaudio-controls.js](https://raw.githubusercontent.com/g200kg/webaudio-controls/master/webaudio-controls.js)
 
 - **WebComponents polyfill**
   - If you want to support legacy browsers that not support WebComponents, the polyfill for WebComponents is needed :  
@@ -52,17 +52,17 @@ Advanced Usage and Application Notes :
   - ```<script src="https://g200kg.github.io/webaudio-controls/webaudio-controls.js"></script>```
 
 - **insert webaudio-knob / slider / switch / param / keyboard elements.**
-  - `<webaudio-knob id="knob-1" src="../knobs/LittlePhatty.png" min="0" max="100"></webaudio-knob>`
+  - `<webaudio-knob id="knob-1" src="./knobs/LittlePhatty.png" min="0" max="100"></webaudio-knob>`
   - `<webaudio-slider></webaudio-slider>`
-  - `<webaudio-switch src="../knobs/switch_toggle.png" width="32" height="32"></webaudio-switch>`
+  - `<webaudio-switch src="./knobs/switch_toggle.png" width="32" height="32"></webaudio-switch>`
   - `<webaudio-param link="knob-1"></webaudio-param>`
   - `<webaudio-keyboard keys="25"></webaudio-keyboard>`
 
 ---
 
-<webaudio-knob id="knob-1" src="../knobs/LittlePhatty.png" sprites="100" min="0" max="100"></webaudio-knob>
+<webaudio-knob id="knob-1" src="./knobs/LittlePhatty.png" sprites="100" min="0" max="100"></webaudio-knob>
 <webaudio-slider></webaudio-slider>
-<webaudio-switch src="../knobs/switch_toggle.png" width="32" height="32"></webaudio-switch>
+<webaudio-switch src="./knobs/switch_toggle.png" width="32" height="32"></webaudio-switch>
 <webaudio-param link="knob-1"></webaudio-param>
 <webaudio-keyboard keys="25"></webaudio-keyboard>
 

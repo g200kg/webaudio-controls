@@ -3,15 +3,15 @@
 <script>
   WebAudioControlsOptions={
   useMidi:1,
-  knobSrc:"../knobs/simplegray.png",
-  sliderSrc:"../knobs/vsliderbody.png",
-  sliderKnobSrc:"../knobs/vsliderknob.png",
+  knobSrc:"./knobs/simplegray.png",
+  sliderSrc:"./knobs/vsliderbody.png",
+  sliderKnobSrc:"./knobs/vsliderknob.png",
   sliderKnobWidth:100,
   sliderKnobHeight:40,
   };
 </script>
 
-<script src="../webaudio-controls.js"></script>
+<script src="https://raw.githubusercontent.com/g200kg/webaudio-controls/master/webaudio-controls.js"></script>
 
 Basic Usage :
 <div style="display:flex;width:100%;flex-wrap:wrap">

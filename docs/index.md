@@ -6,7 +6,7 @@
   };
 </script>
 
-<script src="../webaudio-controls.js"></script>
+<script src="https://raw.githubusercontent.com/g200kg/webaudio-controls/master/webaudio-controls.js"></script>
 
 Basic Usage :
 <div style="display:flex;width:100%;flex-wrap:wrap">
@@ -60,15 +60,15 @@ This is an example of a typical GUI screen created using webaudio-controls. Knob
 Each component fires an event when manipulated and can be handled by a javascript program.
 
 <div>
-    <div style="position:relative;background-image: url('../img/bg.png');width:512px;height:240px;margin:30px auto;padding:0px;">
-        <webaudio-knob id="knob1" midilearn="1" midicc="1.1" style="position:absolute;left:48px;top:76px" src="../knobs/LittlePhatty.png" value="50" step="1" diameter="64" tooltip="Knob1 tooltip %d"></webaudio-knob>
-        <webaudio-knob midilearn="1" midicc="8.7" style="position:absolute;left:128px;top:76px" src="../knobs/LittlePhatty.png" value="1" min="0" max="3" step="0.01" diameter="64" sprites="100" tooltip="Knob2 tooltip <br/> %.2f Hz" conv="(x)=>{return Math.pow(10,x)*20}"></webaudio-knob>
-        <webaudio-knob midilearn="1" midicc="1.22" id="knob3" style="position:absolute;left:232px;top:48px" src="../knobs/vernier.png" value="30" max="100" step="1" diameter="128" sprites="50" valuetip="0" tooltip="Knob3"></webaudio-knob>
+    <div style="position:relative;background-image: url('./img/bg.png');width:512px;height:240px;margin:30px auto;padding:0px;">
+        <webaudio-knob id="knob1" midilearn="1" midicc="1.1" style="position:absolute;left:48px;top:76px" src="./knobs/LittlePhatty.png" value="50" step="1" diameter="64" tooltip="Knob1 tooltip %d"></webaudio-knob>
+        <webaudio-knob midilearn="1" midicc="8.7" style="position:absolute;left:128px;top:76px" src="./knobs/LittlePhatty.png" value="1" min="0" max="3" step="0.01" diameter="64" sprites="100" tooltip="Knob2 tooltip <br/> %.2f Hz" conv="(x)=>{return Math.pow(10,x)*20}"></webaudio-knob>
+        <webaudio-knob midilearn="1" midicc="1.22" id="knob3" style="position:absolute;left:232px;top:48px" src="./knobs/vernier.png" value="30" max="100" step="1" diameter="128" sprites="50" valuetip="0" tooltip="Knob3"></webaudio-knob>
         <webaudio-param style="position:absolute;left:328px;top:162px" link="knob3"></webaudio-param>
-        <webaudio-slider midilearn="1" midicc="1.23" style="position:absolute;left:368px;top:24px" src="../img/vsliderbody.png" knobsrc="../img/vsliderknob.png" value="0" min="0" max="100" step="1" basewidth="24" baseheight="128" knobwidth="24" knobheight="24" ditchLength="100" tooltip="Slider-L"></webaudio-slider>
-        <webaudio-slider midilearn="1"  midicc="1.24" style="position:absolute;left:400px;top:24px" src="../img/vsliderbody.png" knobsrc="../img/vsliderknob.png" value="0" min="0" max="100" step="1" basewidth="24" baseheight="128" knobwidth="24" knobheight="24" ditchLength="100" units="%" tooltip="Slider-R"></webaudio-slider>
-        <webaudio-switch midilearn="1" style="position:absolute;left:440px;top:38px" src="../knobs/switch_toggle.png" value="0" height="56" width="56" tooltip="Switch-A Tooltip text test"></webaudio-switch>
-        <webaudio-switch midilearn="1" style="position:absolute;left:440px;top:102px" src="../knobs/switch_toggle.png" value="0" height="56" width="56" tooltip="Switch-B"></webaudio-switch>
+        <webaudio-slider midilearn="1" midicc="1.23" style="position:absolute;left:368px;top:24px" src="./img/vsliderbody.png" knobsrc="./img/vsliderknob.png" value="0" min="0" max="100" step="1" basewidth="24" baseheight="128" knobwidth="24" knobheight="24" ditchLength="100" tooltip="Slider-L"></webaudio-slider>
+        <webaudio-slider midilearn="1"  midicc="1.24" style="position:absolute;left:400px;top:24px" src="./img/vsliderbody.png" knobsrc="./img/vsliderknob.png" value="0" min="0" max="100" step="1" basewidth="24" baseheight="128" knobwidth="24" knobheight="24" ditchLength="100" units="%" tooltip="Slider-R"></webaudio-slider>
+        <webaudio-switch midilearn="1" style="position:absolute;left:440px;top:38px" src="./knobs/switch_toggle.png" value="0" height="56" width="56" tooltip="Switch-A Tooltip text test"></webaudio-switch>
+        <webaudio-switch midilearn="1" style="position:absolute;left:440px;top:102px" src="./knobs/switch_toggle.png" value="0" height="56" width="56" tooltip="Switch-B"></webaudio-switch>
 	</div>
 </div>
 
