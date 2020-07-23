@@ -755,33 +755,35 @@ ${this.basestyle}
       this.knobimg=new Image();
       this.srcurl=null;
       if(this.src==null||this.src==""){
+        this.sw=+this._width;
+        this.sh=+this.height;
         if(this._direction=="horz"){
-          if(this._width==null) this._width=128;
-          if(this._height==null) this._height=24;
+          if(this._width==null) this.sw=128;
+          if(this._height==null) this.sh=24;
         }
         else if(this._direction=="vert"){
-          if(this._width==null) this._width=24;
-          if(this._height==null) this._height=128;
+          if(this._width==null) this.sw=24;
+          if(this._height==null) this.sh=128;
         }
         else{
-          if(this._width==null) this._width=128;
-          if(this._height==null) this._height=24;
+          if(this._width==null) this.sw=128;
+          if(this._height==null) this.sh=24;
         }
-        const r=Math.min(this._width,this._height)*0.5;
+        const r=Math.min(this.sw,this.sh)*0.5;
         const svgbody=
-`<svg xmlns="http://www.w3.org/2000/svg" width="${this._width}" height="${this._height}" preserveAspectRatio="none">
+`<svg xmlns="http://www.w3.org/2000/svg" width="${this.sw}" height="${this.sh}" preserveAspectRatio="none">
 <defs>
   <filter id="f1">
     <feGaussianBlur in="SourceGraphic" stdDeviation="0.8" />
   </filter>
-  <linearGradient id="g1" x1="0%" y1="0%" ${(this._width>this._height)?'x2="0%" y2="100%"':'x2="100%" y2="0%"'}>
+  <linearGradient id="g1" x1="0%" y1="0%" ${(this.sw>this.sh)?'x2="0%" y2="100%"':'x2="100%" y2="0%"'}>
     <stop offset="0%" stop-color="#000" stop-opacity="0"/>
     <stop offset="100%" stop-color="#000" stop-opacity="0.3"/>
   </linearGradient>
 </defs>
-<rect x="1" y="1" rx="${r}" ry="${r}" width="${this._width-2}" height="${this._height-2}" fill="#000"/>
-<rect x="3" y="3" rx="${r}" ry="${r}" width="${this._width-6}" height="${this._height-6}" fill="${this.coltab[1]}" filter="url(#f1)"/>
-<rect x="1" y="1" rx="${r}" ry="${r}" width="${this._width-2}" height="${this._height-2}" fill="url(#g1)"/>
+<rect x="1" y="1" rx="${r}" ry="${r}" width="${this.sw-2}" height="${this.sh-2}" fill="#000"/>
+<rect x="3" y="3" rx="${r}" ry="${r}" width="${this.sw-6}" height="${this.sh-6}" fill="${this.coltab[1]}" filter="url(#f1)"/>
+<rect x="1" y="1" rx="${r}" ry="${r}" width="${this.sw-2}" height="${this.sh-2}" fill="url(#g1)"/>
 </svg>`;
         this.srcurl = "data:image/svg+xml;base64,"+btoa(svgbody);
       }
