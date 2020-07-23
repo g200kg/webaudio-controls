@@ -49,7 +49,7 @@ Advanced Usage and Application Notes :
 - **load webaudio-controls**
   - ```<script src="./webaudio-controls.js"></script>```  
   Or, if you want to load webaudio-controls.js directly from this GitHub page as CDN :  
-  - ```<script src="https://g200kg.github.io/webaudio-controls/webaudio-controls.js"></script>```
+  - ```<script src="https://raw.githubusercontent.com/g200kg/webaudio-controls/master/webaudio-controls.js"></script>```
 
 - **insert webaudio-knob / slider / switch / param / keyboard elements.**
   - `<webaudio-knob id="knob-1" src="./knobs/LittlePhatty.png" min="0" max="100"></webaudio-knob>`
