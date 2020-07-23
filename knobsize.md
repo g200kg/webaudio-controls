@@ -82,29 +82,29 @@ When `width` and `height` attributes are specified individually.
 ---
 
 
-<webaudio-knob id="knob4" src="../knobs/Aqua.png"></webaudio-knob>
+<webaudio-knob id="knob4" src="./knobs/Aqua.png"></webaudio-knob>
 <br/>
 
 If a `src` image is specified and nothing else is provided, the original size of the image is used.
 At this time, `sprites` are automatically calculated assuming that one frame of the knob image is square.  
 ```html
-<webaudio-knob src="../knobs/Aqua.png"></webaudio-knob>
+<webaudio-knob src="./knobs/Aqua.png"></webaudio-knob>
 ```
 
 ---
 
-<webaudio-knob id="knob5" src="../knobs/Aqua.png" diameter="32"></webaudio-knob>  
+<webaudio-knob id="knob5" src="./knobs/Aqua.png" diameter="32"></webaudio-knob>  
 <br/>
 
 If `src` and `diameter` is specified, the original image will be resized.
 ```html
-<webaudio-knob src="../knobs/Aqua.png" diameter="32">
+<webaudio-knob src="./knobs/Aqua.png" diameter="32">
 </webaudio-knob>
 ```
 
 ---
 
-<webaudio-knob id="knob7" src="../knobs/Aqua.png"
+<webaudio-knob id="knob7" src="./knobs/Aqua.png"
    sprites="100"
    width="200" height="50">
 </webaudio-knob>  
@@ -112,7 +112,7 @@ If `src` and `diameter` is specified, the original image will be resized.
 
 When width height is specified individually with src.
 ```html
-<webaudio-knob src="../knobs/Aqua.png"
+<webaudio-knob src="./knobs/Aqua.png"
   sprites="100" 
   width="200" height="50">
 </webaudio-knob>
@@ -120,12 +120,12 @@ When width height is specified individually with src.
 
 ---
 
-<webaudio-knob id="knob5" src="../knobs/hsw5.png" sprites="4"></webaudio-knob>  
+<webaudio-knob id="knob5" src="./knobs/hsw5.png" sprites="4"></webaudio-knob>  
 <br/>
 
 If one frame of the knob image is not square, the `sprites` attribute should be set to (number of frames - 1).
 ```html
-<webaudio-knob src="../knobs/hsw5.png" sprites="4">
+<webaudio-knob src="./knobs/hsw5.png" sprites="4">
 </webaudio-knob>
 ```
 
@@ -157,25 +157,25 @@ If `width` and `height` is specified, it will be the specified size. At this tim
 ---
 
 <webaudio-slider 
-  src="../knobs/hsliderbody.png">
+  src="./knobs/hsliderbody.png">
 </webaudio-slider>  
 <br/>
 
 When the `src` image is specified and `width` `height` is not specified, the size of the original `src` image is used.  
 ```html
-<webaudio-slider src="../knobs/hsliderbody.png">
+<webaudio-slider src="./knobs/hsliderbody.png">
 </webaudio-slider>
 ```
 
 ---
 
-<webaudio-slider src="../knobs/hsliderbody.png" width="300" height="40"></webaudio-slider>
+<webaudio-slider src="./knobs/hsliderbody.png" width="300" height="40"></webaudio-slider>
 <br/>
 
 When `width` `height` is specified with the `src` image, the `src` image is resized.
 ```html
 <webaudio-slider 
-  src="../knobs/hsliderbody.png"
+  src="./knobs/hsliderbody.png"
   width="300" height="40">
 </webaudio-slider>
 ```
@@ -195,20 +195,20 @@ When `width` `height` is specified with the `src` image, the `src` image is resi
 
 ---
 
-<webaudio-slider width="300" height="40" knobsrc="../knobs/hsliderknob.png"></webaudio-slider>
+<webaudio-slider width="300" height="40" knobsrc="./knobs/hsliderknob.png"></webaudio-slider>
 <br/>
 
 If the thumb size by `knobwidth` and `knobheight` are not specified but the image is served by `knobsrc`, the original size of the `knobsrc` image will be used.
 ```html
 <webaudio-slider 
   width="300" height="40"
-  knobsrc="../knobs/hsliderknob.png">
+  knobsrc="./knobs/hsliderknob.png">
 </webaudio-slider>
 ```
 
 ---
 
-<webaudio-slider width="300" height="40" knobwidth="30" knobheight="100" ditchlength="150" knobsrc="../knobs/hsliderknob.png"></webaudio-slider>
+<webaudio-slider width="300" height="40" knobwidth="30" knobheight="100" ditchlength="150" knobsrc="./knobs/hsliderknob.png"></webaudio-slider>
 <br/>
 
 Specifying `ditchlength` can set the movement range of the thumb.
@@ -217,13 +217,13 @@ Specifying `ditchlength` can set the movement range of the thumb.
   width="300" height="40" 
   knobwidth="30" knobheight="100" 
   ditchlength="150" 
-  knobsrc="../knobs/hsliderknob.png">
+  knobsrc="./knobs/hsliderknob.png">
 </webaudio-slider>
 ```
 
 ---
 
-<webaudio-slider outline="1" width="300" height="40" knobwidth="30" src="" knobheight="100" knobsrc="../knobs/hsliderknob.png"></webaudio-slider>
+<webaudio-slider outline="1" width="300" height="40" knobwidth="30" src="" knobheight="100" knobsrc="./knobs/hsliderknob.png"></webaudio-slider>
 <br/>
 
 Setting src to the empty string "" will stop drawing the background and draw only the thumb.
@@ -233,7 +233,7 @@ Setting src to the empty string "" will stop drawing the background and draw onl
   knobwidth="30" knobheight="100" 
   src="" 
   outline="1" 
-  knobsrc="../knobs/hsliderknob.png">
+  knobsrc="./knobs/hsliderknob.png">
 </webaudio-slider>
 ```
 
@@ -273,24 +273,24 @@ If `width` and `height` are specified, it will be displayed in the specified siz
 
 ---
 
-<webaudio-switch src="../knobs/redbutton128.png">
+<webaudio-switch src="./knobs/redbutton128.png">
 </webaudio-switch>
 <br/>
 
 If the `src` attribute specifies an `image`,  and `width`, `height`, and `diameter` are not specified, the original image size is used.
 ```html
-<webaudio-switch src="../knobs/redbutton128.png">
+<webaudio-switch src="./knobs/redbutton128.png">
 </webaudio-switch>
 ```
 
 ---
 
-<webaudio-switch src="../knobs/redbutton128.png" diameter="40"></webaudio-switch>
+<webaudio-switch src="./knobs/redbutton128.png" diameter="40"></webaudio-switch>
 <br/>
 
 If the `src` image and size are specified, the `src` image will be resized to the specified size.
 ```html
-<webaudio-switch src="../knobs/redbutton128.png" diameter="40"></webaudio-switch>
+<webaudio-switch src="./knobs/redbutton128.png" diameter="40"></webaudio-switch>
 ```
 
 ---
@@ -331,25 +331,25 @@ The font size can be specified with the `fontsize` attribute.
 
 ---
 
-<webaudio-param src="../knobs/parambg120x32.png"></webaudio-param>  
+<webaudio-param src="./knobs/parambg120x32.png"></webaudio-param>  
 <br/>
 
 If the `src` image is specified but no `width` and `height` is provided, the original size of the `src` image is used.
 ```html
 <webaudio-param
-  src="../knobs/parambg120x32.png">
+  src="./knobs/parambg120x32.png">
 </webaudio-param> 
 ```
 
 ---
 
-<webaudio-param src="../knobs/parambg120x32.png" width="50" height="40" fontsize="16"></webaudio-param>
+<webaudio-param src="./knobs/parambg120x32.png" width="50" height="40" fontsize="16"></webaudio-param>
 <br/>
 
 If `src` image, `width`, `height` is specified, the `src` image is resized to specified size.  
 ```html
 <webaudio-param 
-  src="../knobs/parambg120x32.png" 
+  src="./knobs/parambg120x32.png" 
   width="50" height="40"
   fontsize="16">
 </webaudio-param>
