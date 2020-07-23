@@ -6,7 +6,7 @@
   };
 </script>
 
-<script src="./webaudio-controls.js"></script>
+<script src="https://raw.githubusercontent.com/g200kg/webaudio-controls/master/webaudio-controls.js"></script>
 
 Basic Usage :
 <div style="display:flex;width:100%;flex-wrap:wrap">
