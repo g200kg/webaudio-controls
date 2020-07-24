@@ -1,5 +1,5 @@
 ---
-redirect_from: "https://g200kg.github.io/webaudio-controls/"
+redirect_from: "/webaudio-controls/"
 pageid: Overview
 ---
 
