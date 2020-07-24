@@ -7,7 +7,7 @@ iOS and Android touch devices compatible
 
 ![](img/demo.png)
 
-## [Documents and Application Notes](https://g200kg.github.io/webaudio-controls/)
+## [Documents and Application Notes](https://g200kg.github.io/webaudio-controls/docs/index.html)
 
 ---
 ## License
