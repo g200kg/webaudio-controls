@@ -1,0 +1,16 @@
+.gnavi{
+  display:flex;
+  width:100%;
+  flex-wrap:wrap;
+  margin:-10px 0px 30px 40px;
+  padding:0;
+}
+.gnavi li{
+  background:#000;
+  margin:2px 14px;
+  padding:1px 10px;
+}
+.gnavi li.active{
+  background:#600;
+  border:1px solid #966;
+}

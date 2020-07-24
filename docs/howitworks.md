@@ -1,3 +1,7 @@
+---
+pageid: HowItWorks
+---
+
 <link rel="stylesheet" href="./docstyle.css">
 
 <script>
@@ -6,32 +10,9 @@
   };
 </script>
 
-<script src="./webaudio-controls.js"></script>
+<script src="../webaudio-controls.js"></script>
 
-Basic Usage :
-<div style="display:flex;width:100%;flex-wrap:wrap">
-<div class="item"><a href="./index.html">Overview</a></div>
-<div class="item"><a href="./install.html">Install</a></div>
-<div class="item cur"><a href="./components.html">How it works</a></div>
-<div class="item"><a href="./specs.html">Attributes, Functions, Events</a></div>
-<div class="item"><a href="./options.html">WebAudioControlsOptions</a></div>
-<div class="item"><a href="./knobimage.html">Creating Knob Images</a></div>
-<div class="item"><a href="./defstyle.html">Default Style of Controls</a></div>
-<div class="item"><a href="./example.html">Examples of Various Attributes</a></div>
-</div>
-<br/>
-
-Advanced Usage and Application Notes :
-<div style="display:flex;width:100%;flex-wrap:wrap">
-<div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
-<div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
-<div class="item"><a href="./knobsize.html">Determining Knob Size</a></div>
-<div class="item"><a href="./tracking.html">Slider tracking "rel" and "abs"</a></div>
-<div class="item"><a href="./nonlinear.html">Non-Linear Knobs / Sliders</a></div>
-<div class="item"><a href="./multifader.html">Multi-Touch Device Support</a></div>
-<div class="item"><a href="./midisupport.html">MIDI Support</a></div>
-<div class="item"><a href="./resizetest.html">Resizing After Creation</a></div>
-</div>
+{% include_relative gnavi.html %}
 
 ---
 
@@ -67,10 +48,10 @@ The events are issued by operating this knob with a mouse or touch device, so yo
 Also if you assign a external filmstrip-type image file to a `<webaudio-knob>` with the `src` attribute, you can create an frame-by-frame animated knobs that changes not only rotation but changes shapes or colors as the value changes.
 
 <br/>
-<webaudio-knob id="knob2" src="./knobs/lineshadow.png"></webaudio-knob>
+<webaudio-knob id="knob2" src="../knobs/lineshadow.png"></webaudio-knob>
 
 ```html
-<webaudio-knob id="knob2" src="./knobs/lineshadow.png"></webaudio-knob>
+<webaudio-knob id="knob2" src="../knobs/lineshadow.png"></webaudio-knob>
 ```
 
 ---
@@ -84,14 +65,14 @@ Horizontal or vertical is automatically determined by the `width` and `height` s
 When specifying the image file, set the background part and the thumb part separately, then the thumb part will move horizontally or vertically on the background part.
 
 <webaudio-slider id="sli1" width="300" height="30"></webaudio-slider><br/><br/>
-<webaudio-slider id="sli2" width="300" src="./knobs/hsliderbody.png" knobsrc="./knobs/hsliderknob.png"></webaudio-slider><br/>
+<webaudio-slider id="sli2" width="300" src="../knobs/hsliderbody.png" knobsrc="../knobs/hsliderknob.png"></webaudio-slider><br/>
 
 ```html
   <webaudio-slider id="sli1" width="300" height="30"></webaudio-slider>
 
   <webaudio-slider id="sli2" width="300" 
-    src="./knobs/hsliderbody.png" 
-    knobsrc="./knobs/hsliderknob.png">
+    src="../knobs/hsliderbody.png" 
+    knobsrc="../knobs/hsliderknob.png">
   </webaudio-slider>
 ```
 
@@ -150,15 +131,15 @@ As for the event, `"change"` is issued when the state changes and `"click"` is i
 
 If you want to use an image file, you can set the `src` attribute to an image that is vertically stitched in the off and on states like:  
 
-<img src="./knobs/redbutton128.png" width="64"/>  
+<img src="../knobs/redbutton128.png" width="64"/>  
 
 <br/>
 Then you will see the following:<br/>
 
-<webaudio-switch src="./knobs/redbutton128.png"></webaudio-switch>
+<webaudio-switch src="../knobs/redbutton128.png"></webaudio-switch>
 
 ```html
-  <webaudio-switch src="./knobs/redbutton128.png"></webaudio-switch>
+  <webaudio-switch src="../knobs/redbutton128.png"></webaudio-switch>
 ```
 <br/>
 

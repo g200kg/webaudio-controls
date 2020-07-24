@@ -1,3 +1,6 @@
+---
+pageid: Tracking
+---
 <link rel="stylesheet" href="./docstyle.css">
 
 <script>
@@ -6,32 +9,9 @@
   };
 </script>
 
-<script src="https://raw.githubusercontent.com/g200kg/webaudio-controls/master/webaudio-controls.js"></script>
+<script src="../webaudio-controls.js"></script>
 
-Basic Usage :
-<div style="display:flex;width:100%;flex-wrap:wrap">
-<div class="item"><a href="./index.html">Overview</a></div>
-<div class="item"><a href="./install.html">Install</a></div>
-<div class="item"><a href="./components.html">How it works</a></div>
-<div class="item"><a href="./specs.html">Attributes, Functions, Events</a></div>
-<div class="item"><a href="./options.html">WebAudioControlsOptions</a></div>
-<div class="item"><a href="./knobimage.html">Creating Knob Images</a></div>
-<div class="item"><a href="./defstyle.html">Default Style of Controls</a></div>
-<div class="item"><a href="./example.html">Examples of Various Attributes</a></div>
-</div>
-<br/>
-
-Advanced Usage and Application Note :
-<div style="display:flex;width:100%;flex-wrap:wrap">
-<div class="item"><a href="./knobsamples.html">Knob Samples from KnobGallery</a></div>
-<div class="item"><a href="./keyboard.html">Working Keyboard Demo</a></div>
-<div class="item"><a href="./knobsize.html">Determining Knob Size</a></div>
-<div class="item cur"><a href="./tracking.html">Slider tracking "rel" and "abs"</a></div>
-<div class="item"><a href="./nonlinear.html">Non-Linear Knobs / Sliders</a></div>
-<div class="item"><a href="./multifader.html">Multi-Touch Device Support</a></div>
-<div class="item"><a href="./midisupport.html">MIDI Support</a></div>
-<div class="item"><a href="./resizetest.html">Resizing After Creation</a></div>
-</div>
+{% include_relative gnavi.html %}
 
 ---
 

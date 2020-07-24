@@ -1,1 +1,3 @@
 theme: jekyll-theme-midnight
+plugins:
+  - jekyll-redirect-from

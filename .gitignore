@@ -1,3 +1,7 @@
+# jekyll
+_site/
+Gemfile.lock
+
 # bower
 bower_components/
 !bower_components/polymer/LICENSE.txt
