@@ -1,5 +1,4 @@
 ---
-redirect_from: "/webaudio-controls/"
 pageid: Overview
 ---
 
