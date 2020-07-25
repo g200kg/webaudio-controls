@@ -71,18 +71,28 @@ Size :
 
 ## Slider
 Size :
-<button onclick="$('#sl1')[0].height=50;$('#sl1')[0].width=10">Small</button>
-<button onclick="$('#sl1')[0].height=100;$('#sl1')[0].width=20">Mid</button>
-<button onclick="$('#sl1')[0].height=200;$('#sl1')[0].width=40">Large</button>  
-<webaudio-slider id="sl1" height="100" width="20"></webaudio-slider>  
+<button onclick="$('#sl1')[0].height=50;$('#sl1')[0].width=10">
+  Small
+</button>
+<button onclick="$('#sl1')[0].height=100;$('#sl1')[0].width=40">
+  Mid
+</button>
+<button onclick="$('#sl1')[0].height=200;$('#sl1')[0].width=80">
+  Large
+</button>  
+<webaudio-slider id="sl1" height="100" width="20">
+</webaudio-slider>  
 
 <br/>
 
 ```html
-<button onclick="$('#sl1')[0].height=50;$('#sl1')[0].width=10">Small</button>
-<button onclick="$('#sl1')[0].height=100;$('#sl1')[0].width=20">Mid</button>
-<button onclick="$('#sl1')[0].height=200;$('#sl1')[0].width=40">Large</button>  
-<webaudio-slider id="sl1" height="100" width="20"></webaudio-slider>  
+<button onclick="$('#sl1')[0].height=50;$('#sl1')[0].width=10">
+  Small</button>
+<button onclick="$('#sl1')[0].height=100;$('#sl1')[0].width=40">
+  Mid</button>
+<button onclick="$('#sl1')[0].height=200;$('#sl1')[0].width=80">
+  Large</button>  
+<webaudio-slider id="sl1" height="100" width="40"></webaudio-slider>  
 ```
   
 <br/>
@@ -99,9 +109,12 @@ Size :
 <br/>
 
 ```html
-<button onclick="$('#sw1')[0].height=25;$('#sw1')[0].width=25">Small</button>
-<button onclick="$('#sw1')[0].height=50;$('#sw1')[0].width=50">Mid</button>
-<button onclick="$('#sw1')[0].height=100;$('#sw1')[0].width=100">Large</button>  
+<button onclick="$('#sw1')[0].height=25;$('#sw1')[0].width=25">
+  Small</button>
+<button onclick="$('#sw1')[0].height=50;$('#sw1')[0].width=50">
+  Mid</button>
+<button onclick="$('#sw1')[0].height=100;$('#sw1')[0].width=100">
+  Large</button>  
 <webaudio-switch id="sw1" height="50" width="50"></webaudio-switch>
 ```
   
@@ -125,9 +138,12 @@ Keys :
 
 ```html
 Size :
-<button onclick="$('#kb1')[0].width=100;$('#kb1')[0].height=20;">Small</button>
-<button onclick="$('#kb1')[0].width=200;$('#kb1')[0].height=40;">Mid</button>
-<button onclick="$('#kb1')[0].width=400;$('#kb1')[0].height=80;">Large</button>  
+<button onclick="$('#kb1')[0].width=100;$('#kb1')[0].height=20;">
+  Small</button>
+<button onclick="$('#kb1')[0].width=200;$('#kb1')[0].height=40;">
+  Mid</button>
+<button onclick="$('#kb1')[0].width=400;$('#kb1')[0].height=80;">
+  Large</button>  
 Keys :
 <button onclick="$('#kb1')[0].keys=13;">13 Keys</button>
 <button onclick="$('#kb1')[0].keys=25;">25 Keys</button>

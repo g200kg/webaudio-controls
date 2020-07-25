@@ -73,10 +73,14 @@ The MIDI function can be controlled by right-clicking each element to display a 
 ---
 
 ```html
-  <webaudio-slider width="50" height="300" midicc="0.0" midilearn="1"></webaudio-slider>
-  <webaudio-slider width="50" height="300" midicc="0.1" midilearn="1"></webaudio-slider>
-  <webaudio-slider width="50" height="300" midicc="0.2" midilearn="1"></webaudio-slider>
-  <webaudio-slider width="50" height="300" midicc="0.3" midilearn="1"></webaudio-slider>
+  <webaudio-slider width="50" height="300" midicc="0.0" midilearn="1">
+  </webaudio-slider>
+  <webaudio-slider width="50" height="300" midicc="0.1" midilearn="1">
+  </webaudio-slider>
+  <webaudio-slider width="50" height="300" midicc="0.2" midilearn="1">
+  </webaudio-slider>
+  <webaudio-slider width="50" height="300" midicc="0.3" midilearn="1">
+  </webaudio-slider>
   .
   .
   .

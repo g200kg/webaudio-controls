@@ -52,9 +52,9 @@ The captured events are displayed on the Events window on the right.
   <span style="position:absolute;left:240px;top:20px">&lt;webaudio-slider&gt;</span>
   <span style="position:absolute;left:370px;top:160px">&lt;webaudio-switch&gt;</span>
   <span style="position:absolute;left:320px;top:210px">&lt;webaudio-keyboard&gt;</span>
-  <span style="position:absolute;left:460px;top:50px">toggle(default)</span>
-  <span style="position:absolute;left:460px;top:90px">kick</span>
-  <span style="position:absolute;left:460px;top:130px">radio</span>
+  <span style="position:absolute;left:465px;top:50px">toggle(default)</span>
+  <span style="position:absolute;left:465px;top:90px">kick</span>
+  <span style="position:absolute;left:465px;top:130px">radio</span>
   <div style="position:absolute;left:48px;top:420px">
   <div id="events" style="background:rgba(128,128,255,0.5);padding:10px;color:#fff;text-align:left;width:400px;height:150px;overflow:scroll"></div>
   </div>

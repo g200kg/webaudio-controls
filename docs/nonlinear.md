@@ -104,8 +104,10 @@ function valueconv(x){
   return (x/1000).toFixed(2) + " kHz";
 }
 </script>
-<webaudio-knob id="knob2" valuetip="1" min="0" max="100" conv="valueconv"></webaudio-knob>
-<webaudio-param link="knob2" width="80"></webaudio-param>
+<webaudio-knob id="knob2" valuetip="1" min="0" max="100" conv="valueconv">
+</webaudio-knob>
+<webaudio-param link="knob2" width="80">
+</webaudio-param>
 ```
 
 ---

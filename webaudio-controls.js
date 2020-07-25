@@ -68,12 +68,14 @@ if(window.customElements){
   midimenu.id="webaudioctrl-context-menu";
   midimenu.innerHTML=
 `<li class="webaudioctrl-context-menu__title">MIDI Learn</li>
-<li class="webaudioctrl-context-menu__item" id="webaudioctrl-context-menu-learn" onclick="webAudioControlsMidiManager.contextMenuLearn()">Learn</li>
-<li class="webaudioctrl-context-menu__item" onclick="webAudioControlsMidiManager.contextMenuClear()">Clear</li>
-<li class="webaudioctrl-context-menu__item" onclick="webAudioControlsMidiManager.contextMenuClose()">Close</li>
+<li class="webaudioctrl-context-menu__item" id="webaudioctrl-context-menu-learn" onclick="webAudioControlsWidgetManager.contextMenuLearn()">Learn</li>
+<li class="webaudioctrl-context-menu__item" onclick="webAudioControlsWidgetManager.contextMenuClear()">Clear</li>
+<li class="webaudioctrl-context-menu__item" onclick="webAudioControlsWidgetManager.contextMenuClose()">Close</li>
 `;
   let opt={
     useMidi:0,
+    preserveMidiLearn:0,
+    preserveValue:0,
     midilearn:0,
     mididump:0,
     outline:null,
@@ -255,8 +257,8 @@ if(window.customElements){
       this.showtip(0);
     }
     contextMenu(e){
-      if(window.webAudioControlsMidiManager && this.midilearn)
-        webAudioControlsMidiManager.contextMenuOpen(e,this);
+      if(window.webAudioControlsWidgetManager && this.midilearn)
+        webAudioControlsWidgetManager.contextMenuOpen(e,this);
       e.preventDefault();
       e.stopPropagation();
     }
@@ -276,8 +278,9 @@ if(window.customElements){
       const controlNumber = event.data[1];
       if(this.midiMode == 'learn') {
         this.setMidiController(channel, controlNumber);
-        webAudioControlsMidiManager.contextMenuClose();
+        webAudioControlsWidgetManager.contextMenuClose();
         this.midiMode = 'normal';
+        webAudioControlsWidgetManager.preserveMidiLearn();
       }
       if(this.listeningToThisMidiController(channel, controlNumber)) {
         if(this.tagName=="WEBAUDIO-SWITCH"){
@@ -371,13 +374,23 @@ ${this.basestyle}
         this.convValue=this._value;
       this.midilearn=this.getAttr("midilearn",opt.midilearn);
       this.midicc=this.getAttr("midicc",null);
-
       this.midiController={};
       this.midiMode="normal";
       if(this.midicc) {
           let ch = parseInt(this.midicc.substring(0, this.midicc.lastIndexOf("."))) - 1;
           let cc = parseInt(this.midicc.substring(this.midicc.lastIndexOf(".") + 1));
           this.setMidiController(ch, cc);
+      }
+      if(this.midilearn && this.id){
+        if(webAudioControlsWidgetManager && webAudioControlsWidgetManager.midiLearnTable){
+          const ml=webAudioControlsWidgetManager.midiLearnTable;
+          for(let i=0; i < ml.length; ++i){
+            if(ml[i].id==this.id){
+              this.setMidiController(ml[i].cc.channel, ml[i].cc.cc);
+              break;
+            }
+          }
+        }
       }
       this.setupImage();
       this.digits=0;
@@ -387,8 +400,8 @@ ${this.basestyle}
       }
       this._setValue(this._value);
       this.coltab=["#e00","#000","#000"];
-      if(window.webAudioControlsMidiManager)
-        window.webAudioControlsMidiManager.addWidget(this);
+      if(window.webAudioControlsWidgetManager)
+        window.webAudioControlsWidgetManager.addWidget(this);
     }
     disconnectedCallback(){}
     setupImage(){
@@ -736,6 +749,17 @@ ${this.basestyle}
           let cc = parseInt(this.midicc.substring(this.midicc.lastIndexOf(".") + 1));
           this.setMidiController(ch, cc);
       }
+      if(this.midilearn && this.id){
+        if(webAudioControlsWidgetManager && webAudioControlsWidgetManager.midiLearnTable){
+          const ml=webAudioControlsWidgetManager.midiLearnTable;
+          for(let i=0; i < ml.length; ++i){
+            if(ml[i].id==this.id){
+              this.setMidiController(ml[i].cc.channel, ml[i].cc.cc);
+              break;
+            }
+          }
+        }
+      }
       this.setupImage();
       this.digits=0;
       if(this.step && this.step < 1) {
@@ -743,9 +767,9 @@ ${this.basestyle}
           ++this.digits;
       }
       this.fireflag=true;
-      if(window.webAudioControlsMidiManager)
-//        window.webAudioControlsMidiManager.updateWidgets();
-        window.webAudioControlsMidiManager.addWidget(this);
+      if(window.webAudioControlsWidgetManager)
+//        window.webAudioControlsWidgetManager.updateWidgets();
+        window.webAudioControlsWidgetManager.addWidget(this);
       this.elem.onclick=(e)=>{e.stopPropagation()};
     }
     disconnectedCallback(){}
@@ -1132,15 +1156,26 @@ ${this.basestyle}
           let cc = parseInt(this.midicc.substring(this.midicc.lastIndexOf(".") + 1));
           this.setMidiController(ch, cc);
       }
+      if(this.midilearn && this.id){
+        if(webAudioControlsWidgetManager && webAudioControlsWidgetManager.midiLearnTable){
+          const ml=webAudioControlsWidgetManager.midiLearnTable;
+          for(let i=0; i < ml.length; ++i){
+            if(ml[i].id==this.id){
+              this.setMidiController(ml[i].cc.channel, ml[i].cc.cc);
+              break;
+            }
+          }
+        }
+      }
       this.setupImage();
       this.digits=0;
       if(this.step && this.step < 1) {
         for(let n = this.step ; n < 1; n *= 10)
           ++this.digits;
       }
-      if(window.webAudioControlsMidiManager)
-//        window.webAudioControlsMidiManager.updateWidgets();
-        window.webAudioControlsMidiManager.addWidget(this);
+      if(window.webAudioControlsWidgetManager)
+//        window.webAudioControlsWidgetManager.updateWidgets();
+        window.webAudioControlsWidgetManager.addWidget(this);
       this.elem.onclick=(e)=>{e.stopPropagation()};
     }
     disconnectedCallback(){}
@@ -1369,9 +1404,9 @@ ${this.basestyle}
         this.setMidiController(ch, cc);
       }
       this.setupImage();
-      if(window.webAudioControlsMidiManager)
-//        window.webAudioControlsMidiManager.updateWidgets();
-        window.webAudioControlsMidiManager.addWidget(this);
+      if(window.webAudioControlsWidgetManager)
+//        window.webAudioControlsWidgetManager.updateWidgets();
+        window.webAudioControlsWidgetManager.addWidget(this);
       this.fromLink=((e)=>{
         this.setValue(e.target.convValue.toFixed(e.target.digits));
       }).bind(this);
@@ -1534,8 +1569,8 @@ ${this.basestyle}
         for(let n = this.step ; n < 1; n *= 10)
           ++this.digits;
       }
-      if(window.webAudioControlsMidiManager)
-        window.webAudioControlsMidiManager.addWidget(this);
+      if(window.webAudioControlsWidgetManager)
+        window.webAudioControlsWidgetManager.addWidget(this);
     }
     disconnectedCallback(){}
     setupImage(){
@@ -1872,9 +1907,9 @@ ${this.basestyle}
       }
       this.setupImage();
       this.digits=0;
-      if(window.webAudioControlsMidiManager)
-//        window.webAudioControlsMidiManager.updateWidgets();
-        window.webAudioControlsMidiManager.addWidget(this);
+      if(window.webAudioControlsWidgetManager)
+//        window.webAudioControlsWidgetManager.updateWidgets();
+        window.webAudioControlsWidgetManager.addWidget(this);
       this.elem.onclick=(e)=>{e.stopPropagation()};
     }
     disconnectedCallback(){}
@@ -2090,14 +2125,16 @@ ${this.basestyle}
 }
 
 
-
-  // FOR MIDI LEARN
-  class WebAudioControlsMidiManager {
+  class WebAudioControlsWidgetManager {
     constructor(){
       this.midiAccess = null;
       this.listOfWidgets = [];
       this.listOfExternalMidiListeners = [];
       this.updateWidgets();
+      if(opt.preserveMidiLearn)
+        this.midiLearnTable=JSON.parse(localStorage.getItem("WebAudioControlsMidiLearn"));
+      else
+        this.midiLearnTable=null;
       this.initWebAudioControls();
     }
     addWidget(w){
@@ -2186,7 +2223,18 @@ ${this.basestyle}
       menu.knob.midiController={};
       this.contextMenuClose();
     }
+    preserveMidiLearn(){
+      if(!opt.preserveMidiLearn)
+        return;
+      const v=[];
+      for(let w of this.listOfWidgets) {
+        if(w.id)
+          v.push({"id":w.id, "cc":w.midiController});
+      }
+      const s=JSON.stringify(v);
+      localStorage.setItem("WebAudioControlsMidiLearn",s);
+    }
   }
   if(window.UseWebAudioControlsMidi||opt.useMidi)
-    window.webAudioControlsMidiManager = new WebAudioControlsMidiManager();
+    window.webAudioControlsWidgetManager = window.webAudioControlsMidiManager = new WebAudioControlsWidgetManager();
 }

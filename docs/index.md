@@ -95,7 +95,7 @@ Knob/Switch images are from <a href="http://www.g200kg.com/en/webknobman/gallery
 ---
 
 <script>
-webAudioControlsMidiManager.addMidiListener(function(event) {
+webAudioControlsWidgetManager.addMidiListener(function(event) {
     var data = event.data;
     var channel = data[0] & 0xf;
     var controlNumber = data[1];

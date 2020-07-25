@@ -121,8 +121,12 @@ for(var i = 0; i < elms.length; ++i){
 <script>
 elms=document.getElementsByTagName("webaudio-switch");
 for(var i=0;i<elms.length;++i){
-  elms[i].addEventListener("change",(event)=>{console.log("change", event.target.id, event.target.value)});
-  elms[i].addEventListener("click",(event)=>{console.log("click", event.target.id, event.target.value)});
+  elms[i].addEventListener("change",(event)=>{
+    console.log("change", event.target.id, event.target.value)
+  });
+  elms[i].addEventListener("click",(event)=>{
+    console.log("click", event.target.id, event.target.value)
+  });
 }
 </script>
 ```

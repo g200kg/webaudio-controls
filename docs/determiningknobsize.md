@@ -270,7 +270,8 @@ If the `src` attribute specifies an `image`,  and `width`, `height`, and `diamet
 
 If the `src` image and size are specified, the `src` image will be resized to the specified size.
 ```html
-<webaudio-switch src="../knobs/redbutton128.png" diameter="40"></webaudio-switch>
+<webaudio-switch src="../knobs/redbutton128.png" diameter="40">
+</webaudio-switch>
 ```
 
 ---
