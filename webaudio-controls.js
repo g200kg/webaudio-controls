@@ -160,11 +160,11 @@ if(window.customElements){
       this.onfocus=()=>{
         switch(this.outline){
         case null:
-        case "0":
+        case 0:
           this.elem.style.outline="none";
           break;
-        case "1":
-          this.elem.style.outline="1px solid #ccc";
+        case 1:
+          this.elem.style.outline="1px solid #444";
           break;
         default:
           this.elem.style.outline=this.outline;
@@ -202,7 +202,10 @@ if(window.customElements){
       }
       function numformat(s,x){
         let i=s.indexOf("%");
-        let c=[0,0],type=0,m=0,r="",j=i+1;
+        let j=i+1;
+        if(i<0)
+          j=s.length;
+        let c=[0,0],type=0,m=0,r="";
         if(s.indexOf("%s")>=0){
           return s.replace("%s",x);
         }
@@ -247,6 +250,41 @@ if(window.customElements){
       this.ttframe.style.transition="opacity 0.1s "+d+"s,visibility 0.1s "+d+"s";
       this.ttframe.style.opacity=0;
       this.ttframe.style.visibility="hidden";
+    }
+    setupLabel(){
+      this.labelpos=this.getAttr("labelpos", "bottom 0px");
+      const lpos=this.labelpos.split(" ");
+      let offs="";
+      if(lpos.length==3)
+        offs=`translate(${lpos[1]},${lpos[2]})`;
+      this.label.style.position="absolute";
+      switch(lpos[0]){
+      case "center":
+        this.label.style.top="50%";
+        this.label.style.left="50%";
+        this.label.style.transform=`translate(-50%,-50%) ${offs}`;
+        break;
+      case "right":
+        this.label.style.top="50%";
+        this.label.style.left="100%";
+        this.label.style.transform=`translateY(-50%) ${offs}`;
+        break;
+      case "left":
+        this.label.style.top="50%";
+        this.label.style.left="0%";
+        this.label.style.transform=`translate(-100%,-50%) ${offs}`;
+        break;
+      case "bottom":
+        this.label.style.top="100%";
+        this.label.style.left="50%";
+        this.label.style.transform=`translateX(-50%) ${offs}`;
+        break;
+      case "top":
+        this.label.style.top="0%";
+        this.label.style.left="50%";
+        this.label.style.transform=`translate(-50%,-100%) ${offs}`;
+        break;
+      }
     }
     pointerover(e) {
       this.hover=1;
@@ -327,7 +365,6 @@ try{
 ${this.basestyle}
 :host{
   display:inline-block;
-  position:relative;
   margin:0;
   padding:0;
   cursor:pointer;
@@ -340,12 +377,14 @@ ${this.basestyle}
   margin:0;
   padding:0;
   vertical-align:bottom;
+  white-space:pre;
 }
 </style>
-<div class='webaudio-knob-body' tabindex='1' touch-action='none'></div><div class='webaudioctrl-tooltip'></div>
+<div class='webaudio-knob-body' tabindex='1' touch-action='none'><div class='webaudioctrl-tooltip'></div><div class="webaudioctrl-label"><slot></slot></div></div>
 `;
       this.elem=root.childNodes[2];
-      this.ttframe=root.childNodes[3];
+      this.ttframe=this.elem.firstChild;
+      this.label=this.ttframe.nextSibling;
       this.enable=this.getAttr("enable",1);
       this._src=this.getAttr("src",opt.knobSrc); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
       this._value=this.getAttr("value",0); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
@@ -359,6 +398,7 @@ ${this.basestyle}
       this._diameter=this.getAttr("diameter", null); Object.defineProperty(this,"diameter",{get:()=>{return this._diameter},set:(v)=>{this._diameter=v;this.setupImage()}});
       this._colors=this.getAttr("colors",opt.knobColors); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.outline=this.getAttr("outline",opt.outline);
+      this.setupLabel();
       this.log=this.getAttr("log",0);
       this.sensitivity=this.getAttr("sensitivity",1);
       this.valuetip=this.getAttr("valuetip",opt.valuetip);
@@ -696,6 +736,7 @@ ${this.basestyle}
   margin:0;
   padding:0;
   vertical-align:bottom;
+  white-space:pre;
 }
 .webaudio-slider-knob{
   display:inline-block;
@@ -704,11 +745,12 @@ ${this.basestyle}
   padding:0;
 }
 </style>
-<div class='webaudio-slider-body' tabindex='1' touch-action='none'><div class='webaudio-slider-knob' touch-action='none'></div></div><div class='webaudioctrl-tooltip'></div>
+<div class='webaudio-slider-body' tabindex='1' touch-action='none'><div class='webaudio-slider-knob' touch-action='none'></div><div class='webaudioctrl-tooltip'></div><div class="webaudioctrl-label"><slot></slot></div></div>
 `;
       this.elem=root.childNodes[2];
-      this.knob=this.elem.childNodes[0];
-      this.ttframe=root.childNodes[3];
+      this.knob=this.elem.firstChild;
+      this.ttframe=this.knob.nextSibling;
+      this.label=this.ttframe.nextSibling;
       this.enable=this.getAttr("enable",1);
       this.tracking=this.getAttr("tracking","rel"); 
       this._src=this.getAttr("src",opt.sliderSrc); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
@@ -728,6 +770,7 @@ ${this.basestyle}
       this._ditchlength=this.getAttr("ditchlength",opt.sliderDitchlength); Object.defineProperty(this,"ditchlength",{get:()=>{return this._ditchlength},set:(v)=>{this._ditchlength=v;this.setupImage()}});
       this._colors=this.getAttr("colors",opt.sliderColors); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.outline=this.getAttr("outline",opt.outline);
+      this.setupLabel();
       this.sensitivity=this.getAttr("sensitivity",1);
       this.valuetip=this.getAttr("valuetip",opt.valuetip);
       this.tooltip=this.getAttr("tooltip",null);
@@ -1115,6 +1158,7 @@ try{
 ${this.basestyle}
 :host{
   display:inline-block;
+  position:relative;
   margin:0;
   padding:0;
   font-family: sans-serif;
@@ -1123,16 +1167,23 @@ ${this.basestyle}
 }
 .webaudio-switch-body{
   display:inline-block;
+  position:relative;
   margin:0;
   padding:0;
   vertical-align:bottom;
+  white-space:pre;
+}
+.webaudioctrl-label{
+  position:absolute;
+  left:50%;
+  top:50%;
 }
 </style>
-<div class='webaudio-switch-body' tabindex='1' touch-action='none'><div class='webaudioctrl-tooltip'></div></div>
+<div class='webaudio-switch-body' tabindex='1' touch-action='none'><div class='webaudioctrl-tooltip'></div><div class="webaudioctrl-label"><slot></slot></div></div>
 `;
       this.elem=root.childNodes[2];
-      this.ttframe=this.elem.childNodes[0];
-
+      this.ttframe=this.elem.firstChild;
+      this.label=this.ttframe.nextSibling;
       this.enable=this.getAttr("enable",1);
       this._src=this.getAttr("src",null); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
       this._value=this.getAttr("value",0); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
@@ -1145,6 +1196,7 @@ ${this.basestyle}
       this.invert=this.getAttr("invert",0);
       this._colors=this.getAttr("colors",opt.switchColors); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
       this.outline=this.getAttr("outline",opt.outline);
+      this.setupLabel();
       this.valuetip=0;
       this.tooltip=this.getAttr("tooltip",null);
       this.midilearn=this.getAttr("midilearn",opt.midilearn);
@@ -1822,308 +1874,6 @@ ${this.basestyle}
 } catch(error){
   console.log("webaudio-keyboard already defined");
 }
-
-try{
-  customElements.define("webaudio-xypad", class WebAudioXYPad extends WebAudioControlsWidget {
-    constructor(){
-      super();
-    }
-    connectedCallback(){
-      let root;
-      if(this.attachShadow)
-        root=this.attachShadow({mode: 'open'});
-      else
-        root=this;
-      root.innerHTML=
-`<style>
-${this.basestyle}
-:host{
-  display:inline-block;
-  position:relative;
-  margin:0;
-  padding:0;
-  font-family: sans-serif;
-  font-size: 11px;
-  cursor:pointer;
-}
-.webaudio-xypad-body{
-  display:inline-block;
-  position:relative;
-  margin:0;
-  padding:0;
-  vertical-align:bottom;
-}
-.webaudio-xypad-knob{
-  display:inline-block;
-  position:absolute;
-  margin:0;
-  padding:0;
-}
-</style>
-<div class='webaudio-xypad-body' tabindex='1' touch-action='none'><div class='webaudio-xypad-knob' touch-action='none'></div></div><div class='webaudioctrl-tooltip'></div>
-`;
-      this.elem=root.childNodes[2];
-      this.knob=this.elem.childNodes[0];
-      this.ttframe=root.childNodes[3];
-
-      this.enable=this.getAttr("enable",1);
-      this._src=this.getAttr("src",opt.sliderSrc); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
-      this._knobsrc=this.getAttr("knobsrc",opt.sliderKnobsrc); Object.defineProperty(this,"knobsrc",{get:()=>{return this._knobsrc},set:(v)=>{this._knobsrc=v;this.setupImage()}});
-      this._x=this.getAttr("x",50); Object.defineProperty(this,"x",{get:()=>{return this._x},set:(v)=>{this._x=v;this.redraw()}});
-      this._y=this.getAttr("y",50); Object.defineProperty(this,"y",{get:()=>{return this._y},set:(v)=>{this._y=v;this.redraw()}});
-      this.defx=this.getAttr("defx",50);
-      this.defy=this.getAttr("defy",50);
-      this._min=this.getAttr("min",0); Object.defineProperty(this,"min",{get:()=>{return this._min},set:(v)=>{this._min=v;this.redraw()}});
-      this._max=this.getAttr("max",100); Object.defineProperty(this,"max",{get:()=>{return this._max},set:(v)=>{this._max=v;this.redraw()}});
-      this._step=this.getAttr("step",1); Object.defineProperty(this,"step",{get:()=>{return this._step},set:(v)=>{this._step=v;this.redraw()}});
-      this._sprites=this.getAttr("sprites",0); Object.defineProperty(this,"sprites",{get:()=>{return this._sprites},set:(v)=>{this._sprites=v;this.setupImage()}});
-      this._width=this.getAttr("width",128); Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});
-      this._height=this.getAttr("height",128); Object.defineProperty(this,"height",{get:()=>{return this._height},set:(v)=>{this._height=v;this.setupImage()}});
-      this._knobwidth=this.getAttr("knobwidth",28); Object.defineProperty(this,"knobwidth",{get:()=>{return this._knobwidth},set:(v)=>{this._knobwidth=v;this.setupImage()}});
-      this._knobheight=this.getAttr("knobheight",28); Object.defineProperty(this,"knobheight",{get:()=>{return this._knobheight},set:(v)=>{this._knobheight=v;this.setupImage()}});
-      this._colors=this.getAttr("colors",opt.sliderColors); Object.defineProperty(this,"colors",{get:()=>{return this._colors},set:(v)=>{this._colors=v;this.setupImage()}});
-      this.outline=this.getAttr("outline",opt.outline);
-      this.valuetip=this.getAttr("valuetip",opt.valuetip);
-      this.tooltip=this.getAttr("tooltip",null);
-      this.conv=this.getAttr("conv",null);
-      if(this.conv){
-        const x=this._x;
-        const y=this._y;
-        this.convValue=eval(this.conv);
-        if(typeof(this.convValue)=="function")
-          this.convValue=this.convValue(x,y);
-      }
-      else
-        this.convValue={x:this._x,y:this._y};
-  
-      this.midilearn=this.getAttr("midilearn",opt.midilearn);
-      this.midicc=this.getAttr("midicc",null);
-      this.midiController={};
-      this.midiMode="normal";
-      if(this.midicc) {
-          let ch = parseInt(this.midicc.substring(0, this.midicc.lastIndexOf("."))) - 1;
-          let cc = parseInt(this.midicc.substring(this.midicc.lastIndexOf(".") + 1));
-          this.setMidiController(ch, cc);
-      }
-      this.setupImage();
-      this.digits=0;
-      if(window.webAudioControlsWidgetManager)
-//        window.webAudioControlsWidgetManager.updateWidgets();
-        window.webAudioControlsWidgetManager.addWidget(this);
-      this.elem.onclick=(e)=>{e.stopPropagation()};
-    }
-    disconnectedCallback(){}
-    setupImage(){
-      this.coltab = this.colors.split(";");
-      this.dr=this.direction;
-      this.dlen=this.ditchlength;
-      if(!this.width)
-        this.width=256;
-      if(!this.height)
-        this.height=256;
-      this.knob.style.backgroundSize = "100% 100%";
-      this.elem.style.backgroundSize = "100% 100%";
-      this.elem.style.width=this.width+"px";
-      this.elem.style.height=this.height+"px";
-      this.kwidth=this.knobwidth||(this.width*0.15|0);
-      this.kheight=this.knobheight||(this.height*0.15|0);
-      this.knob.style.width = this.kwidth+"px";
-      this.knob.style.height = this.kheight+"px";
-      if(!this.src){
-        let r=Math.min(this.width,this.height)*0.02;
-        let svgbody=
-`<svg xmlns="http://www.w3.org/2000/svg" width="${this.width}" height="${this.height}" preserveAspectRatio="none">
-<rect x="1" y="1" rx="${r}" ry="${r}" width="${this.width-2}" height="${this.height-2}" fill="${this.coltab[1]}"/></svg>`;
-        this.elem.style.backgroundImage = "url(data:image/svg+xml;base64,"+btoa(svgbody)+")";
-      }
-      else{
-        this.elem.style.backgroundImage = "url("+(this.src)+")";
-      }
-      if(!this.knobsrc){
-        let svgthumb=
-`<svg xmlns="http://www.w3.org/2000/svg" width="${this.kwidth}" height="${this.kheight}" preserveAspectRatio="none">
-<radialGradient id="gr" cx="30%" cy="30%"><stop offset="0%" stop-color="${this.coltab[2]}"/><stop offset="100%" stop-color="${this.coltab[0]}"/></radialGradient>
-<rect x="2" y="2" width="${this.kwidth-4}" height="${this.kheight-4}" rx="${this.kwidth*0.5}" ry="${this.kheight*0.5}" fill="url(#gr)"/></svg>`;
-        this.knob.style.backgroundImage = "url(data:image/svg+xml;base64,"+btoa(svgthumb)+")";
-      }
-      else{
-        this.knob.style.backgroundImage = "url("+(this.knobsrc)+")";
-      }
-      this.elem.style.outline=this.outline?"":"none";
-      this.redraw();
-    }
-    redraw() {
-      this.digits=0;
-      if(this.step && this.step < 1) {
-        for(let n = this.step ; n < 1; n *= 10)
-          ++this.digits;
-      }
-      if(this.value<this.min){
-        this.value=this.min;
-        return;
-      }
-      if(this.value>this.max){
-        this.value=this.max;
-        return;
-      }
-      let range = this.max - this.min;
-      let style = this.knob.style;
-      style.left=(this.width-this.kwidth)*(this._x-this.min)/(this.max-this.min)+"px"; style.top=(this.height-this.kheight)*(1-(this._y-this.min)/(this.max-this.min))+"px";
-      this.sensex=0; this.sensey=1;
-    }
-    _setX(v){
-      v=(Math.round((v-this.min)/this.step))*this.step+this.min;
-      this._x=Math.min(this.max,Math.max(this.min,v));
-      if(this._x!=this.oldx){
-        this.oldx=this._x;
-        if(this.conv){
-          const x=this._x;
-          const y=this._y;
-          this.convValue=eval(this.conv);
-          if(typeof(this.convValue)=="function")
-            this.convValue=this.convValue(x,y);
-        }
-        else
-          this.convValue={x:this._x,y:this._y};
-        this.redraw();
-        this.showtip(0);
-        return 1;
-      }
-      return 0;
-    }
-    _setY(v){
-      v=(Math.round((v-this.min)/this.step))*this.step+this.min;
-      this._y=Math.min(this.max,Math.max(this.min,v));
-      if(this._y!=this.oldy){
-        this.oldy=this._y;
-        if(this.conv){
-          const x=this._x;
-          const y=this._y;
-          this.convValue=eval(this.conv);
-          if(typeof(this.convValue)=="function")
-            this.convValue=this.convValue(x,y);
-        }
-        else
-          this.convValue={x:this._x,y:this._y};
-        this.redraw();
-        this.showtip(0);
-        return 1;
-      }
-      return 0;
-    }
-    setX(v,f){
-      if(this._setX(v)&&f)
-        this.sendEvent("input"),this.sendEvent("change");
-    }
-    setY(v,f){
-      if(this._setY(v)&&f)
-        this.sendEvent("input"),this.sendEvent("change");
-    }
-    wheel(e) {
-      let delta=(this.max-this.min)*0.01;
-      delta=e.deltaY>0?-delta:delta;
-      if(!e.shiftKey)
-        delta*=5;
-      if(Math.abs(delta) < this.step)
-        delta = (delta > 0) ? +this.step : -this.step;
-      this.setValue(+this.value+delta,true);
-      e.preventDefault();
-      e.stopPropagation();
-      this.redraw();
-    }
-    pointerdown(ev){
-      if(!this.enable)
-        return;
-      let e=ev;
-      if(ev.touches){
-        e = ev.changedTouches[0];
-        this.identifier=e.identifier;
-      }
-      else {
-        if(e.buttons!=1 && e.button!=0)
-          return;
-      }
-      this.elem.focus();
-      this.drag=1;
-      this.showtip(0);
-      let pointermove=(ev)=>{
-        let e=ev;
-        if(ev.touches){
-          for(let i=0;i<ev.touches.length;++i){
-            if(ev.touches[i].identifier==this.identifier){
-              e = ev.touches[i];
-              break;
-            }
-          }
-        }
-        if(this.lastShift !== e.shiftKey) {
-          this.lastShift = e.shiftKey;
-          this.startPosX = e.pageX;
-          this.startPosY = e.pageY;
-          this.startVal = this.value;
-        }
-        let offsetX = (e.pageX - this.startPosX);
-        let offsetY = (this.startPosY - e.pageY);
-        let rc=this.getBoundingClientRect();
-        this._setX(this.min+(this.max-this.min)*(e.pageX-rc.x-this.kwidth*.5)/(this.width-this.kwidth));
-        this._setY(this.min+(this.max-this.min)*(1-(e.pageY-rc.y-this.kheight*.5)/(this.height-this.kheight)));
-        this.sendEvent("input");
-        if(e.preventDefault)
-          e.preventDefault();
-        if(e.stopPropagation)
-          e.stopPropagation();
-        return false;
-      }
-      let pointerup=(ev)=>{
-        let e=ev;
-        if(ev.touches){
-          for(let i=0;;){
-            if(ev.changedTouches[i].identifier==this.identifier){
-              break;
-            }
-            if(++i>=ev.changedTouches.length)
-              return;
-          }
-        }
-        this.drag=0;
-        this.showtip(0);
-        this.startPosX = this.startPosY = null;
-        window.removeEventListener('mousemove', pointermove);
-        window.removeEventListener('touchmove', pointermove, {passive:false});
-        window.removeEventListener('mouseup', pointerup);
-        window.removeEventListener('touchend', pointerup);
-        window.removeEventListener('touchcancel', pointerup);
-        document.body.removeEventListener('touchstart', preventScroll,{passive:false});
-        this.sendEvent("change");
-      }
-      pointermove(ev);
-      let preventScroll=(e)=>{
-        e.preventDefault();
-      }
-      if(e.touches)
-        e = e.touches[0]; 
-      if(e.ctrlKey || e.metaKey)
-        this.setValue(this.defvalue,true);
-      else {
-        this.startPosX = e.pageX;
-        this.startPosY = e.pageY;
-        this.startVal = this.value;
-        window.addEventListener('mousemove', pointermove);
-        window.addEventListener('touchmove', pointermove, {passive:false});
-      }
-      window.addEventListener('mouseup', pointerup);
-      window.addEventListener('touchend', pointerup);
-      window.addEventListener('touchcancel', pointerup);
-      document.body.addEventListener('touchstart', preventScroll,{passive:false});
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-    }
-  });
-} catch(error){
-  console.log("webaudio-xypad already defined");
-}
-
 
   class WebAudioControlsWidgetManager {
     constructor(){
