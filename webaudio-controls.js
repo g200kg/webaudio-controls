@@ -158,15 +158,18 @@ if(window.customElements){
         this.elem.style.outline="none";
       }
       this.onfocus=()=>{
-        switch(this.outline){
+        switch(+this.outline){
         case null:
         case 0:
+          console.log("0")
           this.elem.style.outline="none";
           break;
         case 1:
+          console.log("1")
           this.elem.style.outline="1px solid #444";
           break;
         default:
+          console.log("E")
           this.elem.style.outline=this.outline;
         }
       }
