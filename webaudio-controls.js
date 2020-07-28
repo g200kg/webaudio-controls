@@ -161,15 +161,12 @@ if(window.customElements){
         switch(+this.outline){
         case null:
         case 0:
-          console.log("0")
           this.elem.style.outline="none";
           break;
         case 1:
-          console.log("1")
           this.elem.style.outline="1px solid #444";
           break;
         default:
-          console.log("E")
           this.elem.style.outline=this.outline;
         }
       }
@@ -383,7 +380,7 @@ ${this.basestyle}
   white-space:pre;
 }
 </style>
-<div class='webaudio-knob-body' tabindex='1' touch-action='none'><div class='webaudioctrl-tooltip'></div><div class="webaudioctrl-label"><slot></slot></div></div>
+<div class='webaudio-knob-body' tabindex='1' touch-action='none'><div class='webaudioctrl-tooltip'></div><div part="label" class="webaudioctrl-label"><slot></slot></div></div>
 `;
       this.elem=root.childNodes[2];
       this.ttframe=this.elem.firstChild;
@@ -748,7 +745,7 @@ ${this.basestyle}
   padding:0;
 }
 </style>
-<div class='webaudio-slider-body' tabindex='1' touch-action='none'><div class='webaudio-slider-knob' touch-action='none'></div><div class='webaudioctrl-tooltip'></div><div class="webaudioctrl-label"><slot></slot></div></div>
+<div class='webaudio-slider-body' tabindex='1' touch-action='none'><div class='webaudio-slider-knob' touch-action='none'></div><div class='webaudioctrl-tooltip'></div><div part="label" class="webaudioctrl-label"><slot></slot></div></div>
 `;
       this.elem=root.childNodes[2];
       this.knob=this.elem.firstChild;
@@ -1182,7 +1179,7 @@ ${this.basestyle}
   top:50%;
 }
 </style>
-<div class='webaudio-switch-body' tabindex='1' touch-action='none'><div class='webaudioctrl-tooltip'></div><div class="webaudioctrl-label"><slot></slot></div></div>
+<div class='webaudio-switch-body' tabindex='1' touch-action='none'><div class='webaudioctrl-tooltip'></div><div part="label" class="webaudioctrl-label"><slot></slot></div></div>
 `;
       this.elem=root.childNodes[2];
       this.ttframe=this.elem.firstChild;
