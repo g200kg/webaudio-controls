@@ -1060,9 +1060,9 @@ ${this.basestyle}
           const rc = this.getBoundingClientRect();
           let val;
           if(this.dr=="horz")
-            val = Math.max(0,Math.min(1,(e.pageX-rc.left-window.pageXOffset-this.kw*0.5)/(this.width-this.kw)));
+            val = Math.max(0,Math.min(1,(e.pageX-rc.left-window.pageXOffset-this.kw*0.5)/(this.sw-this.kw)));
           else
-            val = 1 - Math.max(0,Math.min(1,(e.pageY-rc.top-window.pageYOffset-this.kh*0.5)/(this.height-this.kh)));
+            val = 1 - Math.max(0,Math.min(1,(e.pageY-rc.top-window.pageYOffset-this.kh*0.5)/(this.sh-this.kh)));
           if(this.log){
             this._setValue(this.min * Math.pow(this.max/this.min, val));
           }
