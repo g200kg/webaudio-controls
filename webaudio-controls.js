@@ -1439,7 +1439,7 @@ ${this.basestyle}
       this.enable=this.getAttr("enable",1);
       this._value=this.getAttr("value",0); Object.defineProperty(this,"value",{get:()=>{return this._value},set:(v)=>{this._value=v;this.redraw()}});
       this.defvalue=this.getAttr("defvalue",0);
-      this._fontsize=this.getAttr("fontsize",9); Object.defineProperty(this,"fontsize",{get:()=>{return this._fontsize},set:(v)=>{this._fontsize=v;this.setupImage()}});
+      this._fontsize=this.getAttr("fontsize",opt.paramFontSize); Object.defineProperty(this,"fontsize",{get:()=>{return this._fontsize},set:(v)=>{this._fontsize=v;this.setupImage()}});
       this._src=this.getAttr("src",opt.paramSrc); Object.defineProperty(this,"src",{get:()=>{return this._src},set:(v)=>{this._src=v;this.setupImage()}});
       this.link=this.getAttr("link","");
       this._width=this.getAttr("width",opt.paramWidth); Object.defineProperty(this,"width",{get:()=>{return this._width},set:(v)=>{this._width=v;this.setupImage()}});

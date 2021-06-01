@@ -59,7 +59,8 @@ switchDiameter|24     | diameter for switches
 switchColors|`"#e00;#000;#fcc"`| color setting for switches
 paramWidth  |32       | width for param
 paramHeight |20       | height for param
-paramSrc    |null     | param background image source
-paramColors |`"#fff;#000"`| color setting for param
+paramSrc    |null     | webaudio-param background image source
+paramFontSize|9       | webaudio-param font size
+paramColors |`"#fff;#000"`| color setting for webaudio-param
 
 ---
