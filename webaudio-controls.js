@@ -1643,6 +1643,7 @@ ${this.basestyle}
       this.bheight = this.height * 0.55;
       this.max=this.min+this.keys-1;
       this.dispvalues=[];
+      this.disabledvalues=[];
       this.valuesold=[];
       if(this.kf[this.min%12])
         --this.min;
@@ -1682,7 +1683,9 @@ ${this.basestyle}
       for(let i=this.min,j=0;i<=this.max;++i) {
         if(this.kf[i%12]==0) {
           let x=this.wwidth*(j++)+1;
-          if(this.dispvalues.indexOf(i)>=0)
+          if(this.disabledvalues.indexOf(i)>=0)
+            rrect(this.ctx,x,1,this.wwidth-1,this.height-2,r,this.coltab[3],this.coltab[3]);
+          else if(this.dispvalues.indexOf(i)>=0)
             rrect(this.ctx,x,1,this.wwidth-1,this.height-2,r,this.coltab[5],this.coltab[6]);
           else
             rrect(this.ctx,x,1,this.wwidth-1,this.height-2,r,this.coltab[1],this.coltab[2]);
@@ -1692,7 +1695,9 @@ ${this.basestyle}
       for(let i=this.min;i<this.max;++i) {
         if(this.kf[i%12]) {
           let x=this.wwidth*this.ko[this.min%12]+this.bwidth*(i-this.min)+1;
-          if(this.dispvalues.indexOf(i)>=0)
+          if(this.disabledvalues.indexOf(i)>=0)
+            rrect(this.ctx,x,1,this.bwidth,h2,r,this.coltab[3],this.coltab[3]);
+          else if(this.dispvalues.indexOf(i)>=0)
             rrect(this.ctx,x,1,this.bwidth,h2,r,this.coltab[7],this.coltab[8]);
           else
             rrect(this.ctx,x,1,this.bwidth,h2,r,this.coltab[3],this.coltab[4]);
@@ -1826,6 +1831,7 @@ ${this.basestyle}
       ev.stopPropagation();
     }
     sendEventFromKey(s,k){
+      if (this.disabledvalues.includes(k)) return;
       let ev=document.createEvent('HTMLEvents');
       ev.initEvent('change',true,true);
       ev.note=[s,k];
@@ -1844,12 +1850,28 @@ ${this.basestyle}
       if(notes.length) {
         this.valuesold=this.values;
         for(let i=0;i<notes.length;++i) {
+          if (this.disabledvalues.includes(notes[i][1])) return;
           this.setdispvalues(notes[i][0],notes[i][1]);
           let ev=document.createEvent('HTMLEvents');
           ev.initEvent('change',true,true);
           ev.note=notes[i];
           this.dispatchEvent(ev);
         }
+      }
+    }
+    setDisabledRange(state,start,end) {
+      for (var i=start; i<end;i++) {
+        kbd.setdisabledvalues(state,i);
+      }
+      this.redraw();
+    }
+    setdisabledvalues(state,note) {
+      let n=this.disabledvalues.indexOf(note);
+      if(state) {
+        if(n<0) this.disabledvalues.push(note);
+      }
+      else {
+        if(n>=0) this.disabledvalues.splice(n,1);
       }
     }
     setdispvalues(state,note) {
