@@ -142,6 +142,10 @@ If the `fire` parameter is `undefined` or `false`, this function will not fire `
 `webaudio-keyboard`  
 **description**: webaudio-keyboard can be setup pressing state with this function from JavaScript. corresponding key specified by the `note` is pressed if the `state` is non-zero otherwise the key is released. This function will NOT fire the 'change' event. If the `audioContext` and `when` arguments are specified, the pressing state will be updated after the specified time. `when` is the time in seconds on the `currentTime` time axis of the `audioContext`.
 
+### setDisabledRange(state, start, end)  
+`webaudio-keyboard`  
+**description**: Disable a range of keys using non-zero `state` or zero to re-enable keys. Pass `start` value for the first key in the range. `end` for the last key in the range. All keys between start/end will be disabled/enabled. Disabled keys will be greyed out and will not trigger events.
+
 ---
 ## Events
 
