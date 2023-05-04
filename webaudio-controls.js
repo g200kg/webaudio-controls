@@ -1861,7 +1861,7 @@ ${this.basestyle}
     }
     setDisabledRange(state,start,end) {
       for (var i=start; i<end;i++) {
-        kbd.setdisabledvalues(state,i);
+        this.setdisabledvalues(state,i);
       }
       this.redraw();
     }
