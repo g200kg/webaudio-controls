@@ -36,6 +36,8 @@ The items that can be set are as follows
 name        | default | description
 ------------|---------|----------------
 useMidi     |0        | If `1`, enable control from midi devices.
+bubbles     |1        | If `1`, events from webaudio-controls will be bubbled.
+cancelable  |1        | If `1`, events from webaudio-controls are cancelable.
 midilearn   |0        | If `1`, enable midilearn function for each knobs/sliders/switches.
 preserveMidiLearn|0   | If `1`, save the MIDI learn result in localStorage and maintain when the next access.
 outline     |0        | Outline style when focused. Specify detail like `"1px solid #ff8888"` or `"1"` for default `"1px solid #ccc"` style.

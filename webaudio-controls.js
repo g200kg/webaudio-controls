@@ -74,6 +74,8 @@ if(window.customElements){
 `;
   let opt={
     useMidi:0,
+    bubbles:true,
+    cancelable:true,
     preserveMidiLearn:0,
     preserveValue:0,
     midilearn:0,
@@ -172,9 +174,7 @@ if(window.customElements){
       }
     }
     sendEvent(ev){
-      let event;
-      event=document.createEvent("HTMLEvents");
-      event.initEvent(ev,false,true);
+      let event = new Event(ev, {bubbles:opt.bubbles?true:false, cancelable:opt.cancelable?true:false});
       this.dispatchEvent(event);
     }
     getAttr(n,def){
@@ -1535,8 +1535,7 @@ ${this.basestyle}
         this.redraw();
         this.showtip(0);
         if(f){
-          let event=document.createEvent("HTMLEvents");
-          event.initEvent("change",false,true);
+          let event = new Event("change", {bubbles:opt.bubbles?true:false, cancelable:opt.cancelable?true:false});
           this.dispatchEvent(event);
         }
         this.oldvalue=this.value;
@@ -1832,8 +1831,7 @@ ${this.basestyle}
     }
     sendEventFromKey(s,k){
       if (this.disabledvalues.includes(k)) return;
-      let ev=document.createEvent('HTMLEvents');
-      ev.initEvent('change',true,true);
+      let ev = new Event("change", {bubbles:opt.bubbles?true:false, cancelable:opt.cancelable?true:false});
       ev.note=[s,k];
       this.dispatchEvent(ev);
     }
@@ -1852,8 +1850,7 @@ ${this.basestyle}
         for(let i=0;i<notes.length;++i) {
           if (this.disabledvalues.includes(notes[i][1])) return;
           this.setdispvalues(notes[i][0],notes[i][1]);
-          let ev=document.createEvent('HTMLEvents');
-          ev.initEvent('change',true,true);
+          let ev = new Event("change", {bubbles:opt.bubbles?true:false, cancelable:opt.cancelable?true:false});
           ev.note=notes[i];
           this.dispatchEvent(ev);
         }
